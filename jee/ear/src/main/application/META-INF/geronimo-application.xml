@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://geronimo.apache.org/xml/ns/j2ee/application-2.0"
+	xmlns:sys="http://geronimo.apache.org/xml/ns/deployment-1.2"
+	application-name="OrderPlacement">
+
+	<sys:environment>
+		<sys:moduleId>
+			<sys:groupId>com.acme.orderplacement.jee
+			</sys:groupId>
+			<sys:artifactId>orderplacement.jee.ear
+			</sys:artifactId>
+			<sys:version>1.0-SNAPSHOT</sys:version>
+			<sys:type>ear</sys:type>
+		</sys:moduleId>
+		<sys:hidden-classes>
+			<sys:filter>org.springframework</sys:filter>
+			<sys:filter>org.hibernate</sys:filter>
+			<sys:filter>org.aspectj</sys:filter>
+			<sys:filter>org.aopalliance</sys:filter>
+			<sys:filter>antlr</sys:filter>
+			<sys:filter>javassist</sys:filter>
+		</sys:hidden-classes>
+	</sys:environment>
+
+	<module>
+		<connector>tranql-connector-postgresql-xa-1.1.rar
+		</connector>
+		<alt-dd>META-INF/geronimo-postgresql-ds.xml
+		</alt-dd>
+	</module>
+
+	<module>
+		<ejb>orderplacement.jee.ejb-1.0-SNAPSHOT.jar
+		</ejb>
+		<openejb-jar xmlns="http://openejb.apache.org/xml/ns/openejb-jar-2.2"
+			xmlns:naming="http://geronimo.apache.org/xml/ns/naming-1.2">
+
+			<sys:environment>
+				<sys:moduleId>
+					<sys:groupId>com.acme.orderplacement.jee
+					</sys:groupId>
+					<sys:artifactId>orderplacement.jee.ejb
+					</sys:artifactId>
+					<sys:version>1.0-SNAPSHOT</sys:version>
+					<sys:type>jar</sys:type>
+				</sys:moduleId>
+			</sys:environment>
+
+			<enterprise-beans>
+				<session>
+					<ejb-name>ItemStorageServiceEJB</ejb-name>
+					<naming:resource-ref>
+						<naming:ref-name>jdbc/OrderPlacementDS
+						</naming:ref-name>
+						<naming:resource-link>jdbc/com/acme/OrderPlacementDS
+						</naming:resource-link>
+					</naming:resource-ref>
+				</session>
+			</enterprise-beans>
+		</openejb-jar>
+	</module>
+
+	<module>
+		<web>orderplacement.jee.ws-1.0-SNAPSHOT.war</web>
+		<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+			<sys:environment>
+				<sys:moduleId>
+					<sys:groupId>com.acme.orderplacement.jee
+					</sys:groupId>
+					<sys:artifactId>orderplacement.jee.ejb
+					</sys:artifactId>
+					<sys:version>1.0-SNAPSHOT</sys:version>
+					<sys:type>war</sys:type>
+				</sys:moduleId>
+			</sys:environment>
+			<context-root>/orderplacement</context-root>
+		</web-app>
+	</module>
+
+</application>
+

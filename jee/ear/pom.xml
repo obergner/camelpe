@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
+	<parent>
+		<groupId>com.acme.orderplacement.jee
+		</groupId>
+		<artifactId>orderplacement.jee
+		</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme.orderplacement.jee
+	</groupId>
+	<artifactId>orderplacement.jee.ear
+	</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>ear</packaging>
+
+	<name><![CDATA[SOA Order :: JEE Integration :: EAR]]></name>
+
+	<dependencies>
+		<!--
+			| Compile time dependencies 
+		-->
+		<!--
+			| Runtime dependencies 
+		-->
+		<dependency>
+			<groupId>org.tranql</groupId>
+			<artifactId>tranql-connector-postgresql-xa
+			</artifactId>
+			<type>rar</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.ejb
+			</artifactId>
+			<type>ejb</type>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+			HACK: Due to some bug in m2eclipse, we have to explicitly declare a
+			dependency on this artifact in this pom, so that it gets included in
+			META-INF/lib. See below.
+		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.wsapi
+			</artifactId>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.geronimo.specs
+					</groupId>
+					<artifactId>geronimo-ws-metadata_2.0_spec
+					</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.ws
+			</artifactId>
+			<type>war</type>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+			Provided dependencies: Note that these dependencies' default scope of
+			'provided' is overridden in favor of the 'compile' scope if we do not
+			explicitly reset it to 'provided' here.
+		-->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>ejb3-persistence</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Test dependencies 
+		-->
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin
+				</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/classes/META-INF/lib
+							</outputDirectory>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeScope>provided</excludeScope>
+							<!--
+								Unfortunately, the dependency plugin allows only to exclude a
+								single scope. We therefore have to explicitly exclude test
+								dependencies.
+							-->
+							<excludeGroupIds>junit,org.easymock
+							</excludeGroupIds>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<version>5</version>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultSpecificationEntries>true
+							</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true
+							</addDefaultImplementationEntries>
+							<classpathPrefix>META-INF/lib</classpathPrefix>
+						</manifest>
+					</archive>
+					<defaultLibBundleDir>
+						META-INF/lib
+					</defaultLibBundleDir>
+					<modules>
+						<jarModule>
+							<!--
+								HACK: Due to some bug in m2eclipse, we have to explicitly
+								declare a dependency on this artifact in this pom, so that it
+								gets included in META-INF/lib. TODO:
+								com.acme.orderplacement.jee.wsapi-XXX.jar should be transitively
+								pulled in via com.acme.orderplacement.jee.ws-XXX.war. Try to
+								find out why not and fix if possible.
+							-->
+							<groupId>com.acme.orderplacement.jee
+							</groupId>
+							<artifactId>orderplacement.jee.wsapi
+							</artifactId>
+							<bundleDir>META-INF/lib</bundleDir>
+						</jarModule>
+						<rarModule>
+							<groupId>org.tranql
+							</groupId>
+							<artifactId>tranql-connector-postgresql-xa
+							</artifactId>
+						</rarModule>
+						<ejbModule>
+							<groupId>com.acme.orderplacement.jee
+							</groupId>
+							<artifactId>orderplacement.jee.ejb
+							</artifactId>
+						</ejbModule>
+						<!--
+							I would like to explicitly set this web module's context root to
+							a proper value instead of the '/orderplacement.jee.ws' generated
+							by maven. There i, however, a bug either in m2eclipse or - more
+							likely - in the maven-ear-plugin that prevents me from doing so.
+							See http://jira.codehaus.org/browse/MNGECLIPSE-231.
+						-->
+						<!--
+							<warModule> <groupId>com.acme.orderplacement.jee </groupId>
+							<artifactId>orderplacement.jee.ws </artifactId>
+							<contextRoot>orderplacement</contextRoot> </warModule>
+						-->
+					</modules>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.geronimo.plugins
+				</groupId>
+				<artifactId>geronimo-maven-plugin</artifactId>
+				<configuration>
+					<geronimoHome>D:/Bin/GeronimoHome/geronimo-jetty6-javaee5-2.1.3
+					</geronimoHome>
+					<logOutput>true</logOutput>
+					<moduleArchive>
+						${project.build.directory}/${project.build.finalName}.${project.packaging}
+					</moduleArchive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

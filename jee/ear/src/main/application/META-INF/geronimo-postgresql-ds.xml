@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+	<dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+		<dep:moduleId>
+			<dep:groupId>com.acme.orderplacement.dbpool</dep:groupId>
+			<dep:artifactId>OrderPlacementDS</dep:artifactId>
+			<dep:version>1.0</dep:version>
+			<dep:type>rar</dep:type>
+		</dep:moduleId>
+		<dep:dependencies>
+			<dep:dependency>
+				<dep:groupId>org.postgresql</dep:groupId>
+				<dep:artifactId>jdbc3</dep:artifactId>
+				<dep:version>8.3.604</dep:version>
+				<dep:type>jar</dep:type>
+			</dep:dependency>
+		</dep:dependencies>
+	</dep:environment>
+	<resourceadapter>
+		<outbound-resourceadapter>
+			<connection-definition>
+				<connectionfactory-interface>javax.sql.DataSource</connectionfactory-interface>
+				<connectiondefinition-instance>
+					<name>jdbc/com/acme/OrderPlacementDS</name>
+					<config-property-setting name="Password">postgres</config-property-setting>
+					<config-property-setting name="DatabaseName">orderplacement</config-property-setting>
+					<config-property-setting name="PrepareThreshold">1</config-property-setting>
+					<config-property-setting name="UserName">postgres</config-property-setting>
+					<connectionmanager>
+						<xa-transaction>
+							<transaction-caching />
+						</xa-transaction>
+						<single-pool>
+							<max-size>10</max-size>
+							<min-size>0</min-size>
+							<blocking-timeout-milliseconds>5000</blocking-timeout-milliseconds>
+							<idle-timeout-minutes>15</idle-timeout-minutes>
+							<match-one />
+						</single-pool>
+					</connectionmanager>
+				</connectiondefinition-instance>
+			</connection-definition>
+		</outbound-resourceadapter>
+	</resourceadapter>
+</connector>

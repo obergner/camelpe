@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/"
+	xmlns:tns="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/"
+	xmlns:model="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	version="1.0">
+
+	<!--
+		Imports
+	-->
+
+	<import namespace="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/"
+		schemaLocation="itemstorageservice-model-1.0.xsd" />
+
+	<!--
+		Top level elements
+	-->
+
+	<element name="RegisterItemResponse" nillable="false"
+		type="tns:RegisterItemResponse" />
+
+	<!--
+		Requests
+	-->
+
+	<simpleType name="ResponseCode">
+		<restriction base="string">
+			<enumeration value="SUCCESS" />
+			<enumeration value="WARNING" />
+			<enumeration value="FAILURE" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="RegisterItemResponse">
+		<sequence>
+			<element name="responseCode" minOccurs="1" maxOccurs="1"
+				nillable="false" type="tns:ResponseCode" />
+			<element name="message" minOccurs="1" maxOccurs="1" nillable="false"
+				type="string" />
+		</sequence>
+	</complexType>
+
+</schema>
