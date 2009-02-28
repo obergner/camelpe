@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
+	<parent>
+		<groupId>com.acme.orderplacement.persistence
+		</groupId>
+		<artifactId>orderplacement.persistence
+		</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme.orderplacement.persistence
+	</groupId>
+	<artifactId>orderplacement.persistence.company
+	</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name><![CDATA[SOA Order :: Persistence :: Company]]></name>
+
+	<dependencies>
+		<!--
+			| Compile time dependencies 
+		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.persistence
+			</groupId>
+			<artifactId>orderplacement.persistence.support
+			</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.domain
+			</groupId>
+			<artifactId>orderplacement.domain.people
+			</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<!--
+			| Runtime dependencies 
+		-->
+		<!--
+			| Provided dependencies 
+		-->
+		<!--
+			| Test dependencies 
+		-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-db-schema</id>
+						<phase>process-test-classes</phase>
+						<configuration>
+							<tasks>
+								<property name="export" value="false" />
+
+								<mkdir dir="./target/generated-sources/schema" />
+
+								<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" />
+								<hibernatetool destdir="target/generated-sources">
+									<classpath refid="maven.test.classpath" />
+
+									<jpaconfiguration persistenceunit="persistence.company.CompanyPU" />
+									<hbm2ddl drop="true" create="true" export="false"
+										outputfilename="schema/companyDB.ddl" delimiter=";" format="true" />
+								</hibernatetool>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>1.1.105</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-tools</artifactId>
+						<version>3.2.0.ga</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-entitymanager
+						</artifactId>
+						<version>3.3.1.ga</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-annotations
+						</artifactId>
+						<version>3.3.0.ga</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate</artifactId>
+						<version>3.2.5.ga</version>
+					</dependency>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+						<version>1.5.6</version>
+					</dependency>
+					<dependency>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+						<version>1.0.4</version>
+					</dependency>
+					<dependency>
+						<groupId>commons-collections</groupId>
+						<artifactId>commons-collections</artifactId>
+						<version>3.1</version>
+					</dependency>
+					<dependency>
+						<groupId>dom4j</groupId>
+						<artifactId>dom4j</artifactId>
+						<version>1.6</version>
+					</dependency>
+					<dependency>
+						<groupId>cglib</groupId>
+						<artifactId>cglib</artifactId>
+						<version>2.1_3</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>org.jboss.maven2Repository</id>
+			<url>http://repository.jboss.com/maven2
+			</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+</project>
