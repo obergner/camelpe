@@ -41,6 +41,13 @@
 		<!--
 			| Runtime dependencies 
 		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.support
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!--
 			| Provided dependencies 
 		-->

@@ -9,13 +9,14 @@
 		<project>com.acme.orderplacement.jee.wsapi</project>
 		<project>com.acme.orderplacement.service.item.impl</project>
 		<project>com.acme.orderplacement.service.item.api</project>
-		<project>com.acme.orderplacement.jee.ear</project>
 		<project>com.acme.orderplacement.domain.support</project>
 		<project>com.acme.orderplacement.persistence.item</project>
 		<project>com.acme.orderplacement.domain.item</project>
 		<project>com.acme.orderplacement.persistence.support</project>
 		<project>com.acme.orderplacement.service.support</project>
 		<project>com.acme.orderplacement.aspect.support</project>
+		<project>com.acme.orderplacement.jee.support</project>
+		<project>com.acme.orderplacement.jee.ear</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

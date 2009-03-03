@@ -61,6 +61,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!--
+			HACK: Due to some bug in m2eclipse, we have to explicitly declare a
+			dependency on this artifact in this pom, so that it gets included in
+			META-INF/lib. See below.
+		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.support
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee
 			</groupId>
@@ -95,6 +107,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/application</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -160,6 +178,22 @@
 							</artifactId>
 							<bundleDir>META-INF/lib</bundleDir>
 						</jarModule>
+						<jarModule>
+							<!--
+								HACK: Due to some bug in m2eclipse, we have to explicitly
+								declare a dependency on this artifact in this pom, so that it
+								gets included in META-INF/lib. TODO:
+								com.acme.orderplacement.jee.support-XXX.jar should be
+								transitively pulled in via
+								com.acme.orderplacement.jee.ws-XXX.war. Try to find out why not
+								and fix if possible.
+							-->
+							<groupId>com.acme.orderplacement.jee
+							</groupId>
+							<artifactId>orderplacement.jee.support
+							</artifactId>
+							<bundleDir>META-INF/lib</bundleDir>
+						</jarModule>
 						<rarModule>
 							<groupId>org.tranql
 							</groupId>
@@ -192,12 +226,21 @@
 				</groupId>
 				<artifactId>geronimo-maven-plugin</artifactId>
 				<configuration>
-					<geronimoHome>D:/Bin/GeronimoHome/geronimo-jetty6-javaee5-2.1.3
-					</geronimoHome>
+					<geronimoHome>${geronimo.home}</geronimoHome>
+					s
 					<logOutput>true</logOutput>
 					<moduleArchive>
 						${project.build.directory}/${project.build.finalName}.${project.packaging}
 					</moduleArchive>
+					<module>
+						<groupId>${geronimo.moduleId.groupId}
+						</groupId>
+						<artifactId>${geronimo.moduleId.artifactId}
+						</artifactId>
+						<version>${geronimo.moduleId.version}
+						</version>
+						<type>${geronimo.moduleId.type}</type>
+					</module>
 				</configuration>
 			</plugin>
 		</plugins>

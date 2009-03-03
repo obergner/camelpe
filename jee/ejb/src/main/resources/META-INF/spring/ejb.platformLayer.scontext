@@ -53,7 +53,8 @@
 		<property name="jpaDialect" ref="persistence.support.platform.jpaDialect" />
 		<property name="jpaProperties">
 			<value>
-				hibernate.transaction.factory_class=org.hibernate.transaction.JTATransactionFactory
+				jta.UserTransaction=java:comp/UserTransaction
+				hibernate.transaction.factory_class=org.hibernate.transaction.CMTTransactionFactory
 				hibernate.transaction.manager_lookup_class=com.acme.orderplacement.persistence.support.jta.hibernate.GeronimoTransactionManagerLookup
 				hibernate.cache.provider_class=org.hibernate.cache.NoCacheProvider
 				hibernate.show_sql=true

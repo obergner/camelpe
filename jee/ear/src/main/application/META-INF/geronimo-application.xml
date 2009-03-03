@@ -4,11 +4,16 @@
 	application-name="OrderPlacement">
 
 	<sys:environment>
+		<!--
+			<sys:moduleId>
+			<sys:groupId>${geronimo.moduleId.groupId}</sys:groupId>
+			<sys:artifactId>${geronimo.moduleId.artifactId}</sys:artifactId>
+			<sys:version>${geronimo.moduleId.version}</sys:version>
+			<sys:type>${geronimo.moduleId.type}</sys:type> </sys:moduleId>
+		-->
 		<sys:moduleId>
-			<sys:groupId>com.acme.orderplacement.jee
-			</sys:groupId>
-			<sys:artifactId>orderplacement.jee.ear
-			</sys:artifactId>
+			<sys:groupId>com.acme.orderplacement.jee</sys:groupId>
+			<sys:artifactId>orderplacement.jee.ear</sys:artifactId>
 			<sys:version>1.0-SNAPSHOT</sys:version>
 			<sys:type>ear</sys:type>
 		</sys:moduleId>
@@ -23,15 +28,12 @@
 	</sys:environment>
 
 	<module>
-		<connector>tranql-connector-postgresql-xa-1.1.rar
-		</connector>
-		<alt-dd>META-INF/geronimo-postgresql-ds.xml
-		</alt-dd>
+		<connector>tranql-connector-postgresql-xa-1.1.rar</connector>
+		<alt-dd>META-INF/geronimo-postgresql-ds.xml</alt-dd>
 	</module>
 
 	<module>
-		<ejb>orderplacement.jee.ejb-1.0-SNAPSHOT.jar
-		</ejb>
+		<ejb>orderplacement.jee.ejb-1.0-SNAPSHOT.jar</ejb>
 		<openejb-jar xmlns="http://openejb.apache.org/xml/ns/openejb-jar-2.2"
 			xmlns:naming="http://geronimo.apache.org/xml/ns/naming-1.2">
 

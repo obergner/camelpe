@@ -98,7 +98,7 @@
 
 	<modules>
 		<module>support</module>
-		<module>people</module>
+		<!-- module>people</module -->
 		<!-- module>company</module -->
 		<module>item</module>
 	</modules>
