@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/integration
+           http://www.springframework.org/schema/integration/spring-integration-1.0.xsd
+           http://www.springframework.org/schema/integration/jms
+		   http://www.springframework.org/schema/integration/jms/spring-integration-jms-1.0.xsd
+		   http://www.springframework.org/schema/jee 
+		   http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+	<context:component-scan
+		base-package="com.acme.orderplacement.integration.inbound.item" />
+	<annotation-config />
+
+	<channel id="integration.inbound.item.xml.ItemCreatedEventsChannel" />
+	<channel id="integration.inbound.item.jaxb.ItemCreatedEventsChannel" />
+	<channel id="integration.inbound.item.target.ItemCreatedEventsChannel" />
+
+</beans:beans>

@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
+	<parent>
+		<groupId>com.acme.orderplacement.jee
+		</groupId>
+		<artifactId>orderplacement.jee
+		</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme.orderplacement.jee
+	</groupId>
+	<artifactId>orderplacement.jee.integrationra
+	</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>rar</packaging>
+
+	<name><![CDATA[SOA Order :: JEE Integration :: Integration Layer RA]]></name>
+
+	<dependencies>
+		<!--
+			| Compile time dependencies 
+		-->
+		<!--
+			| Runtime dependencies 
+		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.service
+			</groupId>
+			<artifactId>orderplacement.service.item.api
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.integration
+			</groupId>
+			<artifactId>orderplacement.integration.inbound.item
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.integration
+			</groupId>
+			<artifactId>spring-integration-core
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.integration
+			</groupId>
+			<artifactId>spring-integration-adapter
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.integration
+			</groupId>
+			<artifactId>spring-integration-jms</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+			Provided dependencies: Note that these dependencies' default scope of
+			'provided' is overridden in favor of the 'compile' scope if we do not
+			explicitly reset it to 'provided' here.
+		-->
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Test dependencies 
+		-->
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!--
+				<plugin> <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin </artifactId> <executions>
+				<execution> <id>copy</id> <phase>process-resources</phase> <goals>
+				<goal>copy-dependencies</goal> </goals> <configuration>
+				<outputDirectory> ${project.build.directory}/classes/META-INF/lib
+				</outputDirectory> <overWriteSnapshots>true</overWriteSnapshots>
+				<overWriteIfNewer>true</overWriteIfNewer>
+				<excludeScope>provided</excludeScope>
+				<excludeGroupIds>junit,org.easymock </excludeGroupIds>
+				</configuration> </execution> </executions> </plugin>
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-rar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultSpecificationEntries>true
+							</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true
+							</addDefaultImplementationEntries>
+							<classpathPrefix>META-INF/lib</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

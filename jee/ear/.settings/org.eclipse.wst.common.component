@@ -133,5 +133,8 @@
         <dependent-module deploy-path="META-INF/lib/" handle="module:/classpath/var/M2_REPO/org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.integrationra/com.acme.orderplacement.jee.integrationra">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

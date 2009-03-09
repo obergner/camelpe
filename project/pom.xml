@@ -25,7 +25,8 @@
 		<compiler.showWarnings>true</compiler.showWarnings>
 		<compiler.showDeprecation>true</compiler.showDeprecation>
 		<!--
-			Geronimo settings 
+			Geronimo settings. Note that geronimo.home should be overridden in
+			your own ~/.m2/settings.xml.
 		-->
 		<geronimo.home>
 			C:/Java/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3
@@ -283,6 +284,38 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
+				<groupId>com.acme.orderplacement.integration
+				</groupId>
+				<artifactId>orderplacement.integration
+				</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.integration
+				</groupId>
+				<artifactId>orderplacement.integration.inbound
+				</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.integration
+				</groupId>
+				<artifactId>orderplacement.integration.inbound.external
+				</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.integration
+				</groupId>
+				<artifactId>orderplacement.integration.inbound.item
+				</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
 				<groupId>com.acme.orderplacement.jee
 				</groupId>
 				<artifactId>orderplacement.jee
@@ -321,6 +354,14 @@
 				</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee
+				</groupId>
+				<artifactId>orderplacement.jee.integrationra
+				</artifactId>
+				<version>${project.version}</version>
+				<type>rar</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee
@@ -391,6 +432,13 @@
 				<artifactId>geronimo-ws-metadata_2.0_spec
 				</artifactId>
 				<version>1.1.2</version>
+				<type>jar</type>
+			</dependency>
+			<!-- JAXB2 RI Implementation (SUN) -->
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>2.1.9</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Apache -->
@@ -488,6 +536,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>2.5.6</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
 				<version>2.5.6</version>
 				<type>jar</type>
@@ -546,6 +600,59 @@
 				<version>2.0.4</version>
 				<type>jar</type>
 			</dependency>
+			<!-- Spring Integration -->
+			<dependency>
+				<groupId>org.springframework.integration
+				</groupId>
+				<artifactId>spring-integration-core
+				</artifactId>
+				<version>1.0.1.RELEASE</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.integration
+				</groupId>
+				<artifactId>spring-integration-adapter
+				</artifactId>
+				<version>1.0.1.RELEASE</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.integration
+				</groupId>
+				<artifactId>spring-integration-jms
+				</artifactId>
+				<version>1.0.1.RELEASE</version>
+				<type>jar</type>
+			</dependency>
+			<!--
+				Spring Web Services: Spring Integration uses its XML databinding and
+				transformation capabilities
+			-->
+			<dependency>
+				<groupId>org.springframework.ws
+				</groupId>
+				<artifactId>spring-xml
+				</artifactId>
+				<version>1.5.6</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.ws
+				</groupId>
+				<artifactId>spring-oxm
+				</artifactId>
+				<version>1.5.6</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.ws
+				</groupId>
+				<artifactId>spring-oxm-tiger
+				</artifactId>
+				<version>1.5.6</version>
+				<type>jar</type>
+			</dependency>
 			<!-- CGLIB -->
 			<dependency>
 				<groupId>cglib</groupId>
@@ -562,12 +669,6 @@
 				<type>jar</type>
 			</dependency>
 			<!-- Hibernate -->
-			<!--
-				dependency> <groupId>org.hibernate</groupId>
-				<artifactId>hibernate-annotations</artifactId>
-				<version>3.2.0.ga-no-asm</version> <type>jar</type>
-				<scope>compile</scope> </dependency
-			-->
 			<!-- JPA API -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -861,6 +962,11 @@
 					</artifactId>
 					<version>2.0.2</version>
 				</plugin>
+				<plugin>
+					<groupId>org.jvnet.jaxb2.maven2</groupId>
+					<artifactId>maven-jaxb2-plugin</artifactId>
+					<version>0.6.3</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -940,6 +1046,10 @@
 				</groupId>
 				<artifactId>geronimo-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -960,6 +1070,7 @@
 				<module>../domain</module>
 				<module>../persistence</module>
 				<module>../service</module>
+				<module>../integration</module>
 				<module>../jee</module>
 			</modules>
 		</profile>
@@ -1058,6 +1169,9 @@
 	<!-- =================================================== -->
 
 	<repositories>
+		<!--
+			The JBoss repository provides the EJB 3.0 API jar. 
+		-->
 		<repository>
 			<id>org.jboss.releaseRepository</id>
 			<name>JBoss Releases Repository</name>
@@ -1069,6 +1183,23 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<!--
+			The following two repositories are needed for the JAXB2 Maven2
+			Pluging: https://maven-jaxb2-plugin.dev.java.net/docs/guide.html
+		-->
+		<repository>
+			<id>dev.java.net.maven2Repository</id>
+			<name>Java.net Maven 2 Repository</name>
+			<url>http://download.java.net/maven/2
+			</url>
+		</repository>
+		<repository>
+			<id>dev.java.net.maven1Repository</id>
+			<name>Java.net Maven 1 Repository (legacy)</name>
+			<url>http://download.java.net/maven/1
+			</url>
+			<layout>legacy</layout>
 		</repository>
 	</repositories>
 
@@ -1094,6 +1225,23 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
+		</pluginRepository>
+		<!--
+			The following two repositories are needed for the JAXB2 Maven2
+			Pluging: https://maven-jaxb2-plugin.dev.java.net/docs/guide.html
+		-->
+		<pluginRepository>
+			<id>dev.java.net.maven2Repository</id>
+			<name>Java.net Maven 2 Repository</name>
+			<url>http://download.java.net/maven/2
+			</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>dev.java.net.maven1Repository</id>
+			<name>Java.net Maven 1 Repository (legacy)</name>
+			<url>http://download.java.net/maven/1
+			</url>
+			<layout>legacy</layout>
 		</pluginRepository>
 	</pluginRepositories>
 

@@ -17,6 +17,7 @@
 		<project>com.acme.orderplacement.aspect.support</project>
 		<project>com.acme.orderplacement.jee.support</project>
 		<project>com.acme.orderplacement.jee.ear</project>
+		<project>com.acme.orderplacement.jee.integrationra</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

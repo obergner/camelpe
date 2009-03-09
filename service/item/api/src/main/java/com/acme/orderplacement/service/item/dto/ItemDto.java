@@ -11,8 +11,6 @@ import java.util.TreeSet;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
-
 /**
  * <p>
  * TODO: Insert short summary for ItemDto
@@ -23,8 +21,7 @@ import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  */
-public class ItemDto extends AbstractAuditableDomainObject<Long> implements
-		Serializable {
+public class ItemDto implements Serializable {
 
 	// ------------------------------------------------------------------------
 	// Fields

@@ -41,6 +41,14 @@
 			<type>ejb</type>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.integrationra
+			</artifactId>
+			<type>rar</type>
+			<scope>runtime</scope>
+		</dependency>
 		<!--
 			HACK: Due to some bug in m2eclipse, we have to explicitly declare a
 			dependency on this artifact in this pom, so that it gets included in
@@ -109,8 +117,8 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>src/main/application</directory>
 				<filtering>true</filtering>
+				<directory>src/main/application</directory>
 			</resource>
 		</resources>
 		<plugins>
@@ -148,6 +156,12 @@
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
 					<version>5</version>
+					<!--
+						Needed to make resource filtering work: see
+						http://www.mail-archive.com/users@maven.apache.org/msg59229.html
+					-->
+					<resourcesDir>${project.build.outputDirectory}
+					</resourcesDir>
 					<archive>
 						<index>true</index>
 						<manifest>
@@ -176,7 +190,6 @@
 							</groupId>
 							<artifactId>orderplacement.jee.wsapi
 							</artifactId>
-							<bundleDir>META-INF/lib</bundleDir>
 						</jarModule>
 						<jarModule>
 							<!--
@@ -192,12 +205,17 @@
 							</groupId>
 							<artifactId>orderplacement.jee.support
 							</artifactId>
-							<bundleDir>META-INF/lib</bundleDir>
 						</jarModule>
 						<rarModule>
 							<groupId>org.tranql
 							</groupId>
 							<artifactId>tranql-connector-postgresql-xa
+							</artifactId>
+						</rarModule>
+						<rarModule>
+							<groupId>com.acme.orderplacement.jee
+							</groupId>
+							<artifactId>orderplacement.jee.integrationra
 							</artifactId>
 						</rarModule>
 						<ejbModule>

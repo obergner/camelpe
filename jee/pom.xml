@@ -55,6 +55,7 @@
 		<module>ejb</module>
 		<module>wsapi</module>
 		<module>ws</module>
+		<module>integrationra</module>
 		<module>ear</module>
 	</modules>
 

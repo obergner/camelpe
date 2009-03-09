@@ -24,17 +24,15 @@
 			| Compile time dependencies 
 		-->
 		<dependency>
-			<groupId>com.acme.orderplacement.domain
-			</groupId>
-			<artifactId>orderplacement.domain.item
-			</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.acme.orderplacement.service
 			</groupId>
 			<artifactId>orderplacement.service.support
 			</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--

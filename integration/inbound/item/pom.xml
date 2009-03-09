@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
+	<parent>
+		<groupId>com.acme.orderplacement.integration
+		</groupId>
+		<artifactId>orderplacement.integration.inbound
+		</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme.orderplacement.integration
+	</groupId>
+	<artifactId>orderplacement.integration.inbound.item
+	</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name><![CDATA[SOA Order :: Integration Layer :: Inbound Calls :: Item Services]]></name>
+
+	<dependencies>
+		<!--
+			| Compile time dependencies 
+		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.service
+			</groupId>
+			<artifactId>orderplacement.service.item.api
+			</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.integration
+			</groupId>
+			<artifactId>orderplacement.integration.inbound.external
+			</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.integration
+			</groupId>
+			<artifactId>spring-integration-core
+			</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<!--
+			| Runtime dependencies 
+		-->
+		<dependency>
+			<groupId>org.springframework.integration
+			</groupId>
+			<artifactId>spring-integration-adapter
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.integration
+			</groupId>
+			<artifactId>spring-integration-jms</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+			| Provided dependencies 
+		-->
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Test dependencies 
+		-->
+	</dependencies>
+
+</project>

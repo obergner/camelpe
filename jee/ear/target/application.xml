@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd" version="5">
+  <description></description>
+  <display-name>orderplacement.jee.ear</display-name>
+  <module>
+    <connector>tranql-connector-postgresql-xa-1.1.rar</connector>
+  </module>
+  <module>
+    <connector>orderplacement.jee.integrationra-1.0-SNAPSHOT.rar</connector>
+  </module>
+  <module>
+    <ejb>orderplacement.jee.ejb-1.0-SNAPSHOT.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>orderplacement.jee.ws-1.0-SNAPSHOT.war</web-uri>
+      <context-root>/orderplacement.jee.ws</context-root>
+    </web>
+  </module>
+</application>
