@@ -21,26 +21,28 @@
 
 	<dependencies>
 		<!--
-			| Compile time dependencies 
-		-->
-		<dependency>
-			<groupId>org.springframework.security
-			</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<!--
-			| Runtime dependencies 
-		-->
-		<!--
 			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.shareddeps
+			</artifactId>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
 		<!-- Servlet API -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
+		<!--
+			| Runtime dependencies 
+		-->
 		<!--
 			| Test dependencies 
 		-->

@@ -20,14 +20,19 @@
 
 	<dependencies>
 		<!--
-			| Compile time dependencies 
+			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.common
 			</groupId>
 			<artifactId>orderplacement.common.support
 			</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -38,13 +43,13 @@
 			<groupId>org.springframework.security
 			</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<!--
-			| Runtime dependencies 
+			| Compile time dependencies 
 		-->
 		<!--
-			| Provided dependencies 
+			| Runtime dependencies 
 		-->
 		<!--
 			| Test dependencies 

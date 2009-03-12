@@ -19,22 +19,30 @@
 	<name><![CDATA[SOA Order :: Aspect :: Support]]></name>
 
 	<dependencies>
+		<!--
+			| Provided dependencies 
+		-->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.common
 			</groupId>
 			<artifactId>orderplacement.common.support
 			</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<!--
 			Needed for @Aspect and @Pointcut annotations. I hope, one day AspectJ
@@ -43,13 +51,16 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security
 			</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
 	</dependencies>
 </project>

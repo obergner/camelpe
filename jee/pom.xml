@@ -22,35 +22,16 @@
 		<!--
 			| Compile time dependencies 
 		-->
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.common</groupId>
-			<artifactId>orderplacement.common.support</artifactId>
-			<scope>compile</scope>
-		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<!--
 			| Test dependencies 
 		-->
 	</dependencies>
 
 	<modules>
+		<module>shareddeps</module>
 		<module>support</module>
 		<module>ejb</module>
 		<module>wsapi</module>

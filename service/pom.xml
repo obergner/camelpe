@@ -20,17 +20,12 @@
 	<!-- shared dependencies -->
 	<dependencies>
 		<!--
-			| Compile time dependencies 
+			| Provided dependencies 
 		-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.common</groupId>
-			<artifactId>orderplacement.common.support</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<!--
 			Needed for @Aspect and @Pointcut annotations. I hope, one day AspectJ
@@ -39,21 +34,29 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
-		<!--
-			| Runtime dependencies 
-		-->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<scope>runtime</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<scope>runtime</scope>
+			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.common</groupId>
+			<artifactId>orderplacement.common.support</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
+		<!--
+			| Runtime dependencies 
+		-->
 		<!--
 			| Test dependencies 
 		-->

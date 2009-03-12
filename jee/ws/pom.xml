@@ -21,6 +21,49 @@
 
 	<dependencies>
 		<!--
+			| Provided dependencies 
+		-->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.shareddeps
+			</artifactId>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JAXB API -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			JSR 181 Specification
+		-->
+		<dependency>
+			<groupId>org.apache.geronimo.specs
+				</groupId>
+			<artifactId>geronimo-ws-metadata_2.0_spec
+			</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JAX-WS API -->
+		<dependency>
+			<groupId>javax.xml.ws</groupId>
+			<artifactId>jaxws-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
 			| Compile time dependencies 
 		-->
 		<dependency>
@@ -49,38 +92,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<!--
-			| Provided dependencies 
-		-->
-		<!-- JAXB API -->
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<!--
-			JSR 181 Specification
-		-->
-		<dependency>
-			<groupId>org.apache.geronimo.specs
-				</groupId>
-			<artifactId>geronimo-ws-metadata_2.0_spec
-			</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<!-- JAX-WS API -->
-		<dependency>
-			<groupId>javax.xml.ws</groupId>
-			<artifactId>jaxws-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.service
-			</groupId>
-			<artifactId>orderplacement.service.item.api
-			</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<!--
 			| Test dependencies 
 		-->
 	</dependencies>
@@ -95,11 +106,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<packagingExcludes>WEB-INF/lib/*.jar
-					</packagingExcludes>
+					<!--
+						<packagingExcludes>WEB-INF/lib/*.jar </packagingExcludes>
+					-->
 					<archive>
 						<manifest>
-							<addClasspath>true</addClasspath>
+							<addClasspath>false</addClasspath>
 							<classpathPrefix>
 								META-INF/lib
 							</classpathPrefix>

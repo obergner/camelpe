@@ -20,13 +20,16 @@
 	<!-- shared dependencies -->
 	<dependencies>
 		<!--
-			| Compile time dependencies 
+			| Provided dependencies 
 		-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
 		<!--
 			| Runtime dependencies 
 		-->

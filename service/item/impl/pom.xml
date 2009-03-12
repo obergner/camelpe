@@ -21,15 +21,75 @@
 
 	<dependencies>
 		<!--
-			| Compile time dependencies 
+			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.aspect
+			</groupId>
+			<artifactId>orderplacement.aspect.support
+			</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.service
 			</groupId>
 			<artifactId>orderplacement.service.item.api
 			</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.service
+			</groupId>
+			<artifactId>orderplacement.service.support
+			</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security
+			</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security
+			</groupId>
+			<artifactId>spring-security-core-tiger
+			</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
 		<dependency>
 			<groupId>com.acme.orderplacement.persistence
 			</groupId>
@@ -37,18 +97,8 @@
 			</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.service
-			</groupId>
-			<artifactId>orderplacement.service.support
-			</artifactId>
-			<scope>compile</scope>
-		</dependency>
 		<!--
 			| Runtime dependencies 
-		-->
-		<!--
-			| Provided dependencies 
 		-->
 		<!--
 			| Test dependencies 

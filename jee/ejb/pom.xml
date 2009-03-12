@@ -21,28 +21,21 @@
 
 	<dependencies>
 		<!--
-			| Compile time dependencies 
-		-->
-		<dependency>
-			<groupId>com.acme.orderplacement.service
-			</groupId>
-			<artifactId>orderplacement.service.item.api
-			</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<!--
-			| Runtime dependencies 
-		-->
-		<dependency>
-			<groupId>com.acme.orderplacement.service
-			</groupId>
-			<artifactId>orderplacement.service.item.impl
-			</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<!--
 			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.shareddeps
+			</artifactId>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>ejb3-persistence</artifactId>
@@ -54,8 +47,97 @@
 			<scope>provided</scope>
 		</dependency>
 		<!--
+			| Compile time dependencies 
+		-->
+		<!--
+			| Runtime dependencies 
+		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.service
+			</groupId>
+			<artifactId>orderplacement.service.item.impl
+			</artifactId>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-lang</groupId>
+					<artifactId>commons-lang</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.acme.orderplacement.common
+					</groupId>
+					<artifactId>orderplacement.common.support
+					</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.acme.orderplacement.service
+					</groupId>
+					<artifactId>orderplacement.service.item.api
+					</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.aspectj</groupId>
+					<artifactId>aspectjrt</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.aspectj</groupId>
+					<artifactId>aspectjweaver</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--
 			| Test dependencies 
 		-->
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin
+				</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes/META-INF/lib
+							</outputDirectory>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeScope>provided</excludeScope>
+							<excludeGroupIds>junit,org.easymock
+							</excludeGroupIds>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<configuration>
+					<ejbVersion>3.0</ejbVersion>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultSpecificationEntries>true
+							</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true
+							</addDefaultImplementationEntries>
+							<classpathPrefix>META-INF/lib</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
