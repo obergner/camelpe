@@ -23,36 +23,36 @@
 			| Provided dependencies 
 		-->
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>ejb3-persistence</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
+		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.common
 			</groupId>
 			<artifactId>orderplacement.common.support
 			</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>ejb3-persistence</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security
 			</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
-		<!--
-			| Compile time dependencies 
-		-->
 		<!--
 			| Runtime dependencies 
 		-->

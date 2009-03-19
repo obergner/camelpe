@@ -6,14 +6,14 @@
     <connector>tranql-connector-postgresql-xa-1.1.rar</connector>
   </module>
   <module>
-    <ejb>orderplacement.jee.ejb-1.0-SNAPSHOT.jar</ejb>
+    <ejb>classes</ejb>
   </module>
   <module>
-    <ejb>orderplacement.jee.integrationmdb-1.0-SNAPSHOT.jar</ejb>
+    <ejb>classes</ejb>
   </module>
   <module>
     <web>
-      <web-uri>orderplacement.jee.ws-1.0-SNAPSHOT.war</web-uri>
+      <web-uri>classes</web-uri>
       <context-root>/orderplacement.jee.ws</context-root>
     </web>
   </module>

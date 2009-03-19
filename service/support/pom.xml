@@ -23,26 +23,31 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<!--
+			| Compile time dependencies 
+		-->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.aspect
 			</groupId>
 			<artifactId>orderplacement.aspect.support
 			</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<!--
-			| Compile time dependencies 
-		-->
 		<!--
 			| Runtime dependencies 
 		-->

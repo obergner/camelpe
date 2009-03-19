@@ -22,32 +22,32 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<!--
+			| Compile time dependencies 
+		-->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.common
 			</groupId>
 			<artifactId>orderplacement.common.support
 			</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.domain
+			</groupId>
+			<artifactId>orderplacement.domain.support
+			</artifactId>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security
 			</groupId>
 			<artifactId>spring-security-core-tiger
-			</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<!--
-			| Compile time dependencies 
-		-->
-		<dependency>
-			<groupId>com.acme.orderplacement.domain
-			</groupId>
-			<artifactId>orderplacement.domain.support
 			</artifactId>
 			<scope>compile</scope>
 		</dependency>

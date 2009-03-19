@@ -22,27 +22,36 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<!--
+			| Compile time dependencies 
+		-->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.common
 			</groupId>
 			<artifactId>orderplacement.common.support
 			</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<scope>provided</scope>
+			<groupId>org.springframework.security
+			</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<scope>compile</scope>
 		</dependency>
 		<!--
 			Needed for @Aspect and @Pointcut annotations. I hope, one day AspectJ
@@ -51,16 +60,18 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security
-			</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<!--
-			| Compile time dependencies 
+			| Runtime dependencies 
+		-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+			| Test dependencies 
 		-->
 	</dependencies>
 </project>

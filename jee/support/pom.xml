@@ -23,14 +23,6 @@
 		<!--
 			| Provided dependencies 
 		-->
-		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.shareddeps
-			</artifactId>
-			<type>pom</type>
-			<scope>provided</scope>
-		</dependency>
 		<!-- Servlet API -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -40,6 +32,17 @@
 		<!--
 			| Compile time dependencies 
 		-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security
+			</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->

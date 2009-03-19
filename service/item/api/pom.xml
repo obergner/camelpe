@@ -23,26 +23,26 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<!--
+			| Compile time dependencies 
+		-->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.service
 			</groupId>
 			<artifactId>orderplacement.service.support
 			</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
-		<!--
-			| Compile time dependencies 
-		-->
 		<!--
 			| Runtime dependencies 
 		-->

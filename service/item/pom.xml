@@ -20,6 +20,9 @@
 	<!-- shared dependencies -->
 	<dependencies>
 		<!--
+			| Provided dependencies 
+		-->
+		<!--
 			| Compile time dependencies 
 		-->
 		<!--

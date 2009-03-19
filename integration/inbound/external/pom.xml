@@ -27,12 +27,6 @@ This module is a temporary solution in the future to be replaced by a proper ser
 
 	<dependencies>
 		<!--
-			| Compile time dependencies 
-		-->
-		<!--
-			| Runtime dependencies 
-		-->
-		<!--
 			| Provided dependencies 
 		-->
 		<dependency>
@@ -40,10 +34,16 @@ This module is a temporary solution in the future to be replaced by a proper ser
 			<artifactId>jaxb-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
+		<!--
+			| Runtime dependencies 
+		-->
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<scope>provided</scope>
+			<scope>runtime</scope>
 		</dependency>
 		<!--
 			| Test dependencies 
