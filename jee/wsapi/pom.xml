@@ -21,6 +21,21 @@
 
 	<dependencies>
 		<!--
+			| Provided dependencies 
+		-->
+		<!-- JAXB API -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JAX-WS API -->
+		<dependency>
+			<groupId>javax.xml.ws</groupId>
+			<artifactId>jaxws-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
 			| Compile time dependencies 
 		-->
 		<!--
@@ -37,21 +52,6 @@
 		<!--
 			| Runtime dependencies 
 		-->
-		<!--
-			| Provided dependencies 
-		-->
-		<!-- JAXB API -->
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<!-- JAX-WS API -->
-		<dependency>
-			<groupId>javax.xml.ws</groupId>
-			<artifactId>jaxws-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<!--
 			| Test dependencies 
 		-->

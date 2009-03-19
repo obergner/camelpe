@@ -23,30 +23,12 @@
 		<!--
 			| Provided dependencies 
 		-->
-		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.shareddeps
-			</artifactId>
-			<type>pom</type>
-			<scope>provided</scope>
-		</dependency>
 		<!--
 			TODO: For some unknown reason, maven will exclude spring-beans and
 			spring-context from the classpath if we exclude spring-aop from the
 			spring-integration-core dependency below. Find out why and find a
 			better solution.
 		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>javax.ejb</groupId>
 			<artifactId>ejb-api</artifactId>
@@ -60,6 +42,21 @@
 		<!--
 			| Compile time dependencies 
 		-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.integration
 			</groupId>

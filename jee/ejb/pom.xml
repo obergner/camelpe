@@ -24,14 +24,6 @@
 			| Provided dependencies 
 		-->
 		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.shareddeps
-			</artifactId>
-			<type>pom</type>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>javax.ejb</groupId>
 			<artifactId>ejb-api</artifactId>
 			<scope>provided</scope>
@@ -49,6 +41,18 @@
 		<!--
 			| Compile time dependencies 
 		-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.service
+			</groupId>
+			<artifactId>orderplacement.service.item.api
+			</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->

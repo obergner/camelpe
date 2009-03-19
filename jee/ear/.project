@@ -5,7 +5,6 @@
 	<projects>
 		<project>com.acme.orderplacement.jee.ejb</project>
 		<project>com.acme.orderplacement.jee.ws</project>
-		<project>com.acme.orderplacement.jee.ear</project>
 		<project>com.acme.orderplacement.jee.support</project>
 		<project>com.acme.orderplacement.service.item.api</project>
 		<project>com.acme.orderplacement.service.support</project>

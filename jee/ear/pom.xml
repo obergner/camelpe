@@ -47,14 +47,6 @@
 			| Runtime dependencies 
 		-->
 		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.shareddeps
-			</artifactId>
-			<type>pom</type>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.tranql</groupId>
 			<artifactId>tranql-connector-postgresql-xa
 			</artifactId>
