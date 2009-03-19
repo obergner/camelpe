@@ -51,25 +51,38 @@
 			<scope>provided</scope>
 		</dependency>
 		<!--
-			| Compile time dependencies 
+			The following dependencies have - somewhat artificially - declared as
+			'provided' dependencies in order to force the maven-war-plugin to
+			exclude them from WEB-INF/lib since they will be provided by the
+			enclosing ear's lib directory.
 		-->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.service
 			</groupId>
 			<artifactId>orderplacement.service.item.api
 			</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.support
+			</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
 		<dependency>
 			<groupId>com.acme.orderplacement.jee
 			</groupId>
@@ -88,13 +101,6 @@
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.support
-			</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<!--
 			| Test dependencies 
 		-->

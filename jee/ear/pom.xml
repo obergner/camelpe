@@ -60,14 +60,11 @@
 			</artifactId>
 			<type>ejb</type>
 			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>com.acme.orderplacement.service
-					</groupId>
-					<artifactId>orderplacement.service.item.impl
-					</artifactId>
-				</exclusion>
-			</exclusions>
+			<!--
+				<exclusions> <exclusion> <groupId>com.acme.orderplacement.service
+				</groupId> <artifactId>orderplacement.service.item.impl
+				</artifactId> </exclusion> </exclusions>
+			-->
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee
