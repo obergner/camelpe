@@ -29,6 +29,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.acme.orderplacement.common
+			</groupId>
+			<artifactId>orderplacement.common.support
+			</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.acme.orderplacement.aspect
 			</groupId>
 			<artifactId>orderplacement.aspect.support

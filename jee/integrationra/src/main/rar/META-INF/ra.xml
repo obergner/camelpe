@@ -11,7 +11,7 @@
 		<config-property>
 			<config-property-name>ContextConfigLocation</config-property-name>
 			<config-property-type>java.lang.String</config-property-type>
-			<config-property-value>integration.inbound.integrationLayer.scontext</config-property-value>
+			<config-property-value>META-INF/spring/integration.inbound.integrationLayer.scontext</config-property-value>
 		</config-property>
 	</resourceadapter>
 </connector>

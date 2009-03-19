@@ -6,10 +6,10 @@
     <connector>tranql-connector-postgresql-xa-1.1.rar</connector>
   </module>
   <module>
-    <connector>orderplacement.jee.integrationra-1.0-SNAPSHOT.rar</connector>
+    <ejb>orderplacement.jee.ejb-1.0-SNAPSHOT.jar</ejb>
   </module>
   <module>
-    <ejb>orderplacement.jee.ejb-1.0-SNAPSHOT.jar</ejb>
+    <ejb>orderplacement.jee.integrationmdb-1.0-SNAPSHOT.jar</ejb>
   </module>
   <module>
     <web>
@@ -17,4 +17,5 @@
       <context-root>/orderplacement.jee.ws</context-root>
     </web>
   </module>
+  <library-directory>lib</library-directory>
 </application>

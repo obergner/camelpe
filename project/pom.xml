@@ -350,6 +350,14 @@
 			<dependency>
 				<groupId>com.acme.orderplacement.jee
 				</groupId>
+				<artifactId>orderplacement.jee.integrationmdb
+				</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee
+				</groupId>
 				<artifactId>orderplacement.jee.wsapi
 				</artifactId>
 				<version>${project.version}</version>
@@ -397,6 +405,13 @@
 			<dependency>
 				<groupId>javax.transaction</groupId>
 				<artifactId>jta</artifactId>
+				<version>1.1</version>
+				<type>jar</type>
+			</dependency>
+			<!-- Javax JMS API -->
+			<dependency>
+				<groupId>javax.jms</groupId>
+				<artifactId>jms</artifactId>
 				<version>1.1</version>
 				<type>jar</type>
 			</dependency>
@@ -695,6 +710,19 @@
 				<artifactId>hibernate-annotations</artifactId>
 				<version>3.4.0.GA</version>
 				<type>jar</type>
+				<exclusions>
+					<!--
+						We want slf4j in 'provided' scope since it is one of the libraries
+						that are shared between different JEE modules in our final war. If
+						we wouldn't exclude it here, it would end up in scope 'runtime'
+						and thus would be automatically included in every JEE module we
+						build, not only in the final ear.
+					-->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -702,6 +730,19 @@
 				</artifactId>
 				<version>3.4.0.GA</version>
 				<type>jar</type>
+				<exclusions>
+					<!--
+						We want slf4j in 'provided' scope since it is one of the libraries
+						that are shared between different JEE modules in our final war. If
+						we wouldn't exclude it here, it would end up in scope 'runtime'
+						and thus would be automatically included in every JEE module we
+						build, not only in the final ear.
+					-->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -709,6 +750,19 @@
                 </artifactId>
 				<version>3.1.0.GA</version>
 				<type>jar</type>
+				<exclusions>
+					<!--
+						We want slf4j in 'provided' scope since it is one of the libraries
+						that are shared between different JEE modules in our final war. If
+						we wouldn't exclude it here, it would end up in scope 'runtime'
+						and thus would be automatically included in every JEE module we
+						build, not only in the final ear.
+					-->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -716,6 +770,27 @@
                 </artifactId>
 				<version>3.3.1.GA</version>
 				<type>jar</type>
+				<exclusions>
+					<!--
+						We want these dependencies in 'provided' scope since they count
+						among those libraries that are shared between different JEE
+						modules in our final war. If we wouldn't exclude them here, they
+						would end up in scope 'runtime' and thus would be automatically
+						included in every JEE module we build, not only in the final ear.
+					-->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-collections</groupId>
+						<artifactId>commons-collections</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.transaction</groupId>
+						<artifactId>jta</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<!-- SLF4J -->
 			<dependency>

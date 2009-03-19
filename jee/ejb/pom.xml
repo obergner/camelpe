@@ -58,36 +58,6 @@
 			<artifactId>orderplacement.service.item.impl
 			</artifactId>
 			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-lang</groupId>
-					<artifactId>commons-lang</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.acme.orderplacement.common
-					</groupId>
-					<artifactId>orderplacement.common.support
-					</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.acme.orderplacement.service
-					</groupId>
-					<artifactId>orderplacement.service.item.api
-					</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.aspectj</groupId>
-					<artifactId>aspectjrt</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.aspectj</groupId>
-					<artifactId>aspectjweaver</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!--
 			| Test dependencies 
@@ -127,12 +97,12 @@
 					<archive>
 						<index>true</index>
 						<manifest>
-							<addClasspath>true</addClasspath>
+							<addClasspath>false</addClasspath>
 							<addDefaultSpecificationEntries>true
 							</addDefaultSpecificationEntries>
 							<addDefaultImplementationEntries>true
 							</addDefaultImplementationEntries>
-							<classpathPrefix>META-INF/lib</classpathPrefix>
+							<classpathPrefix>/META-INF/lib</classpathPrefix>
 						</manifest>
 					</archive>
 				</configuration>

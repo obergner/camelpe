@@ -13,6 +13,10 @@
 	<resourceadapter>
 		<resourceadapter-instance>
 			<resourceadapter-name>SpringContextResourceAdapter</resourceadapter-name>
+			<!--
+				<config-property-setting
+				name="ContextConfigLocation">META-INF/spring/integration.inbound.integrationLayer.scontext</config-property-setting>
+			-->
 			<workmanager xmlns="http://geronimo.apache.org/xml/ns/naming-1.2">
 				<gbean-link>DefaultWorkManager</gbean-link>
 			</workmanager>

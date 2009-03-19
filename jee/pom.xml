@@ -36,7 +36,7 @@
 		<module>ejb</module>
 		<module>wsapi</module>
 		<module>ws</module>
-		<module>integrationra</module>
+		<module>integrationmdb</module>
 		<module>ear</module>
 	</modules>
 

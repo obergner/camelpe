@@ -11,10 +11,11 @@
 			<sys:type>${geronimo.moduleId.type}</sys:type>
 		</sys:moduleId>
 		<sys:hidden-classes>
+			<sys:filter>org.apache.log4j</sys:filter>
 			<sys:filter>org.springframework</sys:filter>
-			<sys:filter>org.hibernate</sys:filter>
 			<sys:filter>org.aspectj</sys:filter>
 			<sys:filter>org.aopalliance</sys:filter>
+			<sys:filter>org.hibernate</sys:filter>
 			<sys:filter>antlr</sys:filter>
 			<sys:filter>javassist</sys:filter>
 		</sys:hidden-classes>
@@ -22,26 +23,68 @@
 
 	<module>
 		<connector>tranql-connector-postgresql-xa-1.1.rar</connector>
-		<alt-dd>META-INF/geronimo-postgresql-ds.xml</alt-dd>
+		<connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+			<sys:environment>
+				<sys:moduleId>
+					<sys:groupId>com.acme.orderplacement.dbpool</sys:groupId>
+					<sys:artifactId>OrderPlacementDS</sys:artifactId>
+					<sys:version>${project.version}</sys:version>
+					<sys:type>rar</sys:type>
+				</sys:moduleId>
+				<sys:dependencies>
+					<sys:dependency>
+						<sys:groupId>org.postgresql</sys:groupId>
+						<sys:artifactId>jdbc3</sys:artifactId>
+						<sys:version>8.3.604</sys:version>
+						<sys:type>jar</sys:type>
+					</sys:dependency>
+				</sys:dependencies>
+			</sys:environment>
+			<resourceadapter>
+				<outbound-resourceadapter>
+					<connection-definition>
+						<connectionfactory-interface>javax.sql.DataSource</connectionfactory-interface>
+						<connectiondefinition-instance>
+							<name>jdbc/com/acme/OrderPlacementDS</name>
+							<config-property-setting name="Password">postgres</config-property-setting>
+							<config-property-setting name="DatabaseName">orderplacement</config-property-setting>
+							<config-property-setting name="PrepareThreshold">1</config-property-setting>
+							<config-property-setting name="UserName">postgres</config-property-setting>
+							<connectionmanager>
+								<xa-transaction>
+									<transaction-caching />
+								</xa-transaction>
+								<single-pool>
+									<max-size>10</max-size>
+									<min-size>0</min-size>
+									<blocking-timeout-milliseconds>5000</blocking-timeout-milliseconds>
+									<idle-timeout-minutes>15</idle-timeout-minutes>
+									<match-one />
+								</single-pool>
+							</connectionmanager>
+						</connectiondefinition-instance>
+					</connection-definition>
+				</outbound-resourceadapter>
+			</resourceadapter>
+		</connector>
 	</module>
 
-	<module>
+	<!--
+		<module>
 		<connector>orderplacement.jee.integrationra-1.0-SNAPSHOT.rar</connector>
-		<alt-dd>META-INF/geronimo-integrationra.xml</alt-dd>
-	</module>
+		<alt-dd>META-INF/geronimo-integrationra.xml</alt-dd> </module>
+	-->
 
 	<module>
-		<ejb>orderplacement.jee.ejb-1.0-SNAPSHOT.jar</ejb>
+		<ejb>orderplacement.jee.ejb-${project.version}.jar</ejb>
 		<openejb-jar xmlns="http://openejb.apache.org/xml/ns/openejb-jar-2.2"
 			xmlns:naming="http://geronimo.apache.org/xml/ns/naming-1.2">
 
 			<sys:environment>
 				<sys:moduleId>
-					<sys:groupId>com.acme.orderplacement.jee
-					</sys:groupId>
-					<sys:artifactId>orderplacement.jee.ejb
-					</sys:artifactId>
-					<sys:version>1.0-SNAPSHOT</sys:version>
+					<sys:groupId>com.acme.orderplacement.jee</sys:groupId>
+					<sys:artifactId>orderplacement.jee.ejb</sys:artifactId>
+					<sys:version>${project.version}</sys:version>
 					<sys:type>jar</sys:type>
 				</sys:moduleId>
 			</sys:environment>
@@ -49,13 +92,47 @@
 			<enterprise-beans>
 				<session>
 					<ejb-name>ItemStorageServiceEJB</ejb-name>
+					<jndi name="ejb:/com/acme/orderplacement/ejb/ItemStorageServiceLocal"
+						interface="Local" />
 					<naming:resource-ref>
-						<naming:ref-name>jdbc/OrderPlacementDS
-						</naming:ref-name>
-						<naming:resource-link>jdbc/com/acme/OrderPlacementDS
-						</naming:resource-link>
+						<naming:ref-name>jdbc/OrderPlacementDS</naming:ref-name>
+						<naming:resource-link>jdbc/com/acme/OrderPlacementDS</naming:resource-link>
 					</naming:resource-ref>
 				</session>
+			</enterprise-beans>
+		</openejb-jar>
+	</module>
+
+	<module>
+		<ejb>orderplacement.jee.integrationmdb-${project.version}.jar</ejb>
+		<openejb-jar xmlns="http://openejb.apache.org/xml/ns/openejb-jar-2.2"
+			xmlns:naming="http://geronimo.apache.org/xml/ns/naming-1.2">
+
+			<sys:environment>
+				<sys:moduleId>
+					<sys:groupId>com.acme.orderplacement.jee</sys:groupId>
+					<sys:artifactId>orderplacement.jee.integrationmdb</sys:artifactId>
+					<sys:version>${project.version}</sys:version>
+					<sys:type>jar</sys:type>
+				</sys:moduleId>
+				<sys:dependencies>
+					<sys:dependency>
+						<sys:groupId>org.apache.geronimo.configs</sys:groupId>
+						<sys:artifactId>activemq-ra</sys:artifactId>
+						<sys:version>2.1.3</sys:version>
+						<sys:type>car</sys:type>
+					</sys:dependency>
+				</sys:dependencies>
+			</sys:environment>
+
+			<enterprise-beans>
+				<message-driven>
+					<ejb-name>ItemCreatedEventChannelAdapterMDB
+					</ejb-name>
+					<naming:resource-adapter>
+						<naming:resource-link>ActiveMQ RA</naming:resource-link>
+					</naming:resource-adapter>
+				</message-driven>
 			</enterprise-beans>
 		</openejb-jar>
 	</module>
@@ -65,11 +142,9 @@
 		<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
 			<sys:environment>
 				<sys:moduleId>
-					<sys:groupId>com.acme.orderplacement.jee
-					</sys:groupId>
-					<sys:artifactId>orderplacement.jee.ejb
-					</sys:artifactId>
-					<sys:version>1.0-SNAPSHOT</sys:version>
+					<sys:groupId>com.acme.orderplacement.jee</sys:groupId>
+					<sys:artifactId>orderplacement.jee.ws</sys:artifactId>
+					<sys:version>${project.version}</sys:version>
 					<sys:type>war</sys:type>
 				</sys:moduleId>
 			</sys:environment>
@@ -78,13 +153,21 @@
 	</module>
 
 	<ext-module>
-		<connector>com/acme/jms/StateChangeEventsRA</connector>
+		<connector>com/acme/jms/OrderplacementJMSResources</connector>
 		<external-path>
 			<sys:groupId>org.apache.geronimo.modules</sys:groupId>
 			<sys:artifactId>geronimo-activemq-ra</sys:artifactId>
 			<sys:version>2.1.3</sys:version>
 		</external-path>
 		<connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+			<sys:environment>
+				<sys:moduleId>
+					<sys:groupId>com.acme.orderplacement.jee</sys:groupId>
+					<sys:artifactId>jmsResources</sys:artifactId>
+					<sys:version>${project.version}</sys:version>
+					<sys:type>rar</sys:type>
+				</sys:moduleId>
+			</sys:environment>
 			<resourceadapter>
 				<!--how to connect to the JMS Server-->
 				<resourceadapter-instance>
@@ -102,8 +185,9 @@
 					<connection-definition>
 						<connectionfactory-interface>javax.jms.ConnectionFactory</connectionfactory-interface>
 						<connectiondefinition-instance>
-							<name>com/acme/jms/TopicConnectionFactory</name>
+							<name>com/acme/jms/ConnectionFactory</name>
 							<implemented-interface>javax.jms.TopicConnectionFactory</implemented-interface>
+							<implemented-interface>javax.jms.QueueConnectionFactory</implemented-interface>
 							<connectionmanager>
 								<xa-transaction>
 									<transaction-caching />
@@ -125,8 +209,8 @@
 				<adminobject-interface>javax.jms.Topic</adminobject-interface>
 				<adminobject-class>org.activemq.message.ActiveMQTopic</adminobject-class>
 				<adminobject-instance>
-					<message-destination-name>com/acme/jms/StateChangeEventsTopic</message-destination-name>
-					<config-property-setting name="PhysicalName">com/acme/jms/StateChangeEventsTopic</config-property-setting>
+					<message-destination-name>com/acme/jms/ItemCreatedEventsTopic</message-destination-name>
+					<config-property-setting name="PhysicalName">com/acme/jms/ItemCreatedEventsTopic</config-property-setting>
 				</adminobject-instance>
 			</adminobject>
 		</connector>

@@ -6,9 +6,9 @@ import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
 import com.acme.orderplacement.common.support.role.ApplicationUserRole;
-import com.acme.orderplacement.jee.ejb.internal.spring.CustomSpringBeanAutowiringInterceptor;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;
@@ -25,9 +25,9 @@ import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyReg
 @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
 		ApplicationUserRole.ROLE_EMPLOYEE, ApplicationUserRole.ROLE_ACCOUNTANT,
 		ApplicationUserRole.ROLE_ADMIN })
-@Stateless(name = ItemStorageServiceEjb.BEAN_NAME, mappedName = "com/acme/orderplacement/ejb/ItemStorageService")
+@Stateless(name = ItemStorageServiceEjb.BEAN_NAME)
 @Local( { ItemStorageService.class })
-@Interceptors( { CustomSpringBeanAutowiringInterceptor.class })
+@Interceptors( { SpringBeanAutowiringInterceptor.class })
 public class ItemStorageServiceEjb implements ItemStorageService {
 
 	// -------------------------------------------------------------------------

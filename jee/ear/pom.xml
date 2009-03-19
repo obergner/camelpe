@@ -21,6 +21,26 @@
 
 	<dependencies>
 		<!--
+			Provided dependencies: Note that these dependencies' default scope of
+			'provided' is overridden in favor of the 'compile' scope if we do not
+			explicitly reset it to 'provided' here.
+		-->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>ejb3-persistence</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
 			| Compile time dependencies 
 		-->
 		<!--
@@ -60,9 +80,9 @@
 		<dependency>
 			<groupId>com.acme.orderplacement.jee
 			</groupId>
-			<artifactId>orderplacement.jee.integrationra
+			<artifactId>orderplacement.jee.integrationmdb
 			</artifactId>
-			<type>rar</type>
+			<type>ejb</type>
 			<scope>runtime</scope>
 		</dependency>
 		<!--
@@ -84,26 +104,6 @@
 			</artifactId>
 			<type>war</type>
 			<scope>runtime</scope>
-		</dependency>
-		<!--
-			Provided dependencies: Note that these dependencies' default scope of
-			'provided' is overridden in favor of the 'compile' scope if we do not
-			explicitly reset it to 'provided' here.
-		-->
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>ejb3-persistence</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<!--
 			| Test dependencies 
@@ -148,16 +148,21 @@
 							<artifactId>tranql-connector-postgresql-xa
 							</artifactId>
 						</rarModule>
-						<rarModule>
-							<groupId>com.acme.orderplacement.jee
-							</groupId>
-							<artifactId>orderplacement.jee.integrationra
-							</artifactId>
-						</rarModule>
+						<!--
+							<rarModule> <groupId>com.acme.orderplacement.jee </groupId>
+							<artifactId>orderplacement.jee.integrationra </artifactId>
+							</rarModule>
+						-->
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee
 							</groupId>
 							<artifactId>orderplacement.jee.ejb
+							</artifactId>
+						</ejbModule>
+						<ejbModule>
+							<groupId>com.acme.orderplacement.jee
+							</groupId>
+							<artifactId>orderplacement.jee.integrationmdb
 							</artifactId>
 						</ejbModule>
 						<!--

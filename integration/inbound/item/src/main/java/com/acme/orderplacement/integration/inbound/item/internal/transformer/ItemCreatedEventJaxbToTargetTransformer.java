@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.Transformer;
 
+import com.acme.orderplacement.integration.inbound.item.Channels;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
@@ -50,7 +51,7 @@ public class ItemCreatedEventJaxbToTargetTransformer {
 	 * @param itemCreatedEventAsJaxbObject
 	 * @return
 	 */
-	@Transformer(inputChannel = "integration.inbound.item.jaxb.ItemCreatedEventsChannel", outputChannel = "integration.inbound.item.target.ItemCreatedEventsChannel")
+	@Transformer(inputChannel = Channels.ITEM_CREATED_EVENTS_JAXB, outputChannel = Channels.ITEM_CREATED_EVENTS_TARGET)
 	public ItemDto transformFromJaxb(
 			final ItemCreatedEvent itemCreatedEventAsJaxbObject) {
 		this.log

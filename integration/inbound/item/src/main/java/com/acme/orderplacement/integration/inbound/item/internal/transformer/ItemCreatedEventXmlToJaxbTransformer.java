@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.Transformer;
 
+import com.acme.orderplacement.integration.inbound.item.Channels;
 import com.external.schema.ns.events.itemcreated._1.ItemCreatedEvent;
 
 /**
@@ -48,7 +49,7 @@ public class ItemCreatedEventXmlToJaxbTransformer {
 	 * @return
 	 * @throws JAXBException
 	 */
-	@Transformer(inputChannel = "integration.inbound.item.xml.ItemCreatedEventsChannel", outputChannel = "integration.inbound.item.jaxb.ItemCreatedEventsChannel")
+	@Transformer(inputChannel = Channels.ITEM_CREATED_EVENTS_XML, outputChannel = Channels.ITEM_CREATED_EVENTS_JAXB)
 	public ItemCreatedEvent transformFromXml(final String itemCreatedEventAsXml)
 			throws JAXBException {
 		getLog().debug(
