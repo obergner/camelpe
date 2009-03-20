@@ -47,6 +47,16 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.acme.orderplacement.service
 			</groupId>
 			<artifactId>orderplacement.service.item.api
@@ -56,6 +66,11 @@
 		<!--
 			| Runtime dependencies 
 		-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.service
 			</groupId>
@@ -72,29 +87,6 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin
-				</artifactId>
-				<executions>
-					<execution>
-						<id>copy</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/classes/META-INF/lib
-							</outputDirectory>
-							<overWriteSnapshots>true</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-							<excludeScope>provided</excludeScope>
-							<excludeGroupIds>junit,org.easymock
-							</excludeGroupIds>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ejb-plugin</artifactId>
 				<configuration>
 					<ejbVersion>3.0</ejbVersion>
@@ -106,7 +98,6 @@
 							</addDefaultSpecificationEntries>
 							<addDefaultImplementationEntries>true
 							</addDefaultImplementationEntries>
-							<classpathPrefix>/META-INF/lib</classpathPrefix>
 						</manifest>
 					</archive>
 				</configuration>

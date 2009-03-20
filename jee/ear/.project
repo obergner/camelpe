@@ -8,17 +8,16 @@
 		<project>com.acme.orderplacement.jee.support</project>
 		<project>com.acme.orderplacement.service.item.api</project>
 		<project>com.acme.orderplacement.service.support</project>
-		<project>com.acme.orderplacement.aspect.support</project>
 		<project>com.acme.orderplacement.common.support</project>
 		<project>com.acme.orderplacement.jee.integrationmdb</project>
 		<project>com.acme.orderplacement.integration.inbound.external</project>
 		<project>com.acme.orderplacement.integration.inbound.item</project>
 		<project>com.acme.orderplacement.service.item.impl</project>
-		<project>com.acme.orderplacement.jee.ear</project>
 		<project>com.acme.orderplacement.domain.support</project>
-		<project>com.acme.orderplacement.persistence.support</project>
 		<project>com.acme.orderplacement.persistence.item</project>
 		<project>com.acme.orderplacement.domain.item</project>
+		<project>com.acme.orderplacement.aspect.support</project>
+		<project>com.acme.orderplacement.persistence.support</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

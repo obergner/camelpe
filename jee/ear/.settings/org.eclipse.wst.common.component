@@ -73,9 +73,6 @@
         <dependent-module deploy-path="lib/" handle="module:/classpath/var/M2_REPO/org/springframework/spring-context-support/2.5.6/spring-context-support-2.5.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="lib/orderplacement.aspect.support-1.0-SNAPSHOT.jar" deploy-path="lib/" handle="module:/resource/com.acme.orderplacement.aspect.support/com.acme.orderplacement.aspect.support">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="lib/orderplacement.common.support-1.0-SNAPSHOT.jar" deploy-path="lib/" handle="module:/resource/com.acme.orderplacement.common.support/com.acme.orderplacement.common.support">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -146,9 +143,6 @@
         <dependent-module deploy-path="lib/" handle="module:/classpath/var/M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="lib/orderplacement.persistence.support-1.0-SNAPSHOT.jar" deploy-path="lib/" handle="module:/resource/com.acme.orderplacement.persistence.support/com.acme.orderplacement.persistence.support">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module deploy-path="lib/" handle="module:/classpath/var/M2_REPO/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -168,6 +162,12 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module deploy-path="lib/" handle="module:/classpath/var/M2_REPO/javassist/javassist/3.4.GA/javassist-3.4.GA.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="lib/orderplacement.aspect.support-1.0-SNAPSHOT.jar" deploy-path="lib/" handle="module:/resource/com.acme.orderplacement.aspect.support/com.acme.orderplacement.aspect.support">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="lib/orderplacement.persistence.support-1.0-SNAPSHOT.jar" deploy-path="lib/" handle="module:/resource/com.acme.orderplacement.persistence.support/com.acme.orderplacement.persistence.support">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

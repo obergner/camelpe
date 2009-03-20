@@ -60,11 +60,6 @@
 			</artifactId>
 			<type>ejb</type>
 			<scope>runtime</scope>
-			<!--
-				<exclusions> <exclusion> <groupId>com.acme.orderplacement.service
-				</groupId> <artifactId>orderplacement.service.item.impl
-				</artifactId> </exclusion> </exclusions>
-			-->
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee
@@ -116,8 +111,8 @@
 						Needed to make resource filtering work: see
 						http://www.mail-archive.com/users@maven.apache.org/msg59229.html
 					-->
-					<resourcesDir>${project.build.outputDirectory}
-					</resourcesDir>
+					<earSourceDirectory>${project.build.outputDirectory}
+					</earSourceDirectory>
 					<archive>
 						<index>true</index>
 						<manifest>
@@ -126,7 +121,6 @@
 							</addDefaultSpecificationEntries>
 							<addDefaultImplementationEntries>true
 							</addDefaultImplementationEntries>
-							<classpathPrefix>lib</classpathPrefix>
 						</manifest>
 					</archive>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
@@ -175,7 +169,6 @@
 				<artifactId>geronimo-maven-plugin</artifactId>
 				<configuration>
 					<geronimoHome>${geronimo.home}</geronimoHome>
-					s
 					<logOutput>true</logOutput>
 					<moduleArchive>
 						${project.build.directory}/${project.build.finalName}.${project.packaging}

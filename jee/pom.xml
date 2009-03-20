@@ -34,7 +34,6 @@
 	</dependencies>
 
 	<modules>
-		<module>shareddeps</module>
 		<module>support</module>
 		<module>ejb</module>
 		<module>wsapi</module>
