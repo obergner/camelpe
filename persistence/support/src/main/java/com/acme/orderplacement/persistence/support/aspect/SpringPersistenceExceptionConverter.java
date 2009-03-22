@@ -52,7 +52,7 @@ public class SpringPersistenceExceptionConverter {
 	// Fields
 	// ------------------------------------------------------------------------
 
-	public static final String ASPECT_NAME = "persistence.support.aspect.DataAccessExceptionConverter";
+	public static final String ASPECT_NAME = "persistence.support.aspect.SpringPersistenceExceptionConverter";
 
 	/**
 	 * Our faithful logger.

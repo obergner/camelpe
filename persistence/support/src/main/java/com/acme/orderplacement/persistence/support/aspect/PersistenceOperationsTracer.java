@@ -8,6 +8,7 @@ import java.lang.annotation.Annotation;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
 import com.acme.orderplacement.aspect.support.log.AbstractMethodTracer;
@@ -25,6 +26,7 @@ import com.acme.orderplacement.aspect.support.log.AbstractMethodTracer;
 @Component(PersistenceOperationsTracer.ASPECT_NAME)
 @Order(10)
 @Aspect
+@ManagedResource(objectName = "com.acme.orderplacement:layer=PersistenceLayer,name=PersistenceOperationsTracer", description = "An aspect for tracing the execution of operations within the persistence layer")
 public class PersistenceOperationsTracer extends AbstractMethodTracer {
 
 	// -------------------------------------------------------------------------

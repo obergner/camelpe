@@ -8,15 +8,17 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/test/resources/META-INF/spring/service.item.test.platformLayer.scontext</config>
+		<config>src/main/resources/META-INF/spring/mdb.beanRefContext.xml</config>
+		<config>src/main/resources/META-INF/spring/mdb.integrationContext.scontext</config>
 	</configs>
 	<configSets>
 		<configSet>
-			<name><![CDATA[service.item.test.completeTestContext]]></name>
+			<name><![CDATA[jee.integrationmdb.completeApplicationContext]]></name>
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
-			<incomplete>true</incomplete>
+			<incomplete>false</incomplete>
 			<configs>
-				<config>src/test/resources/META-INF/spring/service.item.test.platformLayer.scontext</config>
+				<config>src/main/resources/META-INF/spring/mdb.beanRefContext.xml</config>
+				<config>src/main/resources/META-INF/spring/mdb.integrationContext.scontext</config>
 			</configs>
 		</configSet>
 	</configSets>

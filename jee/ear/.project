@@ -18,6 +18,7 @@
 		<project>com.acme.orderplacement.domain.item</project>
 		<project>com.acme.orderplacement.aspect.support</project>
 		<project>com.acme.orderplacement.persistence.support</project>
+		<project>com.acme.orderplacement.jee.ear</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

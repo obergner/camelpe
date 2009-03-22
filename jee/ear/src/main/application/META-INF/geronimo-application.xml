@@ -13,6 +13,7 @@
 		<sys:hidden-classes>
 			<sys:filter>org.slf4j</sys:filter>
 			<sys:filter>org.apache.log4j</sys:filter>
+			<sys:filter>org.apache.commons.logging</sys:filter>
 			<sys:filter>org.springframework</sys:filter>
 			<sys:filter>org.aspectj</sys:filter>
 			<sys:filter>org.aopalliance</sys:filter>

@@ -6,6 +6,7 @@ package com.acme.orderplacement.service.support.aspect;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
 import com.acme.orderplacement.aspect.support.log.AbstractMethodTracer;
@@ -24,6 +25,7 @@ import com.acme.orderplacement.aspect.support.log.AbstractMethodTracer;
 @Component(ServiceOperationsTracer.ASPECT_NAME)
 @Order(10)
 @Aspect
+@ManagedResource(objectName = "com.acme.orderplacement:layer=ServiceLayer,name=ServiceOperationsTracer", description = "An aspect for tracing the execution of operations within the service layer")
 public class ServiceOperationsTracer extends AbstractMethodTracer {
 
 	// -------------------------------------------------------------------------

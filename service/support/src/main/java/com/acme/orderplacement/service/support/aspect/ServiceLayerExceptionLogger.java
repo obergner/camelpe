@@ -8,6 +8,7 @@ import java.lang.annotation.Annotation;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
 import com.acme.orderplacement.aspect.support.log.AbstractExceptionLogger;
@@ -26,6 +27,7 @@ import com.acme.orderplacement.aspect.support.log.AbstractExceptionLogger;
 @Component(ServiceLayerExceptionLogger.ASPECT_NAME)
 @Order(30)
 @Aspect
+@ManagedResource(objectName = "com.acme.orderplacement:layer=ServiceLayer,name=ServiceLayerExceptionLogger", description = "An aspect for logging exceptions thrown from the service layer")
 public class ServiceLayerExceptionLogger extends AbstractExceptionLogger {
 
 	// -------------------------------------------------------------------------

@@ -3,16 +3,19 @@
  */
 package com.acme.orderplacement.aspect.support.log;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.apache.commons.logging.Log;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedOperation;
 
 import com.acme.orderplacement.common.support.exception.ExceptionFormatter;
 
@@ -31,14 +34,20 @@ public abstract class AbstractExceptionLogger {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * The {@link Log} used to trace method executions.
+	 * The {@link Logger} used to trace method executions.
 	 */
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * Is this logger enabled or not?
 	 */
-	private boolean isEnabled = false;
+	private volatile boolean isEnabled = false;
+
+	/**
+	 * How many exceptions has this component logged since (a) creation time or
+	 * (b) the last time this counter has been reset?
+	 */
+	private final AtomicInteger exceptionCount = new AtomicInteger();
 
 	// ------------------------------------------------------------------------
 	// Enabling/Disabling this aspect
@@ -48,6 +57,7 @@ public abstract class AbstractExceptionLogger {
 	 * Start tracing method executions.
 	 */
 	@PostConstruct
+	@ManagedOperation(description = "Enable logging exceptions")
 	public void enable() {
 		this.log.info("Logging exceptions has been enabled");
 		this.isEnabled = true;
@@ -57,6 +67,7 @@ public abstract class AbstractExceptionLogger {
 	 * Stop tracing method executions.
 	 */
 	@PreDestroy
+	@ManagedOperation(description = "Disable logging exceptions")
 	public void disable() {
 		this.log.info("Logging exceptions has been disabled");
 		this.isEnabled = true;
@@ -67,9 +78,32 @@ public abstract class AbstractExceptionLogger {
 	 * 
 	 * @return
 	 */
+	@ManagedAttribute(defaultValue = "true", description = "Is logging exceptions currently enabled?")
 	public boolean isEnabled() {
 
 		return this.isEnabled;
+	}
+
+	/**
+	 * Reset this aspect's {@link #getExceptionCount()
+	 * <code>exceptionCount</code>} property to <code>0</code>.
+	 */
+	@ManagedOperation(description = "Reset this MBean's 'exceptionCount' property to 0 (zero)")
+	public void resetExceptionCount() {
+
+	}
+
+	/**
+	 * How many exceptions has this component logged since (a) creation time or
+	 * (b) the last time this counter has been reset?
+	 * 
+	 * @return
+	 */
+	@ManagedAttribute(description = "The number of exceptions logged by this MBean since startup "
+			+ "or since the last time resetExceptionCount() has been called on it")
+	public int getExceptionCount() {
+
+		return this.exceptionCount.get();
 	}
 
 	// ------------------------------------------------------------------------
@@ -96,6 +130,7 @@ public abstract class AbstractExceptionLogger {
 	@AfterThrowing(pointcut = "exceptionLoggedMethods()", throwing = "ex")
 	public void logExceptions(final JoinPoint joinPoint, final Exception ex) {
 		if (this.isEnabled) {
+			this.exceptionCount.incrementAndGet();
 			this.log.error("\n\n"
 					+ ExceptionFormatter.packException(
 							"Exception thrown while executing within\n\n\t<"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[2.2.1.v200811281800]]></pluginVersion>
+	<pluginVersion><![CDATA[2.2.2.RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 		<configSuffix><![CDATA[scontext]]></configSuffix>
@@ -17,6 +17,10 @@
 			<incomplete>false</incomplete>
 			<configs>
 				<config>src/test/resources/META-INF/spring/persistence.item.test.platformLayer.scontext</config>
+				<config>/com.acme.orderplacement.persistence.support/src/main/resources/META-INF/spring/persistence.support.applicationLayer.scontext</config>
+				<config>/com.acme.orderplacement.persistence.support/src/main/resources/META-INF/spring/persistence.support.aspectLayer.scontext</config>
+				<config>/com.acme.orderplacement.persistence.support/src/main/resources/META-INF/spring/persistence.support.daoLayer.scontext</config>
+				<config>/com.acme.orderplacement.persistence.support/src/main/resources/META-INF/spring/persistence.support.securityLayer.scontext</config>
 			</configs>
 		</configSet>
 	</configSets>

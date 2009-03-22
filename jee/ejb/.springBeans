@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[2.2.2.RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+		<configSuffix><![CDATA[scontext]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+		<config>src/main/resources/META-INF/spring/ejb.applicationLayer.scontext</config>
+		<config>src/main/resources/META-INF/spring/ejb.aspectLayer.scontext</config>
+		<config>src/main/resources/META-INF/spring/ejb.beanRefContext.xml</config>
+		<config>src/main/resources/META-INF/spring/ejb.daoLayer.scontext</config>
+		<config>src/main/resources/META-INF/spring/ejb.platformLayer.scontext</config>
+		<config>src/main/resources/META-INF/spring/ejb.securityLayer.scontext</config>
+		<config>src/main/resources/META-INF/spring/ejb.serviceContext.scontext</config>
+	</configs>
+	<configSets>
+		<configSet>
+			<name><![CDATA[jee.ejb.completeApplicationContext]]></name>
+			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>src/main/resources/META-INF/spring/ejb.applicationLayer.scontext</config>
+				<config>src/main/resources/META-INF/spring/ejb.aspectLayer.scontext</config>
+				<config>src/main/resources/META-INF/spring/ejb.beanRefContext.xml</config>
+				<config>src/main/resources/META-INF/spring/ejb.daoLayer.scontext</config>
+				<config>src/main/resources/META-INF/spring/ejb.platformLayer.scontext</config>
+				<config>src/main/resources/META-INF/spring/ejb.securityLayer.scontext</config>
+				<config>src/main/resources/META-INF/spring/ejb.serviceContext.scontext</config>
+			</configs>
+		</configSet>
+	</configSets>
+</beansProjectDescription>

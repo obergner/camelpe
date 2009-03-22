@@ -6,12 +6,14 @@ package com.acme.orderplacement.aspect.support.log;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedOperation;
 
 import com.acme.orderplacement.aspect.support.log.joinpoint.JoinPointFormatter;
 
@@ -31,14 +33,14 @@ public abstract class AbstractMethodTracer {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * The {@link Log} used to trace method executions.
+	 * The {@link Logger} used to trace method executions.
 	 */
-	protected final Log log = LogFactory.getLog(this.getClass());
+	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * Is this tracer enabled or not?
 	 */
-	private boolean isEnabled = false;
+	private volatile boolean isEnabled = false;
 
 	// ------------------------------------------------------------------------
 	// Enabling/Disabling this aspect
@@ -48,6 +50,7 @@ public abstract class AbstractMethodTracer {
 	 * Start tracing method executions.
 	 */
 	@PostConstruct
+	@ManagedOperation(description = "Enable method tracing")
 	public void enable() {
 		if (this.log.isInfoEnabled()) {
 			this.log.info("Method tracing has been enabled");
@@ -60,6 +63,7 @@ public abstract class AbstractMethodTracer {
 	 * Stop tracing method executions.
 	 */
 	@PreDestroy
+	@ManagedOperation(description = "Disable method tracing")
 	public void disable() {
 		if (this.log.isInfoEnabled()) {
 			this.log.info("Method tracing has been disabled");
@@ -69,10 +73,11 @@ public abstract class AbstractMethodTracer {
 	}
 
 	/**
-	 * Is this error logger enabled or not?
+	 * Is method tracing enabled or not?
 	 * 
 	 * @return
 	 */
+	@ManagedAttribute(defaultValue = "true", description = "Is method tracing enabled?")
 	public boolean isEnabled() {
 
 		return this.isEnabled;
@@ -120,9 +125,8 @@ public abstract class AbstractMethodTracer {
 				this.log.trace("<<< " + formattedJoinPoint + " - Returning: <"
 						+ retVal + ">");
 			}
-		} else {
-
-			return joinPoint.proceed();
 		}
+
+		return joinPoint.proceed();
 	}
 }

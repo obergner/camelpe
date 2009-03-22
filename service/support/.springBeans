@@ -11,13 +11,5 @@
 		<config>src/test/resources/META-INF/spring/service.item.test.platformLayer.scontext</config>
 	</configs>
 	<configSets>
-		<configSet>
-			<name><![CDATA[service.item.test.completeTestContext]]></name>
-			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
-			<incomplete>true</incomplete>
-			<configs>
-				<config>src/test/resources/META-INF/spring/service.item.test.platformLayer.scontext</config>
-			</configs>
-		</configSet>
 	</configSets>
 </beansProjectDescription>
