@@ -1,16 +1,11 @@
 package com.acme.orderplacement.jee.ejb.item;
 
-import java.util.List;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
-import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,16 +52,6 @@ public class ItemStorageServiceEjb implements ItemStorageService {
 	// -------------------------------------------------------------------------
 	// API
 	// -------------------------------------------------------------------------
-
-	@PostConstruct
-	public void listMBEanServers() {
-		final List<MBeanServer> servers = MBeanServerFactory
-				.findMBeanServer(null);
-		for (final MBeanServer mServ : servers) {
-			System.out.println("MBeanServer: " + mServ + " Default domain: "
-					+ mServ.getDefaultDomain());
-		}
-	}
 
 	/**
 	 * @see ItemStorageService#registerItem(ItemDto)
