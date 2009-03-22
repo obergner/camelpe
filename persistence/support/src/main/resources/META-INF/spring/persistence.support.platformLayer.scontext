@@ -56,16 +56,6 @@
 		class="org.springframework.transaction.jta.JtaTransactionManager" />
 
 	<!--
-		The Interceptor will fill the MetaInfo instance associated with some
-		peristent entities with the current user's username etc.
-	-->
-	<!--
-		bean id="persistence.platform.metaInfoInterceptor"
-		class="com.acme.orderplacement.persistence.item.internal.hibernate.audit.MetaInfoInterceptor">
-		</bean
-	-->
-
-	<!--
 		==================================================================
 		SECURITY
 		==================================================================

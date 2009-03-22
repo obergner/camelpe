@@ -43,16 +43,16 @@ import com.acme.orderplacement.persistence.support.exception.PersistentStateLock
  * @author <a href="mailto:olaf.bergner@gmx.de">Olaf Bergner</a>
  * 
  */
-@Component(SpringDataAccessExceptionConverter.COMPONENT_NAME)
+@Component(SpringPersistenceExceptionConverter.ASPECT_NAME)
 @Order(20)
 @Aspect
-public class SpringDataAccessExceptionConverter {
+public class SpringPersistenceExceptionConverter {
 
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
 
-	public static final String COMPONENT_NAME = "persistence.aspect.DataAccessExceptionConverter";
+	public static final String ASPECT_NAME = "persistence.support.aspect.DataAccessExceptionConverter";
 
 	/**
 	 * Our faithful logger.
@@ -70,7 +70,7 @@ public class SpringDataAccessExceptionConverter {
 	 */
 	@Pointcut("target(com.acme.orderplacement.persistence.support.jpa.AbstractJpaDao)")
 	public void springBasedDaos() {
-
+		// Intentionally left blank
 	}
 
 	/**
@@ -78,9 +78,9 @@ public class SpringDataAccessExceptionConverter {
 	 * {@link com.acme.orderplacement.persistence.support.jpa.AbstractJpaDao
 	 * <code>AbstractJpaDao</code>}.
 	 */
-	@Pointcut("com.acme.orderplacement.persistence.support.meta.DataAccessLayer.dataAccessOperations() && springBasedDaos()")
-	public void springBasedDataAccessOperations() {
-
+	@Pointcut("com.acme.orderplacement.persistence.support.meta.PersistenceLayer.persistenceOperations() && springBasedDaos()")
+	public void springBasedPersistenceOperations() {
+		// Intentionally left blank
 	}
 
 	// ------------------------------------------------------------------------
@@ -93,7 +93,7 @@ public class SpringDataAccessExceptionConverter {
 	 * @return
 	 * @throws Exception
 	 */
-	@AfterThrowing(pointcut = "springBasedDataAccessOperations()", throwing = "dataAccessException")
+	@AfterThrowing(pointcut = "springBasedPersistenceOperations()", throwing = "dataAccessException")
 	public void convertDataAccessException(final JoinPoint joinPoint,
 			final DataAccessException dataAccessException) throws Exception {
 		Exception convertedException;

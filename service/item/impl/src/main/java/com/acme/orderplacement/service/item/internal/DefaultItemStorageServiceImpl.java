@@ -9,6 +9,8 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.domain.item.ItemSpecification;
@@ -19,19 +21,20 @@ import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
 import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;
+import com.acme.orderplacement.service.support.meta.annotation.ServiceOperation;
 
 /**
  * <p>
- * TODO: Insert short summary for DefaultItemStorageServiceImpl
- * </p>
- * <p>
- * TODO: Insert comprehensive explanation for DefaultItemStorageServiceImpl
+ * Default implementation of the {@link ItemStorageService
+ * <code>ItemStorageService</code>} that delegates to an {@link ItemDao
+ * <code>ItemDao</code>}.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @Service(ItemStorageService.SERVICE_NAME)
+@Transactional
 public class DefaultItemStorageServiceImpl implements ItemStorageService {
 
 	// -------------------------------------------------------------------------
@@ -40,7 +43,7 @@ public class DefaultItemStorageServiceImpl implements ItemStorageService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Resource(name = ItemDao.SERVICE_NAME)
+	@Resource(name = ItemDao.REPOSITORY_NAME)
 	private ItemDao itemDao;
 
 	// -------------------------------------------------------------------------
@@ -64,6 +67,8 @@ public class DefaultItemStorageServiceImpl implements ItemStorageService {
 	/**
 	 * @see com.acme.orderplacement.service.item.ItemStorageService#registerItem(com.acme.orderplacement.service.item.dto.ItemDto)
 	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	@ServiceOperation(idempotent = true)
 	public void registerItem(final ItemDto newItemToRegister)
 			throws EntityAlreadyRegisteredException, IllegalArgumentException,
 			RuntimeException {
@@ -134,9 +139,11 @@ public class DefaultItemStorageServiceImpl implements ItemStorageService {
 
 			return convertedItem;
 		} catch (final CollaborationPreconditionsNotMetException e) {
-			// Could only happen if one of the newly created ItemSpecifications
-			// would already belong to a different Item. Therefore, it is safe
-			// to assume that this will NEVER happen.
+			/*
+			 * Could only happen if one of the newly created ItemSpecifications
+			 * would already belong to a different Item. Therefore, it is safe
+			 * to assume that this will NEVER happen.
+			 */
 			throw new RuntimeException(e);
 		}
 	}

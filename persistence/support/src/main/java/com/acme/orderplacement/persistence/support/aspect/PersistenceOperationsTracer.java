@@ -22,7 +22,7 @@ import com.acme.orderplacement.aspect.support.log.AbstractMethodTracer;
  * @author <a href="mailto:olaf.bergner@gmx.de">Olaf Bergner</a>
  * 
  */
-@Component(PersistenceOperationsTracer.COMPONENT_NAME)
+@Component(PersistenceOperationsTracer.ASPECT_NAME)
 @Order(10)
 @Aspect
 public class PersistenceOperationsTracer extends AbstractMethodTracer {
@@ -31,7 +31,7 @@ public class PersistenceOperationsTracer extends AbstractMethodTracer {
 	// Fields
 	// -------------------------------------------------------------------------
 
-	public static final String COMPONENT_NAME = "persistence.aspect.PersistenceOperationsTracer";
+	public static final String ASPECT_NAME = "persistence.support.aspect.PersistenceOperationsTracer";
 
 	// ------------------------------------------------------------------------
 	// Pointcuts
@@ -40,9 +40,10 @@ public class PersistenceOperationsTracer extends AbstractMethodTracer {
 	/**
 	 * @see de.obergner.soa.order.aspect.log.AbstractMethodTracer#tracedMethods()
 	 */
-	@Pointcut("execution(* com.acme.orderplacement.persistence.item.internal..*.*(..))")
 	@Override
+	@Pointcut("com.acme.orderplacement.persistence.support.meta.PersistenceLayer.persistenceOperations()")
 	public void tracedMethods() {
+		// Intentionally left blank
 	}
 
 }

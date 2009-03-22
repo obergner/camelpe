@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@Component(SpringSecurityAuthorizationEnforcement.COMPONENT_NAME)
+@Component(SpringSecurityAuthorizationEnforcement.ASPECT_NAME)
 @Aspect
 @Order(10)
 public class SpringSecurityAuthorizationEnforcement {
@@ -35,7 +35,7 @@ public class SpringSecurityAuthorizationEnforcement {
 	// Fields
 	// ------------------------------------------------------------------------
 
-	public static final String COMPONENT_NAME = "aspect.security.springSecurityAuthorizationEnforcement";
+	public static final String ASPECT_NAME = "aspect.support.security.springSecurityAuthorizationEnforcement";
 
 	/**
 	 * Our faithful logger.

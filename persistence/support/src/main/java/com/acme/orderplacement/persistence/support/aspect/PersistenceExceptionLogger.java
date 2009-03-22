@@ -23,16 +23,16 @@ import com.acme.orderplacement.aspect.support.log.AbstractExceptionLogger;
  * @author <a href="mailto:olaf.bergner@gmx.de">Olaf Bergner</a>
  * 
  */
-@Component(DataAccessLayerExceptionLogger.COMPONENT_NAME)
+@Component(PersistenceExceptionLogger.ASPECT_NAME)
 @Order(30)
 @Aspect
-public class DataAccessLayerExceptionLogger extends AbstractExceptionLogger {
+public class PersistenceExceptionLogger extends AbstractExceptionLogger {
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
 
-	public static final String COMPONENT_NAME = "persistence.aspect.DataAccessLayerExceptionLogger";
+	public static final String ASPECT_NAME = "persistence.support.aspect.PersistenceExceptionLogger";
 
 	// ------------------------------------------------------------------------
 	// Pointcuts
@@ -42,7 +42,8 @@ public class DataAccessLayerExceptionLogger extends AbstractExceptionLogger {
 	 * @see de.obergner.soa.order.aspect.log.AbstractExceptionLogger#exceptionLoggedMethods()
 	 */
 	@Override
-	@Pointcut("com.acme.orderplacement.persistence.support.meta.DataAccessLayer.dataAccessOperations()")
+	@Pointcut("com.acme.orderplacement.persistence.support.meta.PersistenceLayer.persistenceOperations()")
 	public void exceptionLoggedMethods() {
+		// Intentionally left blank
 	}
 }

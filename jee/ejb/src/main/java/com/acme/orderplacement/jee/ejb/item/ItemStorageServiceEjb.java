@@ -3,9 +3,12 @@ package com.acme.orderplacement.jee.ejb.item;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.acme.orderplacement.common.support.role.ApplicationUserRole;
 import com.acme.orderplacement.jee.ejb.internal.spring.ServiceLayerSpecificSpringBeanAutowiringInterceptor;
@@ -43,6 +46,7 @@ public class ItemStorageServiceEjb implements ItemStorageService {
 	 * implementation we delegate all service requests to.
 	 */
 	@Autowired(required = true)
+	@Qualifier(ItemStorageService.SERVICE_NAME)
 	private ItemStorageService delegate;
 
 	// -------------------------------------------------------------------------
@@ -55,6 +59,7 @@ public class ItemStorageServiceEjb implements ItemStorageService {
 	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
 			ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void registerItem(final ItemDto newItemToRegister)
 			throws EntityAlreadyRegisteredException, IllegalArgumentException {
 		this.delegate.registerItem(newItemToRegister);

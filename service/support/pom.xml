@@ -24,6 +24,20 @@
 			| Provided dependencies 
 		-->
 		<!--
+			Only needed to make AspectJ's PointcutParser correctly parse pointcut
+			definitions that use the javax.ejb.TransactionAttribute annotation.
+
+			Strictly speaking we don't need this dependency in this module since
+			we don't execute any tests that would cause our pointcut definitions
+			to be parsed. Still we define it here to make this module's needs
+			more explicit.
+		-->
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
 			| Compile time dependencies 
 		-->
 		<dependency>

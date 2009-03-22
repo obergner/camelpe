@@ -8,7 +8,14 @@ import org.hibernate.transaction.TransactionManagerLookup;
 
 /**
  * <p>
- * TODO: Insert short summary for GeronimoTransactionManagerLookup
+ * <tt>Geronimo</tt> specific <tt>Hibernate</tt>
+ * {@link TransactionManagerLookup <code>TransactionManagerLookup</code>}
+ * implementation used to access the <code>JTA</code>
+ * {@link javax.transaction.UserTransaction
+ * <code>javax.transaction.UserTransaction</code>} and
+ * {@link javax.transaction.TransactionManager
+ * <code>javax.transaction.TransactionManager</code>} components when executing
+ * within <tt>Geronimo</tt>.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>

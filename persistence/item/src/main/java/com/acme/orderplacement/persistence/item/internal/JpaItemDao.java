@@ -9,16 +9,19 @@ import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.persistence.item.ItemDao;
 import com.acme.orderplacement.persistence.support.jpa.AbstractJpaDao;
+import com.acme.orderplacement.persistence.support.meta.annotation.ReadOnlyPersistenceOperation;
 
 /**
  * @author o.bergner
  * 
  */
-@Repository(ItemDao.SERVICE_NAME)
+@Repository(ItemDao.REPOSITORY_NAME)
 public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 
 	// ------------------------------------------------------------------------
@@ -28,6 +31,8 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 	/**
 	 * @see com.acme.orderplacement.persistence.item.ItemDao.domain.ItemDAO#findByItemNumber(java.lang.String)
 	 */
+	@ReadOnlyPersistenceOperation
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public Item findByItemNumber(final String itemNumber) {
 		Validate.notNull(itemNumber, "itemNumber");
 		final Map<String, String> parameters = new HashMap<String, String>(1);
@@ -39,6 +44,8 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 	/**
 	 * @see com.acme.orderplacement.persistence.item.ItemDao.domain.ItemDAO#findByNameLike(java.lang.String)
 	 */
+	@ReadOnlyPersistenceOperation
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Item> findByNameLike(final String itemName) {
 		Validate.notNull(itemName, "itemName");
 		final Map<String, String> parameters = new HashMap<String, String>(1);
@@ -46,5 +53,4 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 
 		return findByNamedQuery(Item.Queries.BY_NAME_LIKE, parameters);
 	}
-
 }

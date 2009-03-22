@@ -19,6 +19,8 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.persistence.support.GenericJpaDao;
 import com.acme.orderplacement.persistence.support.exception.DataAccessRuntimeException;
@@ -29,6 +31,8 @@ import com.acme.orderplacement.persistence.support.exception.ObjectTransientExce
 import com.acme.orderplacement.persistence.support.exception.PersistentStateConcurrentlyModifiedException;
 import com.acme.orderplacement.persistence.support.exception.PersistentStateDeletedException;
 import com.acme.orderplacement.persistence.support.exception.PersistentStateLockedException;
+import com.acme.orderplacement.persistence.support.meta.annotation.ReadOnlyPersistenceOperation;
+import com.acme.orderplacement.persistence.support.meta.annotation.StateModifyingPersistenceOperation;
 
 /**
  * <p>
@@ -82,19 +86,23 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	/**
 	 * @see com.acme.orderplacement.persistence.support.GenericJpaDao#findAll()
 	 */
+	@ReadOnlyPersistenceOperation
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<T> findAll() throws DataAccessRuntimeException {
 		final List<T> allEntities = getEntityManager().createQuery(
 				"From " + getPersistentClass().getName()).getResultList();
 		getLog().debug("Returned all ({}) entities of type = [{}].",
 				allEntities.size(), getPersistentClass().getName());
 
-		return Collections.unmodifiableList(allEntities);
+		return Collections.<T> unmodifiableList(allEntities);
 	}
 
 	/**
 	 * @see com.acme.orderplacement.persistence.support.GenericJpaDao#findById(java.io.Serializable,
 	 *      boolean)
 	 */
+	@ReadOnlyPersistenceOperation
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public T findById(final ID id, final boolean lock)
 			throws NoSuchPersistentObjectException, DataAccessRuntimeException {
 		final T matchingEntity = getEntityManager().find(getPersistentClass(),
@@ -116,6 +124,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 
 	/**
 	 * @see com.acme.orderplacement.persistence.support.GenericJpaDao#flush()
+	 * 
+	 *      TODO: Does this method need to be marked @Transactional?
 	 */
 	public void flush() throws DataAccessRuntimeException,
 			PersistentStateLockedException,
@@ -131,6 +141,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	/**
 	 * @see com.acme.orderplacement.persistence.support.GenericJpaDao#makePersistent(java.lang.Object)
 	 */
+	@StateModifyingPersistenceOperation(idempotent = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public T makePersistent(final T transientObject)
 			throws DataAccessRuntimeException, ObjectNotTransientException {
 		getEntityManager().persist(transientObject);
@@ -142,6 +154,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	/**
 	 * @see com.acme.orderplacement.persistence.support.GenericJpaDao#makePersistentOrUpdatePersistentState(java.lang.Object)
 	 */
+	@StateModifyingPersistenceOperation(idempotent = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public T makePersistentOrUpdatePersistentState(
 			final T persistentOrDetachedObject)
 			throws DataAccessRuntimeException {
@@ -155,6 +169,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	/**
 	 * @see com.acme.orderplacement.persistence.support.GenericJpaDao#makeTransient(java.lang.Object)
 	 */
+	@StateModifyingPersistenceOperation(idempotent = true)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void makeTransient(final T persistentOrDetachedObject)
 			throws DataAccessRuntimeException, ObjectTransientException {
 		getEntityManager().remove(persistentOrDetachedObject);
@@ -179,7 +195,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			namedQuery.setParameter(param.getKey(), param.getValue());
 		}
 
-		return Collections.unmodifiableList(namedQuery.getResultList());
+		return Collections.<T> unmodifiableList(namedQuery.getResultList());
 	}
 
 	/**
@@ -196,7 +212,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			namedQuery.setParameter(idx++, param);
 		}
 
-		return Collections.unmodifiableList(namedQuery.getResultList());
+		return Collections.<T> unmodifiableList(namedQuery.getResultList());
 	}
 
 	/**

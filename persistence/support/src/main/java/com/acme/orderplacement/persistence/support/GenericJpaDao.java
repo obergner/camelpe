@@ -8,9 +8,6 @@ import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.acme.orderplacement.common.support.role.ApplicationUserRole;
 import com.acme.orderplacement.persistence.support.exception.DataAccessRuntimeException;
 import com.acme.orderplacement.persistence.support.exception.NoSuchPersistentObjectException;
@@ -37,7 +34,6 @@ import com.acme.orderplacement.persistence.support.exception.PersistentStateLock
 @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
 		ApplicationUserRole.ROLE_EMPLOYEE, ApplicationUserRole.ROLE_ACCOUNTANT,
 		ApplicationUserRole.ROLE_ADMIN })
-@Transactional
 public interface GenericJpaDao<T, ID extends Serializable> {
 
 	/**
@@ -55,7 +51,6 @@ public interface GenericJpaDao<T, ID extends Serializable> {
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	@Transactional(readOnly = true)
 	T findById(ID id, boolean lock) throws NoSuchPersistentObjectException,
 			DataAccessRuntimeException;
 
@@ -69,7 +64,6 @@ public interface GenericJpaDao<T, ID extends Serializable> {
 			ApplicationUserRole.ROLE_EXTERNAL_USER,
 			ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	@Transactional(readOnly = true)
 	List<T> findAll() throws DataAccessRuntimeException;
 
 	/**
@@ -87,7 +81,6 @@ public interface GenericJpaDao<T, ID extends Serializable> {
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	@Transactional(readOnly = false)
 	T makePersistent(T transientObject) throws DataAccessRuntimeException,
 			ObjectNotTransientException;
 
@@ -101,7 +94,6 @@ public interface GenericJpaDao<T, ID extends Serializable> {
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	@Transactional(readOnly = false)
 	T makePersistentOrUpdatePersistentState(T object)
 			throws DataAccessRuntimeException;
 
@@ -117,7 +109,6 @@ public interface GenericJpaDao<T, ID extends Serializable> {
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_ACCOUNTANT,
 			ApplicationUserRole.ROLE_ADMIN })
-	@Transactional(readOnly = false)
 	void makeTransient(T persistentOrDetachedObject)
 			throws DataAccessRuntimeException, ObjectTransientException;
 
@@ -140,7 +131,6 @@ public interface GenericJpaDao<T, ID extends Serializable> {
 	 * 
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_ADMIN })
-	@Transactional(readOnly = false, propagation = Propagation.MANDATORY)
 	void flush() throws DataAccessRuntimeException,
 			PersistentStateLockedException,
 			PersistentStateConcurrentlyModifiedException,

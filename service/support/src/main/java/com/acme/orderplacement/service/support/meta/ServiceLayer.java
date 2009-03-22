@@ -45,7 +45,8 @@ public final class ServiceLayer {
 	/**
 	 * 
 	 */
-	@Pointcut("serviceOperations() && @annotation(org.springframework.transaction.annotation.Transactional)")
+	@Pointcut("serviceOperations() && (@annotation(org.springframework.transaction.annotation.Transactional) "
+			+ "|| @annotation(javax.ejb.TransactionAttribute))")
 	public void transactionalServiceOperations() {
 		// Intentionally left blank
 	}

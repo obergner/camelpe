@@ -6,5 +6,5 @@
 	<classpathentry kind="src" path="src/site/fml"/>
 	<classpathentry kind="src" path="src/site/xdoc"/>
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="target"/>
 </classpath>

@@ -23,7 +23,7 @@ import com.acme.orderplacement.aspect.support.log.AbstractExceptionLogger;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@Component(ServiceLayerExceptionLogger.COMPONENT_NAME)
+@Component(ServiceLayerExceptionLogger.ASPECT_NAME)
 @Order(30)
 @Aspect
 public class ServiceLayerExceptionLogger extends AbstractExceptionLogger {
@@ -32,7 +32,7 @@ public class ServiceLayerExceptionLogger extends AbstractExceptionLogger {
 	// Fields
 	// -------------------------------------------------------------------------
 
-	public static final String COMPONENT_NAME = "service.aspect.ServiceLayerExceptionLogger";
+	public static final String ASPECT_NAME = "service.support.aspect.ServiceLayerExceptionLogger";
 
 	// ------------------------------------------------------------------------
 	// Pointcuts

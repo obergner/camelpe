@@ -21,7 +21,7 @@ import com.acme.orderplacement.aspect.support.log.AbstractMethodTracer;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@Component(ServiceOperationsTracer.COMPONENT_NAME)
+@Component(ServiceOperationsTracer.ASPECT_NAME)
 @Order(10)
 @Aspect
 public class ServiceOperationsTracer extends AbstractMethodTracer {
@@ -30,7 +30,7 @@ public class ServiceOperationsTracer extends AbstractMethodTracer {
 	// Fields
 	// -------------------------------------------------------------------------
 
-	public static final String COMPONENT_NAME = "service.aspect.ServiceOperationsTracer";
+	public static final String ASPECT_NAME = "service.support.aspect.ServiceOperationsTracer";
 
 	// ------------------------------------------------------------------------
 	// Pointcuts
