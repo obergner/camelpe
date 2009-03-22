@@ -25,8 +25,8 @@
 	<channel id="integration.inbound.item.target.ItemCreatedEventsChannel" />
 
 	<jee:local-slsb id="integration.inbound.item.ItemStorageServiceDelegate"
-		jndi-name="com/acme/orderplacement/ejb/ItemStorageService"
-		business-interface="com.acme.orderplacement.service.item.ItemStorageService" />
+		jndi-name="ejb/com/acme/orderplacment/ItemStorageServiceEJB"
+		resource-ref="true" business-interface="com.acme.orderplacement.service.item.ItemStorageService" />
 	<service-activator
 		id="integration.inbound.item.ItemStorageServiceActivator"
 		input-channel="integration.inbound.item.target.ItemCreatedEventsChannel"

@@ -8,6 +8,6 @@
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.5.0_17"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.apache.geronimo.cli.daemon.DaemonCLI"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--long"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-javaagent:&quot;D:/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3/bin/jpa.jar&quot; -Djava.ext.dirs=&quot;D:/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3/lib/ext;C:\Programme\Java\jdk1.5.0_17\jre\lib\ext&quot; -Djava.endorsed.dirs=&quot;D:/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3/lib/endorsed;C:\Programme\Java\jdk1.5.0_17\jre\lib\endorsed&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms128m&#13;&#10;-Xmx512m&#13;&#10;-javaagent:&quot;D:/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3/bin/jpa.jar&quot; -Djava.ext.dirs=&quot;D:/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3/lib/ext;C:\Programme\Java\jdk1.5.0_17\jre\lib\ext&quot; -Djava.endorsed.dirs=&quot;D:/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3/lib/endorsed;C:\Programme\Java\jdk1.5.0_17\jre\lib\endorsed&quot;"/>
 <stringAttribute key="server-id" value="Apache Geronimo v2.1 Server at localhost"/>
 </launchConfiguration>

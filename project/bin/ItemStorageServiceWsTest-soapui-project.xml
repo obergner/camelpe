@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project name="ItemStorageServiceWsTest" soapui-version="2.5.1" resourceRoot="" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="ProjectSettings@projectRoot">C:\Var\Projects\Orderplacement\Src\com.acme.orderplacement\project\src\soapui</con:setting></con:settings><con:interface name="ItemStorageServicePortServiceSoapBinding" bindingName="{http://ws.jee.orderplacement.acme.com/}ItemStorageServicePortServiceSoapBinding" soapVersion="1_1" definition="http://localhost:8080/orderplacement/itemstorage?wsdl" xsi:type="con:WsdlInterface" wsaVersion="NONE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoints><con:endpoint>http://localhost:8080/orderplacement/itemstorage</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://www.acme.com/service/ns/itemstorageservice/1.0/registerItem" name="registerItem" bindingOperationName="registerItem" inputName="registerItem" outputName="registerItemResponse" receivesAttachments="false" sendsAttachments="false" type="Request-Response"><con:settings/><con:call name="RegisterFirstTestItemRequest"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/orderplacement/itemstorage</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns1="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/">
+<con:soapui-project name="ItemStorageServiceWsTest" soapui-version="2.5.1" resourceRoot="" xmlns:con="http://eviware.com/soapui/config">
+	<con:settings>
+		<con:setting id="ProjectSettings@projectRoot">E:\Projects\Orderplacement\Src\com.acme.orderplacement\project\src\soapui</con:setting>
+	</con:settings>
+	<con:interface name="ItemStorageServicePortServiceSoapBinding" bindingName="{http://ws.jee.orderplacement.acme.com/}ItemStorageServicePortServiceSoapBinding" soapVersion="1_1" definition="http://localhost:8080/orderplacement/itemstorage?wsdl" xsi:type="con:WsdlInterface" wsaVersion="NONE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<con:settings/>
+		<con:endpoints>
+			<con:endpoint>http://localhost:8080/orderplacement/itemstorage
+			</con:endpoint>
+		</con:endpoints>
+		<con:operation isOneWay="false" action="http://www.acme.com/service/ns/itemstorageservice/1.0/registerItem" name="registerItem" bindingOperationName="registerItem" inputName="registerItem" outputName="registerItemResponse" receivesAttachments="false" sendsAttachments="false" type="Request-Response">
+			<con:settings/>
+			<con:call name="RegisterFirstTestItemRequest">
+				<con:settings/>
+				<con:encoding>UTF-8</con:encoding>
+				<con:endpoint>http://localhost:8080/orderplacement/itemstorage
+				</con:endpoint>
+				<con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns1="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/">
    <soapenv:Header/>
    <soapenv:Body>
       <ns:RegisterItemRequest>
@@ -16,7 +33,16 @@
          </ns:itemToRegister>
       </ns:RegisterItemRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508"/></con:call></con:operation><con:definitionCache rootPart="http://localhost:8080/orderplacement/itemstorage?wsdl" type="TEXT"><con:part><con:url>http://localhost:8080/orderplacement/itemstorage?wsdl=ItemStorageServicePortType.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ItemStorageServicePortType" targetNamespace="http://www.acme.com/service/ns/itemstorageservice/1.0/" xmlns:ns1="http://www.acme.com/service/ns/itemstorageservice/1.0/" xmlns:ns2="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns3="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/" xmlns:ns4="http://www.acme.com/schema/ns/itemstorageservice/fault/1.0/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+</soapenv:Envelope>]]></con:request>
+				<con:wsaConfig mustUnderstand="NONE" version="200508"/>
+			</con:call>
+		</con:operation>
+		<con:definitionCache rootPart="http://localhost:8080/orderplacement/itemstorage?wsdl" type="TEXT">
+			<con:part>
+				<con:url>
+					http://localhost:8080/orderplacement/itemstorage?wsdl=ItemStorageServicePortType.wsdl
+				</con:url>
+				<con:content><![CDATA[<wsdl:definitions name="ItemStorageServicePortType" targetNamespace="http://www.acme.com/service/ns/itemstorageservice/1.0/" xmlns:ns1="http://www.acme.com/service/ns/itemstorageservice/1.0/" xmlns:ns2="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns3="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/" xmlns:ns4="http://www.acme.com/schema/ns/itemstorageservice/fault/1.0/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
     <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns1="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/" xmlns:tns="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:import namespace="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/"/>
@@ -90,7 +116,14 @@
       <wsdl:fault message="ns1:ItemAlreadyRegisteredFault_Exception" name="ItemAlreadyRegisteredFault_Exception"></wsdl:fault>
     </wsdl:operation>
   </wsdl:portType>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/orderplacement/itemstorage?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ItemStorageServicePortService" targetNamespace="http://ws.jee.orderplacement.acme.com/" xmlns:ns1="http://www.acme.com/service/ns/itemstorageservice/1.0/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.jee.orderplacement.acme.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+</wsdl:definitions>]]></con:content>
+				<con:type>http://schemas.xmlsoap.org/wsdl/
+				</con:type>
+			</con:part>
+			<con:part>
+				<con:url>http://localhost:8080/orderplacement/itemstorage?wsdl
+				</con:url>
+				<con:content><![CDATA[<wsdl:definitions name="ItemStorageServicePortService" targetNamespace="http://ws.jee.orderplacement.acme.com/" xmlns:ns1="http://www.acme.com/service/ns/itemstorageservice/1.0/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.jee.orderplacement.acme.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:import location="http://localhost:8080/orderplacement/itemstorage?wsdl=ItemStorageServicePortType.wsdl" namespace="http://www.acme.com/service/ns/itemstorageservice/1.0/"></wsdl:import>
   <wsdl:binding name="ItemStorageServicePortServiceSoapBinding" type="ns1:ItemStorageServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -112,4 +145,12 @@
       <soap:address location="http://localhost:8080/orderplacement/itemstorage"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
+</wsdl:definitions>]]></con:content>
+				<con:type>http://schemas.xmlsoap.org/wsdl/
+				</con:type>
+			</con:part>
+		</con:definitionCache>
+	</con:interface>
+	<con:properties/>
+	<con:wssContainer/>
+</con:soapui-project>

@@ -22,8 +22,7 @@
 		<property name="targetMethod" value="initLogging" />
 		<property name="arguments">
 			<list>
-				<value>META-INF/conf/log4j.properties
-				</value>
+				<value><![CDATA[classpath:META-INF/conf/log4j.properties]]></value>
 			</list>
 		</property>
 	</bean>
@@ -64,9 +63,11 @@
 			ref="persistence.support.platform.jpaVendorAdapter" />
 		<property name="jpaDialect" ref="persistence.support.platform.jpaDialect" />
 		<property name="jpaProperties">
+			<!--
+				hibernate.transaction.factory_class=org.hibernate.transaction.CMTTransactionFactory
+			-->
 			<value>
 				jta.UserTransaction=java:comp/UserTransaction
-				hibernate.transaction.factory_class=org.hibernate.transaction.CMTTransactionFactory
 				hibernate.transaction.manager_lookup_class=com.acme.orderplacement.persistence.support.jta.hibernate.GeronimoTransactionManagerLookup
 				hibernate.cache.provider_class=org.hibernate.cache.NoCacheProvider
 				hibernate.show_sql=true

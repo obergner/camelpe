@@ -3,6 +3,10 @@
  */
 package playground;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Hashtable;
 
 import javax.jms.Connection;
@@ -30,12 +34,13 @@ public class JmsTestClient {
 	 * @param args
 	 * @throws NamingException
 	 * @throws JMSException
+	 * @throws IOException
 	 */
 	public static void main(final String[] args) throws NamingException,
-			JMSException {
+			JMSException, IOException {
 		System.out.println("JMSClient: Establishing initial context");
 		System.out.println(" Establishing initial context");
-		final Hashtable env = new Hashtable();
+		final Hashtable<String, String> env = new Hashtable<String, String>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY,
 				"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
 		env.put(Context.PROVIDER_URL, "tcp://localhost:61616");
@@ -45,7 +50,7 @@ public class JmsTestClient {
 				.lookup("ConnectionFactory");
 		System.out.println("JMSClient: Lookup Topic");
 		final Destination outDest = (Destination) ctx
-				.lookup("dynamicQueues/com/acme/jms/ItemCreatedEventsTopic");
+				.lookup("dynamicTopics/jms/topic/com/acme/ItemCreatedEventsTopic");
 		System.out.println("destination = " + outDest.toString());
 		System.out.println("JMSClient: Establishing connection");
 		final Connection connection = cf.createConnection();
@@ -54,8 +59,8 @@ public class JmsTestClient {
 				Session.AUTO_ACKNOWLEDGE);
 		final MessageProducer destSender = session.createProducer(outDest);
 		System.out.println("JMSClient: Sending message");
-		// Send argument default "1 DonationFund 1"
-		final TextMessage toutMessage = session.createTextMessage("TEST");
+		final String payload = readFile("ValidItemCreatedEventMsg.xml");
+		final TextMessage toutMessage = session.createTextMessage(payload);
 		destSender.send(toutMessage);
 		System.out.println("JMSClient: Message sent!");
 		destSender.close();
@@ -63,4 +68,27 @@ public class JmsTestClient {
 		connection.close();
 	}
 
+	private static String readFile(final String relativePath)
+			throws IOException {
+		BufferedReader reader = null;
+		try {
+			final StringBuffer fileData = new StringBuffer(1000);
+			final InputStream is = JmsTestClient.class
+					.getResourceAsStream(relativePath);
+			reader = new BufferedReader(new InputStreamReader(is));
+			char[] buf = new char[1024];
+			int numRead = 0;
+			while ((numRead = reader.read(buf)) != -1) {
+				final String readData = String.valueOf(buf, 0, numRead);
+				fileData.append(readData);
+				buf = new char[1024];
+			}
+
+			return fileData.toString();
+		} finally {
+			if (reader != null) {
+				reader.close();
+			}
+		}
+	}
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee" version="3.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+         http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+
+	<description>ACME Orderplacement Inbound Integration Layer</description>
+	<display-name>ACME Orderplacement Inbound Integration Layer</display-name>
+
+	<enterprise-beans>
+		<message-driven>
+			<ejb-name>ItemCreatedEventChannelAdapterMDB</ejb-name>
+			<ejb-class>
+				com.acme.orderplacement.jee.integrationmdb.internal.ItemCreatedEventChannelAdapterMdb</ejb-class>
+			<transaction-type>Container</transaction-type>
+			<ejb-local-ref>
+				<ejb-ref-name>ejb/com/acme/orderplacment/ItemStorageServiceEJB</ejb-ref-name>
+				<ejb-ref-type>Session</ejb-ref-type>
+				<local>com.acme.orderplacement.service.item.ItemStorageService</local>
+			</ejb-local-ref>
+		</message-driven>
+	</enterprise-beans>
+
+</ejb-jar>
+

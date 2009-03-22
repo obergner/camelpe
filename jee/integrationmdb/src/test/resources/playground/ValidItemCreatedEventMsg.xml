@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ic:ItemCreatedEvent
+	xmlns:ic="http://www.external.com/schema/ns/events/itemcreated/1.0/"
+	xmlns:mo="http://www.external.com/schema/ns/models/item/1.0/">
+	<ic:eventId>12345678</ic:eventId>
+	<ic:createdItem>
+		<mo:itemNumber>ITM-23-567884</mo:itemNumber>
+		<mo:name>Item Created Event</mo:name>
+		<mo:description>Description</mo:description>
+		<mo:itemSpecs>
+			<mo:ItemSpec>
+				<mo:ItemSpecId>ITSPEC-45-78234</mo:ItemSpecId>
+				<mo:name>Item Spec</mo:name>
+			</mo:ItemSpec>
+		</mo:itemSpecs>
+	</ic:createdItem>
+</ic:ItemCreatedEvent>

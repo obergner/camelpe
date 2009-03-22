@@ -3,15 +3,11 @@
 	<version>1</version>
 	<pluginVersion><![CDATA[2.2.1.v200811281800]]></pluginVersion>
 	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
 		<configSuffix><![CDATA[scontext]]></configSuffix>
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/main/resources/META-INF/spring/persistence.support.applicationLayer.scontext</config>
-		<config>src/main/resources/META-INF/spring/persistence.support.aspectLayer.scontext</config>
-		<config>src/main/resources/META-INF/spring/persistence.support.daoLayer.scontext</config>
-		<config>src/main/resources/META-INF/spring/persistence.support.platformLayer.scontext</config>
-		<config>src/main/resources/META-INF/spring/persistence.support.securityLayer.scontext</config>
 	</configs>
 	<configSets>
 		<configSet>
@@ -19,11 +15,6 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>false</incomplete>
 			<configs>
-				<config>src/main/resources/META-INF/spring/persistence.support.applicationLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.aspectLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.daoLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.platformLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.securityLayer.scontext</config>
 			</configs>
 		</configSet>
 		<configSet>
@@ -31,10 +22,6 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>true</incomplete>
 			<configs>
-				<config>src/main/resources/META-INF/spring/persistence.support.applicationLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.aspectLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.daoLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.securityLayer.scontext</config>
 			</configs>
 		</configSet>
 	</configSets>

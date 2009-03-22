@@ -6,6 +6,8 @@ package com.acme.orderplacement.service.item.internal;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.acme.orderplacement.domain.item.Item;
@@ -36,6 +38,8 @@ public class DefaultItemStorageServiceImpl implements ItemStorageService {
 	// Fields
 	// -------------------------------------------------------------------------
 
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
 	@Resource(name = ItemDao.SERVICE_NAME)
 	private ItemDao itemDao;
 
@@ -61,15 +65,23 @@ public class DefaultItemStorageServiceImpl implements ItemStorageService {
 	 * @see com.acme.orderplacement.service.item.ItemStorageService#registerItem(com.acme.orderplacement.service.item.dto.ItemDto)
 	 */
 	public void registerItem(final ItemDto newItemToRegister)
-			throws EntityAlreadyRegisteredException, IllegalArgumentException {
+			throws EntityAlreadyRegisteredException, IllegalArgumentException,
+			RuntimeException {
 		try {
 			Validate.notNull(newItemToRegister, "newItemToRegister");
+			this.log.info("Registering item [{}] ...", newItemToRegister);
 			ensureNotExistsItemHavingItemNumber(newItemToRegister
 					.getItemNumber());
 
-			getItemDao().makePersistent(convertIntoItem(newItemToRegister));
-		} catch (final ObjectNotTransientException e) {
+			final Item registeredItem = getItemDao().makePersistent(
+					convertIntoItem(newItemToRegister));
 
+			this.log.info("Item [{}] successfully registered", registeredItem);
+		} catch (final ObjectNotTransientException e) {
+			/*
+			 * This cannot happen since it is impossible that the Item which has
+			 * been newly created from the ItemDto passed is not transient.
+			 */
 			throw new RuntimeException(e);
 		}
 	}
@@ -94,12 +106,17 @@ public class DefaultItemStorageServiceImpl implements ItemStorageService {
 		final Item itemHavingItemNumber = getItemDao().findByItemNumber(
 				itemNumber);
 		if (itemHavingItemNumber != null) {
+			this.log
+					.error(
+							"An item [{}] having the same item number [{}] as the one to register has already been registered",
+							itemHavingItemNumber, itemNumber);
 
 			throw new EntityAlreadyRegisteredException(itemHavingItemNumber);
 		}
 	}
 
-	private Item convertIntoItem(final ItemDto itemDtoToConvert) {
+	private Item convertIntoItem(final ItemDto itemDtoToConvert)
+			throws RuntimeException {
 		try {
 			final Item convertedItem = new Item();
 			convertedItem.setItemNumber(itemDtoToConvert.getItemNumber());
