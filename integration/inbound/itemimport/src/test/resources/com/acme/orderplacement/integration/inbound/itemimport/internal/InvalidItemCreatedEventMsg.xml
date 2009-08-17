@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ic:ItemCreatedEvent>
+	<ic:constructedItem>
+		<mo:name>Item Created Event</mo:name>
+		<mo:description>Description</mo:description>
+		<mo:itemSpecs>
+			<mo:ItemSpec>
+				<mo:ItemSpecId>ITSPEC-45-78234</mo:ItemSpecId>
+				<mo:name>Item Spec</mo:name>
+			</mo:ItemSpec>
+		</mo:itemSpecs>
+	</ic:constructedItem>
+</ic:ItemCreatedEvent>

@@ -94,6 +94,7 @@
 					</naming:resource-ref>
 				</session>
 			</enterprise-beans>
+
 		</openejb-jar>
 	</module>
 
@@ -116,14 +117,23 @@
 					<ejb-name>ItemCreatedEventChannelAdapterMDB
 					</ejb-name>
 					<naming:ejb-local-ref>
-						<naming:ref-name>ejb/com/acme/orderplacment/ItemStorageServiceEJB</naming:ref-name>
+						<naming:ref-name>ejb/com/acme/orderplacment/item/ItemStorageService</naming:ref-name>
 						<naming:ejb-link>ItemStorageServiceEJB</naming:ejb-link>
 					</naming:ejb-local-ref>
 					<naming:resource-adapter>
 						<naming:resource-link>jms/com/acme/OrderplacementJMSResources</naming:resource-link>
 					</naming:resource-adapter>
+					<naming:resource-ref>
+						<naming:ref-name>jms/com/acme/ConnectionFactory</naming:ref-name>
+						<naming:resource-link>jms/com/acme/ConnectionFactory</naming:resource-link>
+					</naming:resource-ref>
+					<naming:resource-env-ref>
+						<naming:ref-name>jms/queue/com/acme/ItemCreatedEventsErrorQueue</naming:ref-name>
+						<naming:admin-object-link>jms/queue/com/acme/ItemCreatedEventsErrorQueue</naming:admin-object-link>
+					</naming:resource-env-ref>
 				</message-driven>
 			</enterprise-beans>
+
 		</openejb-jar>
 	</module>
 
@@ -203,8 +213,27 @@
 					<config-property-setting name="PhysicalName">jms/topic/com/acme/ItemCreatedEventsTopic</config-property-setting>
 				</adminobject-instance>
 			</adminobject>
+
+			<adminobject>
+				<adminobject-interface>javax.jms.Queue</adminobject-interface>
+				<adminobject-class>org.activemq.message.ActiveMQQueue</adminobject-class>
+				<adminobject-instance>
+					<message-destination-name>jms/queue/com/acme/ItemCreatedEventsErrorQueue</message-destination-name>
+					<config-property-setting name="PhysicalName">jms/queue/com/acme/ItemCreatedEventsErrorQueue</config-property-setting>
+				</adminobject-instance>
+			</adminobject>
 		</connector>
 	</ext-module>
+
+	<sys:gbean name="SharedApplicationContext"
+		class="com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean">
+		<sys:reference name="globalJndiContext">
+			<sys:name>GlobalContext</sys:name>
+		</sys:reference>
+		<sys:attribute name="applicationContextResourceLocation"
+			type="java.lang.String">META-INF/spring/app.sharedApplicationContext.scontext</sys:attribute>
+		<sys:attribute name="jndiName" type="java.lang.String">java:spring/com/acme/orderplacement/app/SharedApplicationContext</sys:attribute>
+	</sys:gbean>
 
 </application>
 

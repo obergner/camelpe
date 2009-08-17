@@ -9,7 +9,6 @@
 		<project>com.acme.orderplacement.service.item.api</project>
 		<project>com.acme.orderplacement.service.support</project>
 		<project>com.acme.orderplacement.common.support</project>
-		<project>com.acme.orderplacement.jee.integrationmdb</project>
 		<project>com.acme.orderplacement.integration.inbound.external</project>
 		<project>com.acme.orderplacement.integration.inbound.item</project>
 		<project>com.acme.orderplacement.service.item.impl</project>
@@ -18,7 +17,11 @@
 		<project>com.acme.orderplacement.domain.item</project>
 		<project>com.acme.orderplacement.aspect.support</project>
 		<project>com.acme.orderplacement.persistence.support</project>
+		<project>com.acme.orderplacement.integration.inbound.support</project>
+		<project>com.acme.orderplacement.jee.geronimo</project>
+		<project>com.acme.orderplacement.jee.integrationmdb</project>
 		<project>com.acme.orderplacement.jee.ear</project>
+		<project>com.acme.orderplacement.integration.inbound.itemimport</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -41,8 +44,14 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.springframework.ide.eclipse.core.springbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.springframework.ide.eclipse.core.springnature</nature>
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>

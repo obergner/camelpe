@@ -16,12 +16,83 @@
 		   http://www.springframework.org/schema/jee 
 		   http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
-	<context:component-scan
-		base-package="com.acme.orderplacement.integration.inbound.item" />
-	<annotation-config />
+	<!-- 
+		Channel Interceptors (JMX enabled)
+	 -->
 
-	<channel id="integration.inbound.item.xml.ItemCreatedEventsChannel" />
-	<channel id="integration.inbound.item.jaxb.ItemCreatedEventsChannel" />
-	<channel id="integration.inbound.item.target.ItemCreatedEventsChannel" />
+	<beans:bean id="integration.inbound.item.jmx.MBeanExporter"
+		class="org.springframework.jmx.export.MBeanExporter">
+		<beans:property name="beans">
+			<beans:map>
+				<beans:entry
+					key="com.acme.orderplacement:layer=InboundIntegrationLayer,type=MessageCounter,name=ItemCreatedEventsCounter"
+					value-ref="integration.inbound.item.jmx.ItemCreatedEventsCounter" />
+			</beans:map>
+		</beans:property>
+		<beans:property name="assembler">
+			<beans:bean
+				class="org.springframework.jmx.export.assembler.InterfaceBasedMBeanInfoAssembler">
+				<beans:property name="managedInterfaces">
+					<beans:value>
+						com.acme.orderplacement.integration.inbound.support.interceptor.MessageCounterMBean
+					</beans:value>
+				</beans:property>
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="integration.inbound.item.jmx.ItemCreatedEventsCounter"
+		class="com.acme.orderplacement.integration.inbound.support.internal.interceptor.MessageCounterChannelInterceptor" />
+
+	<!--
+		Channels 
+	 -->
+
+	<channel id="integration.inbound.item.xml.ItemCreatedEventsChannel">
+		<interceptors>
+			<ref bean="integration.inbound.item.jmx.ItemCreatedEventsCounter" />
+		</interceptors>
+	</channel>
+
+	<!--
+		Transformers 
+	 -->
+
+	<beans:bean
+		id="integration.inbound.item.xml.ItemCreatedEventXmlToJaxbTransformerBean"
+		class="org.springframework.integration.xml.transformer.XmlPayloadUnmarshallingTransformer">
+		<beans:constructor-arg>
+			<beans:bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+				<beans:property name="contextPath"
+					value="com.external.schema.ns.events.itemcreated._1:com.external.schema.ns.models.item._1" />
+			</beans:bean>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean
+		id="integration.inbound.item.jaxb.ItemCreatedEventJaxbToTargetTransformerBean"
+		class="com.acme.orderplacement.integration.inbound.item.internal.transformer.ItemCreatedEventJaxbToTargetTransformer" />
+
+	<!--
+		Service Activator
+	 -->
+
+	<beans:bean id="integration.inbound.item.test.ItemDtoReceiverBean"
+		class="com.acme.orderplacement.integration.inbound.item.integration.ItemDtoReceiver" />
+
+	<!--
+		Message Handler Chain
+	 -->
+
+	<chain input-channel="integration.inbound.item.xml.ItemCreatedEventsChannel">
+		<transformer
+			id="integration.inbound.item.xml.ItemCreatedEventXmlToJaxbTransformer"
+			ref="integration.inbound.item.xml.ItemCreatedEventXmlToJaxbTransformerBean" />
+		<transformer
+			id="integration.inbound.item.jaxb.ItemCreatedEventJaxbToTargetTransformer"
+			ref="integration.inbound.item.jaxb.ItemCreatedEventJaxbToTargetTransformerBean" />
+		<service-activator id="integration.inbound.item.test.ItemDtoReceiver"
+			ref="integration.inbound.item.test.ItemDtoReceiverBean" />
+	</chain>
 
 </beans:beans>

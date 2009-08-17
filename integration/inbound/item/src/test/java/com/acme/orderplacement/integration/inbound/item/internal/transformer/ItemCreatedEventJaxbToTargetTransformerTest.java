@@ -113,7 +113,7 @@ public class ItemCreatedEventJaxbToTargetTransformerTest {
 		result.getCreatedItem().setName(EXPECTED_ITEM_NAME);
 		result.getCreatedItem().setItemSpecs(new ItemSpecs());
 		final ItemSpec itemSpec = new ItemSpec();
-		result.getCreatedItem().getItemSpecs().getItemSpec().add(itemSpec);
+		result.getCreatedItem().getItemSpecs().getItemSpecs().add(itemSpec);
 		itemSpec.setItemSpecId(EXPECTED_ITEM_SPEC_ID);
 		itemSpec.setName(EXPECTED_ITEM_SPEC_NAME);
 

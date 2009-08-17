@@ -56,6 +56,18 @@
 			<artifactId>spring-context</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.support
+			</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 			TODO: For some unknown reason, maven will exclude spring-beans and
 			spring-context from the classpath if we exclude spring-aop from the
@@ -63,30 +75,22 @@
 			better solution.
 		-->
 		<dependency>
-			<groupId>org.springframework.integration
+			<groupId>com.acme.orderplacement.integration
 			</groupId>
-			<artifactId>spring-integration-core
+			<artifactId>orderplacement.integration.inbound.support
 			</artifactId>
 			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-tx</artifactId>
+					<artifactId>spring-jms</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.integration
 			</groupId>
-			<artifactId>orderplacement.integration.inbound.item
+			<artifactId>orderplacement.integration.inbound.itemimport
 			</artifactId>
 			<scope>compile</scope>
 		</dependency>
@@ -104,6 +108,11 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>aopalliance</groupId>
 			<artifactId>aopalliance</artifactId>
 			<scope>runtime</scope>
@@ -111,6 +120,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security
+			</groupId>
+			<artifactId>spring-security-core</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -131,6 +146,38 @@
 					<artifactId>spring-jms</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.integration
+			</groupId>
+			<artifactId>spring-integration-core
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.integration
+			</groupId>
+			<artifactId>orderplacement.integration.inbound.item
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
+			<artifactId>orderplacement.jee.geronimo
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring-integration
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-camel</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<!--
 			| Test dependencies 

@@ -14,7 +14,7 @@
 	<bean id="com.acme.orderplacement.jee.integrationComponentFactory"
 		class="org.springframework.context.support.ClassPathXmlApplicationContext">
 		<constructor-arg
-			value="classpath:/META-INF/spring/mdb.integrationContext.scontext" />
+			value="classpath:/META-INF/spring/mdb.integrationContext-camel.scontext" />
 	</bean>
 
 </beans>

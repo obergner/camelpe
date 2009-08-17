@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+
+	<!--
+		==================================================================
+		This context file gathers all those bean definitions in one place that
+		are specific to a concrete platform/runtime environment, e.g.
+		Geronimo, WebLogic, Tomcat ...
+		==================================================================
+	-->
+
+	<context:mbean-export default-domain="com.acme.orderplacement"
+		server="persistence.support.platform.mbeanServer" />
+
+	<!--
+		==================================================================
+		Logging
+		==================================================================
+	-->
+
+	<bean id="persistence.support.platform.log4jInitialization"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+		destroy-method="shutdownLogging">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value><![CDATA[classpath:META-INF/conf/log4j-ear.properties]]></value>
+			</list>
+		</property>
+	</bean>
+
+	<!--
+		==================================================================
+		Obtaining Geronimo's MBeanServer
+		==================================================================
+	-->
+
+	<bean id="persistence.support.platform.mbeanServer"
+		class="com.acme.orderplacement.jee.geronimo.spring.GeronimoMBeanServerLookupFactoryBean" />
+
+	<!--
+		==================================================================
+		PERSISTENCE
+		==================================================================
+	-->
+
+	<!--
+		Our data source 
+	-->
+	<jee:jndi-lookup id="persistence.support.platform.dataSource"
+		jndi-name="jca:/com.acme.orderplacement.jee/orderplacement.jee.ear/JCAManagedConnectionFactory/jdbc/com/acme/OrderPlacementDS"
+		cache="true" resource-ref="false" />
+
+	<bean id="persistence.support.platform.transactionManager"
+		class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="transactionManagerName" value="java:/TransactionManager" />
+		<property name="userTransactionName" value="java:/TransactionManager" />
+		<property name="transactionSynchronizationRegistryName"
+			value="java:/TransactionSynchronizationRegistry" />
+	</bean>
+
+	<!--
+		==================================================================
+		SECURITY
+		==================================================================
+	-->
+
+	<security:authentication-provider>
+		<security:user-service
+			id="persistence.support.platform.userDetailsService">
+			<security:user name="guest" password="guest"
+				authorities="ROLE_GUEST" />
+			<security:user name="external" password="external"
+				authorities="ROLE_EXTERNAL_USER" />
+			<security:user name="employee" password="employee"
+				authorities="ROLE_EMPLOYEE" />
+			<security:user name="admin" password="admin"
+				authorities="ROLE_ADMIN" />
+			<security:user name="accountant" password="accountant"
+				authorities="ROLE_ACCOUNTANT" />
+		</security:user-service>
+	</security:authentication-provider>
+
+</beans>

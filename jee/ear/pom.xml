@@ -84,6 +84,13 @@
 		<dependency>
 			<groupId>com.acme.orderplacement.jee
 			</groupId>
+			<artifactId>orderplacement.jee.geronimo
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
 			<artifactId>orderplacement.jee.ws
 			</artifactId>
 			<type>war</type>

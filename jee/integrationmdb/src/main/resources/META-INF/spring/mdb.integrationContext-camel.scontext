@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:camel="http://camel.apache.org/schema/spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		   http://www.springframework.org/schema/jee 
+		   http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+		   http://camel.apache.org/schema/spring
+		   http://camel.apache.org/schema/spring/camel-spring-2.0-M2.xsd">
+
+	<context:component-scan
+		base-package="com.acme.orderplacement.integration.inbound.item" />
+	<context:annotation-config />
+
+	<camel:camelContext id="integration.inbound.item.CamelContext">
+		<!-- will auto discover camel router in the specified package -->
+		<camel:package>com.acme.orderplacement.integration.inbound.itemimport.internal.routes</camel:package>
+		<camel:package>com.acme.orderplacement.jee.integrationmdb.internal.routes</camel:package>
+		<camel:template id="integration.inbound.item.ProducerTemplate"
+			defaultEndpoint="direct:itemimport.incoming.raw" />
+		<!-- camel:jmxAgent id="agent" createConnector="true"/-->
+	</camel:camelContext>
+
+	<!--
+		JMS/ActiveMQ integration 
+	 -->
+
+	<bean id="integration.inbound.item.ActiveMQ" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="brokerURL" value="tcp://localhost:61616" />
+	</bean>
+
+	<bean id="integration.inbound.item..Jms" class="org.apache.camel.component.jms.JmsComponent">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="tcp://localhost:61616" />
+			</bean>
+		</property>
+	</bean>
+
+	<!--
+		JMX integration 
+	 -->
+
+	<bean id="integration.inbound.item.jmx.MBeanServer"
+		class="com.acme.orderplacement.jee.geronimo.spring.GeronimoMBeanServerLookupFactoryBean" />
+
+
+	<jee:jndi-lookup
+		jndi-name="jca:/com.acme.orderplacement.jee/orderplacement.jee.ear/JCAManagedConnectionFactory/jms/com/acme/ConnectionFactory"
+		id="integration.inbound.geronimo.JmsConnectionFactory" expected-type="javax.jms.ConnectionFactory"
+		resource-ref="false" />
+
+	<jee:jndi-lookup
+		jndi-name="jca:/com.acme.orderplacement.jee/orderplacement.jee.ear/JCAAdminObject/jms/queue/com/acme/ItemCreatedEventsErrorQueue"
+		id="integration.inbound.geronimo.ItemCreatedEventsErrorQueue"
+		expected-type="javax.jms.Queue" resource-ref="false" />
+
+	<jee:local-slsb id="integration.inbound.item.ItemStorageServiceDelegate"
+		jndi-name="java:comp/env/ejb/com/acme/orderplacment/item/ItemStorageService"
+		resource-ref="false" business-interface="com.acme.orderplacement.service.item.ItemStorageService" />
+
+</beans>

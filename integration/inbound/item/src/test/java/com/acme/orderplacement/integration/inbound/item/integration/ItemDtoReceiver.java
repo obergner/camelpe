@@ -6,7 +6,6 @@ package com.acme.orderplacement.integration.inbound.item.integration;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
 
 import com.acme.orderplacement.service.item.dto.ItemDto;
@@ -21,14 +20,13 @@ import com.acme.orderplacement.service.item.dto.ItemDto;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@MessageEndpoint(ItemDtoReceiver.COMPONENT_NAME)
 public class ItemDtoReceiver {
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
 
-	public static final String COMPONENT_NAME = "integration.inbound.item.test.ItemDtoReceiver";
+	public static final String COMPONENT_NAME = "integration.inbound.item.test.ItemDtoReceiverBean";
 
 	private final List<ItemDto> receivedItemDtos = new ArrayList<ItemDto>();
 
@@ -39,7 +37,7 @@ public class ItemDtoReceiver {
 	/**
 	 * @param itemDto
 	 */
-	@ServiceActivator(inputChannel = "integration.inbound.item.target.ItemCreatedEventsChannel")
+	@ServiceActivator
 	public void receiveAndStore(final ItemDto itemDto) {
 		this.receivedItemDtos.add(itemDto);
 	}

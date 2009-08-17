@@ -14,10 +14,20 @@
 				com.acme.orderplacement.jee.integrationmdb.internal.ItemCreatedEventChannelAdapterMdb</ejb-class>
 			<transaction-type>Container</transaction-type>
 			<ejb-local-ref>
-				<ejb-ref-name>ejb/com/acme/orderplacment/ItemStorageServiceEJB</ejb-ref-name>
+				<ejb-ref-name>ejb/com/acme/orderplacment/item/ItemStorageService</ejb-ref-name>
 				<ejb-ref-type>Session</ejb-ref-type>
 				<local>com.acme.orderplacement.service.item.ItemStorageService</local>
 			</ejb-local-ref>
+			<resource-ref>
+				<res-ref-name>jms/com/acme/ConnectionFactory</res-ref-name>
+				<res-type>javax.jms.ConnectionFactory</res-type>
+				<res-sharing-scope>Shareable</res-sharing-scope>
+			</resource-ref>
+			<resource-env-ref>
+				<resource-env-ref-name>
+					jms/queue/com/acme/ItemCreatedEventsErrorQueue</resource-env-ref-name>
+				<resource-env-ref-type>javax.jms.Queue</resource-env-ref-type>
+			</resource-env-ref>
 		</message-driven>
 	</enterprise-beans>
 

@@ -63,6 +63,13 @@ This module is a temporary solution in the future to be replaced by a proper ser
 					</execution>
 				</executions>
 				<configuration>
+					<!--
+						Use extensions specific to the XJC implementation, in our case
+						Sun' JAXB RI. We need this to force XJC to generate an
+						@XmlRootElement annotation: see
+						http://weblogs.java.net/blog/kohsuke/archive/2006/03/why_does_jaxb_p.html.
+					-->
+					<extension>true</extension>
 					<!-- Changes the default schema directory -->
 					<schemaDirectory>src/main/resources/META-INF/schema
 					</schemaDirectory>
@@ -72,6 +79,9 @@ This module is a temporary solution in the future to be replaced by a proper ser
 					<schemaExcludes>
 						<exclude>*/*/*.xsd</exclude>
 					</schemaExcludes>
+					<bindingIncludes>
+						<include>*/*.xjb</include>
+					</bindingIncludes>
 				</configuration>
 			</plugin>
 		</plugins>

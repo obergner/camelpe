@@ -17,8 +17,6 @@ public final class Channels {
 
 	public static final String ITEM_CREATED_EVENTS_XML = "integration.inbound.item.xml.ItemCreatedEventsChannel";
 
-	public static final String ITEM_CREATED_EVENTS_JAXB = "integration.inbound.item.jaxb.ItemCreatedEventsChannel";
-
 	public static final String ITEM_CREATED_EVENTS_TARGET = "integration.inbound.item.target.ItemCreatedEventsChannel";
 
 	/**

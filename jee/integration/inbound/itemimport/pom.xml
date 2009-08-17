@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
+	<parent>
+		<groupId>com.acme.orderplacement.jee.integration</groupId>
+		<artifactId>orderplacement.jee.integration.inbound</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme.orderplacement.jee.integration.inbound</groupId>
+	<artifactId>orderplacement.jee.integration.inbound.itemimport</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>ejb</packaging>
+
+	<name><![CDATA[SOA Order :: JEE :: Integration Layer :: Inbound :: Item Import]]></name>
+
+	<dependencies>
+		<!--
+			| Provided dependencies 
+		-->
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.jms</groupId>
+			<artifactId>jms</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<!--
+			TODO: For some unknown reason, maven will exclude spring-beans and
+			spring-context from the classpath if we exclude spring-aop from the
+			spring-integration-core dependency below. Find out why and find a
+			better solution.
+		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.integration
+			</groupId>
+			<artifactId>orderplacement.integration.inbound.support
+			</artifactId>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-jms</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--
+			| Runtime dependencies 
+		-->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+			| Test dependencies 
+		-->
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<configuration>
+					<ejbVersion>3.0</ejbVersion>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>false</addClasspath>
+							<addDefaultSpecificationEntries>true
+							</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true
+							</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
