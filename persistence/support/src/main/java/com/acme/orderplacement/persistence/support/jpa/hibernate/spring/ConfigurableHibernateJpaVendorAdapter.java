@@ -3,9 +3,9 @@
  */
 package com.acme.orderplacement.persistence.support.jpa.hibernate.spring;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +22,7 @@ import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.dialect.Oracle10gDialect;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.dialect.SQLServerDialect;
-import org.hibernate.dialect.SybaseDialect;
+import org.hibernate.dialect.SybaseASE15Dialect;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.ejb.HibernateEntityManagerFactory;
 import org.hibernate.event.PostDeleteEventListener;
@@ -124,25 +124,24 @@ public class ConfigurableHibernateJpaVendorAdapter extends
 	 * @see org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter#getJpaPropertyMap()
 	 */
 	@Override
-	public Map getJpaPropertyMap() {
-		final Properties jpaProperties = new Properties();
+	public Map<String, ?> getJpaPropertyMap() {
+		final Map<String, Object> jpaProperties = new HashMap<String, Object>();
 
 		if (getDatabasePlatform() != null) {
-			jpaProperties.setProperty(Environment.DIALECT,
-					getDatabasePlatform());
+			jpaProperties.put(Environment.DIALECT, getDatabasePlatform());
 		} else if (getDatabase() != null) {
 			final Class<? extends Dialect> databaseDialectClass = determineDatabaseDialectClass(getDatabase());
 			if (databaseDialectClass != null) {
-				jpaProperties.setProperty(Environment.DIALECT,
-						databaseDialectClass.getName());
+				jpaProperties.put(Environment.DIALECT, databaseDialectClass
+						.getName());
 			}
 		}
 
 		if (isGenerateDdl()) {
-			jpaProperties.setProperty(Environment.HBM2DDL_AUTO, "update");
+			jpaProperties.put(Environment.HBM2DDL_AUTO, "update");
 		}
 		if (isShowSql()) {
-			jpaProperties.setProperty(Environment.SHOW_SQL, "true");
+			jpaProperties.put(Environment.SHOW_SQL, "true");
 		}
 
 		return jpaProperties;
@@ -259,7 +258,7 @@ public class ConfigurableHibernateJpaVendorAdapter extends
 		case SQL_SERVER:
 			return SQLServerDialect.class;
 		case SYBASE:
-			return SybaseDialect.class;
+			return SybaseASE15Dialect.class;
 		default:
 			return null;
 		}

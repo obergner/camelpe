@@ -45,6 +45,8 @@
 		<deps.jta.version>1.1</deps.jta.version>
 		<deps.jms.version>1.1</deps.jms.version>
 		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
+		<deps.hibernate-jpa-api.version>1.0.0.Final
+		</deps.hibernate-jpa-api.version>
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.easymock.version>2.5.2</deps.easymock.version>
 		<deps.slf4j.version>1.5.8</deps.slf4j.version>
@@ -54,6 +56,7 @@
 		</deps.springsecurity.version>
 		<deps.springintegration.version>1.0.3.RELEASE
 		</deps.springintegration.version>
+		<deps.hibernate.version>3.5.0-Final</deps.hibernate.version>
 		<deps.camel.version>2.2.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
@@ -458,6 +461,13 @@
 				<version>${deps.jms.version}</version>
 				<type>jar</type>
 			</dependency>
+			<!-- Javax Persistence API -->
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.0-api</artifactId>
+				<version>${deps.hibernate-jpa-api.version}</version>
+				<type>jar</type>
+			</dependency>
 			<!-- JAXB API -->
 			<dependency>
 				<groupId>javax.xml.bind</groupId>
@@ -783,10 +793,15 @@
 				<type>jar</type>
 			</dependency>
 			<!-- CGLIB -->
+			<!--
+				<dependency> <groupId>cglib</groupId>
+				<artifactId>cglib-nodep</artifactId> <version>2.1_3</version>
+				<type>jar</type> </dependency>
+			-->
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib-nodep</artifactId>
-				<version>2.1_3</version>
+				<version>2.2</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Google -->
@@ -798,35 +813,10 @@
 				<type>jar</type>
 			</dependency>
 			<!-- Hibernate -->
-			<!-- JPA API -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>ejb3-persistence</artifactId>
-				<version>1.0.2.GA</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>antlr</groupId>
-				<artifactId>antlr</artifactId>
-				<version>2.7.6</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>dom4j</groupId>
-				<artifactId>dom4j</artifactId>
-				<version>1.6.1</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>javassist</groupId>
-				<artifactId>javassist</artifactId>
-				<version>3.4.GA</version>
-				<type>jar</type>
-			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-annotations</artifactId>
-				<version>3.4.0.GA</version>
+				<version>${deps.hibernate.version}</version>
 				<type>jar</type>
 				<exclusions>
 					<!--
@@ -844,9 +834,8 @@
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager
-				</artifactId>
-				<version>3.4.0.GA</version>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${deps.hibernate.version}</version>
 				<type>jar</type>
 				<exclusions>
 					<!--
@@ -860,12 +849,42 @@
 						<groupId>org.slf4j</groupId>
 						<artifactId>slf4j-api</artifactId>
 					</exclusion>
+					<exclusion>
+						<groupId>cglib</groupId>
+						<artifactId>cglib</artifactId>
+					</exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator
-                </artifactId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${deps.hibernate.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<!--
+						We want these dependencies in 'provided' scope since they count
+						among those libraries that are shared between different JEE
+						modules in our final ear. If we wouldn't exclude them here, they
+						would end up in scope 'runtime' and thus would be automatically
+						included in every JEE module we build, not only in the final ear.
+					-->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-collections</groupId>
+						<artifactId>commons-collections</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.transaction</groupId>
+						<artifactId>jta</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
 				<version>3.1.0.GA</version>
 				<type>jar</type>
 				<exclusions>
@@ -883,32 +902,22 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core
-                </artifactId>
-				<version>3.3.1.GA</version>
+				<groupId>antlr</groupId>
+				<artifactId>antlr</artifactId>
+				<version>2.7.6</version>
 				<type>jar</type>
-				<exclusions>
-					<!--
-						We want these dependencies in 'provided' scope since they count
-						among those libraries that are shared between different JEE
-						modules in our final war. If we wouldn't exclude them here, they
-						would end up in scope 'runtime' and thus would be automatically
-						included in every JEE module we build, not only in the final ear.
-					-->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-api</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>commons-collections</groupId>
-						<artifactId>commons-collections</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>javax.transaction</groupId>
-						<artifactId>jta</artifactId>
-					</exclusion>
-				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>dom4j</groupId>
+				<artifactId>dom4j</artifactId>
+				<version>1.6.1</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>3.9.0.GA</version>
+				<type>jar</type>
 			</dependency>
 			<!-- SLF4J -->
 			<dependency>
