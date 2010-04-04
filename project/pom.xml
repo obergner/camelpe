@@ -41,7 +41,6 @@
 		<!--
 			Dependencies version 
 		 -->
-		<!-- deps.spring.version>2.5.6</deps.spring.version -->
 		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
 		<deps.springsecurity.version>3.0.2.RELEASE
 		</deps.springsecurity.version>
@@ -51,6 +50,9 @@
 		<deps.easymock.version>2.5.2</deps.easymock.version>
 		<deps.slf4j.version>1.5.8</deps.slf4j.version>
 		<deps.aspectj.version>1.6.8</deps.aspectj.version>
+		<deps.camel.version>2.2.0</deps.camel.version>
+		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
+		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
 	</properties>
 
 	<organization>
@@ -679,14 +681,6 @@
 				<artifactId>spring-security-core</artifactId>
 				<version>${deps.springsecurity.version}</version>
 				<type>jar</type>
-				<!--
-					<exclusions> Spring Security 2.0.4 is based on Spring 2.0.8. In
-					Spring 2.5.6, spring-support has been merged into the other spring
-					jars. <exclusion> <groupId>org.springframework</groupId>
-					<artifactId>spring-support</artifactId> </exclusion> <exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId> </exclusion> </exclusions>
-				-->
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.security
@@ -735,44 +729,44 @@
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-core</artifactId>
-				<version>2.0-M3</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-activemq</artifactId>
-				<version>1.1.0</version>
+				<version>${deps.camel.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-jaxb</artifactId>
-				<version>2.0-M3</version>
+				<version>${deps.camel.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-jms</artifactId>
-				<version>2.0-M3</version>
+				<version>${deps.camel.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-spring</artifactId>
-				<version>2.0-M3</version>
+				<version>${deps.camel.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-spring-integration
 				</artifactId>
-				<version>2.0-M3</version>
+				<version>${deps.camel.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-test</artifactId>
-				<version>2.0-M3</version>
+				<version>${deps.camel.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-activemq</artifactId>
+				<version>${deps.camel-activemq.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- 
@@ -781,7 +775,7 @@
 			<dependency>
 				<groupId>org.apache.activemq</groupId>
 				<artifactId>activemq-camel</artifactId>
-				<version>5.2.0</version>
+				<version>${deps.activemq-camel.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- CGLIB -->
