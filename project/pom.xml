@@ -41,15 +41,19 @@
 		<!--
 			Dependencies version 
 		 -->
+		<deps.ejb-api.version>3.0</deps.ejb-api.version>
+		<deps.jta.version>1.1</deps.jta.version>
+		<deps.jms.version>1.1</deps.jms.version>
+		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
+		<deps.junit.version>4.8.1</deps.junit.version>
+		<deps.easymock.version>2.5.2</deps.easymock.version>
+		<deps.slf4j.version>1.5.8</deps.slf4j.version>
+		<deps.aspectj.version>1.6.8</deps.aspectj.version>
 		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
 		<deps.springsecurity.version>3.0.2.RELEASE
 		</deps.springsecurity.version>
 		<deps.springintegration.version>1.0.3.RELEASE
 		</deps.springintegration.version>
-		<deps.junit.version>4.8.1</deps.junit.version>
-		<deps.easymock.version>2.5.2</deps.easymock.version>
-		<deps.slf4j.version>1.5.8</deps.slf4j.version>
-		<deps.aspectj.version>1.6.8</deps.aspectj.version>
 		<deps.camel.version>2.2.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
@@ -430,28 +434,28 @@
 			<dependency>
 				<groupId>javax.annotation</groupId>
 				<artifactId>jsr250-api</artifactId>
-				<version>1.0</version>
+				<version>${deps.jsr250-api.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- EJB 3.0 API -->
 			<dependency>
 				<groupId>javax.ejb</groupId>
 				<artifactId>ejb-api</artifactId>
-				<version>3.0</version>
+				<version>${deps.ejb-api.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Javax Transaction API -->
 			<dependency>
 				<groupId>javax.transaction</groupId>
 				<artifactId>jta</artifactId>
-				<version>1.1</version>
+				<version>${deps.jta.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Javax JMS API -->
 			<dependency>
 				<groupId>javax.jms</groupId>
 				<artifactId>jms</artifactId>
-				<version>1.1</version>
+				<version>${deps.jms.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- JAXB API -->
