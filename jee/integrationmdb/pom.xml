@@ -123,6 +123,16 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-asm</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.security
 			</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -151,13 +161,6 @@
 			<groupId>org.springframework.integration
 			</groupId>
 			<artifactId>spring-integration-core
-			</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.integration
-			</groupId>
-			<artifactId>orderplacement.integration.inbound.item
 			</artifactId>
 			<scope>runtime</scope>
 		</dependency>

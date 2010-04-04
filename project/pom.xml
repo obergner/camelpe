@@ -38,6 +38,19 @@
 		<geronimo.moduleId.version>${project.version}
 		</geronimo.moduleId.version>
 		<geronimo.moduleId.type>ear</geronimo.moduleId.type>
+		<!--
+			Dependencies version 
+		 -->
+		<!-- deps.spring.version>2.5.6</deps.spring.version -->
+		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
+		<deps.springsecurity.version>3.0.2.RELEASE
+		</deps.springsecurity.version>
+		<deps.springintegration.version>1.0.3.RELEASE
+		</deps.springintegration.version>
+		<deps.junit.version>4.8.1</deps.junit.version>
+		<deps.easymock.version>2.5.2</deps.easymock.version>
+		<deps.slf4j.version>1.5.8</deps.slf4j.version>
+		<deps.aspectj.version>1.6.8</deps.aspectj.version>
 	</properties>
 
 	<organization>
@@ -577,13 +590,13 @@
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjrt</artifactId>
-				<version>1.6.2</version>
+				<version>${deps.aspectj.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjweaver</artifactId>
-				<version>1.6.2</version>
+				<version>${deps.aspectj.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Spring -->
@@ -596,49 +609,67 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-aop</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-tx</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jms</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-oxm</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-asm</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Spring Security -->
@@ -646,29 +677,23 @@
 				<groupId>org.springframework.security
 				</groupId>
 				<artifactId>spring-security-core</artifactId>
-				<version>2.0.4</version>
+				<version>${deps.springsecurity.version}</version>
 				<type>jar</type>
-				<exclusions>
-					<!--
-						Spring Security 2.0.4 is based on Spring 2.0.8. In Spring 2.5.6,
-						spring-support has been merged into the other spring jars.
-					-->
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-support</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-core</artifactId>
-					</exclusion>
-				</exclusions>
+				<!--
+					<exclusions> Spring Security 2.0.4 is based on Spring 2.0.8. In
+					Spring 2.5.6, spring-support has been merged into the other spring
+					jars. <exclusion> <groupId>org.springframework</groupId>
+					<artifactId>spring-support</artifactId> </exclusion> <exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId> </exclusion> </exclusions>
+				-->
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.security
 				</groupId>
-				<artifactId>spring-security-core-tiger
+				<artifactId>spring-security-config
 				</artifactId>
-				<version>2.0.4</version>
+				<version>${deps.springsecurity.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Spring Integration -->
@@ -677,7 +702,7 @@
 				</groupId>
 				<artifactId>spring-integration-core
 				</artifactId>
-				<version>1.0.1.RELEASE</version>
+				<version>${deps.springintegration.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
@@ -685,7 +710,7 @@
 				</groupId>
 				<artifactId>spring-integration-adapter
 				</artifactId>
-				<version>1.0.1.RELEASE</version>
+				<version>${deps.springintegration.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
@@ -693,7 +718,7 @@
 				</groupId>
 				<artifactId>spring-integration-jms
 				</artifactId>
-				<version>1.0.1.RELEASE</version>
+				<version>${deps.springintegration.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
@@ -701,35 +726,7 @@
 				</groupId>
 				<artifactId>spring-integration-xml
 				</artifactId>
-				<version>1.0.1.RELEASE</version>
-				<type>jar</type>
-			</dependency>
-			<!--
-				Spring Web Services: Spring Integration uses its XML databinding and
-				transformation capabilities
-			-->
-			<dependency>
-				<groupId>org.springframework.ws
-				</groupId>
-				<artifactId>spring-xml
-				</artifactId>
-				<version>1.5.6</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.ws
-				</groupId>
-				<artifactId>spring-oxm
-				</artifactId>
-				<version>1.5.6</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.ws
-				</groupId>
-				<artifactId>spring-oxm-tiger
-				</artifactId>
-				<version>1.5.6</version>
+				<version>${deps.springintegration.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- 
@@ -920,14 +917,14 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api
                 </artifactId>
-				<version>1.5.6</version>
+				<version>${deps.slf4j.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12
                 </artifactId>
-				<version>1.5.6</version>
+				<version>${deps.slf4j.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Tranql: PostgreSQL XA Connector -->
@@ -958,28 +955,28 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<!-- version>3.8.2</version -->
-				<version>4.4</version>
+				<version>${deps.junit.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Easymock -->
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
-				<version>2.4</version>
+				<version>${deps.easymock.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymockclassextension
 				</artifactId>
-				<version>2.4</version>
+				<version>${deps.easymock.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Spring-Test -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
-				<version>2.5.6</version>
+				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>

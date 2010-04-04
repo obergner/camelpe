@@ -4,6 +4,7 @@
 package com.acme.orderplacement.jee.geronimo.spring;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.Locale;
 import java.util.Map;
 
@@ -187,6 +188,25 @@ public class ApplicationContextGBean implements ApplicationContext,
 	// -------------------------------------------------------------------------
 
 	/**
+	 * @see org.springframework.beans.factory.ListableBeanFactory#findAnnotationOnBean
+	 *      (java.lang.String, java.lang.Class)
+	 */
+	public <A extends Annotation> A findAnnotationOnBean(final String beanName,
+			final Class<A> annotationType) {
+		return getDelegate().findAnnotationOnBean(beanName, annotationType);
+	}
+
+	/**
+	 * @see org.springframework.beans.factory.ListableBeanFactory#getBeansWithAnnotation
+	 *      (java.lang.Class)
+	 */
+	public Map<String, Object> getBeansWithAnnotation(
+			final Class<? extends Annotation> annotationType)
+			throws BeansException {
+		return getDelegate().getBeansWithAnnotation(annotationType);
+	}
+
+	/**
 	 * @param name
 	 * @return
 	 * @see org.springframework.beans.factory.BeanFactory#containsBean(java.lang.String)
@@ -233,6 +253,13 @@ public class ApplicationContextGBean implements ApplicationContext,
 	}
 
 	/**
+	 * @see org.springframework.beans.factory.BeanFactory#getBean(java.lang.Class)
+	 */
+	public <T> T getBean(final Class<T> requiredType) throws BeansException {
+		return getDelegate().getBean(requiredType);
+	}
+
+	/**
 	 * @param name
 	 * @param requiredType
 	 * @return
@@ -240,7 +267,7 @@ public class ApplicationContextGBean implements ApplicationContext,
 	 * @see org.springframework.beans.factory.BeanFactory#getBean(java.lang.String,
 	 *      java.lang.Class)
 	 */
-	public Object getBean(final String name, final Class requiredType)
+	public <T> T getBean(final String name, final Class<T> requiredType)
 			throws BeansException {
 		return getDelegate().getBean(name, requiredType);
 	}
@@ -253,7 +280,7 @@ public class ApplicationContextGBean implements ApplicationContext,
 	 * @see org.springframework.beans.factory.BeanFactory#getBean(java.lang.String,
 	 *      java.lang.Object[])
 	 */
-	public Object getBean(final String name, final Object[] args)
+	public Object getBean(final String name, final Object... args)
 			throws BeansException {
 		return getDelegate().getBean(name, args);
 	}
@@ -316,7 +343,7 @@ public class ApplicationContextGBean implements ApplicationContext,
 	 * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(java.lang.Class,
 	 *      boolean, boolean)
 	 */
-	public Map<?, ?> getBeansOfType(final Class type,
+	public <T> Map<String, T> getBeansOfType(final Class<T> type,
 			final boolean includeNonSingletons, final boolean allowEagerInit)
 			throws BeansException {
 		return getDelegate().getBeansOfType(type, includeNonSingletons,
@@ -329,7 +356,8 @@ public class ApplicationContextGBean implements ApplicationContext,
 	 * @throws BeansException
 	 * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(java.lang.Class)
 	 */
-	public Map<?, ?> getBeansOfType(final Class type) throws BeansException {
+	public <T> Map<String, T> getBeansOfType(final Class<T> type)
+			throws BeansException {
 		return getDelegate().getBeansOfType(type);
 	}
 

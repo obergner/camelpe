@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.integration.inbound.itemimport.internal;
+package com.acme.orderplacement.integration.inbound.itemimport;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,13 +11,12 @@ import java.io.InputStreamReader;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.acme.orderplacement.integration.inbound.itemimport.ItemImportChannels;
 
 /**
  * <p>
@@ -62,7 +61,17 @@ public class ItemImportRoutesIntegrationTest extends CamelSpringTestSupport {
 	protected AbstractXmlApplicationContext createApplicationContext() {
 
 		return new ClassPathXmlApplicationContext(
-				"classpath:META-INF/spring/integration.inbound.itemimport.test.integrationLayer.scontext");
+				new String[] { "classpath:META-INF/spring/integration.inbound.itemimport.test.integrationLayer.scontext" },
+				getRouteExcludingApplicationContext());
+	}
+
+	/**
+	 * @see org.apache.camel.test.junit4.CamelSpringTestSupport#excludeRoute()
+	 */
+	@Override
+	protected Class<? extends RouteBuilder> excludeRoute() {
+
+		return ItemImportRoutesTest.TestRoutes.class;
 	}
 
 	// -------------------------------------------------------------------------

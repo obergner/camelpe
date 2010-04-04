@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.integration.inbound.itemimport.internal;
+package com.acme.orderplacement.integration.inbound.itemimport;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,9 +14,6 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.CamelTestSupport;
-
-import com.acme.orderplacement.integration.inbound.itemimport.ItemImportChannels;
-import com.acme.orderplacement.integration.inbound.itemimport.internal.testroutes.MockRoutes;
 
 /**
  * <p>
@@ -47,7 +44,7 @@ public class ItemImportRoutesTest extends CamelTestSupport {
 
 	@Override
 	protected RouteBuilder[] createRouteBuilders() {
-		return MockRoutes.INSTANCE.createRouteBuilders();
+		return new RouteBuilder[] { new ItemImportRoutes(), new TestRoutes() };
 	}
 
 	// -------------------------------------------------------------------------
@@ -100,6 +97,24 @@ public class ItemImportRoutesTest extends CamelTestSupport {
 			if (reader != null) {
 				reader.close();
 			}
+		}
+	}
+
+	/**
+	 * <p>
+	 * TODO: Insert short summary for TestRoutes
+	 * </p>
+	 * 
+	 * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
+	 * 
+	 */
+	static final class TestRoutes extends RouteBuilder {
+		@Override
+		public void configure() throws Exception {
+			from(ItemImportChannels.TRANSFER_JAXB).to(
+					MockRoutes.ITEMIMPORT_SERVICE_MOCK_EP);
+			from(ItemImportChannels.EXCEPTIONS).to(
+					MockRoutes.EXCEPTION_HANDLER_MOCK_EP);
 		}
 	}
 }

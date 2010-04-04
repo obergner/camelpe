@@ -10,7 +10,7 @@
 		   http://www.springframework.org/schema/jee 
 		   http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 		   http://camel.apache.org/schema/spring
-		   http://camel.apache.org/schema/spring/camel-spring-2.0-M2.xsd">
+		   http://camel.apache.org/schema/spring/camel-spring-2.0-M3.xsd">
 
 	<context:component-scan
 		base-package="com.acme.orderplacement.integration.inbound.item" />
@@ -18,12 +18,21 @@
 
 	<camel:camelContext id="integration.inbound.item.CamelContext">
 		<!-- will auto discover camel router in the specified package -->
-		<camel:package>com.acme.orderplacement.integration.inbound.itemimport.internal.routes</camel:package>
-		<camel:package>com.acme.orderplacement.jee.integrationmdb.internal.routes</camel:package>
+		<camel:packageScan>
+			<camel:package>com.acme.orderplacement.integration.inbound.itemimport</camel:package>
+			<camel:package>com.acme.orderplacement.jee.integrationmdb.internal.routes</camel:package>
+		</camel:packageScan>
 		<camel:template id="integration.inbound.item.ProducerTemplate"
 			defaultEndpoint="direct:itemimport.incoming.raw" />
 		<!-- camel:jmxAgent id="agent" createConnector="true"/-->
 	</camel:camelContext>
+
+	<!--
+		<camel:endpoint id="integration.inbound.item.ItemStorageServiceEP"
+		uri="direct:integration.inbound.item.ItemStorageServiceEP">
+		<camel:bean ref="integration.inbound.item.ItemStorageServiceDelegate"
+		method="registerItem" /> </camel:endpoint>
+	-->
 
 	<!--
 		JMS/ActiveMQ integration 

@@ -1,12 +1,10 @@
 /**
  * 
  */
-package com.acme.orderplacement.integration.inbound.itemimport.internal.routes;
+package com.acme.orderplacement.integration.inbound.itemimport;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
-
-import com.acme.orderplacement.integration.inbound.itemimport.ItemImportChannels;
 
 /**
  * <p>

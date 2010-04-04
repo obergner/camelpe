@@ -13,8 +13,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.intercept.method.aspectj.AspectJAnnotationCallback;
-import org.springframework.security.intercept.method.aspectj.AspectJAnnotationSecurityInterceptor;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.intercept.aspectj.AspectJAnnotationCallback;
+import org.springframework.security.access.intercept.aspectj.AspectJAnnotationSecurityInterceptor;
 import org.springframework.stereotype.Component;
 
 /**

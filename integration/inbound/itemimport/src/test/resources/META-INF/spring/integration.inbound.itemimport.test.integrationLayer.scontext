@@ -13,20 +13,12 @@
            http://www.springframework.org/schema/integration/jms
 		   http://www.springframework.org/schema/integration/jms/spring-integration-jms-1.0.xsd
 		   http://camel.apache.org/schema/spring
-		   http://camel.apache.org/schema/spring/camel-spring-2.0-M2.xsd">
+		   http://camel.apache.org/schema/spring/camel-spring-2.0-M3.xsd">
 
 	<camelContext>
-		<package>
-			com.acme.orderplacement.integration.inbound.itemimport.internal.routes
-		</package>
-		<route>
-			<from uri="direct:itemimport.transfer.jaxb" />
-			<to uri="mock:itemimportService" />
-		</route>
-		<route>
-			<from uri="direct:itemimport.exceptions" />
-			<to uri="mock:exceptionHandler" />
-		</route>
+		<packageScan>
+			<package>com.acme.orderplacement.integration.inbound.itemimport</package>
+		</packageScan>
 	</camelContext>
 
 </beans:beans>
