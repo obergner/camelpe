@@ -54,15 +54,6 @@
 			<scope>compile</scope>
 		</dependency>
 		<!--
-			Needed for @Aspect and @Pointcut annotations. I hope, one day AspectJ
-			will offer a separate jar just for its annotations.
-		-->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<!--
 			| Runtime dependencies 
 		-->
 		<dependency>

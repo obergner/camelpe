@@ -49,7 +49,8 @@
 		</deps.hibernate-jpa-api.version>
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.easymock.version>2.5.2</deps.easymock.version>
-		<deps.slf4j.version>1.5.8</deps.slf4j.version>
+		<deps.slf4j.version>1.5.11</deps.slf4j.version>
+		<deps.log4j.version>1.2.15</deps.log4j.version>
 		<deps.aspectj.version>1.6.8</deps.aspectj.version>
 		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
 		<deps.springsecurity.version>3.0.2.RELEASE
@@ -569,7 +570,7 @@
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
-				<version>1.2.15</version>
+				<version>${deps.log4j.version}</version>
 				<type>jar</type>
 				<exclusions>
 					<exclusion>
@@ -627,6 +628,12 @@
 				<artifactId>spring-core</artifactId>
 				<version>${deps.spring.version}</version>
 				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -745,12 +752,24 @@
 				<artifactId>camel-core</artifactId>
 				<version>${deps.camel.version}</version>
 				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-jaxb</artifactId>
 				<version>${deps.camel.version}</version>
 				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
@@ -791,6 +810,64 @@
 				<artifactId>activemq-camel</artifactId>
 				<version>${deps.activemq-camel.version}</version>
 				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!--
+				Explicitily list these dependencies in order to be able to exclude
+				commons-logging
+			-->
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-core</artifactId>
+				<version>${deps.activemq-camel.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-pool</artifactId>
+				<version>${deps.activemq-camel.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activeio-core</artifactId>
+				<version>3.1.2</version>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>kahadb</artifactId>
+				<version>${deps.activemq-camel.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<!-- CGLIB -->
 			<!--
@@ -924,6 +1001,12 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api
                 </artifactId>
+				<version>${deps.slf4j.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
 				<version>${deps.slf4j.version}</version>
 				<type>jar</type>
 			</dependency>

@@ -37,9 +37,6 @@
         <dependent-module archiveName="/orderplacement.integration.inbound.external-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.external/com.acme.orderplacement.integration.inbound.external">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/commons-logging-api-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.service.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.service.support/com.acme.orderplacement.service.support">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -68,9 +65,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.jee.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.jee.support/com.acme.orderplacement.jee.support">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/commons-logging-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/geronimo-j2ee-management_1.0_spec-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-j2ee-management_1.0_spec/1.0/geronimo-j2ee-management_1.0_spec-1.0.jar">
@@ -121,12 +115,6 @@
         <dependent-module archiveName="/lib/spring-security-core-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/security/spring-security-core/3.0.2.RELEASE/spring-security-core-3.0.2.RELEASE.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/slf4j-api-1.5.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-api/1.5.8/slf4j-api-1.5.8.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/slf4j-log4j12-1.5.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-log4j12/1.5.8/slf4j-log4j12-1.5.8.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/aspectjrt-1.6.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjrt/1.6.8/aspectjrt-1.6.8.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -169,9 +157,6 @@
         <dependent-module archiveName="/lib/activemq-camel-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-camel/5.3.1/activemq-camel-5.3.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/geronimo-j2ee-management_1.1_spec-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-j2ee-management_1.1_spec/1.0.1/geronimo-j2ee-management_1.1_spec-1.0.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/spring-osgi-io-1.2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/osgi/spring-osgi-io/1.2.1/spring-osgi-io-1.2.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -185,9 +170,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/camel-jms-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-jms/2.2.0/camel-jms-2.2.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/activeio-core-3.1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/3.1.2/activeio-core-3.1.2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="orderplacement.jee.ejb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.ejb/com.acme.orderplacement.jee.ejb">
@@ -249,6 +231,84 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/cglib-nodep-2.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/cglib/cglib-nodep/2.2/cglib-nodep-2.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/slf4j-api-1.5.11.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/slf4j-log4j12-1.5.11.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-log4j12/1.5.11/slf4j-log4j12-1.5.11.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/jcl-over-slf4j-1.5.11.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/jcl-over-slf4j/1.5.11/jcl-over-slf4j-1.5.11.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/geronimo-j2ee-management_1.1_spec-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-j2ee-management_1.1_spec/1.0.1/geronimo-j2ee-management_1.1_spec-1.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-3.1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/3.1.2/activeio-core-3.1.2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
