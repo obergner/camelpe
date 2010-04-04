@@ -14,7 +14,6 @@
 		<project>com.acme.orderplacement.common.support</project>
 		<project>com.acme.orderplacement.jee.support</project>
 		<project>com.acme.orderplacement.jee.geronimo</project>
-		<project>com.acme.orderplacement.integration.inbound.item</project>
 		<project>com.acme.orderplacement.service.item.impl</project>
 		<project>com.acme.orderplacement.persistence.item</project>
 		<project>com.acme.orderplacement.domain.support</project>
