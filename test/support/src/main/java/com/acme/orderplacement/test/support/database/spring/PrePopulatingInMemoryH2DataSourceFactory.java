@@ -35,7 +35,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  * 
  */
 public final class PrePopulatingInMemoryH2DataSourceFactory implements
-		FactoryBean {
+		FactoryBean<DataSource> {
 
 	// ------------------------------------------------------------------------
 	// Fields
@@ -91,7 +91,7 @@ public final class PrePopulatingInMemoryH2DataSourceFactory implements
 	/**
 	 * @see org.springframework.beans.factory.FactoryBean#getObject()
 	 */
-	public Object getObject() throws Exception {
+	public DataSource getObject() throws Exception {
 		if (this.dataSource == null) {
 			initDataSource();
 		}
