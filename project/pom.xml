@@ -55,8 +55,6 @@
 		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
 		<deps.springsecurity.version>3.0.2.RELEASE
 		</deps.springsecurity.version>
-		<deps.springintegration.version>1.0.3.RELEASE
-		</deps.springintegration.version>
 		<deps.hibernate.version>3.5.0-Final</deps.hibernate.version>
 		<deps.camel.version>2.2.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
@@ -711,39 +709,6 @@
 				<version>${deps.springsecurity.version}</version>
 				<type>jar</type>
 			</dependency>
-			<!-- Spring Integration -->
-			<dependency>
-				<groupId>org.springframework.integration
-				</groupId>
-				<artifactId>spring-integration-core
-				</artifactId>
-				<version>${deps.springintegration.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.integration
-				</groupId>
-				<artifactId>spring-integration-adapter
-				</artifactId>
-				<version>${deps.springintegration.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.integration
-				</groupId>
-				<artifactId>spring-integration-jms
-				</artifactId>
-				<version>${deps.springintegration.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.integration
-				</groupId>
-				<artifactId>spring-integration-xml
-				</artifactId>
-				<version>${deps.springintegration.version}</version>
-				<type>jar</type>
-			</dependency>
 			<!-- 
 				Apache Camel 
 			-->
@@ -870,11 +835,6 @@
 				</exclusions>
 			</dependency>
 			<!-- CGLIB -->
-			<!--
-				<dependency> <groupId>cglib</groupId>
-				<artifactId>cglib-nodep</artifactId> <version>2.1_3</version>
-				<type>jar</type> </dependency>
-			-->
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib-nodep</artifactId>
@@ -1044,7 +1004,6 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<!-- version>3.8.2</version -->
 				<version>${deps.junit.version}</version>
 				<type>jar</type>
 			</dependency>

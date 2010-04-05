@@ -36,10 +36,6 @@ public class ItemCreatedEventChannelAdapterMdb implements MessageListener {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	// @Autowired(required = true)
-	// @Qualifier(MessageTypeEnsuringJmsChannelAdapter.COMPONENT_NAME)
-	// private MessageTypeEnsuringJmsChannelAdapter jmsChannelAdapter;
-
 	@Autowired(required = true)
 	@Qualifier("integration.inbound.item.ProducerTemplate")
 	private ProducerTemplate channelEndpoint;
@@ -64,15 +60,4 @@ public class ItemCreatedEventChannelAdapterMdb implements MessageListener {
 			throw new RuntimeException(e);
 		}
 	}
-
-	// /**
-	// * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
-	// */
-	// public void onMessage(final Message jmsMessage)
-	// throws IllegalArgumentException {
-	// this.jmsChannelAdapter.convertAndPropagate(jmsMessage);
-	// this.log.debug(
-	// "Received JMS message [{}] propagated to integration layer",
-	// jmsMessage);
-	// }
 }

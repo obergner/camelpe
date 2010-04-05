@@ -35,8 +35,6 @@
 
 	<modules>
 		<module>external</module>
-		<module>support</module>
-		<module>item</module>
 		<module>itemimport</module>
 	</modules>
 
