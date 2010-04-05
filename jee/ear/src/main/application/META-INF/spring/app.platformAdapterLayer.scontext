@@ -74,20 +74,18 @@
 		==================================================================
 	-->
 
-	<security:authentication-provider>
-		<security:user-service
-			id="persistence.support.platform.userDetailsService">
-			<security:user name="guest" password="guest"
-				authorities="ROLE_GUEST" />
-			<security:user name="external" password="external"
-				authorities="ROLE_EXTERNAL_USER" />
-			<security:user name="employee" password="employee"
-				authorities="ROLE_EMPLOYEE" />
-			<security:user name="admin" password="admin"
-				authorities="ROLE_ADMIN" />
-			<security:user name="accountant" password="accountant"
-				authorities="ROLE_ACCOUNTANT" />
-		</security:user-service>
-	</security:authentication-provider>
+	<security:user-service
+		id="persistence.support.platform.userDetailsService">
+		<security:user name="guest" password="guest"
+			authorities="ROLE_GUEST" />
+		<security:user name="external" password="external"
+			authorities="ROLE_EXTERNAL_USER" />
+		<security:user name="employee" password="employee"
+			authorities="ROLE_EMPLOYEE" />
+		<security:user name="admin" password="admin"
+			authorities="ROLE_ADMIN" />
+		<security:user name="accountant" password="accountant"
+			authorities="ROLE_ACCOUNTANT" />
+	</security:user-service>
 
 </beans>

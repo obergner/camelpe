@@ -27,7 +27,10 @@
 		access-decision-manager-ref="persistence.support.security.accessDecisionManager" />
 
 	<security:authentication-manager
-		alias="persistence.support.security.authenticationManager" />
+		alias="persistence.support.security.authenticationManager">
+		<security:authentication-provider
+			user-service-ref="persistence.support.platform.userDetailsService" />
+	</security:authentication-manager>
 
 	<!--
 		==================================================================
@@ -36,7 +39,8 @@
 	-->
 
 	<!-- RunAsManager -->
-	<bean id="persistence.support.security.runAsManager" class="org.springframework.security.runas.RunAsManagerImpl">
+	<bean id="persistence.support.security.runAsManager"
+		class="org.springframework.security.access.intercept.RunAsManagerImpl">
 		<property name="key" value="my_run_as_password" />
 	</bean>
 
@@ -49,16 +53,17 @@
 	<!--
 		An access decision voter that reads ROLE_* configuration settings
 	-->
-	<bean id="persistence.support.security.roleVoter" class="org.springframework.security.vote.RoleVoter" />
+	<bean id="persistence.support.security.roleVoter" class="org.springframework.security.access.vote.RoleVoter" />
 
 	<!--
 		An access decision voter that requires that users be authenticated
 	-->
-	<bean id="persistence.support.security.authenticatedVoter" class="org.springframework.security.vote.AuthenticatedVoter" />
+	<bean id="persistence.support.security.authenticatedVoter"
+		class="oorg.springframework.security.access.vote.AuthenticatedVoter" />
 
 	<!-- A unanimous access decision manager -->
 	<bean id="persistence.support.security.accessDecisionManager"
-		class="org.springframework.security.vote.AffirmativeBased">
+		class="org.springframework.security.access.vote.AffirmativeBased">
 		<property name="allowIfAllAbstainDecisions" value="false" />
 		<property name="decisionVoters">
 			<list>
@@ -75,10 +80,10 @@
 	-->
 
 	<bean id="persistence.support.security.securedMethods"
-		class="org.springframework.security.annotation.SecuredMethodDefinitionSource" />
+		class="org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource" />
 
 	<bean id="persistence.support.security.securityInterceptor"
-		class="org.springframework.security.intercept.method.aspectj.AspectJAnnotationSecurityInterceptor">
+		class="org.springframework.security.access.intercept.aspectj.AspectJAnnotationSecurityInterceptor">
 		<property name="validateConfigAttributes" value="false" />
 		<property name="authenticationManager"
 			ref="persistence.support.security.authenticationManager" />
