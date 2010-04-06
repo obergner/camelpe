@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://geronimo.apache.org/xml/ns/j2ee/application-2.0"
-	xmlns:sys="http://geronimo.apache.org/xml/ns/deployment-1.2"
+	xmlns:sys="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0"
 	application-name="OrderPlacement">
 
 	<sys:environment>
@@ -13,7 +13,7 @@
 		<sys:hidden-classes>
 			<sys:filter>org.slf4j</sys:filter>
 			<sys:filter>org.apache.log4j</sys:filter>
-			<sys:filter>org.apache.commons.logging</sys:filter>
+			<!-- sys:filter>org.apache.commons.logging</sys:filter -->
 			<sys:filter>org.springframework</sys:filter>
 			<sys:filter>org.aspectj</sys:filter>
 			<sys:filter>org.aopalliance</sys:filter>
@@ -157,7 +157,7 @@
 		<external-path>
 			<sys:groupId>org.apache.geronimo.modules</sys:groupId>
 			<sys:artifactId>geronimo-activemq-ra</sys:artifactId>
-			<sys:version>2.1.3</sys:version>
+			<sys:version>2.2</sys:version>
 		</external-path>
 		<connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
 			<sys:environment>
@@ -224,6 +224,18 @@
 			</adminobject>
 		</connector>
 	</ext-module>
+
+	<sec:security use-context-handler="false"
+		doas-current-caller="true" default-role="admin1">
+		<sec:role-mappings>
+			<sec:role role-name="admin-role">
+				<sec:description>ability to do everything</sec:description>
+			</sec:role>
+			<sec:role role-name="user-role">
+				<sec:description>limited access</sec:description>
+			</sec:role>
+		</sec:role-mappings>
+	</sec:security>
 
 	<sys:gbean name="SharedApplicationContext"
 		class="com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean">
