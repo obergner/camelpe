@@ -55,7 +55,7 @@
 	 -->
 
 	<bean id="integration.inbound.item.jmx.MBeanServer"
-		class="com.acme.orderplacement.jee.geronimo.spring.GeronimoMBeanServerLookupFactoryBean" />
+		class="com.acme.orderplacement.jee.geronimo.internal.spring.GeronimoMBeanServerLookupFactoryBean" />
 
 
 	<jee:jndi-lookup

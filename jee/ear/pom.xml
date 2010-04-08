@@ -168,6 +168,28 @@
 							<contextRoot>orderplacement</contextRoot> </warModule>
 						-->
 					</modules>
+					<security>
+						<security-role id="SecurityRole_GUEST">
+							<description>My cool description</description>
+							<role-name id="RoleName_GUEST">ROLE_GUEST</role-name>
+						</security-role>
+						<security-role id="SecurityRole_EXTERNAL_USER">
+							<description>My cool description</description>
+							<role-name id="RoleName_EXTERNAL_USER">ROLE_EXTERNAL_USER</role-name>
+						</security-role>
+						<security-role id="SecurityRole_EMPLOYEE">
+							<description>My cool description</description>
+							<role-name id="RoleName_EMPLOYEE">ROLE_EMPLOYEE</role-name>
+						</security-role>
+						<security-role id="SecurityRole_ADMIN">
+							<description>My cool description</description>
+							<role-name id="RoleName_ADMIN">ROLE_ADMIN</role-name>
+						</security-role>
+						<security-role id="SecurityRole_ACCOUNTANT">
+							<description>My cool description</description>
+							<role-name id="RoleName_ACCOUNTANT">ROLE_ACCOUNTANT</role-name>
+						</security-role>
+					</security>
 				</configuration>
 			</plugin>
 			<plugin>
