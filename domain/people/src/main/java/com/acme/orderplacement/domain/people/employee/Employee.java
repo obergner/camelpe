@@ -16,11 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 import com.acme.orderplacement.domain.people.contact.EmailAddress;
 import com.acme.orderplacement.domain.people.customer.PrivateCustomer;
@@ -164,7 +164,7 @@ public class Employee extends AbstractAuditableDomainObject<Long> implements
 	 * </p>
 	 */
 	@NotNull
-	@Length(min = 5, max = 30)
+	@Size(min = 5, max = 30)
 	@Basic
 	@Column(name = "EMPLOYEE_NUMBER", unique = true, nullable = false, length = 30)
 	@org.hibernate.annotations.NaturalId(mutable = false)

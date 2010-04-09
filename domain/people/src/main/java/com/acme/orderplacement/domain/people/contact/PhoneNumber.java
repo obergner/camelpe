@@ -12,11 +12,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 /**
  * <p>
@@ -134,7 +134,7 @@ public class PhoneNumber extends ContactChannel implements Serializable {
 	 * @uml.property name="phoneNumber"
 	 */
 	@NotNull
-	@Length(min = 3, max = 30)
+	@Size(min = 3, max = 30)
 	@Basic
 	@Column(name = "PHONE_NUMBER", unique = true, nullable = false, length = 30)
 	private String phoneNumber;

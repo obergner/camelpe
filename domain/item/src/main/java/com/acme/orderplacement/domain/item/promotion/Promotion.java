@@ -16,12 +16,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Future;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 import com.acme.orderplacement.domain.item.offer.Offer;
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
@@ -160,7 +160,7 @@ public class Promotion extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="name"
 	 */
 	@NotNull
-	@Length(min = 2, max = 60)
+	@Size(min = 2, max = 60)
 	@Basic
 	@Column(name = "NAME", unique = true, nullable = false, length = 60)
 	private String name;
@@ -271,7 +271,7 @@ public class Promotion extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="promotionalText"
 	 */
 	@NotNull
-	@Length(min = 10, max = 2000)
+	@Size(min = 10, max = 2000)
 	@Basic
 	@Column(name = "PROMOTIONAL_TEXT", unique = false, nullable = false, length = 2000)
 	private String promotionalText;

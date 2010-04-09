@@ -16,13 +16,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Future;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 import com.acme.orderplacement.domain.people.person.Person;
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
@@ -107,7 +107,7 @@ public class Account extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="username"
 	 */
 	@NotNull
-	@Length(min = 8, max = 20)
+	@Size(min = 8, max = 20)
 	@Basic
 	@Column(name = "USERNAME", unique = true, nullable = false, length = 20)
 	private String username;
@@ -147,7 +147,7 @@ public class Account extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="password"
 	 */
 	@NotNull
-	@Length(min = 8, max = 30)
+	@Size(min = 8, max = 30)
 	@Basic
 	@Column(name = "PASSWORD", unique = false, nullable = false, length = 30)
 	private String password;
@@ -261,7 +261,7 @@ public class Account extends AbstractAuditableDomainObject<Long> implements
 	 * 
 	 * @uml.property name="secretQuestion"
 	 */
-	@Length(min = 3, max = 200)
+	@Size(min = 3, max = 200)
 	@Basic
 	@Column(name = "SECRET_QUESTION", unique = false, nullable = true, length = 200)
 	private String secretQuestion;
@@ -295,7 +295,7 @@ public class Account extends AbstractAuditableDomainObject<Long> implements
 	 * 
 	 * @uml.property name="secretAnswer"
 	 */
-	@Length(min = 1, max = 100)
+	@Size(min = 1, max = 100)
 	@Basic
 	@Column(name = "SECRET_ANSWER", unique = false, nullable = true, length = 100)
 	private String secretAnswer;

@@ -18,14 +18,16 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
 import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
@@ -45,11 +47,11 @@ import com.acme.orderplacement.domain.support.meta.AuditInfo;
 @Entity
 @Table(schema = "ITEM", name = "ITEM")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "ITEM.ID_SEQ_ITEM")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = Item.Queries.BY_ITEM_NUMBER, query = "from com.acme.orderplacement.domain.item.Item item where item.itemNumber = :itemNumber"),
-		@org.hibernate.annotations.NamedQuery(name = Item.Queries.BY_ITEM_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.item.Item item where item.itemNumber like :itemNumber"),
-		@org.hibernate.annotations.NamedQuery(name = Item.Queries.BY_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.Item item where item.name like :name"),
-		@org.hibernate.annotations.NamedQuery(name = Item.Queries.BY_DESCRIPTION_LIKE, query = "from com.acme.orderplacement.domain.item.Item item where item.description like :description") })
+@NamedQueries( {
+		@NamedQuery(name = Item.Queries.BY_ITEM_NUMBER, query = "from com.acme.orderplacement.domain.item.Item item where item.itemNumber = :itemNumber"),
+		@NamedQuery(name = Item.Queries.BY_ITEM_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.item.Item item where item.itemNumber like :itemNumber"),
+		@NamedQuery(name = Item.Queries.BY_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.Item item where item.name like :name"),
+		@NamedQuery(name = Item.Queries.BY_DESCRIPTION_LIKE, query = "from com.acme.orderplacement.domain.item.Item item where item.description like :description") })
 public class Item extends AbstractAuditableDomainObject<Long> implements
 		Serializable {
 
@@ -150,7 +152,7 @@ public class Item extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="itemNumber"
 	 */
 	@NotNull
-	@Length(min = 5, max = 30)
+	@Size(min = 5, max = 30)
 	@Basic
 	@Column(name = "ITEM_NUMBER", unique = true, nullable = false, length = 30)
 	@org.hibernate.annotations.NaturalId(mutable = false)
@@ -190,7 +192,7 @@ public class Item extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="name"
 	 */
 	@NotNull
-	@Length(min = 2, max = 60)
+	@Size(min = 2, max = 60)
 	@Basic
 	@Column(name = "NAME", unique = true, nullable = false, length = 60)
 	private String name;
@@ -228,7 +230,7 @@ public class Item extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="description"
 	 */
 	@NotNull
-	@Length(min = 3, max = 2000)
+	@Size(min = 3, max = 2000)
 	@Basic
 	@Column(name = "DESCRIPTION", unique = false, nullable = false, length = 2000)
 	private String description;

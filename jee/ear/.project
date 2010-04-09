@@ -18,8 +18,8 @@
 		<project>com.acme.orderplacement.domain.support</project>
 		<project>com.acme.orderplacement.persistence.support</project>
 		<project>com.acme.orderplacement.persistence.item</project>
-		<project>com.acme.orderplacement.domain.item</project>
 		<project>com.acme.orderplacement.aspect.support</project>
+		<project>com.acme.orderplacement.domain.item</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

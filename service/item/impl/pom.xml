@@ -23,6 +23,16 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--
 			Only needed to make AspectJ's PointcutParser correctly parse pointcut
 			definitions that use the javax.ejb.TransactionAttribute annotation.
@@ -45,19 +55,21 @@
 			<artifactId>commons-lang</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<scope>compile</scope>
-		</dependency>
+		<!--
+			Needed in compile scope since otherwise javac 1.5_17 will throw an
+			exception, i.e. compilation will NOT fail due to a compilation error
+			but rather due to a bug in the compiler - or else it might indeed be
+			a compilation problem that cannot be properly handled by that javac
+			version.
+		-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -99,6 +111,11 @@
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

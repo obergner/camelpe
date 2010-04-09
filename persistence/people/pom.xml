@@ -21,6 +21,9 @@
 
 	<dependencies>
 		<!--
+			| Provided dependencies 
+		-->
+		<!--
 			| Compile time dependencies 
 		-->
 		<dependency>
@@ -122,9 +125,6 @@
 			<artifactId>dom4j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!--
-			| Provided dependencies 
-		-->
 		<!--
 			| Test dependencies 
 		-->

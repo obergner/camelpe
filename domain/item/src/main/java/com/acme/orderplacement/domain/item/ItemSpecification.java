@@ -19,11 +19,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
+import org.hibernate.annotations.Sort;
 
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
 import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
@@ -204,7 +205,7 @@ public class ItemSpecification extends AbstractAuditableDomainObject<Long>
 	 * @uml.property name="itemSpecificationNumber"
 	 */
 	@NotNull
-	@Length(min = 5, max = 30)
+	@Size(min = 5, max = 30)
 	@Basic
 	@Column(name = "ITEM_SPECIFICATION_NUMBER", unique = true, nullable = false, length = 30)
 	@org.hibernate.annotations.NaturalId(mutable = false)
@@ -286,7 +287,7 @@ public class ItemSpecification extends AbstractAuditableDomainObject<Long>
 					+ "] as the Item specified by this Specification ["
 					+ this
 					+ "] when this Specification already specifies another Item ["
-					+ this.getSpecifiedItem() + "]";
+					+ getSpecifiedItem() + "]";
 			throw new CollaborationPreconditionsNotMetException(error);
 		}
 		this.specifiedItem = specifiedItem;

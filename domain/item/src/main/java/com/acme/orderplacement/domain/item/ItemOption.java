@@ -10,11 +10,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 import com.acme.orderplacement.domain.support.AbstractVersionedDomainObject;
 
@@ -121,7 +121,7 @@ public class ItemOption extends AbstractVersionedDomainObject<Long> implements
 	 * @uml.property name="name"
 	 */
 	@NotNull
-	@Length(min = 2, max = 60)
+	@Size(min = 2, max = 60)
 	@Basic
 	@Column(name = "NAME", unique = true, nullable = false, length = 60)
 	private String name;
@@ -160,7 +160,7 @@ public class ItemOption extends AbstractVersionedDomainObject<Long> implements
 	 * @uml.property name="description"
 	 */
 	@NotNull
-	@Length(min = 3, max = 200)
+	@Size(min = 3, max = 200)
 	@Basic
 	@Column(name = "DESCRIPTION", unique = false, nullable = true, length = 200)
 	private String description;
@@ -195,7 +195,7 @@ public class ItemOption extends AbstractVersionedDomainObject<Long> implements
 	 * @uml.property name="type"
 	 */
 	@NotNull
-	@Length(min = 2, max = 30)
+	@Size(min = 2, max = 30)
 	@Basic
 	@Column(name = "TYPE", unique = false, nullable = false, length = 30)
 	private String type;

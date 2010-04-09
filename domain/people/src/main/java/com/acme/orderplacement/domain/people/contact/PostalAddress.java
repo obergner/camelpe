@@ -10,11 +10,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 import com.acme.orderplacement.domain.people.customer.PrivateCustomer;
 import com.acme.orderplacement.domain.people.person.Person;
@@ -104,7 +104,7 @@ public class PostalAddress extends ContactChannel implements Serializable {
 	 * @uml.property name="street"
 	 */
 	@NotNull
-	@Length(min = 3, max = 50)
+	@Size(min = 3, max = 50)
 	@Basic
 	@Column(name = "STREET", unique = false, nullable = false, length = 50)
 	private String street;
@@ -143,7 +143,7 @@ public class PostalAddress extends ContactChannel implements Serializable {
 	 * @uml.property name="streetNumber"
 	 */
 	@NotNull
-	@Length(min = 1, max = 10)
+	@Size(min = 1, max = 10)
 	@Basic
 	@Column(name = "STREET_NUMBER", unique = false, nullable = false, length = 10)
 	private String streetNumber;
@@ -182,7 +182,7 @@ public class PostalAddress extends ContactChannel implements Serializable {
 	 * @uml.property name="postalCode"
 	 */
 	@NotNull
-	@Length(min = 3, max = 10)
+	@Size(min = 3, max = 10)
 	@Basic
 	@Column(name = "POSTAL_CODE", unique = false, nullable = false, length = 10)
 	private String postalCode;
@@ -221,7 +221,7 @@ public class PostalAddress extends ContactChannel implements Serializable {
 	 * @uml.property name="city"
 	 */
 	@NotNull
-	@Length(min = 2, max = 40)
+	@Size(min = 2, max = 40)
 	@Basic
 	@Column(name = "CITY", unique = false, nullable = false, length = 40)
 	private String city;

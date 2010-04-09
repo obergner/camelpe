@@ -22,9 +22,19 @@
 	<dependencies>
 		<!--
 			Provided dependencies: Note that these dependencies' default scope of
-			'provided' is overridden in favor of the 'compile' scope if we do not
-			explicitly reset it to 'provided' here.
+			'provided' is overridden in favor of the 'compile' or 'runtime' scope
+			if we do not explicitly reset it to 'provided' here.
 		-->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>

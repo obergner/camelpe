@@ -13,11 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 import com.acme.orderplacement.domain.support.AbstractVersionedDomainObject;
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
@@ -122,7 +122,7 @@ public class ItemOptionSpecification extends
 	 * @uml.property name="value"
 	 */
 	@NotNull
-	@Length(min = 0, max = 200)
+	@Size(min = 0, max = 200)
 	@Basic
 	@Column(name = "NAME", unique = false, nullable = true, length = 200)
 	private String value;

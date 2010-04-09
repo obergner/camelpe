@@ -45,6 +45,8 @@
 		<deps.jta.version>1.1</deps.jta.version>
 		<deps.jms.version>1.1</deps.jms.version>
 		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
+		<deps.jaxb-api.version>2.1</deps.jaxb-api.version>
+		<deps.jaxb-impl.version>2.1.9</deps.jaxb-impl.version>
 		<deps.hibernate-jpa-api.version>1.0.0.Final
 		</deps.hibernate-jpa-api.version>
 		<deps.junit.version>4.8.1</deps.junit.version>
@@ -56,6 +58,14 @@
 		<deps.springsecurity.version>3.0.2.RELEASE
 		</deps.springsecurity.version>
 		<deps.hibernate.version>3.5.0-Final</deps.hibernate.version>
+		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
+		<!--
+			We use Hibernate Validator 4.1.0.Beta1 because its pom correctly
+			registers the dependencies on jaxb in scope 'provided' instead of
+			'runtime'.
+		-->
+		<deps.hibernate-validator.version>4.1.0.Beta1
+		</deps.hibernate-validator.version>
 		<deps.camel.version>2.2.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
@@ -495,7 +505,14 @@
 			<dependency>
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
-				<version>2.1</version>
+				<version>${deps.jaxb-api.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- JAXB2 RI Implementation (SUN) -->
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>${deps.jaxb-impl.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- JAX-WS API -->
@@ -524,6 +541,33 @@
 				<version>2.5</version>
 				<type>jar</type>
 			</dependency>
+			<!-- Bean Validation API -->
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${deps.validation-api.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- Hibernate Bean Validation Implementation -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${deps.hibernate-validator.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<!--
+						We want slf4j in 'provided' scope since it is one of the libraries
+						that are shared between different JEE modules in our final war. If
+						we wouldn't exclude it here, it would end up in scope 'runtime'
+						and thus would be automatically included in every JEE module we
+						build, not only in the final ear.
+					-->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 			<!-- JSR 181 Specification -->
 			<dependency>
 				<groupId>org.apache.geronimo.specs
@@ -531,13 +575,6 @@
 				<artifactId>geronimo-ws-metadata_2.0_spec
 				</artifactId>
 				<version>1.1.2</version>
-				<type>jar</type>
-			</dependency>
-			<!-- JAXB2 RI Implementation (SUN) -->
-			<dependency>
-				<groupId>com.sun.xml.bind</groupId>
-				<artifactId>jaxb-impl</artifactId>
-				<version>2.1.9</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Apache -->
@@ -940,25 +977,6 @@
 					<exclusion>
 						<groupId>javax.transaction</groupId>
 						<artifactId>jta</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator</artifactId>
-				<version>3.1.0.GA</version>
-				<type>jar</type>
-				<exclusions>
-					<!--
-						We want slf4j in 'provided' scope since it is one of the libraries
-						that are shared between different JEE modules in our final war. If
-						we wouldn't exclude it here, it would end up in scope 'runtime'
-						and thus would be automatically included in every JEE module we
-						build, not only in the final ear.
-					-->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-api</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>

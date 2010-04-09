@@ -19,13 +19,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.exception.NestableRuntimeException;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Past;
 
 import com.acme.orderplacement.domain.people.account.Account;
 import com.acme.orderplacement.domain.people.contact.PhoneNumber;
@@ -156,7 +156,7 @@ public class Person extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="firstName"
 	 */
 	@NotNull
-	@Length(min = 2, max = 40)
+	@Size(min = 2, max = 40)
 	@Basic
 	@Column(name = "FIRST_NAME", unique = false, nullable = false, length = 40)
 	private String firstName;
@@ -193,7 +193,7 @@ public class Person extends AbstractAuditableDomainObject<Long> implements
 	 * 
 	 * @uml.property name="middleNames"
 	 */
-	@Length(min = 1, max = 60)
+	@Size(min = 1, max = 60)
 	@Basic
 	@Column(name = "MIDDLE_NAMES", unique = false, nullable = true, length = 60)
 	private String middleNames;
@@ -226,7 +226,7 @@ public class Person extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="lastName"
 	 */
 	@NotNull
-	@Length(min = 2, max = 40)
+	@Size(min = 2, max = 40)
 	@Basic
 	@Column(name = "LAST_NAME", unique = false, nullable = false, length = 40)
 	private String lastName;
@@ -358,7 +358,7 @@ public class Person extends AbstractAuditableDomainObject<Long> implements
 	 * 
 	 * @uml.property name="title"
 	 */
-	@Length(min = 1, max = 30)
+	@Size(min = 1, max = 30)
 	@Basic
 	@Column(name = "TITLE", unique = false, nullable = true, length = 30)
 	private String title;

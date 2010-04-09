@@ -10,12 +10,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Email;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
+import org.hibernate.validator.constraints.Email;
 
 /**
  * <p>
@@ -87,7 +87,7 @@ public class EmailAddress extends ContactChannel implements Serializable {
 	 */
 	@NotNull
 	@Email
-	@Length(min = 1, max = 70)
+	@Size(min = 1, max = 70)
 	@Basic
 	@Column(name = "EMAIL_ADDRESS", unique = true, nullable = false, length = 70)
 	private String address;

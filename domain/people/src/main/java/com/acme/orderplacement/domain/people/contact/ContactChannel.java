@@ -12,11 +12,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
 
 import com.acme.orderplacement.domain.people.person.Person;
 import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
@@ -70,7 +70,7 @@ public abstract class ContactChannel extends
 	 * @uml.property name="name"
 	 */
 	@NotNull
-	@Length(min = 2, max = 30)
+	@Size(min = 2, max = 30)
 	@Basic
 	@Column(name = "NAME", unique = false, nullable = false, length = 30)
 	private String name;
@@ -106,7 +106,7 @@ public abstract class ContactChannel extends
 	 * May be <code>null</code>.
 	 * </p>
 	 */
-	@Length(min = 2, max = 200)
+	@Size(min = 2, max = 200)
 	@Basic
 	@Column(name = "COMMENT", unique = false, nullable = true, length = 200)
 	private String comment;
