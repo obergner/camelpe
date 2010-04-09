@@ -1,2 +1,2 @@
 # Ignore the maven generated 'target' directory
-target
+target/

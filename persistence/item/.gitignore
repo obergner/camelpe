@@ -1,4 +1,2 @@
 # Ignore the maven generated 'target' directory
-target/target
-/target
-/target
+target/

@@ -1,2 +1,2 @@
 # Ignore the maven generated 'target' directory
-target/unlink_svn.py
+target/
