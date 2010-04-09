@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.geronimo.spring;
+package com.acme.orderplacement.jee.geronimo.internal.spring;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

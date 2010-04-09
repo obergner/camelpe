@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.geronimo.spring;
+package com.acme.orderplacement.jee.geronimo.internal.spring;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
+import com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean;
 import com.acme.orderplacement.jee.support.jndi.JndiNames;
 
 /**
@@ -80,7 +81,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -90,7 +91,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -101,7 +102,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -112,7 +113,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -123,7 +124,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#ApplicationContextGBean(org.apache.geronimo.gjndi.GlobalContextGBean, java.lang.String, java.lang.String)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -134,7 +135,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#doStart()}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#doStart()}
 	 * .
 	 * 
 	 * @throws Exception
@@ -168,7 +169,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#doStart()}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#doStart()}
 	 * .
 	 * 
 	 * @throws Exception
@@ -220,7 +221,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#doStart()}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#doStart()}
 	 * .
 	 * 
 	 * @throws Exception
@@ -256,7 +257,7 @@ public class ApplicationContextGBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.geronimo.spring.ApplicationContextGBean#doStop()}
+	 * {@link com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean#doStop()}
 	 * .
 	 * 
 	 * @throws Exception

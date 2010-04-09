@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.geronimo.spring;
+package com.acme.orderplacement.jee.geronimo.internal.spring;
 
 import java.util.ArrayList;
 
@@ -21,21 +21,26 @@ import org.springframework.beans.factory.FactoryBean;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class GeronimoMBeanServerLookupFactoryBean implements FactoryBean {
+public class GeronimoMBeanServerLookupFactoryBean implements
+		FactoryBean<MBeanServer> {
 
 	/**
 	 * <tt>Geronimo</tt>'s <code>MBeanServer</code>'s <i>default domain</i>,
 	 * used to select the appropriate <code>MBeanServer</code> from the list of
 	 * available <code>MBeanServer</code>s.
+	 * 
+	 * TODO: Since version 2.2 (or 2.1.5?) Geronimo uses the standard platform
+	 * mbean server. Consequently, this code isn't necessary anymore. Get rid of
+	 * it.
 	 */
-	private static final String GERONIMO_DEFAULT_DOMAIN = "geronimo";
+	private static final String GERONIMO_DEFAULT_DOMAIN = "DefaultDomain";
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/**
 	 * @see org.springframework.beans.factory.FactoryBean#getObject()
 	 */
-	public Object getObject() throws Exception {
+	public MBeanServer getObject() throws Exception {
 		this.log
 				.info(
 						"Trying to obtain Geronimo's MBeanServer using DefaultDomain [{}] as selection criterion ...",
