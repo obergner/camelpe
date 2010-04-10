@@ -11,6 +11,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,6 +25,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.ForeignKey;
 
 import com.acme.orderplacement.domain.people.person.Person;
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
@@ -47,9 +50,9 @@ import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject
 @Entity
 @Table(schema = "PEOPLE", name = "PERSON_ACCOUNT")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "PEOPLE.ID_SEQ_ACCOUNT")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = Account.Queries.BY_USERNAME, query = "from com.acme.orderplacement.domain.people.account.Account account where account.username = :username"),
-		@org.hibernate.annotations.NamedQuery(name = Account.Queries.BY_USERNAME_LIKE, query = "from com.acme.orderplacement.domain.people.account.Account account where account.username like '%:username%'") })
+@NamedQueries( {
+		@NamedQuery(name = Account.Queries.BY_USERNAME, query = "from com.acme.orderplacement.domain.people.account.Account account where account.username = :username"),
+		@NamedQuery(name = Account.Queries.BY_USERNAME_LIKE, query = "from com.acme.orderplacement.domain.people.account.Account account where account.username like '%:username%'") })
 public class Account extends AbstractAuditableDomainObject<Long> implements
 		Serializable {
 
@@ -343,7 +346,7 @@ public class Account extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_PERSON", referencedColumnName = "ID", nullable = false, unique = true)
-	@org.hibernate.annotations.ForeignKey(name = "FK_ACCOUNT_PERSON")
+	@ForeignKey(name = "FK_ACCOUNT_PERSON")
 	private Person accountOwner;
 
 	/**

@@ -14,6 +14,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,6 +28,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.exception.NestableRuntimeException;
+import org.hibernate.annotations.ForeignKey;
 
 import com.acme.orderplacement.domain.people.account.Account;
 import com.acme.orderplacement.domain.people.contact.PhoneNumber;
@@ -68,19 +71,19 @@ import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject
 @Entity
 @Table(schema = "PEOPLE", name = "PERSON")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "PEOPLE.ID_SEQ_PERSON")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_LAST_NAME_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.lastName like :lastName"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_FIRST_NAME_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.firstName like :firstName"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BORN_AFTER, query = "from com.acme.orderplacement.domain.people.person.Person person where person.dateOfBirth > :dateOfBirth"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BORN_BEFORE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.dateOfBirth < :dateOfBirth"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BORN_BETWEEN, query = "from com.acme.orderplacement.domain.people.person.Person person where (person.dateOfBirth >= :firstDate and person.dateOfBirth <= :secondDate)"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_PRIVATE_RESIDENTIAL_PHONE_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.privateResidentialPhone like :privateResidentialPhone"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_PRIVATE_MOBILE_PHONE_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.privateMobilePhone like :privateMobilePhone"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_PRIVATE_FAX_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.privateFax like :privateFax"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_USERNAME_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.account.username like :username"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_STREET_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.homeAddress.street like :street"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_STREET_AND_CITY_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where (person.homeAddress.street like :street and person.homeAddress.city like :city)"),
-		@org.hibernate.annotations.NamedQuery(name = Person.Queries.BY_STREET_AND_CITY_AND_POSTAL_CODE_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where (person.homeAddress.street like :street and person.homeAddress.city like :city and person.homeAddress.postalCode like :postalCode)") })
+@NamedQueries( {
+		@NamedQuery(name = Person.Queries.BY_LAST_NAME_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.lastName like :lastName"),
+		@NamedQuery(name = Person.Queries.BY_FIRST_NAME_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.firstName like :firstName"),
+		@NamedQuery(name = Person.Queries.BORN_AFTER, query = "from com.acme.orderplacement.domain.people.person.Person person where person.dateOfBirth > :dateOfBirth"),
+		@NamedQuery(name = Person.Queries.BORN_BEFORE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.dateOfBirth < :dateOfBirth"),
+		@NamedQuery(name = Person.Queries.BORN_BETWEEN, query = "from com.acme.orderplacement.domain.people.person.Person person where (person.dateOfBirth >= :firstDate and person.dateOfBirth <= :secondDate)"),
+		@NamedQuery(name = Person.Queries.BY_PRIVATE_RESIDENTIAL_PHONE_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.privateResidentialPhone like :privateResidentialPhone"),
+		@NamedQuery(name = Person.Queries.BY_PRIVATE_MOBILE_PHONE_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.privateMobilePhone like :privateMobilePhone"),
+		@NamedQuery(name = Person.Queries.BY_PRIVATE_FAX_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.privateFax like :privateFax"),
+		@NamedQuery(name = Person.Queries.BY_USERNAME_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.account.username like :username"),
+		@NamedQuery(name = Person.Queries.BY_STREET_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where person.homeAddress.street like :street"),
+		@NamedQuery(name = Person.Queries.BY_STREET_AND_CITY_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where (person.homeAddress.street like :street and person.homeAddress.city like :city)"),
+		@NamedQuery(name = Person.Queries.BY_STREET_AND_CITY_AND_POSTAL_CODE_LIKE, query = "from com.acme.orderplacement.domain.people.person.Person person where (person.homeAddress.street like :street and person.homeAddress.city like :city and person.homeAddress.postalCode like :postalCode)") })
 public class Person extends AbstractAuditableDomainObject<Long> implements
 		Serializable {
 
@@ -491,7 +494,7 @@ public class Person extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_HOME_ADDRESS", unique = false, nullable = false)
-	@org.hibernate.annotations.ForeignKey(name = "FK_PERSON_HOMEADDR")
+	@ForeignKey(name = "FK_PERSON_HOMEADDR")
 	private PostalAddress homeAddress;
 
 	/**
@@ -536,7 +539,7 @@ public class Person extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_PRIVATE_RESIDENTIAL_PHONE", unique = false, nullable = true)
-	@org.hibernate.annotations.ForeignKey(name = "FK_PERSON_PRVRESPHONE")
+	@ForeignKey(name = "FK_PERSON_PRVRESPHONE")
 	private PhoneNumber privateResidentialPhone;
 
 	/**
@@ -582,7 +585,7 @@ public class Person extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_PRIVATE_MOBILE_PHONE", unique = false, nullable = true)
-	@org.hibernate.annotations.ForeignKey(name = "FK_PERSON_PRVMOBPHONE")
+	@ForeignKey(name = "FK_PERSON_PRVMOBPHONE")
 	private PhoneNumber privateMobilePhone;
 
 	/**
@@ -627,7 +630,7 @@ public class Person extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_PRIVATE_FAX", unique = false, nullable = true)
-	@org.hibernate.annotations.ForeignKey(name = "FK_PERSON_PRVFAX")
+	@ForeignKey(name = "FK_PERSON_PRVFAX")
 	private PhoneNumber privateFax;
 
 	/**

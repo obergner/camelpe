@@ -8,6 +8,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -41,10 +43,10 @@ import com.acme.orderplacement.domain.people.person.Person;
 @Entity
 @Table(schema = "PEOPLE", name = "POSTAL_ADDRESS", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"STREET", "STREET_NUMBER", "POSTAL_CODE" }))
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = "postalAddress.byStreetLike", query = "from com.acme.orderplacement.domain.people.contact.PostalAddress postalAddress where postalAddress.street like :street"),
-		@org.hibernate.annotations.NamedQuery(name = "postalAddress.byStreetAndCityLike", query = "from com.acme.orderplacement.domain.people.contact.PostalAddress postalAddress where (postalAddress.street like :street and postalAddress.city like :city)"),
-		@org.hibernate.annotations.NamedQuery(name = "postalAddress.byStreetAndCityAndPostalCodeLike", query = "from com.acme.orderplacement.domain.people.contact.PostalAddress postalAddress where (postalAddress.street like :street and postalAddress.city like :city and postalAddress.postalCode like :postalCode)") })
+@NamedQueries( {
+		@NamedQuery(name = "postalAddress.byStreetLike", query = "from com.acme.orderplacement.domain.people.contact.PostalAddress postalAddress where postalAddress.street like :street"),
+		@NamedQuery(name = "postalAddress.byStreetAndCityLike", query = "from com.acme.orderplacement.domain.people.contact.PostalAddress postalAddress where (postalAddress.street like :street and postalAddress.city like :city)"),
+		@NamedQuery(name = "postalAddress.byStreetAndCityAndPostalCodeLike", query = "from com.acme.orderplacement.domain.people.contact.PostalAddress postalAddress where (postalAddress.street like :street and postalAddress.city like :city and postalAddress.postalCode like :postalCode)") })
 public class PostalAddress extends ContactChannel implements Serializable {
 
 	// ------------------------------------------------------------------------

@@ -15,6 +15,8 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,6 +27,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.ForeignKey;
 
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
@@ -45,15 +48,15 @@ import com.acme.orderplacement.domain.support.money.MonetaryAmount;
 @Entity
 @Table(schema = "ITEM", name = "OFFER")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "ITEM.ID_SEQ_OFFER")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = Offer.Queries.BY_NAME, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.name = :name"),
-		@org.hibernate.annotations.NamedQuery(name = Offer.Queries.BY_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.name like '%:name%'"),
-		@org.hibernate.annotations.NamedQuery(name = Offer.Queries.OFFERED_AFTER, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.endDate > :date"),
-		@org.hibernate.annotations.NamedQuery(name = Offer.Queries.OFFERED_BEFORE, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.startDate < :date"),
-		@org.hibernate.annotations.NamedQuery(name = Offer.Queries.OFFERED_BETWEEN, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where (offer.endDate > :startDate and offer.startDate < :endDate)"),
-		@org.hibernate.annotations.NamedQuery(name = Offer.Queries.BY_OFFERED_ITEM_ID, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.offeredItem.id = :itemId"),
-		@org.hibernate.annotations.NamedQuery(name = Offer.Queries.BY_OFFERED_ITEM_NAME, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.offeredItem.name = :itemName"),
-		@org.hibernate.annotations.NamedQuery(name = Offer.Queries.BY_OFFERED_ITEM_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.offeredItem.name like '%:itemName%'") })
+@NamedQueries( {
+		@NamedQuery(name = Offer.Queries.BY_NAME, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.name = :name"),
+		@NamedQuery(name = Offer.Queries.BY_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.name like '%:name%'"),
+		@NamedQuery(name = Offer.Queries.OFFERED_AFTER, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.endDate > :date"),
+		@NamedQuery(name = Offer.Queries.OFFERED_BEFORE, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.startDate < :date"),
+		@NamedQuery(name = Offer.Queries.OFFERED_BETWEEN, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where (offer.endDate > :startDate and offer.startDate < :endDate)"),
+		@NamedQuery(name = Offer.Queries.BY_OFFERED_ITEM_ID, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.offeredItem.id = :itemId"),
+		@NamedQuery(name = Offer.Queries.BY_OFFERED_ITEM_NAME, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.offeredItem.name = :itemName"),
+		@NamedQuery(name = Offer.Queries.BY_OFFERED_ITEM_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.offer.Offer offer where offer.offeredItem.name like '%:itemName%'") })
 public class Offer extends AbstractAuditableDomainObject<Long> implements
 		Serializable {
 
@@ -314,7 +317,7 @@ public class Offer extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "ID_ITEM", unique = false, nullable = false)
-	@org.hibernate.annotations.ForeignKey(name = "FK_OFFER_ITEM")
+	@ForeignKey(name = "FK_OFFER_ITEM")
 	private Item offeredItem;
 
 	/**

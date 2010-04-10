@@ -11,6 +11,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,6 +24,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.ForeignKey;
 
 import com.acme.orderplacement.domain.item.offer.Offer;
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
@@ -42,15 +45,15 @@ import com.acme.orderplacement.domain.support.meta.AuditInfo;
 @Entity
 @Table(schema = "ITEM", name = "PROMOTION")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "ITEM.ID_SEQ_PROMOTION")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = Promotion.Queries.BY_NAME, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.name = :name"),
-		@org.hibernate.annotations.NamedQuery(name = Promotion.Queries.BY_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.name like '%:name%'"),
-		@org.hibernate.annotations.NamedQuery(name = Promotion.Queries.PROMOTED_AFTER, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.endDate > :date"),
-		@org.hibernate.annotations.NamedQuery(name = Promotion.Queries.PROMOTED_BEFORE, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.startDate < :Date"),
-		@org.hibernate.annotations.NamedQuery(name = Promotion.Queries.PROMOTED_BETWEEN, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where (promotion.endDate >= :startDate and promotion.startDate <= :endDate)"),
-		@org.hibernate.annotations.NamedQuery(name = Promotion.Queries.BY_PROMOTED_OFFER_ID, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.promotedOffer.id = :offerId"),
-		@org.hibernate.annotations.NamedQuery(name = Promotion.Queries.BY_PROMOTED_OFFER_NAME, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.promotedOffer.name = :offerName"),
-		@org.hibernate.annotations.NamedQuery(name = Promotion.Queries.BY_PROMOTED_OFFER_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.promotedOffer.name like '%:offerName%'") })
+@NamedQueries( {
+		@NamedQuery(name = Promotion.Queries.BY_NAME, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.name = :name"),
+		@NamedQuery(name = Promotion.Queries.BY_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.name like '%:name%'"),
+		@NamedQuery(name = Promotion.Queries.PROMOTED_AFTER, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.endDate > :date"),
+		@NamedQuery(name = Promotion.Queries.PROMOTED_BEFORE, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.startDate < :Date"),
+		@NamedQuery(name = Promotion.Queries.PROMOTED_BETWEEN, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where (promotion.endDate >= :startDate and promotion.startDate <= :endDate)"),
+		@NamedQuery(name = Promotion.Queries.BY_PROMOTED_OFFER_ID, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.promotedOffer.id = :offerId"),
+		@NamedQuery(name = Promotion.Queries.BY_PROMOTED_OFFER_NAME, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.promotedOffer.name = :offerName"),
+		@NamedQuery(name = Promotion.Queries.BY_PROMOTED_OFFER_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.promotion.Promotion promotion where promotion.promotedOffer.name like '%:offerName%'") })
 public class Promotion extends AbstractAuditableDomainObject<Long> implements
 		Serializable {
 
@@ -314,7 +317,7 @@ public class Promotion extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_OFFER", referencedColumnName = "ID", nullable = false, unique = true)
-	@org.hibernate.annotations.ForeignKey(name = "FK_PROMOTION_OFFER")
+	@ForeignKey(name = "FK_PROMOTION_OFFER")
 	private Offer promotedOffer;
 
 	/**

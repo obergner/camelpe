@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -19,6 +21,8 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.NaturalId;
 
 import com.acme.orderplacement.domain.people.contact.PostalAddress;
 import com.acme.orderplacement.domain.people.person.Person;
@@ -40,15 +44,15 @@ import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject
 @Entity
 @Table(schema = "PEOPLE", name = "PRIVATE_CUSTOMER")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "PEOPLE.ID_SEQ_PRIVATE_CUSTOMER")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = PrivateCustomer.Queries.BY_CUSTOMER_NUMBER, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where privateCustomer.customerNumber = :customerNumber"),
-		@org.hibernate.annotations.NamedQuery(name = PrivateCustomer.Queries.BY_CUSTOMER_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where privateCustomer.customerNumber like :customerNumber"),
-		@org.hibernate.annotations.NamedQuery(name = PrivateCustomer.Queries.BY_SHIPPING_STREET_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where privateCustomer.shippingAddress.street like :street"),
-		@org.hibernate.annotations.NamedQuery(name = PrivateCustomer.Queries.BY_SHIPPING_STREET_AND_CITY_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where (privateCustomer.shippingAddress.street like :street and privateCustomer.shippingAddress.city like :city)"),
-		@org.hibernate.annotations.NamedQuery(name = PrivateCustomer.Queries.BY_SHIPPING_STREET_AND_CITY_AND_POSTAL_CODE_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where (privateCustomer.shippingAddress.street like :street and privateCustomer.shippingAddress.city like :city and privateCustomer.shippingAddress.postalCode like :postalCode)"),
-		@org.hibernate.annotations.NamedQuery(name = PrivateCustomer.Queries.BY_INVOICE_STREET_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where privateCustomer.invoiceAddress.street like :street"),
-		@org.hibernate.annotations.NamedQuery(name = PrivateCustomer.Queries.BY_INVOICE_STREET_AND_CITY_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where (privateCustomer.invoiceAddress.street like :street and privateCustomer.invoiceAddress.city like :city)"),
-		@org.hibernate.annotations.NamedQuery(name = PrivateCustomer.Queries.BY_INVOICE_STREET_AND_CITY_AND_POSTAL_CODE_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where (privateCustomer.invoiceAddress.street like :street and privateCustomer.invoiceAddress.city like :city and privateCustomer.invoiceAddress.postalCode like :postalCode)") })
+@NamedQueries( {
+		@NamedQuery(name = PrivateCustomer.Queries.BY_CUSTOMER_NUMBER, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where privateCustomer.customerNumber = :customerNumber"),
+		@NamedQuery(name = PrivateCustomer.Queries.BY_CUSTOMER_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where privateCustomer.customerNumber like :customerNumber"),
+		@NamedQuery(name = PrivateCustomer.Queries.BY_SHIPPING_STREET_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where privateCustomer.shippingAddress.street like :street"),
+		@NamedQuery(name = PrivateCustomer.Queries.BY_SHIPPING_STREET_AND_CITY_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where (privateCustomer.shippingAddress.street like :street and privateCustomer.shippingAddress.city like :city)"),
+		@NamedQuery(name = PrivateCustomer.Queries.BY_SHIPPING_STREET_AND_CITY_AND_POSTAL_CODE_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where (privateCustomer.shippingAddress.street like :street and privateCustomer.shippingAddress.city like :city and privateCustomer.shippingAddress.postalCode like :postalCode)"),
+		@NamedQuery(name = PrivateCustomer.Queries.BY_INVOICE_STREET_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where privateCustomer.invoiceAddress.street like :street"),
+		@NamedQuery(name = PrivateCustomer.Queries.BY_INVOICE_STREET_AND_CITY_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where (privateCustomer.invoiceAddress.street like :street and privateCustomer.invoiceAddress.city like :city)"),
+		@NamedQuery(name = PrivateCustomer.Queries.BY_INVOICE_STREET_AND_CITY_AND_POSTAL_CODE_LIKE, query = "from com.acme.orderplacement.domain.people.customer.PrivateCustomer privateCustomer where (privateCustomer.invoiceAddress.street like :street and privateCustomer.invoiceAddress.city like :city and privateCustomer.invoiceAddress.postalCode like :postalCode)") })
 public class PrivateCustomer extends AbstractAuditableDomainObject<Long>
 		implements Serializable {
 
@@ -122,7 +126,7 @@ public class PrivateCustomer extends AbstractAuditableDomainObject<Long>
 	@Size(min = 5, max = 30)
 	@Basic
 	@Column(name = "CUSTOMER_NUMBER", unique = true, nullable = false, length = 30)
-	@org.hibernate.annotations.NaturalId(mutable = false)
+	@NaturalId(mutable = false)
 	private String customerNumber;
 
 	/**
@@ -174,7 +178,7 @@ public class PrivateCustomer extends AbstractAuditableDomainObject<Long>
 	 */
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_SHIPPING_ADDRESS", unique = false, nullable = true)
-	@org.hibernate.annotations.ForeignKey(name = "FK_PRIVATECUST_SHIPPINGADDR", inverseName = "FK_SHIPPINGADDR_PRIVATECUST")
+	@ForeignKey(name = "FK_PRIVATECUST_SHIPPINGADDR", inverseName = "FK_SHIPPINGADDR_PRIVATECUST")
 	private PostalAddress shippingAddress;
 
 	/**
@@ -233,7 +237,7 @@ public class PrivateCustomer extends AbstractAuditableDomainObject<Long>
 	 */
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_INVOICE_ADDRESS", unique = false, nullable = true)
-	@org.hibernate.annotations.ForeignKey(name = "FK_PRIVATECUST_INVOICEADDR", inverseName = "FK_INVOICEADDR_PRIVATECUST")
+	@ForeignKey(name = "FK_PRIVATECUST_INVOICEADDR", inverseName = "FK_INVOICEADDR_PRIVATECUST")
 	private PostalAddress invoiceAddress = null;
 
 	/**
@@ -298,7 +302,7 @@ public class PrivateCustomer extends AbstractAuditableDomainObject<Long>
 	 */
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_PERSON", referencedColumnName = "ID", unique = true, nullable = false)
-	@org.hibernate.annotations.ForeignKey(name = "FK_PRIVATECUST_PERSON")
+	@ForeignKey(name = "FK_PRIVATECUST_PERSON")
 	private Person parent;
 
 	/**

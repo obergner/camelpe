@@ -8,6 +8,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -32,11 +34,11 @@ import com.acme.orderplacement.domain.support.AbstractVersionedDomainObject;
 @Entity
 @Table(schema = "ITEM", name = "ITEM_OPTION")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "ITEM.ID_SEQ_ITEM_OPTION")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = ItemOption.Queries.BY_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.ItemOption itemOption where itemOption.name like '%:name%'"),
-		@org.hibernate.annotations.NamedQuery(name = ItemOption.Queries.BY_DESCRIPTION_LIKE, query = "from com.acme.orderplacement.domain.item.ItemOption itemOption where itemOption.description like '%:description%'"),
-		@org.hibernate.annotations.NamedQuery(name = ItemOption.Queries.BY_TYPE, query = "from com.acme.orderplacement.domain.item.ItemOption itemOption where itemOption.type = :type"),
-		@org.hibernate.annotations.NamedQuery(name = ItemOption.Queries.BY_TYPE_LIKE, query = "from com.acme.orderplacement.domain.item.ItemOption itemOption where itemOption.type like '%:type%'") })
+@NamedQueries( {
+		@NamedQuery(name = ItemOption.Queries.BY_NAME_LIKE, query = "from com.acme.orderplacement.domain.item.ItemOption itemOption where itemOption.name like '%:name%'"),
+		@NamedQuery(name = ItemOption.Queries.BY_DESCRIPTION_LIKE, query = "from com.acme.orderplacement.domain.item.ItemOption itemOption where itemOption.description like '%:description%'"),
+		@NamedQuery(name = ItemOption.Queries.BY_TYPE, query = "from com.acme.orderplacement.domain.item.ItemOption itemOption where itemOption.type = :type"),
+		@NamedQuery(name = ItemOption.Queries.BY_TYPE_LIKE, query = "from com.acme.orderplacement.domain.item.ItemOption itemOption where itemOption.type like '%:type%'") })
 public class ItemOption extends AbstractVersionedDomainObject<Long> implements
 		Serializable {
 

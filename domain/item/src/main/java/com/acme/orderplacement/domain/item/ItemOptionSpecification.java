@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -18,6 +20,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.ForeignKey;
 
 import com.acme.orderplacement.domain.support.AbstractVersionedDomainObject;
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
@@ -36,11 +39,11 @@ import com.acme.orderplacement.domain.support.exception.CollaborationPreconditio
 @Entity
 @Table(schema = "ITEM", name = "ITEM_OPTION_SPECIFICATION")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "ITEM.ID_SEQ_ITEM_OPTION_SPEC")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = ItemOptionSpecification.Queries.BY_VALUE, query = "from com.acme.orderplacement.domain.item.ItemOptionSpecification itemOptionSpecification where itemOptionSpecification.value = :value"),
-		@org.hibernate.annotations.NamedQuery(name = ItemOptionSpecification.Queries.BY_VALUE_LIKE, query = "from com.acme.orderplacement.domain.item.ItemOptionSpecification itemOptionSpecification where itemOptionSpecification.value like '%:value%'"),
-		@org.hibernate.annotations.NamedQuery(name = ItemOptionSpecification.Queries.BY_SPECIFIED_ITEM_OPTION_ID, query = "from com.acme.orderplacement.domain.item.ItemOptionSpecification itemOptionSpecification where itemOptionSpecification.specifiedItemOption.id = :itemOptionId"),
-		@org.hibernate.annotations.NamedQuery(name = ItemOptionSpecification.Queries.BY_SPECIFIED_ITEM_OPTION_NAME, query = "from com.acme.orderplacement.domain.item.ItemOptionSpecification itemOptionSpecification where itemOptionSpecification.specifiedItemOption.name = :itemOptionName") })
+@NamedQueries( {
+		@NamedQuery(name = ItemOptionSpecification.Queries.BY_VALUE, query = "from com.acme.orderplacement.domain.item.ItemOptionSpecification itemOptionSpecification where itemOptionSpecification.value = :value"),
+		@NamedQuery(name = ItemOptionSpecification.Queries.BY_VALUE_LIKE, query = "from com.acme.orderplacement.domain.item.ItemOptionSpecification itemOptionSpecification where itemOptionSpecification.value like '%:value%'"),
+		@NamedQuery(name = ItemOptionSpecification.Queries.BY_SPECIFIED_ITEM_OPTION_ID, query = "from com.acme.orderplacement.domain.item.ItemOptionSpecification itemOptionSpecification where itemOptionSpecification.specifiedItemOption.id = :itemOptionId"),
+		@NamedQuery(name = ItemOptionSpecification.Queries.BY_SPECIFIED_ITEM_OPTION_NAME, query = "from com.acme.orderplacement.domain.item.ItemOptionSpecification itemOptionSpecification where itemOptionSpecification.specifiedItemOption.name = :itemOptionName") })
 public class ItemOptionSpecification extends
 		AbstractVersionedDomainObject<Long> implements Serializable {
 
@@ -160,7 +163,7 @@ public class ItemOptionSpecification extends
 	 */
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_ITEM_OPTION", unique = false, nullable = false)
-	@org.hibernate.annotations.ForeignKey(name = "FK_ITEMOPTIONSPEC_ITEMOPTION")
+	@ForeignKey(name = "FK_ITEMOPTIONSPEC_ITEMOPTION")
 	private ItemOption specifiedItemOption;
 
 	/**
@@ -197,7 +200,7 @@ public class ItemOptionSpecification extends
 	 */
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "ID_ITEM_SPECIFICATION", unique = false, nullable = false)
-	@org.hibernate.annotations.ForeignKey(name = "FK_ITEMOPTIONSPEC_ITEMSPEC")
+	@ForeignKey(name = "FK_ITEMOPTIONSPEC_ITEMSPEC")
 	private ItemSpecification itemSpecification;
 
 	/**

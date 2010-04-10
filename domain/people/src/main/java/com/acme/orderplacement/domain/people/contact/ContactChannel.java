@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -33,9 +35,9 @@ import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(schema = "PEOPLE", name = "CONTACT_CHANNEL")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "PEOPLE.ID_SEQ_CONTACT_CHANNEL")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = "contactChannel.byName", query = "from com.acme.orderplacement.domain.people.contact.ContactChannel contactChannel where contactChannel.name = :name"),
-		@org.hibernate.annotations.NamedQuery(name = "contactChannel.byNameLike", query = "from com.acme.orderplacement.domain.people.contact.ContactChannel contactChannel where contactChannel.name like '%:name%'") })
+@NamedQueries( {
+		@NamedQuery(name = "contactChannel.byName", query = "from com.acme.orderplacement.domain.people.contact.ContactChannel contactChannel where contactChannel.name = :name"),
+		@NamedQuery(name = "contactChannel.byNameLike", query = "from com.acme.orderplacement.domain.people.contact.ContactChannel contactChannel where contactChannel.name like '%:name%'") })
 public abstract class ContactChannel extends
 		AbstractAuditableDomainObject<Long> implements Serializable {
 

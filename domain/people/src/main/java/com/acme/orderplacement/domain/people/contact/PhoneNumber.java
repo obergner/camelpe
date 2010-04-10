@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -29,9 +31,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 @Entity
 @Table(schema = "PEOPLE", name = "TELEPHONE_NUMBER", uniqueConstraints = @UniqueConstraint(columnNames = { "PHONE_NUMBER" }))
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = PhoneNumber.Queries.BY_NUMBER, query = "from com.acme.orderplacement.domain.people.contact.PhoneNumber phoneNumber where phoneNumber.phoneNumber = :number"),
-		@org.hibernate.annotations.NamedQuery(name = PhoneNumber.Queries.BY_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.people.contact.PhoneNumber phoneNumber where phoneNumber.phoneNumber like :number") })
+@NamedQueries( {
+		@NamedQuery(name = PhoneNumber.Queries.BY_NUMBER, query = "from com.acme.orderplacement.domain.people.contact.PhoneNumber phoneNumber where phoneNumber.phoneNumber = :number"),
+		@NamedQuery(name = PhoneNumber.Queries.BY_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.people.contact.PhoneNumber phoneNumber where phoneNumber.phoneNumber like :number") })
 public class PhoneNumber extends ContactChannel implements Serializable {
 
 	// ------------------------------------------------------------------------

@@ -8,6 +8,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -27,9 +29,9 @@ import org.hibernate.validator.constraints.Email;
  */
 @Entity
 @Table(schema = "PEOPLE", name = "EMAIL_ADDRESS", uniqueConstraints = @UniqueConstraint(columnNames = { "EMAIL_ADDRESS" }))
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = EmailAddress.Queries.BY_ADDRESS, query = "from com.acme.orderplacement.domain.people.contact.EmailAddress emailAddress where emailAddress.address = :address"),
-		@org.hibernate.annotations.NamedQuery(name = EmailAddress.Queries.BY_ADDRESS_LIKE, query = "from com.acme.orderplacement.domain.people.contact.EmailAddress emailAddress where emailAddress.address like :address") })
+@NamedQueries( {
+		@NamedQuery(name = EmailAddress.Queries.BY_ADDRESS, query = "from com.acme.orderplacement.domain.people.contact.EmailAddress emailAddress where emailAddress.address = :address"),
+		@NamedQuery(name = EmailAddress.Queries.BY_ADDRESS_LIKE, query = "from com.acme.orderplacement.domain.people.contact.EmailAddress emailAddress where emailAddress.address like :address") })
 public class EmailAddress extends ContactChannel implements Serializable {
 
 	// ------------------------------------------------------------------------

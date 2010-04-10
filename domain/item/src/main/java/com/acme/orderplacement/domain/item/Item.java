@@ -28,6 +28,12 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
 import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
@@ -155,7 +161,7 @@ public class Item extends AbstractAuditableDomainObject<Long> implements
 	@Size(min = 5, max = 30)
 	@Basic
 	@Column(name = "ITEM_NUMBER", unique = true, nullable = false, length = 30)
-	@org.hibernate.annotations.NaturalId(mutable = false)
+	@NaturalId(mutable = false)
 	private String itemNumber;
 
 	/**
@@ -267,8 +273,8 @@ public class Item extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.association name="Specific Item - Item"
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "specifiedItem")
-	@org.hibernate.annotations.Sort(type = org.hibernate.annotations.SortType.COMPARATOR, comparator = ItemSpecification.ByItemSpecificationNumberComparator.class)
-	@org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	@Sort(type = SortType.COMPARATOR, comparator = ItemSpecification.ByItemSpecificationNumberComparator.class)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private SortedSet<ItemSpecification> specifications;
 
 	/**
@@ -474,7 +480,7 @@ public class Item extends AbstractAuditableDomainObject<Long> implements
 	@ManyToMany(targetEntity = ItemOption.class, cascade = {
 			CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(schema = "ITEM", name = "ITEM_ITEM_OPTION_ASSOC", joinColumns = { @JoinColumn(name = "ID_ITEM") }, inverseJoinColumns = { @JoinColumn(name = "ID_ITEM_OPTION") })
-	@org.hibernate.annotations.ForeignKey(name = "FK_ITEM_ITEMOPTION", inverseName = "FK_ITEMOPTION_ITEM")
+	@ForeignKey(name = "FK_ITEM_ITEMOPTION", inverseName = "FK_ITEMOPTION_ITEM")
 	private Set<ItemOption> options;
 
 	/**

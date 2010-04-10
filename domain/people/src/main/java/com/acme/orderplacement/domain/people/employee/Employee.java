@@ -13,6 +13,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -21,6 +23,8 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.NaturalId;
 
 import com.acme.orderplacement.domain.people.contact.EmailAddress;
 import com.acme.orderplacement.domain.people.customer.PrivateCustomer;
@@ -56,12 +60,12 @@ import com.acme.orderplacement.domain.support.meta.AuditInfo;
 @Entity
 @Table(schema = "PEOPLE", name = "EMPLOYEE")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "PEOPLE.ID_SEQ_EMPLOYEE")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = Employee.Queries.BY_EMPLOYEE_NUMBER, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.employeeNumber = :employeeNumber"),
-		@org.hibernate.annotations.NamedQuery(name = Employee.Queries.BY_EMPLOYEE_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.employeeNumber like :employeeNumber"),
-		@org.hibernate.annotations.NamedQuery(name = Employee.Queries.BY_WORK_EMAIL_ADDRESS, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.workEmailAddress = :workEmailAddress"),
-		@org.hibernate.annotations.NamedQuery(name = Employee.Queries.BY_WORK_EMAIL_ADDRESS_LIKE, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.workEmailAddress like :workEmailAddress)"),
-		@org.hibernate.annotations.NamedQuery(name = Employee.Queries.BY_DEPARTMENT, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.department = :department)") })
+@NamedQueries( {
+		@NamedQuery(name = Employee.Queries.BY_EMPLOYEE_NUMBER, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.employeeNumber = :employeeNumber"),
+		@NamedQuery(name = Employee.Queries.BY_EMPLOYEE_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.employeeNumber like :employeeNumber"),
+		@NamedQuery(name = Employee.Queries.BY_WORK_EMAIL_ADDRESS, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.workEmailAddress = :workEmailAddress"),
+		@NamedQuery(name = Employee.Queries.BY_WORK_EMAIL_ADDRESS_LIKE, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.workEmailAddress like :workEmailAddress)"),
+		@NamedQuery(name = Employee.Queries.BY_DEPARTMENT, query = "from com.acme.orderplacement.domain.people.employee.Employee employee where employee.department = :department)") })
 public class Employee extends AbstractAuditableDomainObject<Long> implements
 		Serializable {
 
@@ -167,7 +171,7 @@ public class Employee extends AbstractAuditableDomainObject<Long> implements
 	@Size(min = 5, max = 30)
 	@Basic
 	@Column(name = "EMPLOYEE_NUMBER", unique = true, nullable = false, length = 30)
-	@org.hibernate.annotations.NaturalId(mutable = false)
+	@NaturalId(mutable = false)
 	private String employeeNumber;
 
 	/**
@@ -234,7 +238,7 @@ public class Employee extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_WORK_EMAIL_ADDRESS", unique = false, nullable = false)
-	@org.hibernate.annotations.ForeignKey(name = "FK_EMPLOYEE_WORKEMAILADDR")
+	@ForeignKey(name = "FK_EMPLOYEE_WORKEMAILADDR")
 	private EmailAddress workEmailAddress;
 
 	/**
@@ -274,7 +278,7 @@ public class Employee extends AbstractAuditableDomainObject<Long> implements
 	 */
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_PERSON", referencedColumnName = "ID", unique = true, nullable = false)
-	@org.hibernate.annotations.ForeignKey(name = "FK_EMPLOYEE_PERSON")
+	@ForeignKey(name = "FK_EMPLOYEE_PERSON")
 	private Person parent;
 
 	/**

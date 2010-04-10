@@ -16,6 +16,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -24,7 +26,8 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.NaturalId;
 
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
 import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
@@ -44,11 +47,11 @@ import com.acme.orderplacement.domain.support.meta.AuditInfo;
 @Entity
 @Table(schema = "ITEM", name = "ITEM_SPECIFICATION")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "ITEM.ID_SEQ_ITEM_SPEC")
-@org.hibernate.annotations.NamedQueries( {
-		@org.hibernate.annotations.NamedQuery(name = ItemSpecification.Queries.BY_ITEM_SPECIFICATION_NUMBER, query = "from com.acme.orderplacement.domain.item.ItemSpecification itemSpecification where itemSpecification.itemSpecificationNumber = :itemSpecificationNumber"),
-		@org.hibernate.annotations.NamedQuery(name = ItemSpecification.Queries.BY_ITEM_SPECIFICATION_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.item.ItemSpecification itemSpecification where itemSpecification.itemSpecificationNumber like '%:itemSpecificationNumber%'"),
-		@org.hibernate.annotations.NamedQuery(name = ItemSpecification.Queries.BY_SPECIFIED_ITEM_ID, query = "from com.acme.orderplacement.domain.item.ItemSpecification itemSpecification where itemSpecification.specifiedItem.id = :itemId"),
-		@org.hibernate.annotations.NamedQuery(name = ItemSpecification.Queries.BY_SPECIFIED_ITEM_NAME, query = "from com.acme.orderplacement.domain.item.ItemSpecification itemSpecification where itemSpecification.specifiedItem.name = :itemName") })
+@NamedQueries( {
+		@NamedQuery(name = ItemSpecification.Queries.BY_ITEM_SPECIFICATION_NUMBER, query = "from com.acme.orderplacement.domain.item.ItemSpecification itemSpecification where itemSpecification.itemSpecificationNumber = :itemSpecificationNumber"),
+		@NamedQuery(name = ItemSpecification.Queries.BY_ITEM_SPECIFICATION_NUMBER_LIKE, query = "from com.acme.orderplacement.domain.item.ItemSpecification itemSpecification where itemSpecification.itemSpecificationNumber like '%:itemSpecificationNumber%'"),
+		@NamedQuery(name = ItemSpecification.Queries.BY_SPECIFIED_ITEM_ID, query = "from com.acme.orderplacement.domain.item.ItemSpecification itemSpecification where itemSpecification.specifiedItem.id = :itemId"),
+		@NamedQuery(name = ItemSpecification.Queries.BY_SPECIFIED_ITEM_NAME, query = "from com.acme.orderplacement.domain.item.ItemSpecification itemSpecification where itemSpecification.specifiedItem.name = :itemName") })
 public class ItemSpecification extends AbstractAuditableDomainObject<Long>
 		implements Serializable, Comparable<ItemSpecification> {
 
@@ -86,10 +89,6 @@ public class ItemSpecification extends AbstractAuditableDomainObject<Long>
 	 * <code>itemSpecificationNumber</code>.
 	 * </p>
 	 * <p>
-	 * <strong>Note</strong> This has to be an explicit class definition instead
-	 * of an anonymous class since Hibernate's {@link Sort <code>@Sort</code>}
-	 * annotation requires a class <em>literal</em>.
-	 * </p>
 	 * 
 	 * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
 	 * 
@@ -208,7 +207,7 @@ public class ItemSpecification extends AbstractAuditableDomainObject<Long>
 	@Size(min = 5, max = 30)
 	@Basic
 	@Column(name = "ITEM_SPECIFICATION_NUMBER", unique = true, nullable = false, length = 30)
-	@org.hibernate.annotations.NaturalId(mutable = false)
+	@NaturalId(mutable = false)
 	private String itemSpecificationNumber;
 
 	/**
@@ -250,7 +249,7 @@ public class ItemSpecification extends AbstractAuditableDomainObject<Long>
 	 */
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_ITEM", unique = false, nullable = false)
-	@org.hibernate.annotations.ForeignKey(name = "FK_ITEMSPEC_ITEM")
+	@ForeignKey(name = "FK_ITEMSPEC_ITEM")
 	private Item specifiedItem;
 
 	/**
@@ -318,7 +317,7 @@ public class ItemSpecification extends AbstractAuditableDomainObject<Long>
 	 * @uml.association name="ItemSpecification - ItemOptionSpecifications"
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "itemSpecification")
-	@org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	// @OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<ItemOptionSpecification> itemOptionSpecifications;
 
 	/**
