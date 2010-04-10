@@ -9,13 +9,6 @@
         <dependent-module deploy-path="/" handle="module:/classpath/var/M2_REPO/org/tranql/tranql-connector-postgresql-xa/1.1/tranql-connector-postgresql-xa-1.1.rar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.integrationmdb/com.acme.orderplacement.jee.integrationmdb">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/orderplacement.integration.inbound.itemimport-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.itemimport/com.acme.orderplacement.integration.inbound.itemimport">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/aopalliance-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -28,16 +21,10 @@
         <dependent-module archiveName="/orderplacement.service.item.api-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.service.item.api/com.acme.orderplacement.service.item.api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/orderplacement.integration.inbound.external-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.external/com.acme.orderplacement.integration.inbound.external">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.service.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.service.support/com.acme.orderplacement.service.support">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/commons-codec-1.3.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.3/commons-codec-1.3.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/geronimo-jta_1.0.1B_spec-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-jta_1.0.1B_spec/1.0.1/geronimo-jta_1.0.1B_spec-1.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.integration.inbound.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.support/com.acme.orderplacement.integration.inbound.support">
@@ -46,16 +33,10 @@
         <dependent-module archiveName="/orderplacement.common.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.common.support/com.acme.orderplacement.common.support">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/geronimo-jms_1.1_spec-1.1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/commons-collections-3.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-collections/commons-collections/3.2/commons-collections-3.2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.jee.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.jee.support/com.acme.orderplacement.jee.support">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/geronimo-j2ee-management_1.0_spec-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-j2ee-management_1.0_spec/1.0/geronimo-j2ee-management_1.0_spec-1.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.jee.geronimo-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.jee.geronimo/com.acme.orderplacement.jee.geronimo">
@@ -76,9 +57,6 @@
         <dependent-module archiveName="/lib/spring-asm-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-asm/3.0.2.RELEASE/spring-asm-3.0.2.RELEASE.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/spring-jms-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-jms/3.0.2.RELEASE/spring-jms-3.0.2.RELEASE.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/spring-core-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-core/3.0.2.RELEASE/spring-core-3.0.2.RELEASE.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -95,54 +73,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/aspectjweaver-1.6.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjweaver/1.6.8/aspectjweaver-1.6.8.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/activemq-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-core/5.3.1/activemq-core-5.3.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/protobuf/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/camel-spring-integration-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-spring-integration/2.2.0/camel-spring-integration-2.2.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/org.osgi.core-4.1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/osgi/org.osgi.core/4.1.0/org.osgi.core-4.1.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/kahadb-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/kahadb/5.3.1/kahadb-5.3.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/camel-jaxb-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-jaxb/2.2.0/camel-jaxb-2.2.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/camel-spring-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-spring/2.2.0/camel-spring-2.2.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/camel-core-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-core/2.2.0/camel-core-2.2.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/org.springframework.integration-1.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/integration/org.springframework.integration/1.0.3.RELEASE/org.springframework.integration-1.0.3.RELEASE.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/activemq-pool-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-pool/5.3.1/activemq-pool-5.3.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/activemq-camel-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-camel/5.3.1/activemq-camel-5.3.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/spring-osgi-io-1.2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/osgi/spring-osgi-io/1.2.1/spring-osgi-io-1.2.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/spring-osgi-core-1.2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/osgi/spring-osgi-core/1.2.1/spring-osgi-core-1.2.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/commons-management-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/fusesource/commonman/commons-management/1.0/commons-management-1.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/commons-net-2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-net/commons-net/2.0/commons-net-2.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/camel-jms-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-jms/2.2.0/camel-jms-2.2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="orderplacement.jee.ejb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.ejb/com.acme.orderplacement.jee.ejb">
@@ -272,12 +202,6 @@
         <dependent-module archiveName="/lib/activeio-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/5.3.1/activeio-core-5.3.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/geronimo-j2ee-management_1.1_spec-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-j2ee-management_1.1_spec/1.0.1/geronimo-j2ee-management_1.1_spec-1.0.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/activeio-core-3.1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/3.1.2/activeio-core-3.1.2.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/validation-api-1.0.0.GA.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -285,6 +209,55 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/hibernate-validator-4.1.0.Beta1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-validator/4.1.0.Beta1/hibernate-validator-4.1.0.Beta1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-core-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-core/5.3.1/activemq-core-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/protobuf/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.integration.inbound.itemimport-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.itemimport/com.acme.orderplacement.integration.inbound.itemimport">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.integration.inbound.external-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.external/com.acme.orderplacement.integration.inbound.external">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/kahadb-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/kahadb/5.3.1/kahadb-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/spring-jms-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-jms/3.0.2.RELEASE/spring-jms-3.0.2.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/camel-jaxb-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-jaxb/2.2.0/camel-jaxb-2.2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/camel-spring-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-spring/2.2.0/camel-spring-2.2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/camel-core-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-core/2.2.0/camel-core-2.2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-pool-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-pool/5.3.1/activemq-pool-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-camel-5.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-camel/5.3.1/activemq-camel-5.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/commons-management-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/fusesource/commonman/commons-management/1.0/commons-management-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/commons-net-2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-net/commons-net/2.0/commons-net-2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/camel-jms-2.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-jms/2.2.0/camel-jms-2.2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activeio-core-3.1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activeio-core/3.1.2/activeio-core-3.1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="orderplacement.jee.integrationmdb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.integrationmdb/com.acme.orderplacement.jee.integrationmdb">
+            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

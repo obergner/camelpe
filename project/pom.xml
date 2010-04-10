@@ -577,6 +577,15 @@
 				<version>1.1.2</version>
 				<type>jar</type>
 			</dependency>
+			<!-- J2EE Management Specification -->
+			<dependency>
+				<groupId>org.apache.geronimo.specs
+				</groupId>
+				<artifactId>geronimo-j2ee-management_1.1_spec
+				</artifactId>
+				<version>1.0.1</version>
+				<type>jar</type>
+			</dependency>
 			<!-- Apache -->
 			<dependency>
 				<groupId>commons-lang</groupId>
@@ -802,17 +811,19 @@
 				<artifactId>camel-jms</artifactId>
 				<version>${deps.camel.version}</version>
 				<type>jar</type>
+				<exclusions>
+					<!--
+						We use the standard javax.jms-1.1 
+					 -->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-jms_1.1_spec</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-spring</artifactId>
-				<version>${deps.camel.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-spring-integration
-				</artifactId>
 				<version>${deps.camel.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -841,6 +852,13 @@
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging-api</artifactId>
 					</exclusion>
+					<!--
+						We use the standard javax.jms-1.1 
+					 -->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-jms_1.1_spec</artifactId>
+					</exclusion>
 				</exclusions>
 			</dependency>
 			<!--
@@ -857,6 +875,21 @@
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging-api</artifactId>
 					</exclusion>
+					<!--
+						activeio-core uses geronimo-j2ee-management_1.1_spec
+					-->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-j2ee-management_1.0_spec</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.osgi</groupId>
+						<artifactId>org.osgi.core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.osgi</groupId>
+						<artifactId>spring-osgi-core</artifactId>
+					</exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
@@ -869,6 +902,13 @@
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging-api</artifactId>
 					</exclusion>
+					<!--
+						We use the standard javax.jta-1.1 
+					 -->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-jta_1.0.1B_spec</artifactId>
+					</exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
@@ -880,6 +920,14 @@
 					<exclusion>
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<!--
+						Will be provided by the JEE container and is not needed during
+						tests
+					-->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
