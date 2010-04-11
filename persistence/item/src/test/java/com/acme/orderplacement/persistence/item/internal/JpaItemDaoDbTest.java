@@ -37,7 +37,7 @@ import com.acme.orderplacement.persistence.support.exception.PersistentStateConc
 import com.acme.orderplacement.persistence.support.exception.PersistentStateDeletedException;
 import com.acme.orderplacement.persistence.support.exception.PersistentStateLockedException;
 import com.acme.orderplacement.test.support.annotation.TestUser;
-import com.acme.orderplacement.test.support.annotation.spring.SpringBasedAuthenticationProvidingTestExecutionListener;
+import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrationTestExecutionListener;
 
 /**
  * <p>
@@ -56,7 +56,7 @@ import com.acme.orderplacement.test.support.annotation.spring.SpringBasedAuthent
 		"classpath:/META-INF/spring/persistence.support.daoLayer.scontext" })
 @TestExecutionListeners( { DependencyInjectionTestExecutionListener.class,
 		TransactionalTestExecutionListener.class,
-		SpringBasedAuthenticationProvidingTestExecutionListener.class })
+		PrincipalRegistrationTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(transactionManager = "persistence.support.platform.transactionManager", defaultRollback = true)
 @Transactional

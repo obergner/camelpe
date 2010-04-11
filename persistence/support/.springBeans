@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[2.2.2.RELEASE]]></pluginVersion>
+	<pluginVersion><![CDATA[2.3.2.201003220227-RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 		<configSuffix><![CDATA[scontext]]></configSuffix>
@@ -12,7 +12,6 @@
 		<config>src/main/resources/META-INF/spring/persistence.support.aspectLayer.scontext</config>
 		<config>src/main/resources/META-INF/spring/persistence.support.daoLayer.scontext</config>
 		<config>src/main/resources/META-INF/spring/persistence.support.platformLayer.scontext</config>
-		<config>src/main/resources/META-INF/spring/persistence.support.securityLayer.scontext</config>
 	</configs>
 	<configSets>
 		<configSet>
@@ -24,7 +23,6 @@
 				<config>src/main/resources/META-INF/spring/persistence.support.aspectLayer.scontext</config>
 				<config>src/main/resources/META-INF/spring/persistence.support.daoLayer.scontext</config>
 				<config>src/main/resources/META-INF/spring/persistence.support.platformLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.securityLayer.scontext</config>
 			</configs>
 		</configSet>
 	</configSets>

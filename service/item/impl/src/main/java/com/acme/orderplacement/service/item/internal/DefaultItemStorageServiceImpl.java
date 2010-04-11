@@ -3,6 +3,7 @@
  */
 package com.acme.orderplacement.service.item.internal;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.Validate;
@@ -58,6 +59,18 @@ public class DefaultItemStorageServiceImpl implements ItemStorageService {
 			throws IllegalArgumentException {
 		Validate.notNull(itemDao, "itemDao");
 		this.itemDao = itemDao;
+	}
+
+	// -------------------------------------------------------------------------
+	// Sanity check
+	// -------------------------------------------------------------------------
+
+	@PostConstruct
+	public void ensureCorrectlyInitialized() throws IllegalStateException {
+		if (this.itemDao == null) {
+			throw new IllegalStateException("Unsatisfied dependency: ["
+					+ ItemDao.class.getName() + "]");
+		}
 	}
 
 	// -------------------------------------------------------------------------

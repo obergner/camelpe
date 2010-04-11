@@ -114,12 +114,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security
-			</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.acme.orderplacement.jee
 			</groupId>
 			<artifactId>orderplacement.jee.geronimo

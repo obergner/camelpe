@@ -150,20 +150,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security
-			</groupId>
-			<artifactId>spring-security-core
-			</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security
-			</groupId>
-			<artifactId>spring-security-config
-			</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.acme.orderplacement.aspect
 			</groupId>
 			<artifactId>orderplacement.aspect.support

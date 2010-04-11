@@ -313,55 +313,55 @@
 					<cs:subject>
 						<cs:id>guest-run-as</cs:id>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>guest</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>guest</cs:value>
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
 						<cs:id>external-run-as</cs:id>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>external</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>external</cs:value>
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
 						<cs:id>employee-run-as</cs:id>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>employee</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>employee</cs:value>
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
 						<cs:id>accountant-run-as</cs:id>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>accountant</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>accountant</cs:value>
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
 						<cs:id>administrator</cs:id>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>administrator</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
+							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
 							<cs:value>administrator</cs:value>
 						</cs:credential>
 					</cs:subject>

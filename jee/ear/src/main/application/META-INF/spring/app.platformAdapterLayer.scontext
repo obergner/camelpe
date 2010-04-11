@@ -2,12 +2,11 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
-       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
 	<!--
 		==================================================================
@@ -72,19 +71,5 @@
 		SECURITY
 		==================================================================
 	-->
-
-	<security:user-service
-		id="persistence.support.platform.userDetailsService">
-		<security:user name="guest" password="guest"
-			authorities="ROLE_GUEST" />
-		<security:user name="external" password="external"
-			authorities="ROLE_EXTERNAL_USER" />
-		<security:user name="employee" password="employee"
-			authorities="ROLE_EMPLOYEE" />
-		<security:user name="admin" password="admin"
-			authorities="ROLE_ADMIN" />
-		<security:user name="accountant" password="accountant"
-			authorities="ROLE_ACCOUNTANT" />
-	</security:user-service>
 
 </beans>

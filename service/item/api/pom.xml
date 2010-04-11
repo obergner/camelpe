@@ -67,11 +67,6 @@
 					<artifactId>spring-expression</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>org.springframework.security
-					</groupId>
-					<artifactId>spring-security-core</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>commons-collections</groupId>
 					<artifactId>commons-collections</artifactId>
 				</exclusion>

@@ -4,6 +4,7 @@
 package com.acme.orderplacement.domain.support.meta.jpa;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.Date;
 
 import javax.persistence.PrePersist;
@@ -11,10 +12,8 @@ import javax.persistence.PreUpdate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.acme.orderplacement.common.support.auth.PrincipalAccess;
 import com.acme.orderplacement.domain.support.meta.AuditInfo;
 import com.acme.orderplacement.domain.support.meta.AuditableDomainObject;
 
@@ -33,6 +32,15 @@ import com.acme.orderplacement.domain.support.meta.AuditableDomainObject;
 public final class AuditInfoManagingEntityListener {
 
 	// ------------------------------------------------------------------------
+	// Static fields
+	// ------------------------------------------------------------------------
+
+	/**
+	 * 
+	 */
+	private static PrincipalAccess principalAccess;
+
+	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
 
@@ -40,6 +48,14 @@ public final class AuditInfoManagingEntityListener {
 	 * Our faithful logger.
 	 */
 	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	// ------------------------------------------------------------------------
+	// Static dependencies
+	// ------------------------------------------------------------------------
+
+	public static void setPrincipalAccess(final PrincipalAccess principalAccess) {
+		AuditInfoManagingEntityListener.principalAccess = principalAccess;
+	}
 
 	// ------------------------------------------------------------------------
 	// Public API
@@ -111,21 +127,20 @@ public final class AuditInfoManagingEntityListener {
 	 * @throws IllegalStateException
 	 */
 	private String currentUser() throws IllegalStateException {
-		final Authentication currentAuthentication = SecurityContextHolder
-				.getContext().getAuthentication();
-		if (currentAuthentication == null) {
-			final String error = "There is not security context associated with the current thread: "
+		final Principal currentPrincipal = principalAccess.currentPrincipal();
+		if (currentPrincipal == null) {
+			final String error = "There is no Principal associated with the current thread: "
 					+ "Unable to determine the current user.";
 			this.log.error(error);
 
 			throw new IllegalStateException(error);
 		}
 		this.log.debug("Obtained authentication [{}] from the current thread.",
-				currentAuthentication);
+				currentPrincipal);
 
-		final String username = currentAuthentication.getName();
+		final String username = currentPrincipal.getName();
 		if (username == null) {
-			final String error = "Unable to determine the current user: No principal found in the current authentication.";
+			final String error = "Unable to determine the current user: No username found in the current authentication.";
 			this.log.error(error);
 
 			throw new IllegalArgumentException(error);

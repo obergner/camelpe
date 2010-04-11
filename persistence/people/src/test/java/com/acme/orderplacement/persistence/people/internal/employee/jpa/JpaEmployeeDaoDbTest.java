@@ -46,7 +46,7 @@ import com.acme.orderplacement.persistence.support.exception.ObjectNotPersistent
 import com.acme.orderplacement.persistence.support.exception.ObjectNotTransientException;
 import com.acme.orderplacement.persistence.support.exception.ObjectTransientException;
 import com.acme.orderplacement.test.support.annotation.TestUser;
-import com.acme.orderplacement.test.support.annotation.spring.SpringBasedAuthenticationProvidingTestExecutionListener;
+import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrationTestExecutionListener;
 
 ;
 
@@ -70,7 +70,7 @@ import com.acme.orderplacement.test.support.annotation.spring.SpringBasedAuthent
 		"classpath:/META-INF/spring/persistence.support.daoLayer.scontext" })
 @TestExecutionListeners( { DependencyInjectionTestExecutionListener.class,
 		TransactionalTestExecutionListener.class,
-		SpringBasedAuthenticationProvidingTestExecutionListener.class })
+		PrincipalRegistrationTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(transactionManager = "persistence.support.platform.transactionManager", defaultRollback = true)
 @Transactional

@@ -19,7 +19,7 @@ import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;
 import com.acme.orderplacement.test.support.annotation.TestUser;
-import com.acme.orderplacement.test.support.annotation.spring.SpringBasedAuthenticationProvidingTestExecutionListener;
+import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrationTestExecutionListener;
 
 /**
  * <p>
@@ -41,7 +41,7 @@ import com.acme.orderplacement.test.support.annotation.spring.SpringBasedAuthent
 		"classpath:/META-INF/spring/persistence.support.daoLayer.scontext" })
 @TestExecutionListeners( { DependencyInjectionTestExecutionListener.class,
 		TransactionalTestExecutionListener.class,
-		SpringBasedAuthenticationProvidingTestExecutionListener.class })
+		PrincipalRegistrationTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(transactionManager = "persistence.support.platform.transactionManager", defaultRollback = true)
 @Transactional

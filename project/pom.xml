@@ -55,8 +55,6 @@
 		<deps.log4j.version>1.2.15</deps.log4j.version>
 		<deps.aspectj.version>1.6.8</deps.aspectj.version>
 		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
-		<deps.springsecurity.version>3.0.2.RELEASE
-		</deps.springsecurity.version>
 		<deps.hibernate.version>3.5.0-Final</deps.hibernate.version>
 		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
 		<!--
@@ -246,6 +244,14 @@
 				<groupId>com.acme.orderplacement.domain
 				</groupId>
 				<artifactId>orderplacement.domain.support
+				</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.domain
+				</groupId>
+				<artifactId>orderplacement.domain.testsupport
 				</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
@@ -761,22 +767,6 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-expression</artifactId>
 				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<!-- Spring Security -->
-			<dependency>
-				<groupId>org.springframework.security
-				</groupId>
-				<artifactId>spring-security-core</artifactId>
-				<version>${deps.springsecurity.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.security
-				</groupId>
-				<artifactId>spring-security-config
-				</artifactId>
-				<version>${deps.springsecurity.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- 
