@@ -54,7 +54,6 @@ import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrat
 @ContextConfiguration(locations = {
 		"classpath:/META-INF/spring/persistence.support.applicationLayer.scontext",
 		"classpath:/META-INF/spring/persistence.people.test.platformLayer.scontext",
-		"classpath:/META-INF/spring/persistence.support.securityLayer.scontext",
 		"classpath:/META-INF/spring/persistence.support.aspectLayer.scontext",
 		"classpath:/META-INF/spring/persistence.support.daoLayer.scontext" })
 @TestExecutionListeners( { DependencyInjectionTestExecutionListener.class,

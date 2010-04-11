@@ -159,6 +159,13 @@
 		<!--
 			| Test dependencies 
 		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.domain
+			</groupId>
+			<artifactId>orderplacement.domain.testsupport
+			</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

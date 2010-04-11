@@ -221,6 +221,13 @@
 			</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.domain
+			</groupId>
+			<artifactId>orderplacement.domain.testsupport
+			</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 </project>

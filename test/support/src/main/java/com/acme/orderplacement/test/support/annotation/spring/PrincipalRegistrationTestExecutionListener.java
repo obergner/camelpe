@@ -5,18 +5,15 @@ package com.acme.orderplacement.test.support.annotation.spring;
 
 import java.security.Principal;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestExecutionListener;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
 import com.acme.orderplacement.common.support.auth.PrincipalRegistration;
 import com.acme.orderplacement.test.support.annotation.TestUser;
+import com.acme.orderplacement.test.support.auth.PrincipalHolder;
 import com.acme.orderplacement.test.support.auth.TestPrincipal;
 
 /**
@@ -35,15 +32,8 @@ import com.acme.orderplacement.test.support.auth.TestPrincipal;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@Configurable(PrincipalRegistrationTestExecutionListener.CONFIGURABLE_NAME)
 public final class PrincipalRegistrationTestExecutionListener extends
 		AbstractTestExecutionListener implements TestExecutionListener {
-
-	// ------------------------------------------------------------------------
-	// Static fields
-	// ------------------------------------------------------------------------
-
-	public static final String CONFIGURABLE_NAME = "persistence.testsupport.PrincipalRegistrationTestExecutionListener";
 
 	// ------------------------------------------------------------------------
 	// Fields
@@ -53,34 +43,6 @@ public final class PrincipalRegistrationTestExecutionListener extends
 	 * Our faithful logger.
 	 */
 	private final Logger log = LoggerFactory.getLogger(getClass());
-
-	@Resource(name = PrincipalRegistrationTestExecutionListener.CONFIGURABLE_NAME)
-	private PrincipalRegistration principalRegistration;
-
-	// ------------------------------------------------------------------------
-	// Dependencies
-	// ------------------------------------------------------------------------
-
-	/**
-	 * @param principalRegistration
-	 *            the principalRegistration to set
-	 */
-	public final void setPrincipalRegistration(
-			final PrincipalRegistration principalRegistration) {
-		this.principalRegistration = principalRegistration;
-	}
-
-	// -------------------------------------------------------------------------
-	// Sanity check
-	// -------------------------------------------------------------------------
-
-	@PostConstruct
-	public void ensureCorrectlyInitialized() throws IllegalStateException {
-		if (this.principalRegistration == null) {
-			throw new IllegalStateException("Unsatisfied dependency: ["
-					+ PrincipalRegistration.class.getName() + "]");
-		}
-	}
 
 	// ------------------------------------------------------------------------
 	// org.springframework.test.context.support.AbstractTestExecutionListener
@@ -108,7 +70,7 @@ public final class PrincipalRegistrationTestExecutionListener extends
 		}
 
 		if (testUserAnnotation != null) {
-			authenticateUsing(testUserAnnotation);
+			authenticateUsing(testUserAnnotation, testContext);
 		}
 	}
 
@@ -120,7 +82,7 @@ public final class PrincipalRegistrationTestExecutionListener extends
 		if (testContext.getTestMethod().isAnnotationPresent(TestUser.class)
 				|| testContext.getTestClass().isAnnotationPresent(
 						TestUser.class)) {
-			clearAuthentication();
+			clearAuthentication(testContext);
 		}
 	}
 
@@ -131,10 +93,12 @@ public final class PrincipalRegistrationTestExecutionListener extends
 	/**
 	 * @param testUserAnnotation
 	 */
-	private void authenticateUsing(final TestUser testUserAnnotation) {
+	private void authenticateUsing(final TestUser testUserAnnotation,
+			final TestContext testContext) {
 		final Principal testPrincipal = new TestPrincipal(testUserAnnotation
 				.username());
-		this.principalRegistration.registerCurrentPrincipal(testPrincipal);
+		principalRegistration(testContext).registerCurrentPrincipal(
+				testPrincipal);
 		this.log
 				.debug(
 						"Registered test authentication token [{}] with security context",
@@ -144,8 +108,14 @@ public final class PrincipalRegistrationTestExecutionListener extends
 	/**
 	 * 
 	 */
-	private void clearAuthentication() {
-		this.principalRegistration.unregisterCurrentPrincipal();
+	private void clearAuthentication(final TestContext testContext) {
+		principalRegistration(testContext).unregisterCurrentPrincipal();
 		this.log.debug("Cleared security context after test execution");
+	}
+
+	private PrincipalRegistration principalRegistration(
+			final TestContext testContext) {
+		return testContext.getApplicationContext().getBean(
+				PrincipalHolder.COMPONENT_NAME, PrincipalRegistration.class);
 	}
 }

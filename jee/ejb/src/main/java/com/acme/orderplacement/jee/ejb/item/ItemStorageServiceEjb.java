@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.acme.orderplacement.common.support.role.ApplicationUserRole;
 import com.acme.orderplacement.jee.ejb.internal.spring.JndiEnabledServiceLayerSpringBeanAutowiringInterceptor;
-import com.acme.orderplacement.jee.support.internal.auth.DummyUserInjectingAuthenticationEjbInterceptor;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;
@@ -31,8 +30,7 @@ import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyReg
 		ApplicationUserRole.ROLE_ADMIN })
 @Stateless(name = ItemStorageServiceEjb.BEAN_NAME)
 @Local( { ItemStorageService.class })
-@Interceptors( { JndiEnabledServiceLayerSpringBeanAutowiringInterceptor.class,
-		DummyUserInjectingAuthenticationEjbInterceptor.class })
+@Interceptors( { JndiEnabledServiceLayerSpringBeanAutowiringInterceptor.class })
 public class ItemStorageServiceEjb implements ItemStorageService {
 
 	// -------------------------------------------------------------------------
