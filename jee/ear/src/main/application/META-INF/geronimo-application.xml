@@ -138,7 +138,7 @@
 	</module>
 
 	<module>
-		<web>orderplacement.jee.ws-1.0-SNAPSHOT.war</web>
+		<web>orderplacement.jee.ws-${project.version}.war</web>
 		<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
 			<sys:environment>
 				<sys:moduleId>
@@ -149,6 +149,7 @@
 				</sys:moduleId>
 			</sys:environment>
 			<context-root>/orderplacement</context-root>
+			<security-realm-name>OrderplacementRealm</security-realm-name>
 		</web-app>
 	</module>
 
@@ -242,9 +243,8 @@
 					<sec:realm>OrderplacementRealm</sec:realm>
 					<sec:id>guest-run-as</sec:id>
 				</sec:run-as-subject>
-				<sec:realm-principal name="guest"
-					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"
-					domain-name="OrderplacementRealm" realm-name="OrderplacementRealm" />
+				<sec:principal name="guest"
+					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" />
 			</sec:role>
 			<sec:role role-name="ROLE_EXTERNAL_USER">
 				<sec:description>A regular user who is not an employee</sec:description>
@@ -252,9 +252,8 @@
 					<sec:realm>OrderplacementRealm</sec:realm>
 					<sec:id>external-run-as</sec:id>
 				</sec:run-as-subject>
-				<sec:realm-principal name="external"
-					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"
-					domain-name="OrderplacementRealm" realm-name="OrderplacementRealm" />
+				<sec:principal name="external"
+					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" />
 			</sec:role>
 			<sec:role role-name="ROLE_EMPLOYEE">
 				<sec:description>An employee with extended permissions</sec:description>
@@ -262,9 +261,8 @@
 					<sec:realm>OrderplacementRealm</sec:realm>
 					<sec:id>employee-run-as</sec:id>
 				</sec:run-as-subject>
-				<sec:realm-principal name="employee"
-					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"
-					domain-name="OrderplacementRealm" realm-name="OrderplacementRealm" />
+				<sec:principal name="employee"
+					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" />
 			</sec:role>
 			<sec:role role-name="ROLE_ACCOUNTANT">
 				<sec:description>A member of the accountancy department</sec:description>
@@ -272,21 +270,20 @@
 					<sec:realm>OrderplacementRealm</sec:realm>
 					<sec:id>accountant-run-as</sec:id>
 				</sec:run-as-subject>
-				<sec:realm-principal name="accountant"
-					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"
-					domain-name="OrderplacementRealm" realm-name="OrderplacementRealm" />
+				<sec:principal name="accountant"
+					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal" />
 			</sec:role>
 			<sec:role role-name="ROLE_ADMIN">
 				<sec:description>An administrator with permission to do everything</sec:description>
-				<sec:realm-principal name="administrator"
-					class="org.apache.geronimo.security.realm.providers.GeronimoGroupPrincipal"
-					domain-name="OrderplacementRealm" realm-name="OrderplacementRealm" />
+				<sec:principal name="admin"
+					class="org.apache.geronimo.security.realm.providers.GeronimoUserPrincipal" />
 			</sec:role>
 		</sec:role-mappings>
 	</sec:security>
 
 	<sys:gbean name="OrderplacementRealm"
-		class="org.apache.geronimo.security.realm.GenericSecurityRealm">
+		class="org.apache.geronimo.security.realm.GenericSecurityRealm"
+		xsi:type="sys:gbeanType">
 		<sys:attribute name="realmName">OrderplacementRealm</sys:attribute>
 		<sys:attribute name="global">true</sys:attribute>
 		<sys:xml-reference name="LoginModuleConfiguration">
@@ -294,8 +291,7 @@
 				<lc:login-module control-flag="REQUISITE"
 					wrap-principals="false">
 					<lc:login-domain-name>OrderplacementRealm</lc:login-domain-name>
-					<lc:login-module-class>com.acme.orderplacement.jee.support.internal.auth.SpringSecurityBackedLoginModule</lc:login-module-class>
-					<lc:option name="ignoreMissingAuthentication">false</lc:option>
+					<lc:login-module-class>com.acme.orderplacement.jee.geronimo.internal.auth.ConstantTestGeronimoLoginModule</lc:login-module-class>
 				</lc:login-module>
 			</lc:login-config>
 		</sys:xml-reference>
@@ -305,7 +301,8 @@
 	</sys:gbean>
 
 	<sys:gbean name="OrderplacementCredentialStore"
-		class="org.apache.geronimo.security.credentialstore.SimpleCredentialStoreImpl">
+		class="org.apache.geronimo.security.credentialstore.SimpleCredentialStoreImpl"
+		xsi:type="sys:gbeanType">
 		<sys:xml-attribute name="credentialStore">
 			<cs:credential-store
 				xmlns:cs="http://geronimo.apache.org/xml/ns/credentialstore-1.0">
@@ -313,55 +310,55 @@
 					<cs:subject>
 						<cs:id>guest-run-as</cs:id>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
 							<cs:value>guest</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
 							<cs:value>guest</cs:value>
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
 						<cs:id>external-run-as</cs:id>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
 							<cs:value>external</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
 							<cs:value>external</cs:value>
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
 						<cs:id>employee-run-as</cs:id>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
 							<cs:value>employee</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
 							<cs:value>employee</cs:value>
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
 						<cs:id>accountant-run-as</cs:id>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
 							<cs:value>accountant</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
 							<cs:value>accountant</cs:value>
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
 						<cs:id>administrator</cs:id>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
 							<cs:value>administrator</cs:value>
 						</cs:credential>
 						<cs:credential>
-							<cs:type>com.acme.orderplacement.jee.support.internal.auth.ConstantUsernamePasswordCallbackHandler</cs:type>
+							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
 							<cs:value>administrator</cs:value>
 						</cs:credential>
 					</cs:subject>
@@ -371,7 +368,8 @@
 	</sys:gbean>
 
 	<sys:gbean name="SharedApplicationContext"
-		class="com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean">
+		class="com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean"
+		xsi:type="sys:gbeanType">
 		<sys:reference name="globalJndiContext">
 			<sys:name>GlobalContext</sys:name>
 		</sys:reference>

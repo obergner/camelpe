@@ -7,9 +7,6 @@ import java.security.Principal;
 
 import org.springframework.stereotype.Component;
 
-import com.acme.orderplacement.common.support.auth.PrincipalAccess;
-import com.acme.orderplacement.common.support.auth.PrincipalRegistration;
-
 /**
  * <p>
  * TODO: Insert short summary for PrincipalHolder
@@ -19,28 +16,28 @@ import com.acme.orderplacement.common.support.auth.PrincipalRegistration;
  * 
  */
 @Component(PrincipalHolder.COMPONENT_NAME)
-public class PrincipalHolder implements PrincipalAccess, PrincipalRegistration {
+public class PrincipalHolder {
 
-	public static final String COMPONENT_NAME = "persistence.testsupport.PrincipalHolder";
+	public static final String COMPONENT_NAME = "test.support.auth.PrincipalHolder";
 
 	private final ThreadLocal<Principal> currentPrincipal = new ThreadLocal<Principal>();
 
 	/**
-	 * @see com.acme.orderplacement.common.support.auth.PrincipalAccess#currentPrincipal()
+	 * @return
 	 */
 	public Principal currentPrincipal() {
 		return this.currentPrincipal.get();
 	}
 
 	/**
-	 * @see com.acme.orderplacement.common.support.auth.PrincipalRegistration#registerCurrentPrincipal(java.security.Principal)
+	 * @param principal
 	 */
 	public void registerCurrentPrincipal(final Principal principal) {
 		this.currentPrincipal.set(principal);
 	}
 
 	/**
-	 * @see com.acme.orderplacement.common.support.auth.PrincipalRegistration#unregisterCurrentPrincipal()
+	 * 
 	 */
 	public void unregisterCurrentPrincipal() {
 		this.currentPrincipal.remove();

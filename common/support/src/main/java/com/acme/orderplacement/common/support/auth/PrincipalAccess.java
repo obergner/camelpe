@@ -17,6 +17,8 @@ import java.security.Principal;
  */
 public interface PrincipalAccess {
 
+	String COMPONENT_NAME = "common.support.auth.PrincipalAccess";
+
 	/**
 	 * @return The current <code>Principal</code> or <code>null</code>
 	 */

@@ -68,6 +68,7 @@ public final class AuditInfoManagingEntityListener {
 	@PrePersist
 	public <T extends AuditableDomainObject<? extends Serializable>> void fillAuditInfoBeforePersisting(
 			final T auditableEntity) throws IllegalStateException {
+		ensureCorrectlyConfigured();
 		final AuditInfo auditInfo = auditableEntity.getAuditInfo();
 		if (!auditInfo.isNew()) {
 			final String error = "An entity to be peristed for the first time should have an empty AuditInfo component. "
@@ -150,5 +151,19 @@ public final class AuditInfoManagingEntityListener {
 				username);
 
 		return username;
+	}
+
+	/**
+	 * @throws IllegalStateException
+	 */
+	private void ensureCorrectlyConfigured() throws IllegalStateException {
+		if (principalAccess == null) {
+			final String error = "No ["
+					+ PrincipalAccess.class.getName()
+					+ "] has been set. Cannot access the Principal associated with each current thread.";
+			this.log.error(error);
+
+			throw new IllegalStateException(error);
+		}
 	}
 }

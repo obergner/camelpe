@@ -11,9 +11,8 @@ import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestExecutionListener;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
-import com.acme.orderplacement.common.support.auth.PrincipalRegistration;
 import com.acme.orderplacement.test.support.annotation.TestUser;
-import com.acme.orderplacement.test.support.auth.PrincipalHolder;
+import com.acme.orderplacement.test.support.auth.PrincipalRegistration;
 import com.acme.orderplacement.test.support.auth.TestPrincipal;
 
 /**
@@ -116,6 +115,7 @@ public final class PrincipalRegistrationTestExecutionListener extends
 	private PrincipalRegistration principalRegistration(
 			final TestContext testContext) {
 		return testContext.getApplicationContext().getBean(
-				PrincipalHolder.COMPONENT_NAME, PrincipalRegistration.class);
+				PrincipalRegistration.COMPONENT_NAME,
+				PrincipalRegistration.class);
 	}
 }

@@ -22,6 +22,5 @@
 	<import resource="app.platformAdapterLayer.scontext" />
 	<import resource="app.hibernateIntegrationLayer.scontext" />
 	<import resource="app.aspectLayer.scontext" />
-	<import resource="app.securityLayer.scontext" />
 
 </beans>

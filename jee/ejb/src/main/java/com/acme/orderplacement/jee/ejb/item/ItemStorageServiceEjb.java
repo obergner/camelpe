@@ -1,5 +1,6 @@
 package com.acme.orderplacement.jee.ejb.item;
 
+import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -25,7 +26,8 @@ import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyReg
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+@DeclareRoles( { ApplicationUserRole.ROLE_GUEST,
+		ApplicationUserRole.ROLE_EXTERNAL_USER,
 		ApplicationUserRole.ROLE_EMPLOYEE, ApplicationUserRole.ROLE_ACCOUNTANT,
 		ApplicationUserRole.ROLE_ADMIN })
 @Stateless(name = ItemStorageServiceEjb.BEAN_NAME)

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.common.support.auth;
+package com.acme.orderplacement.test.support.auth;
 
 import java.security.Principal;
 
@@ -14,6 +14,8 @@ import java.security.Principal;
  * 
  */
 public interface PrincipalRegistration {
+
+	String COMPONENT_NAME = "test.support.auth.PrincipalRegistration";
 
 	/**
 	 * @param principal
