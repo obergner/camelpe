@@ -136,18 +136,18 @@ public final class AuditInfoManagingEntityListener {
 
 			throw new IllegalStateException(error);
 		}
-		this.log.debug("Obtained authentication [{}] from the current thread.",
+		this.log.debug("Obtained Principal [{}] from the current thread.",
 				currentPrincipal);
 
 		final String username = currentPrincipal.getName();
 		if (username == null) {
-			final String error = "Unable to determine the current user: No username found in the current authentication.";
+			final String error = "Unable to determine the current user: No username found in the current Principal.";
 			this.log.error(error);
 
 			throw new IllegalArgumentException(error);
 		}
 		this.log.debug(
-				"Extracted current user [{}] from the current authentication.",
+				"Extracted current user [{}] from the current Principal.",
 				username);
 
 		return username;

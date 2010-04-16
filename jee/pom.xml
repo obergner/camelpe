@@ -54,6 +54,7 @@
 	</dependencies>
 
 	<modules>
+		<module>geronimo-realm-plugin</module>
 		<module>support</module>
 		<module>geronimo</module>
 		<module>ejb</module>

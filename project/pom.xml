@@ -28,6 +28,7 @@
 			Geronimo settings. Note that geronimo.home should be overridden in
 			your own ~/.m2/settings.xml.
 		-->
+		<geronimoVersion>2.2</geronimoVersion>
 		<geronimo.home>
 			C:/Java/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3
 		</geronimo.home>
@@ -91,6 +92,7 @@
 		<plugins.jaxws.version>1.12</plugins.jaxws.version>
 		<plugins.bundle.version>2.0.1</plugins.bundle.version>
 		<plugins.geronimo.version>2.0.2</plugins.geronimo.version>
+		<plugins.geronimo-car.version>2.2</plugins.geronimo-car.version>
 	</properties>
 
 	<organization>
@@ -1323,6 +1325,25 @@
 					<version>${plugins.geronimo.version}</version>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.geronimo.buildsupport</groupId>
+					<artifactId>car-maven-plugin</artifactId>
+					<version>${plugins.geronimo-car.version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<deploymentConfigs>
+							<deploymentConfig>${gbeanDeployer}</deploymentConfig>
+							<deploymentConfig>${j2eeDeployer}</deploymentConfig>
+						</deploymentConfigs>
+						<category>Security</category>
+						<instance>
+							<plugin-artifact>
+								<copy-file relative-to="server" dest-dir="var/security">orderplacement
+								</copy-file>
+							</plugin-artifact>
+						</instance>
+					</configuration>
+				</plugin>
+				<plugin>
 					<groupId>org.jvnet.jaxb2.maven2</groupId>
 					<artifactId>maven-jaxb2-plugin</artifactId>
 					<version>${plugins.jaxb2.version}</version>
@@ -1409,6 +1430,10 @@
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.geronimo.buildsupport</groupId>
+				<artifactId>car-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

@@ -21,13 +21,13 @@
    <soapenv:Body>
       <ns:RegisterItemRequest>
          <ns:itemToRegister>
-            <ns1:itemNumber>ITM-003-000000021</ns1:itemNumber>
-            <ns1:name>New Test Item 21</ns1:name>
+            <ns1:itemNumber>ITM-003-000000025</ns1:itemNumber>
+            <ns1:name>New Test Item 25</ns1:name>
             <ns1:description>Test item description</ns1:description>
             <ns1:itemSpecifications>
                <ns1:itemSpecification>
-                  <ns1:itemSpecificationNumber>ITMSPEC-003-000021</ns1:itemSpecificationNumber>
-                  <ns1:name>New Test Item Spec 21</ns1:name>
+                  <ns1:itemSpecificationNumber>ITMSPEC-003-000025</ns1:itemSpecificationNumber>
+                  <ns1:name>New Test Item Spec 25</ns1:name>
                </ns1:itemSpecification>
             </ns1:itemSpecifications>
          </ns:itemToRegister>

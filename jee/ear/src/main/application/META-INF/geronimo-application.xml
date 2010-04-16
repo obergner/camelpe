@@ -291,7 +291,9 @@
 				<lc:login-module control-flag="REQUISITE"
 					wrap-principals="false">
 					<lc:login-domain-name>OrderplacementRealm</lc:login-domain-name>
-					<lc:login-module-class>com.acme.orderplacement.jee.geronimo.internal.auth.ConstantTestGeronimoLoginModule</lc:login-module-class>
+					<lc:login-module-class>org.apache.geronimo.security.realm.providers.PropertiesFileLoginModule</lc:login-module-class>
+					<lc:option name="usersURI">var/security/orderplacement/orderplacement-users.properties</lc:option>
+					<lc:option name="groupsURI">var/security/orderplacement/orderplacement-groups.properties</lc:option>
 				</lc:login-module>
 			</lc:login-config>
 		</sys:xml-reference>
@@ -352,14 +354,14 @@
 						</cs:credential>
 					</cs:subject>
 					<cs:subject>
-						<cs:id>administrator</cs:id>
+						<cs:id>admin</cs:id>
 						<cs:credential>
 							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
-							<cs:value>administrator</cs:value>
+							<cs:value>admin</cs:value>
 						</cs:credential>
 						<cs:credential>
 							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
-							<cs:value>administrator</cs:value>
+							<cs:value>admin</cs:value>
 						</cs:credential>
 					</cs:subject>
 				</cs:realm>
