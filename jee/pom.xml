@@ -54,7 +54,10 @@
 	</dependencies>
 
 	<modules>
-		<module>geronimo-realm-plugin</module>
+		<!--
+			TODO: Builds via command line, but not via m2eclipse
+			<module>geronimo-realm-plugin</module>
+		-->
 		<module>support</module>
 		<module>geronimo</module>
 		<module>ejb</module>

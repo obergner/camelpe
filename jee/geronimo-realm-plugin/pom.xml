@@ -74,7 +74,19 @@
 			<plugin>
 				<groupId>org.apache.geronimo.buildsupport</groupId>
 				<artifactId>car-maven-plugin</artifactId>
-				<extensions>true</extensions>
+				<version>${geronimoVersion}</version>
+				<!--
+					<executions> <execution> <id>default-archive-car</id>
+					<phase>package</phase> <goals> <goal>archive-car</goal> </goals>
+					<configuration> <deploymentConfigs>
+					<deploymentConfig>${j2eeDeployer}</deploymentConfig>
+					<deploymentConfig>${gbeanDeployer}</deploymentConfig>
+					</deploymentConfigs> <category>Security</category> <instance>
+					<plugin-artifact> <copy-file relative-to="server"
+					dest-dir="var/security">orderplacement</copy-file>
+					</plugin-artifact> </instance> </configuration> </execution>
+					</executions>
+				-->
 				<configuration>
 					<deploymentConfigs>
 						<deploymentConfig>${gbeanDeployer}</deploymentConfig>

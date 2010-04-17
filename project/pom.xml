@@ -1328,20 +1328,6 @@
 					<groupId>org.apache.geronimo.buildsupport</groupId>
 					<artifactId>car-maven-plugin</artifactId>
 					<version>${plugins.geronimo-car.version}</version>
-					<extensions>true</extensions>
-					<configuration>
-						<deploymentConfigs>
-							<deploymentConfig>${gbeanDeployer}</deploymentConfig>
-							<deploymentConfig>${j2eeDeployer}</deploymentConfig>
-						</deploymentConfigs>
-						<category>Security</category>
-						<instance>
-							<plugin-artifact>
-								<copy-file relative-to="server" dest-dir="var/security">orderplacement
-								</copy-file>
-							</plugin-artifact>
-						</instance>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.jvnet.jaxb2.maven2</groupId>
@@ -1434,6 +1420,7 @@
 			<plugin>
 				<groupId>org.apache.geronimo.buildsupport</groupId>
 				<artifactId>car-maven-plugin</artifactId>
+				<extensions>true</extensions>
 			</plugin>
 		</plugins>
 	</build>
