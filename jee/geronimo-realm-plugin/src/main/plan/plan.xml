@@ -17,7 +17,7 @@
 <module xmlns="http://geronimo.apache.org/xml/ns/deployment-1.2">
 	<environment>
 		<moduleId>
-			<groupId>com.obergner.acme.orderplacement.jee</groupId>
+			<groupId>com.acme.orderplacement.jee</groupId>
 			<artifactId>orderplacement.jee.geronimo-realm-plugin</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<type>car</type>
@@ -31,12 +31,12 @@
 			</dependency>
 		</dependencies>
 	</environment>
-	<gbean name="OrderplacementCredentialStore"
+	<gbean name="orderplacement.auth.CredentialStore"
 		class="org.apache.geronimo.security.credentialstore.SimpleCredentialStoreImpl">
 		<xml-attribute name="credentialStore">
 			<cs:credential-store
 				xmlns:cs="http://geronimo.apache.org/xml/ns/credentialstore-1.0">
-				<cs:realm name="OrderplacementRealm">
+				<cs:realm name="orderplacement.auth.Realm">
 					<cs:subject>
 						<cs:id>guest-run-as</cs:id>
 						<cs:credential>
@@ -97,27 +97,27 @@
 		</xml-attribute>
 	</gbean>
 	<!--Default security realm using properties files-->
-	<gbean name="OrderplacementLoginModule" class="org.apache.geronimo.security.jaas.LoginModuleGBean">
+	<gbean name="orderplacement.auth.LoginModule" class="org.apache.geronimo.security.jaas.LoginModuleGBean">
 		<attribute name="loginModuleClass">org.apache.geronimo.security.realm.providers.PropertiesFileLoginModule</attribute>
 		<attribute name="options">
-			usersURI=var/security/users.properties
-			groupsURI=var/security/groups.properties
+			usersURI=var/security/orderplacement/orderplacement-users.properties
+			groupsURI=var/security/orderplacement/orderplacement-groups.properties
 		</attribute>
-		<attribute name="loginDomainName">OrderplacementRealm</attribute>
+		<attribute name="loginDomainName">orderplacement.auth.Realm</attribute>
 	</gbean>
-	<gbean name="OrderplacementLoginModuleConfiguration"
+	<gbean name="orderplacement.auth.LoginModuleConfiguration"
 		class="org.apache.geronimo.security.jaas.JaasLoginModuleUse">
 		<attribute name="controlFlag">REQUISITE</attribute>
 		<reference name="LoginModule">
-			<name>OrderplacementLoginModule</name>
+			<name>orderplacement.auth.LoginModule</name>
 		</reference>
 	</gbean>
-	<gbean name="OrderplacementRealm"
+	<gbean name="orderplacement.auth.Realm"
 		class="org.apache.geronimo.security.realm.GenericSecurityRealm">
-		<attribute name="realmName">OrderplacementRealm</attribute>
+		<attribute name="realmName">orderplacement.auth.Realm</attribute>
 		<attribute name="global">true</attribute>
 		<reference name="LoginModuleConfiguration">
-			<name>OrderplacementLoginModuleConfiguration</name>
+			<name>orderplacement.auth.LoginModuleConfiguration</name>
 		</reference>
 		<reference name="ServerInfo">
 			<name>ServerInfo</name>

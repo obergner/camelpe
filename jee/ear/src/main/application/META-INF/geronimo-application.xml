@@ -11,6 +11,14 @@
 			<sys:version>${geronimo.moduleId.version}</sys:version>
 			<sys:type>${geronimo.moduleId.type}</sys:type>
 		</sys:moduleId>
+		<sys:dependencies>
+			<sys:dependency>
+				<sys:groupId>com.acme.orderplacement.jee</sys:groupId>
+				<sys:artifactId>orderplacement.jee.geronimo-realm-plugin</sys:artifactId>
+				<sys:version>1.0-SNAPSHOT</sys:version>
+				<sys:type>car</sys:type>
+			</sys:dependency>
+		</sys:dependencies>
 		<sys:hidden-classes>
 			<sys:filter>org.slf4j</sys:filter>
 			<sys:filter>org.apache.log4j</sys:filter>
@@ -149,7 +157,6 @@
 				</sys:moduleId>
 			</sys:environment>
 			<context-root>/orderplacement</context-root>
-			<security-realm-name>OrderplacementRealm</security-realm-name>
 		</web-app>
 	</module>
 
@@ -229,10 +236,10 @@
 	<sec:security use-context-handler="false"
 		doas-current-caller="true" default-role="ROLE_GUEST">
 		<sec:credential-store-ref>
-			<sys:name>OrderplacementCredentialStore</sys:name>
+			<sys:name>orderplacement.auth.CredentialStore</sys:name>
 		</sec:credential-store-ref>
 		<sec:default-subject>
-			<sec:realm>OrderplacementRealm</sec:realm>
+			<sec:realm>orderplacement.auth.Realm</sec:realm>
 			<sec:id>guest-run-as</sec:id>
 		</sec:default-subject>
 		<sec:role-mappings>
@@ -240,7 +247,7 @@
 				<sec:description>An unauthenticated guest with strictly limited
 					permissions</sec:description>
 				<sec:run-as-subject>
-					<sec:realm>OrderplacementRealm</sec:realm>
+					<sec:realm>orderplacement.auth.Realm</sec:realm>
 					<sec:id>guest-run-as</sec:id>
 				</sec:run-as-subject>
 				<sec:principal name="guest"
@@ -249,7 +256,7 @@
 			<sec:role role-name="ROLE_EXTERNAL_USER">
 				<sec:description>A regular user who is not an employee</sec:description>
 				<sec:run-as-subject>
-					<sec:realm>OrderplacementRealm</sec:realm>
+					<sec:realm>orderplacement.auth.Realm</sec:realm>
 					<sec:id>external-run-as</sec:id>
 				</sec:run-as-subject>
 				<sec:principal name="external"
@@ -258,7 +265,7 @@
 			<sec:role role-name="ROLE_EMPLOYEE">
 				<sec:description>An employee with extended permissions</sec:description>
 				<sec:run-as-subject>
-					<sec:realm>OrderplacementRealm</sec:realm>
+					<sec:realm>orderplacement.auth.Realm</sec:realm>
 					<sec:id>employee-run-as</sec:id>
 				</sec:run-as-subject>
 				<sec:principal name="employee"
@@ -267,7 +274,7 @@
 			<sec:role role-name="ROLE_ACCOUNTANT">
 				<sec:description>A member of the accountancy department</sec:description>
 				<sec:run-as-subject>
-					<sec:realm>OrderplacementRealm</sec:realm>
+					<sec:realm>orderplacement.auth.Realm</sec:realm>
 					<sec:id>accountant-run-as</sec:id>
 				</sec:run-as-subject>
 				<sec:principal name="accountant"
@@ -280,94 +287,6 @@
 			</sec:role>
 		</sec:role-mappings>
 	</sec:security>
-
-	<sys:gbean name="OrderplacementRealm"
-		class="org.apache.geronimo.security.realm.GenericSecurityRealm"
-		xsi:type="sys:gbeanType">
-		<sys:attribute name="realmName">OrderplacementRealm</sys:attribute>
-		<sys:attribute name="global">true</sys:attribute>
-		<sys:xml-reference name="LoginModuleConfiguration">
-			<lc:login-config xmlns:lc="http://geronimo.apache.org/xml/ns/loginconfig-2.0">
-				<lc:login-module control-flag="REQUISITE"
-					wrap-principals="false">
-					<lc:login-domain-name>OrderplacementRealm</lc:login-domain-name>
-					<lc:login-module-class>org.apache.geronimo.security.realm.providers.PropertiesFileLoginModule</lc:login-module-class>
-					<lc:option name="usersURI">var/security/orderplacement/orderplacement-users.properties</lc:option>
-					<lc:option name="groupsURI">var/security/orderplacement/orderplacement-groups.properties</lc:option>
-				</lc:login-module>
-			</lc:login-config>
-		</sys:xml-reference>
-		<sys:reference name="ServerInfo">
-			<sys:name>ServerInfo</sys:name>
-		</sys:reference>
-	</sys:gbean>
-
-	<sys:gbean name="OrderplacementCredentialStore"
-		class="org.apache.geronimo.security.credentialstore.SimpleCredentialStoreImpl"
-		xsi:type="sys:gbeanType">
-		<sys:xml-attribute name="credentialStore">
-			<cs:credential-store
-				xmlns:cs="http://geronimo.apache.org/xml/ns/credentialstore-1.0">
-				<cs:realm name="OrderplacementRealm">
-					<cs:subject>
-						<cs:id>guest-run-as</cs:id>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
-							<cs:value>guest</cs:value>
-						</cs:credential>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
-							<cs:value>guest</cs:value>
-						</cs:credential>
-					</cs:subject>
-					<cs:subject>
-						<cs:id>external-run-as</cs:id>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
-							<cs:value>external</cs:value>
-						</cs:credential>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
-							<cs:value>external</cs:value>
-						</cs:credential>
-					</cs:subject>
-					<cs:subject>
-						<cs:id>employee-run-as</cs:id>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
-							<cs:value>employee</cs:value>
-						</cs:credential>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
-							<cs:value>employee</cs:value>
-						</cs:credential>
-					</cs:subject>
-					<cs:subject>
-						<cs:id>accountant-run-as</cs:id>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
-							<cs:value>accountant</cs:value>
-						</cs:credential>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
-							<cs:value>accountant</cs:value>
-						</cs:credential>
-					</cs:subject>
-					<cs:subject>
-						<cs:id>admin</cs:id>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.NameCallbackHandler</cs:type>
-							<cs:value>admin</cs:value>
-						</cs:credential>
-						<cs:credential>
-							<cs:type>org.apache.geronimo.security.credentialstore.PasswordCallbackHandler</cs:type>
-							<cs:value>admin</cs:value>
-						</cs:credential>
-					</cs:subject>
-				</cs:realm>
-			</cs:credential-store>
-		</sys:xml-attribute>
-	</sys:gbean>
 
 	<sys:gbean name="SharedApplicationContext"
 		class="com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean"

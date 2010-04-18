@@ -25,7 +25,7 @@
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.obergner.acme.orderplacement.jee</groupId>
+	<groupId>com.acme.orderplacement.jee</groupId>
 	<artifactId>orderplacement.jee.geronimo-realm-plugin</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>car</packaging>
@@ -75,18 +75,6 @@
 				<groupId>org.apache.geronimo.buildsupport</groupId>
 				<artifactId>car-maven-plugin</artifactId>
 				<version>${geronimoVersion}</version>
-				<!--
-					<executions> <execution> <id>default-archive-car</id>
-					<phase>package</phase> <goals> <goal>archive-car</goal> </goals>
-					<configuration> <deploymentConfigs>
-					<deploymentConfig>${j2eeDeployer}</deploymentConfig>
-					<deploymentConfig>${gbeanDeployer}</deploymentConfig>
-					</deploymentConfigs> <category>Security</category> <instance>
-					<plugin-artifact> <copy-file relative-to="server"
-					dest-dir="var/security">orderplacement</copy-file>
-					</plugin-artifact> </instance> </configuration> </execution>
-					</executions>
-				-->
 				<configuration>
 					<deploymentConfigs>
 						<deploymentConfig>${gbeanDeployer}</deploymentConfig>

@@ -54,10 +54,6 @@
 	</dependencies>
 
 	<modules>
-		<!--
-			TODO: Builds via command line, but not via m2eclipse
-			<module>geronimo-realm-plugin</module>
-		-->
 		<module>support</module>
 		<module>geronimo</module>
 		<module>ejb</module>
@@ -66,5 +62,18 @@
 		<module>integrationmdb</module>
 		<module>ear</module>
 	</modules>
+
+	<profiles>
+		<profile>
+			<id>include-realm-plugin</id>
+			<modules>
+				<!--
+					TODO: Builds via command line using maven 2.2.0, but neither via
+					m2eclipse 0.10 nor maven 3.0-alpha-7
+				-->
+				<module>geronimo-realm-plugin</module>
+			</modules>
+		</profile>
+	</profiles>
 
 </project>

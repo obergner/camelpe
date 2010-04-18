@@ -30,7 +30,7 @@
 		-->
 		<geronimoVersion>2.2</geronimoVersion>
 		<geronimo.home>
-			C:/Java/Apps/GeronimoHome/geronimo-jetty6-javaee5-2.1.3
+			C:/Java/Apps/GeronimoHome/geronimo-jetty7-javaee5-2.2
 		</geronimo.home>
 		<geronimo.moduleId.groupId>com.acme.orderplacement.jee
 		</geronimo.moduleId.groupId>
