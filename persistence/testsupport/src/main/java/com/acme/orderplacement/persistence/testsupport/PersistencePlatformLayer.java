@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.persistence.item.internal;
+package com.acme.orderplacement.persistence.testsupport;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -18,7 +18,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.acme.orderplacement.test.support.database.spring.PrePopulatingInMemoryH2DataSourceFactory;
+import com.acme.orderplacement.persistence.testsupport.database.spring.PrePopulatingInMemoryH2DataSourceFactory;
 
 /**
  * <p>
@@ -31,9 +31,15 @@ import com.acme.orderplacement.test.support.database.spring.PrePopulatingInMemor
 @Configuration
 public class PersistencePlatformLayer {
 
+	public static final String EMF_COMPONENT_NAME = "persistence.support.platform.applicationEMF";
+
+	public static final String TXMANAGER_COMPONENT_NAME = "persistence.support.platform.transactionManager";
+
+	public static final String DATASOURCE_COMPONENT_NAME = "persistence.support.platform.dataSource";
+
 	private DataSource applicationDataSource;
 
-	@Bean(name = "persistence.support.platform.applicationEMF")
+	@Bean(name = PersistencePlatformLayer.EMF_COMPONENT_NAME)
 	public EntityManagerFactory entityManagerFactory() throws Exception {
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryFactory
@@ -46,7 +52,7 @@ public class PersistencePlatformLayer {
 		return entityManagerFactoryFactory.getObject();
 	}
 
-	@Bean(name = "persistence.support.platform.transactionManager")
+	@Bean(name = PersistencePlatformLayer.TXMANAGER_COMPONENT_NAME)
 	public PlatformTransactionManager transactionManager() throws Exception {
 		final JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
 		jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
@@ -56,7 +62,7 @@ public class PersistencePlatformLayer {
 		return jpaTransactionManager;
 	}
 
-	@Bean(name = "persistence.support.platform.dataSource")
+	@Bean(name = PersistencePlatformLayer.DATASOURCE_COMPONENT_NAME)
 	public DataSource applicationDataSource() throws Exception {
 		if (this.applicationDataSource == null) {
 			this.applicationDataSource = newApplicationDataSource();

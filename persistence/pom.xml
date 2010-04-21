@@ -100,6 +100,7 @@
 	</dependencies>
 
 	<modules>
+		<module>testsupport</module>
 		<module>support</module>
 		<!-- module>people</module -->
 		<!-- module>company</module -->

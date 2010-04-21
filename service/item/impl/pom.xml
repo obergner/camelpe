@@ -222,9 +222,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.domain
+			<groupId>com.acme.orderplacement.persistence
 			</groupId>
-			<artifactId>orderplacement.domain.testsupport
+			<artifactId>orderplacement.persistence.testsupport
 			</artifactId>
 			<scope>test</scope>
 		</dependency>

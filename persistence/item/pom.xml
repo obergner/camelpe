@@ -166,6 +166,13 @@
 			</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.persistence
+			</groupId>
+			<artifactId>orderplacement.persistence.testsupport
+			</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

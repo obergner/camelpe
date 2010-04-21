@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
-import com.acme.orderplacement.test.support.database.spring.PrePopulatingInMemoryH2DataSourceFactory;
+import com.acme.orderplacement.persistence.testsupport.database.spring.PrePopulatingInMemoryH2DataSourceFactory;
 
 /**
  * <p>

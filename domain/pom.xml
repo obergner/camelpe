@@ -22,8 +22,13 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--
-			| Compile time dependencies 
+			| Compile time dependencies
 		-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -40,10 +45,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!--
+			| Runtime dependencies 
+		-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<scope>compile</scope>
+			<scope>runtime</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.hibernate</groupId>
@@ -51,9 +59,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!--
-			| Runtime dependencies 
-		-->
 		<!--
 			| Test dependencies 
 		-->

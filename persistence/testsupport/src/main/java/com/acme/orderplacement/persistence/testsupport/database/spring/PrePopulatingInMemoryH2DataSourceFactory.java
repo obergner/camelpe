@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.test.support.database.spring;
+package com.acme.orderplacement.persistence.testsupport.database.spring;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

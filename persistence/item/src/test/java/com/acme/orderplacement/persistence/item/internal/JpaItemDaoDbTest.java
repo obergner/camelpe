@@ -36,6 +36,7 @@ import com.acme.orderplacement.persistence.support.exception.ObjectTransientExce
 import com.acme.orderplacement.persistence.support.exception.PersistentStateConcurrentlyModifiedException;
 import com.acme.orderplacement.persistence.support.exception.PersistentStateDeletedException;
 import com.acme.orderplacement.persistence.support.exception.PersistentStateLockedException;
+import com.acme.orderplacement.persistence.testsupport.PersistencePlatformLayer;
 import com.acme.orderplacement.test.support.annotation.TestUser;
 import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrationTestExecutionListener;
 
@@ -56,7 +57,7 @@ import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrat
 		TransactionalTestExecutionListener.class,
 		PrincipalRegistrationTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
-@TransactionConfiguration(transactionManager = "persistence.support.platform.transactionManager", defaultRollback = true)
+@TransactionConfiguration(transactionManager = PersistencePlatformLayer.TXMANAGER_COMPONENT_NAME, defaultRollback = true)
 @Transactional
 public class JpaItemDaoDbTest {
 
@@ -117,7 +118,7 @@ public class JpaItemDaoDbTest {
 	/**
 	 * @param dataSource
 	 */
-	@Resource(name = "persistence.support.platform.dataSource")
+	@Resource(name = PersistencePlatformLayer.DATASOURCE_COMPONENT_NAME)
 	public void setDataSource(final DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}

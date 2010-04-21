@@ -15,7 +15,7 @@
         Our test data source 
      -->
 	<bean id="persistence.support.platform.dataSource"
-		class="com.acme.orderplacement.test.support.database.spring.PrePopulatingInMemoryH2DataSourceFactory">
+		class="com.acme.orderplacement.persistence.testsupport.database.spring.PrePopulatingInMemoryH2DataSourceFactory">
 		<property name="databaseName" value="service.item.testDataBase" />
 		<property name="schemaLocation"
 			value="classpath:/testdata/h2/service.itemDB-drop+create.h2.ddl" />
