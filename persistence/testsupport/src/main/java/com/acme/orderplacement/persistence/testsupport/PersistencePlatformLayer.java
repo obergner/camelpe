@@ -6,6 +6,7 @@ package com.acme.orderplacement.persistence.testsupport;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -37,6 +38,18 @@ public class PersistencePlatformLayer {
 
 	public static final String DATASOURCE_COMPONENT_NAME = "persistence.support.platform.dataSource";
 
+	@Value("#{ testEnvironment['persistence.testsupport.schemaClasspathLocation'] }")
+	private String schemaClasspathLocation;
+
+	@Value("#{ testEnvironment['persistence.testsupport.dataClasspathLocation'] }")
+	private String dataClasspathLocation;
+
+	/*
+	 * We have to cache the created test datasource since obviously the spring
+	 * test support creates a new data source for each test run. This, however,
+	 * results in an exception since we will try to recreate the database schema
+	 * in an already initialized in-memory H2 database.
+	 */
 	private DataSource applicationDataSource;
 
 	@Bean(name = PersistencePlatformLayer.EMF_COMPONENT_NAME)
@@ -79,9 +92,9 @@ public class PersistencePlatformLayer {
 		final PrePopulatingInMemoryH2DataSourceFactory dataSourceFactory = new PrePopulatingInMemoryH2DataSourceFactory();
 		dataSourceFactory.setDatabaseName("persistence.item.testDataBase");
 		dataSourceFactory.setSchemaLocation(new ClassPathResource(
-				"testdata/h2/persistence.itemDB-create.h2.ddl"));
+				this.schemaClasspathLocation));
 		dataSourceFactory.setDataLocation(new ClassPathResource(
-				"testdata/h2/persistence.itemDB-populate.h2.dml"));
+				this.dataClasspathLocation));
 
 		return dataSourceFactory.getObject();
 	}

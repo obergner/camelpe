@@ -8,10 +8,6 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/main/resources/META-INF/spring/persistence.support.applicationLayer.scontext</config>
-		<config>src/main/resources/META-INF/spring/persistence.support.aspectLayer.scontext</config>
-		<config>src/main/resources/META-INF/spring/persistence.support.daoLayer.scontext</config>
-		<config>src/main/resources/META-INF/spring/persistence.support.platformLayer.scontext</config>
 	</configs>
 	<configSets>
 		<configSet>
@@ -19,10 +15,6 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>false</incomplete>
 			<configs>
-				<config>src/main/resources/META-INF/spring/persistence.support.applicationLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.aspectLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.daoLayer.scontext</config>
-				<config>src/main/resources/META-INF/spring/persistence.support.platformLayer.scontext</config>
 			</configs>
 		</configSet>
 	</configSets>
