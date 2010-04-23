@@ -27,49 +27,4 @@
 		<!-- camel:jmxAgent id="agent" createConnector="true"/-->
 	</camel:camelContext>
 
-	<!--
-		<camel:endpoint id="integration.inbound.item.ItemStorageServiceEP"
-		uri="direct:integration.inbound.item.ItemStorageServiceEP">
-		<camel:bean ref="integration.inbound.item.ItemStorageServiceDelegate"
-		method="registerItem" /> </camel:endpoint>
-	-->
-
-	<!--
-		JMS/ActiveMQ integration 
-	 -->
-
-	<bean id="integration.inbound.item.ActiveMQ" class="org.apache.activemq.camel.component.ActiveMQComponent">
-		<property name="brokerURL" value="tcp://localhost:61616" />
-	</bean>
-
-	<bean id="integration.inbound.item..Jms" class="org.apache.camel.component.jms.JmsComponent">
-		<property name="connectionFactory">
-			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
-				<property name="brokerURL" value="tcp://localhost:61616" />
-			</bean>
-		</property>
-	</bean>
-
-	<!--
-		JMX integration 
-	 -->
-
-	<bean id="integration.inbound.item.jmx.MBeanServer"
-		class="com.acme.orderplacement.jee.geronimo.internal.spring.GeronimoMBeanServerLookupFactoryBean" />
-
-
-	<jee:jndi-lookup
-		jndi-name="jca:/com.acme.orderplacement.jee/orderplacement.jee.ear/JCAManagedConnectionFactory/jms/com/acme/ConnectionFactory"
-		id="integration.inbound.geronimo.JmsConnectionFactory" expected-type="javax.jms.ConnectionFactory"
-		resource-ref="false" />
-
-	<jee:jndi-lookup
-		jndi-name="jca:/com.acme.orderplacement.jee/orderplacement.jee.ear/JCAAdminObject/jms/queue/com/acme/ItemCreatedEventsErrorQueue"
-		id="integration.inbound.geronimo.ItemCreatedEventsErrorQueue"
-		expected-type="javax.jms.Queue" resource-ref="false" />
-
-	<jee:local-slsb id="integration.inbound.item.ItemStorageServiceDelegate"
-		jndi-name="java:comp/env/ejb/com/acme/orderplacment/item/ItemStorageService"
-		resource-ref="false" business-interface="com.acme.orderplacement.service.item.ItemStorageService" />
-
 </beans>

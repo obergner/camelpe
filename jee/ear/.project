@@ -16,10 +16,10 @@
 		<project>com.acme.orderplacement.common.support</project>
 		<project>com.acme.orderplacement.aspect.support</project>
 		<project>com.acme.orderplacement.jee.ejb</project>
-		<project>com.acme.orderplacement.jee.integrationmdb</project>
 		<project>com.acme.orderplacement.domain.item</project>
 		<project>com.acme.orderplacement.service.item.api</project>
 		<project>com.acme.orderplacement.jee.support</project>
+		<project>com.acme.orderplacement.jee.integrationmdb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

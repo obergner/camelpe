@@ -241,10 +241,6 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="orderplacement.jee.integrationmdb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.integrationmdb/com.acme.orderplacement.jee.integrationmdb">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.domain.item-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.domain.item/com.acme.orderplacement.domain.item">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -252,6 +248,79 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.jee.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.jee.support/com.acme.orderplacement.jee.support">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="orderplacement.jee.integrationmdb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.integrationmdb/com.acme.orderplacement.jee.integrationmdb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
