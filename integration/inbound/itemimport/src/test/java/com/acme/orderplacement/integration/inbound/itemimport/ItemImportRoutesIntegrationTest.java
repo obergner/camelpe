@@ -27,10 +27,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-// @ContextConfiguration(locations = {
-// "classpath:/META-INF/spring/integration.inbound.itemimport.test.integrationLayer.scontext"
-// })
-// @RunWith(SpringJUnit4ClassRunner.class)
 public class ItemImportRoutesIntegrationTest extends CamelSpringTestSupport {
 
 	// ------------------------------------------------------------------------

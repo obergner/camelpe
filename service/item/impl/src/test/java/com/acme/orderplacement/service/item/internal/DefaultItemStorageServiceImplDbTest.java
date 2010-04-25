@@ -15,7 +15,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.acme.orderplacement.persistence.testsupport.PersistencePlatformLayer;
+import com.acme.orderplacement.persistence.testsupport.scontext.PersistencePlatformContext;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;
@@ -39,7 +39,7 @@ import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrat
 		TransactionalTestExecutionListener.class,
 		PrincipalRegistrationTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
-@TransactionConfiguration(transactionManager = PersistencePlatformLayer.TXMANAGER_COMPONENT_NAME, defaultRollback = true)
+@TransactionConfiguration(transactionManager = PersistencePlatformContext.TXMANAGER_COMPONENT_NAME, defaultRollback = true)
 @Transactional
 public class DefaultItemStorageServiceImplDbTest {
 

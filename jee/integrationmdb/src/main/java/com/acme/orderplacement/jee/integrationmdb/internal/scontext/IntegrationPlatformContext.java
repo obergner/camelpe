@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.integrationmdb.internal.spring;
+package com.acme.orderplacement.jee.integrationmdb.internal.scontext;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Queue;
@@ -20,14 +20,14 @@ import com.acme.orderplacement.service.item.ItemStorageService;
 
 /**
  * <p>
- * TODO: Insert short summary for IntegrationPlatformLayer
+ * TODO: Insert short summary for IntegrationPlatformContext
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @Configuration
-public class IntegrationPlatformLayer {
+public class IntegrationPlatformContext {
 
 	public static final String ACTIVEMQ_JMS_COMPONENT_COMPONENT_NAME = "integration.inbound.item.ActiveMQ";
 
@@ -56,7 +56,7 @@ public class IntegrationPlatformLayer {
 	 */
 	private static final String GERONIMO_DEFAULT_DOMAIN = "DefaultDomain";
 
-	@Bean(name = IntegrationPlatformLayer.ACTIVEMQ_JMS_COMPONENT_COMPONENT_NAME)
+	@Bean(name = IntegrationPlatformContext.ACTIVEMQ_JMS_COMPONENT_COMPONENT_NAME)
 	public ActiveMQComponent activeMQJmsComponent() {
 		final ActiveMQComponent activeMQComponent = new ActiveMQComponent();
 		activeMQComponent.setBrokerURL(BROKER_URL);
@@ -64,7 +64,7 @@ public class IntegrationPlatformLayer {
 		return activeMQComponent;
 	}
 
-	@Bean(name = IntegrationPlatformLayer.JMS_COMPONENT_COMPONENT_NAME)
+	@Bean(name = IntegrationPlatformContext.JMS_COMPONENT_COMPONENT_NAME)
 	public JmsComponent jmsComponent() {
 		final JmsComponent jmsComponent = new JmsComponent();
 		jmsComponent.setConnectionFactory(jmsConnectionFactory());
@@ -77,7 +77,7 @@ public class IntegrationPlatformLayer {
 		return new ActiveMQConnectionFactory(BROKER_URL);
 	}
 
-	@Bean(name = IntegrationPlatformLayer.GERONIMO_JMS_CONNECTION_FACTORY_COMPONENT_NAME)
+	@Bean(name = IntegrationPlatformContext.GERONIMO_JMS_CONNECTION_FACTORY_COMPONENT_NAME)
 	public ConnectionFactory geronimoJmsConnectionFactory() {
 		final JndiObjectFactoryBean jndiLookup = new JndiObjectFactoryBean();
 		jndiLookup.setJndiName(GERONIMO_JMS_CONNECTION_FACTORY_JNDI_NAME);
@@ -87,7 +87,7 @@ public class IntegrationPlatformLayer {
 		return (ConnectionFactory) jndiLookup.getObject();
 	}
 
-	@Bean(name = IntegrationPlatformLayer.ITEM_CREATED_EVENTS_ERROR_QUEUE_COMPONENT_NAME)
+	@Bean(name = IntegrationPlatformContext.ITEM_CREATED_EVENTS_ERROR_QUEUE_COMPONENT_NAME)
 	public Queue itemCreatedEventsErrorQueue() {
 		final JndiObjectFactoryBean jndiLookup = new JndiObjectFactoryBean();
 		jndiLookup.setJndiName(ITEM_CREATED_EVENTS_ERROR_QUEUE_JNDI_NAME);
@@ -97,7 +97,7 @@ public class IntegrationPlatformLayer {
 		return (Queue) jndiLookup.getObject();
 	}
 
-	@Bean(name = IntegrationPlatformLayer.ITEM_STORAGE_SERVICE_DELEGATE_SERVICE_NAME)
+	@Bean(name = IntegrationPlatformContext.ITEM_STORAGE_SERVICE_DELEGATE_SERVICE_NAME)
 	public ItemStorageService itemStorageService() {
 		final LocalStatelessSessionProxyFactoryBean jndiLookup = new LocalStatelessSessionProxyFactoryBean();
 		jndiLookup.setJndiName(ITEM_STORAGE_SERVICE_JNDI_NAME);
@@ -107,7 +107,7 @@ public class IntegrationPlatformLayer {
 		return (ItemStorageService) jndiLookup.getObject();
 	}
 
-	@Bean(name = IntegrationPlatformLayer.PLATFORM_MBEAN_SERVER_COMPONENT_NAME)
+	@Bean(name = IntegrationPlatformContext.PLATFORM_MBEAN_SERVER_COMPONENT_NAME)
 	public MBeanServer platformBeanServer() {
 		final MBeanServerFactoryBean mbeanServerLookup = new MBeanServerFactoryBean();
 		mbeanServerLookup.setLocateExistingServerIfPossible(true);

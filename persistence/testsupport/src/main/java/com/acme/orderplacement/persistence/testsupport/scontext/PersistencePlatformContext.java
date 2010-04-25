@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.persistence.testsupport;
+package com.acme.orderplacement.persistence.testsupport.scontext;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -23,14 +23,14 @@ import com.acme.orderplacement.persistence.testsupport.database.spring.PrePopula
 
 /**
  * <p>
- * TODO: Insert short summary for PersistencePlatformLayer
+ * TODO: Insert short summary for PersistencePlatformContext
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @Configuration
-public class PersistencePlatformLayer {
+public class PersistencePlatformContext {
 
 	public static final String EMF_COMPONENT_NAME = "persistence.support.platform.applicationEMF";
 
@@ -52,7 +52,7 @@ public class PersistencePlatformLayer {
 	 */
 	private DataSource applicationDataSource;
 
-	@Bean(name = PersistencePlatformLayer.EMF_COMPONENT_NAME)
+	@Bean(name = PersistencePlatformContext.EMF_COMPONENT_NAME)
 	public EntityManagerFactory entityManagerFactory() throws Exception {
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryFactory
@@ -65,7 +65,7 @@ public class PersistencePlatformLayer {
 		return entityManagerFactoryFactory.getObject();
 	}
 
-	@Bean(name = PersistencePlatformLayer.TXMANAGER_COMPONENT_NAME)
+	@Bean(name = PersistencePlatformContext.TXMANAGER_COMPONENT_NAME)
 	public PlatformTransactionManager transactionManager() throws Exception {
 		final JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
 		jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
@@ -75,7 +75,7 @@ public class PersistencePlatformLayer {
 		return jpaTransactionManager;
 	}
 
-	@Bean(name = PersistencePlatformLayer.DATASOURCE_COMPONENT_NAME)
+	@Bean(name = PersistencePlatformContext.DATASOURCE_COMPONENT_NAME)
 	public DataSource applicationDataSource() throws Exception {
 		if (this.applicationDataSource == null) {
 			this.applicationDataSource = newApplicationDataSource();

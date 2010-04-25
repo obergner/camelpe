@@ -60,6 +60,7 @@
 		<module>wsapi</module>
 		<module>ws</module>
 		<module>integrationmdb</module>
+		<module>app</module>
 		<module>ear</module>
 	</modules>
 
