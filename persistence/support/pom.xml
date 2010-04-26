@@ -23,6 +23,11 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--
 			Only needed to make AspectJ's PointcutParser correctly parse pointcut
 			definitions that use the javax.ejb.TransactionAttribute annotation.
@@ -60,13 +65,13 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
+			<artifactId>spring-beans</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -126,11 +131,6 @@
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

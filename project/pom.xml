@@ -477,6 +477,14 @@
 			<dependency>
 				<groupId>com.acme.orderplacement.jee
 				</groupId>
+				<artifactId>orderplacement.jee.app
+				</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee
+				</groupId>
 				<artifactId>orderplacement.jee.ear
 				</artifactId>
 				<version>${project.version}</version>

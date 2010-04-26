@@ -101,6 +101,13 @@
 		<dependency>
 			<groupId>com.acme.orderplacement.jee
 			</groupId>
+			<artifactId>orderplacement.jee.app
+			</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee
+			</groupId>
 			<artifactId>orderplacement.jee.ws
 			</artifactId>
 			<type>war</type>

@@ -3,6 +3,8 @@
  */
 package com.acme.orderplacement.persistence.testsupport.scontext;
 
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -19,24 +21,21 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.acme.orderplacement.persistence.support.scontext.HibernateIntegrationConfig;
+import com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig;
 import com.acme.orderplacement.persistence.testsupport.database.spring.PrePopulatingInMemoryH2DataSourceFactory;
 
 /**
  * <p>
- * TODO: Insert short summary for PersistencePlatformContext
+ * TODO: Insert short summary for PersistencePlatformTestConfig
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @Configuration
-public class PersistencePlatformContext {
-
-	public static final String EMF_COMPONENT_NAME = "persistence.support.platform.applicationEMF";
-
-	public static final String TXMANAGER_COMPONENT_NAME = "persistence.support.platform.transactionManager";
-
-	public static final String DATASOURCE_COMPONENT_NAME = "persistence.support.platform.dataSource";
+public class PersistencePlatformTestConfig implements
+		PlatformIntegrationConfig, HibernateIntegrationConfig {
 
 	@Value("#{ testEnvironment['persistence.testsupport.schemaClasspathLocation'] }")
 	private String schemaClasspathLocation;
@@ -52,7 +51,41 @@ public class PersistencePlatformContext {
 	 */
 	private DataSource applicationDataSource;
 
-	@Bean(name = PersistencePlatformContext.EMF_COMPONENT_NAME)
+	/**
+	 * @see com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig#transactionManager()
+	 */
+	@Bean(name = PlatformIntegrationConfig.TXMANAGER_COMPONENT_NAME)
+	public PlatformTransactionManager transactionManager() throws Exception {
+		final JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+		jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
+		jpaTransactionManager.setDataSource(applicationDataSource());
+		jpaTransactionManager.setJpaDialect(jpaDialect());
+
+		return jpaTransactionManager;
+	}
+
+	/**
+	 * @see com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig#applicationDataSource()
+	 */
+	@Bean(name = PlatformIntegrationConfig.DATASOURCE_COMPONENT_NAME)
+	public DataSource applicationDataSource() throws Exception {
+		if (this.applicationDataSource == null) {
+			this.applicationDataSource = newApplicationDataSource();
+		}
+
+		return this.applicationDataSource;
+	}
+
+	/**
+	 * @see com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig#platformMBeanServer()
+	 */
+	@Bean(name = PlatformIntegrationConfig.MBEAN_SERVER_COMPONENT_NAME)
+	public MBeanServer platformMBeanServer() {
+
+		return (MBeanServer) MBeanServerFactory.findMBeanServer("").get(0);
+	}
+
+	@Bean(name = HibernateIntegrationConfig.EMF_COMPONENT_NAME)
 	public EntityManagerFactory entityManagerFactory() throws Exception {
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryFactory
@@ -63,25 +96,6 @@ public class PersistencePlatformContext {
 		entityManagerFactoryFactory.afterPropertiesSet();
 
 		return entityManagerFactoryFactory.getObject();
-	}
-
-	@Bean(name = PersistencePlatformContext.TXMANAGER_COMPONENT_NAME)
-	public PlatformTransactionManager transactionManager() throws Exception {
-		final JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-		jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
-		jpaTransactionManager.setDataSource(applicationDataSource());
-		jpaTransactionManager.setJpaDialect(jpaDialect());
-
-		return jpaTransactionManager;
-	}
-
-	@Bean(name = PersistencePlatformContext.DATASOURCE_COMPONENT_NAME)
-	public DataSource applicationDataSource() throws Exception {
-		if (this.applicationDataSource == null) {
-			this.applicationDataSource = newApplicationDataSource();
-		}
-
-		return this.applicationDataSource;
 	}
 
 	/**
@@ -99,11 +113,19 @@ public class PersistencePlatformContext {
 		return dataSourceFactory.getObject();
 	}
 
-	private JpaDialect jpaDialect() {
+	/**
+	 * @see com.acme.orderplacement.persistence.support.scontext.HibernateIntegrationConfig#jpaDialect()
+	 */
+	@Bean(name = HibernateIntegrationConfig.JPA_DIALECT_COMPONENT_NAME)
+	public JpaDialect jpaDialect() {
 		return new HibernateJpaDialect();
 	}
 
-	private JpaVendorAdapter jpaVendorAdapter() {
+	/**
+	 * @see com.acme.orderplacement.persistence.support.scontext.HibernateIntegrationConfig#jpaVendorAdapter()
+	 */
+	@Bean(name = HibernateIntegrationConfig.JPA_VENDOR_ADAPTER_COMPONENT_NAME)
+	public JpaVendorAdapter jpaVendorAdapter() {
 		final HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
 		hibernateJpaVendorAdapter.setDatabase(Database.H2);
 		hibernateJpaVendorAdapter.setShowSql(true);

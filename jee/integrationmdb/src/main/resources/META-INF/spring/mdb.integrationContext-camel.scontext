@@ -13,7 +13,8 @@
 		   http://camel.apache.org/schema/spring/camel-spring-2.2.0.xsd">
 
 	<context:component-scan
-		base-package="com.acme.orderplacement.integration.inbound.item" />
+		base-package="com.acme.orderplacement.integration.inbound.item,
+					  com.acme.orderplacement.jee.integrationmdb" />
 	<context:annotation-config />
 
 	<camel:camelContext id="integration.inbound.item.CamelContext">

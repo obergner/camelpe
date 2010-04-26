@@ -24,6 +24,11 @@
 			| Provided dependencies 
 		-->
 		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<scope>provided</scope>
@@ -61,9 +66,46 @@
 			<artifactId>spring-tx</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.persistence</groupId>
+			<artifactId>orderplacement.persistence.support</artifactId>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.acme.orderplacement.common</groupId>
+					<artifactId>orderplacement.common.support</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.acme.orderplacement.aspect</groupId>
+					<artifactId>orderplacement.aspect.support</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.acme.orderplacement.domain</groupId>
+					<artifactId>orderplacement.domain.support</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-entitymanager</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!--
 			| Runtime dependencies
 		-->
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
