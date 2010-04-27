@@ -100,6 +100,7 @@
 	</dependencies>
 
 	<modules>
+		<module>config</module>
 		<module>testsupport</module>
 		<module>support</module>
 		<!-- module>people</module -->

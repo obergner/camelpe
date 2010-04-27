@@ -15,7 +15,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig;
+import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;

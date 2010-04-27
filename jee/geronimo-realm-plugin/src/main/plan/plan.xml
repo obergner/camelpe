@@ -30,6 +30,8 @@
 				<type>car</type>
 			</dependency>
 		</dependencies>
+		<hidden-classes />
+		<non-overridable-classes />
 	</environment>
 	<gbean name="orderplacement.auth.CredentialStore"
 		class="org.apache.geronimo.security.credentialstore.SimpleCredentialStoreImpl">

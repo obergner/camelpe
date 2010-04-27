@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.domain.support.meta.AuditInfo;
+import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
 import com.acme.orderplacement.persistence.item.ItemDao;
 import com.acme.orderplacement.persistence.support.exception.DataAccessRuntimeException;
 import com.acme.orderplacement.persistence.support.exception.NoSuchPersistentObjectException;
@@ -36,7 +37,6 @@ import com.acme.orderplacement.persistence.support.exception.ObjectTransientExce
 import com.acme.orderplacement.persistence.support.exception.PersistentStateConcurrentlyModifiedException;
 import com.acme.orderplacement.persistence.support.exception.PersistentStateDeletedException;
 import com.acme.orderplacement.persistence.support.exception.PersistentStateLockedException;
-import com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig;
 import com.acme.orderplacement.test.support.annotation.TestUser;
 import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrationTestExecutionListener;
 

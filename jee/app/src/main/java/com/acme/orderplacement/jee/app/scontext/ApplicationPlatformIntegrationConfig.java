@@ -15,7 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
-import com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig;
+import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
 
 /**
  * <p>
@@ -45,7 +45,7 @@ public class ApplicationPlatformIntegrationConfig implements
 	private static final String GERONIMO_DEFAULT_DOMAIN = "DefaultDomain";
 
 	/**
-	 * @see com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig#transactionManager()
+	 * @see com.acme.orderplacement.persistence.config.PlatformIntegrationConfig#transactionManager()
 	 */
 	@Bean(name = PlatformIntegrationConfig.TXMANAGER_COMPONENT_NAME)
 	public PlatformTransactionManager transactionManager()
@@ -63,7 +63,7 @@ public class ApplicationPlatformIntegrationConfig implements
 	}
 
 	/**
-	 * @see com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig#applicationDataSource()
+	 * @see com.acme.orderplacement.persistence.config.PlatformIntegrationConfig#applicationDataSource()
 	 */
 	@Bean(name = PlatformIntegrationConfig.DATASOURCE_COMPONENT_NAME)
 	public DataSource applicationDataSource() throws NamingException {
@@ -79,7 +79,7 @@ public class ApplicationPlatformIntegrationConfig implements
 	}
 
 	/**
-	 * @see com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig#platformMBeanServer()
+	 * @see com.acme.orderplacement.persistence.config.PlatformIntegrationConfig#platformMBeanServer()
 	 */
 	@Bean(name = PlatformIntegrationConfig.MBEAN_SERVER_COMPONENT_NAME)
 	public MBeanServer platformMBeanServer() {

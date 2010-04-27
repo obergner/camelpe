@@ -19,20 +19,19 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import com.acme.orderplacement.persistence.support.scontext.HibernateIntegrationConfig;
-import com.acme.orderplacement.persistence.support.scontext.PlatformIntegrationConfig;
+import com.acme.orderplacement.persistence.config.JpaProviderConfig;
+import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
 
 /**
  * <p>
- * TODO: Insert short summary for ApplicationHibernateIntegrationConfig
+ * TODO: Insert short summary for HibernateJpaProviderConfig
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @Configuration
-public class ApplicationHibernateIntegrationConfig implements
-		HibernateIntegrationConfig {
+public class HibernateJpaProviderConfig implements JpaProviderConfig {
 
 	@Resource(name = PlatformIntegrationConfig.DATASOURCE_COMPONENT_NAME)
 	private DataSource applicationDataSource;
@@ -41,9 +40,9 @@ public class ApplicationHibernateIntegrationConfig implements
 	private Properties jpaProperties;
 
 	/**
-	 * @see com.acme.orderplacement.persistence.support.scontext.HibernateIntegrationConfig#entityManagerFactory()
+	 * @see com.acme.orderplacement.persistence.config.HibernateIntegrationConfig#entityManagerFactory()
 	 */
-	@Bean(name = HibernateIntegrationConfig.EMF_COMPONENT_NAME)
+	@Bean(name = JpaProviderConfig.EMF_COMPONENT_NAME)
 	public EntityManagerFactory entityManagerFactory() throws Exception {
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryFactory
@@ -60,17 +59,17 @@ public class ApplicationHibernateIntegrationConfig implements
 	}
 
 	/**
-	 * @see com.acme.orderplacement.persistence.support.scontext.HibernateIntegrationConfig#jpaDialect()
+	 * @see com.acme.orderplacement.persistence.config.HibernateIntegrationConfig#jpaDialect()
 	 */
-	@Bean(name = HibernateIntegrationConfig.JPA_DIALECT_COMPONENT_NAME)
+	@Bean(name = JpaProviderConfig.JPA_DIALECT_COMPONENT_NAME)
 	public JpaDialect jpaDialect() {
 		return new HibernateJpaDialect();
 	}
 
 	/**
-	 * @see com.acme.orderplacement.persistence.support.scontext.HibernateIntegrationConfig#jpaVendorAdapter()
+	 * @see com.acme.orderplacement.persistence.config.HibernateIntegrationConfig#jpaVendorAdapter()
 	 */
-	@Bean(name = HibernateIntegrationConfig.JPA_VENDOR_ADAPTER_COMPONENT_NAME)
+	@Bean(name = JpaProviderConfig.JPA_VENDOR_ADAPTER_COMPONENT_NAME)
 	public JpaVendorAdapter jpaVendorAdapter() {
 		final HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
 		hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);

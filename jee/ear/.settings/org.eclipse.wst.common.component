@@ -326,5 +326,8 @@
         <dependent-module archiveName="/orderplacement.jee.app-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.jee.app/com.acme.orderplacement.jee.app">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="/orderplacement.persistence.config-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.persistence.config/com.acme.orderplacement.persistence.config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

@@ -21,6 +21,7 @@
 		<project>com.acme.orderplacement.jee.support</project>
 		<project>com.acme.orderplacement.jee.integrationmdb</project>
 		<project>com.acme.orderplacement.jee.app</project>
+		<project>com.acme.orderplacement.persistence.config</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

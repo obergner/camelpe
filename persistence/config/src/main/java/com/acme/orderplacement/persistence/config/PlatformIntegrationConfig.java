@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.persistence.support.scontext;
+package com.acme.orderplacement.persistence.config;
 
 import javax.management.MBeanServer;
 import javax.sql.DataSource;

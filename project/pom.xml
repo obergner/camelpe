@@ -301,6 +301,14 @@
 			<dependency>
 				<groupId>com.acme.orderplacement.persistence
 				</groupId>
+				<artifactId>orderplacement.persistence.config
+				</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.persistence
+				</groupId>
 				<artifactId>orderplacement.persistence.testsupport
 				</artifactId>
 				<version>${project.version}</version>
