@@ -12,9 +12,12 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
@@ -37,9 +40,108 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public final class PrePopulatingInMemoryH2DataSourceFactory implements
 		FactoryBean<DataSource> {
 
+	private static class CacheKey {
+
+		private final String databaseName;
+
+		private final Resource schemaLocation;
+
+		private final Resource dataLocation;
+
+		/**
+		 * @param databaseName
+		 * @param schemaLocation
+		 * @param dataLocation
+		 */
+		CacheKey(final String databaseName, final Resource schemaLocation,
+				final Resource dataLocation) throws IllegalArgumentException {
+			Validate.notNull(databaseName, "databaseName");
+			Validate.notNull(schemaLocation, "schemaLocation");
+			Validate.notNull(dataLocation, "dataLocation");
+			this.databaseName = databaseName;
+			this.schemaLocation = schemaLocation;
+			this.dataLocation = dataLocation;
+		}
+
+		/**
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime
+					* result
+					+ ((this.dataLocation == null) ? 0 : this.dataLocation
+							.hashCode());
+			result = prime
+					* result
+					+ ((this.databaseName == null) ? 0 : this.databaseName
+							.hashCode());
+			result = prime
+					* result
+					+ ((this.schemaLocation == null) ? 0 : this.schemaLocation
+							.hashCode());
+			return result;
+		}
+
+		/**
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(final Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			final CacheKey other = (CacheKey) obj;
+			if (this.dataLocation == null) {
+				if (other.dataLocation != null) {
+					return false;
+				}
+			} else if (!this.dataLocation.getDescription().equals(
+					other.dataLocation.getDescription())) {
+				return false;
+			}
+			if (this.databaseName == null) {
+				if (other.databaseName != null) {
+					return false;
+				}
+			} else if (!this.databaseName.equals(other.databaseName)) {
+				return false;
+			}
+			if (this.schemaLocation == null) {
+				if (other.schemaLocation != null) {
+					return false;
+				}
+			} else if (!this.schemaLocation.getDescription().equals(
+					other.schemaLocation.getDescription())) {
+				return false;
+			}
+			return true;
+		}
+
+		/**
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "CacheKey [dataLocation=" + this.dataLocation
+					+ ", databaseName=" + this.databaseName
+					+ ", schemaLocation=" + this.schemaLocation + "]";
+		}
+	}
+
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
+
+	private static final Map<CacheKey, DataSource> DATA_SOURCE_CACHE = new HashMap<CacheKey, DataSource>();
 
 	private static final String H2_JDBC_DRIVER_CLASS = "org.h2.Driver";
 
@@ -50,11 +152,6 @@ public final class PrePopulatingInMemoryH2DataSourceFactory implements
 	private Resource schemaLocation;
 
 	private Resource dataLocation;
-
-	/**
-	 * The object created by this factory.
-	 */
-	private DataSource dataSource;
 
 	// ------------------------------------------------------------------------
 	// Properties
@@ -92,11 +189,15 @@ public final class PrePopulatingInMemoryH2DataSourceFactory implements
 	 * @see org.springframework.beans.factory.FactoryBean#getObject()
 	 */
 	public DataSource getObject() throws Exception {
-		if (this.dataSource == null) {
-			initDataSource();
+		final CacheKey cacheKey = new CacheKey(this.databaseName,
+				this.schemaLocation, this.dataLocation);
+		DataSource dataSource = DATA_SOURCE_CACHE.get(cacheKey);
+		if (dataSource == null) {
+			dataSource = initDataSource();
+			DATA_SOURCE_CACHE.put(cacheKey, dataSource);
 		}
 
-		return this.dataSource;
+		return dataSource;
 	}
 
 	/**
@@ -117,15 +218,17 @@ public final class PrePopulatingInMemoryH2DataSourceFactory implements
 	// Internal
 	// ------------------------------------------------------------------------
 
-	private void initDataSource() {
+	private DataSource initDataSource() {
 		// create the in-memory database source first
-		this.dataSource = createDataSource();
+		final DataSource dataSource = createDataSource();
 		this.log.debug("Created in-memory H2 database [{}]", this.databaseName);
 		// now populate the database by loading the schema and data
-		populateDataSource();
+		populateDataSource(dataSource);
 		this.log
 				.debug("Created schema from DDL file [{}]", this.schemaLocation);
 		this.log.debug("Loaded data from [{}]", this.dataLocation);
+
+		return dataSource;
 	}
 
 	private DataSource createDataSource() {
@@ -138,12 +241,12 @@ public final class PrePopulatingInMemoryH2DataSourceFactory implements
 				+ ";DB_CLOSE_DELAY=-1");
 		dataSource.setUsername("sa");
 		dataSource.setPassword("");
+
 		return dataSource;
 	}
 
-	private void populateDataSource() {
-		final DatabasePopulator populator = new DatabasePopulator(
-				this.dataSource);
+	private void populateDataSource(final DataSource dataSource) {
+		final DatabasePopulator populator = new DatabasePopulator(dataSource);
 		populator.populate();
 	}
 

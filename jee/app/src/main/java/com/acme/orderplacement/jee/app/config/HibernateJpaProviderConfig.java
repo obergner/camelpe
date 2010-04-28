@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.app.scontext;
+package com.acme.orderplacement.jee.app.config;
 
 import java.util.Properties;
 

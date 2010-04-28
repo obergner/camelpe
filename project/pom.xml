@@ -69,6 +69,8 @@
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
 		<deps.geronimo.version>2.2</deps.geronimo.version>
+		<deps.h2.version>1.2.134</deps.h2.version>
+		<deps.xbean-naming.version>3.6</deps.xbean-naming.version>
 		<!--
 			Plugin versions 
 		 -->
@@ -1175,14 +1177,14 @@
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
-				<version>1.1.105</version>
+				<version>${deps.h2.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- We need a JNDI implementation for testing purposes -->
 			<dependency>
 				<groupId>org.apache.xbean</groupId>
 				<artifactId>xbean-naming</artifactId>
-				<version>3.5</version>
+				<version>${deps.xbean-naming.version}</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>

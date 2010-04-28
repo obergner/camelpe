@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.app.scontext;
+package com.acme.orderplacement.jee.app.config;
 
 import javax.management.MBeanServer;
 import javax.naming.NamingException;

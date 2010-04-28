@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.integrationmdb.internal.scontext;
+package com.acme.orderplacement.jee.integrationmdb.internal.config;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Queue;

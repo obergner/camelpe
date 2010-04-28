@@ -62,12 +62,14 @@ public class PersistencePlatformTestConfig implements
 	 */
 	@Bean(name = PlatformIntegrationConfig.DATASOURCE_COMPONENT_NAME)
 	public DataSource applicationDataSource() throws Exception {
-		if (!PerJvmDataSourceHolder.INSTANCE.holdsDataSource()) {
-			PerJvmDataSourceHolder.INSTANCE
-					.setDataSource(newApplicationDataSource());
-		}
+		final PrePopulatingInMemoryH2DataSourceFactory dataSourceFactory = new PrePopulatingInMemoryH2DataSourceFactory();
+		dataSourceFactory.setDatabaseName("persistence.item.testDataBase");
+		dataSourceFactory.setSchemaLocation(new ClassPathResource(
+				this.schemaClasspathLocation));
+		dataSourceFactory.setDataLocation(new ClassPathResource(
+				this.dataClasspathLocation));
 
-		return PerJvmDataSourceHolder.INSTANCE.getDataSource();
+		return dataSourceFactory.getObject();
 	}
 
 	/**
@@ -90,21 +92,6 @@ public class PersistencePlatformTestConfig implements
 		entityManagerFactoryFactory.afterPropertiesSet();
 
 		return entityManagerFactoryFactory.getObject();
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	private DataSource newApplicationDataSource() throws Exception {
-		final PrePopulatingInMemoryH2DataSourceFactory dataSourceFactory = new PrePopulatingInMemoryH2DataSourceFactory();
-		dataSourceFactory.setDatabaseName("persistence.item.testDataBase");
-		dataSourceFactory.setSchemaLocation(new ClassPathResource(
-				this.schemaClasspathLocation));
-		dataSourceFactory.setDataLocation(new ClassPathResource(
-				this.dataClasspathLocation));
-
-		return dataSourceFactory.getObject();
 	}
 
 	/**
