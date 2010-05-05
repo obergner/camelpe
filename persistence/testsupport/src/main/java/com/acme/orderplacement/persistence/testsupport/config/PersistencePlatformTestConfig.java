@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.persistence.testsupport.scontext;
+package com.acme.orderplacement.persistence.testsupport.config;
 
 import java.lang.management.ManagementFactory;
 

@@ -96,9 +96,6 @@
         <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/protobuf/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/orderplacement.integration.inbound.itemimport-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.itemimport/com.acme.orderplacement.integration.inbound.itemimport">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.domain.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.domain.support/com.acme.orderplacement.domain.support">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -327,6 +324,9 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.persistence.config-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.persistence.config/com.acme.orderplacement.persistence.config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.integration.inbound.itemimport-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.itemimport/com.acme.orderplacement.integration.inbound.itemimport">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

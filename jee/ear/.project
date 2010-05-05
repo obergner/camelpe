@@ -6,7 +6,6 @@
 		<project>com.acme.orderplacement.jee.ws</project>
 		<project>com.acme.orderplacement.integration.inbound.support</project>
 		<project>com.acme.orderplacement.jee.geronimo</project>
-		<project>com.acme.orderplacement.integration.inbound.itemimport</project>
 		<project>com.acme.orderplacement.domain.support</project>
 		<project>com.acme.orderplacement.persistence.item</project>
 		<project>com.acme.orderplacement.service.item.impl</project>
@@ -22,6 +21,7 @@
 		<project>com.acme.orderplacement.jee.integrationmdb</project>
 		<project>com.acme.orderplacement.jee.app</project>
 		<project>com.acme.orderplacement.persistence.config</project>
+		<project>com.acme.orderplacement.integration.inbound.itemimport</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

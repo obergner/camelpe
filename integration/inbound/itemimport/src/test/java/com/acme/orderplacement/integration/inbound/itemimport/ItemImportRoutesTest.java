@@ -29,13 +29,13 @@ public class ItemImportRoutesTest extends CamelTestSupport {
 	// Fields
 	// ------------------------------------------------------------------------
 
-	@EndpointInject(uri = MockRoutes.ITEMIMPORT_SERVICE_MOCK_EP)
+	@EndpointInject(uri = MockEndpoints.ITEMIMPORT_SERVICE_MOCK_EP)
 	protected MockEndpoint resultEndpoint;
 
-	@EndpointInject(uri = MockRoutes.EXCEPTION_HANDLER_MOCK_EP)
+	@EndpointInject(uri = MockEndpoints.EXCEPTION_HANDLER_MOCK_EP)
 	protected MockEndpoint exceptionEndpoint;
 
-	@Produce(uri = ItemImportChannels.INCOMING_RAW)
+	@Produce(uri = ItemImportCoreRoutes.INCOMING_XML_MESSAGES)
 	protected ProducerTemplate template;
 
 	// -------------------------------------------------------------------------
@@ -44,7 +44,8 @@ public class ItemImportRoutesTest extends CamelTestSupport {
 
 	@Override
 	protected RouteBuilder[] createRouteBuilders() {
-		return new RouteBuilder[] { new ItemImportRoutes(), new TestRoutes() };
+		return new RouteBuilder[] { new ItemImportCoreRoutes(),
+				new TestRoutes() };
 	}
 
 	// -------------------------------------------------------------------------
@@ -100,21 +101,13 @@ public class ItemImportRoutesTest extends CamelTestSupport {
 		}
 	}
 
-	/**
-	 * <p>
-	 * TODO: Insert short summary for TestRoutes
-	 * </p>
-	 * 
-	 * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
-	 * 
-	 */
 	static final class TestRoutes extends RouteBuilder {
 		@Override
 		public void configure() throws Exception {
-			from(ItemImportChannels.TRANSFER_JAXB).to(
-					MockRoutes.ITEMIMPORT_SERVICE_MOCK_EP);
-			from(ItemImportChannels.EXCEPTIONS).to(
-					MockRoutes.EXCEPTION_HANDLER_MOCK_EP);
+			from(ItemImportCoreRoutes.TRANSFORMED_JAVA_OBJECT_MESSAGES).to(
+					MockEndpoints.ITEMIMPORT_SERVICE_MOCK_EP);
+			from(ItemImportCoreRoutes.FAULT_MESSAGES).to(
+					MockEndpoints.EXCEPTION_HANDLER_MOCK_EP);
 		}
 	}
 }

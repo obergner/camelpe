@@ -42,11 +42,20 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.integration
-			</groupId>
-			<artifactId>orderplacement.integration.inbound.external
-			</artifactId>
+			<groupId>com.acme.orderplacement.integration</groupId>
+			<artifactId>orderplacement.integration.inbound.external</artifactId>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.service</groupId>
+			<artifactId>orderplacement.service.support</artifactId>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.acme.orderplacement.aspect</groupId>
+					<artifactId>orderplacement.aspect.support</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.service
@@ -65,17 +74,38 @@
 			<artifactId>camel-jaxb</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-camel</artifactId>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.activemq</groupId>
+					<artifactId>activemq-pool</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->
 		<dependency>
-			<groupId>com.acme.orderplacement.service </groupId>
-			<artifactId>orderplacement.service.support </artifactId>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-spring</artifactId>
+			<groupId>org.fusesource.commonman</groupId>
+			<artifactId>commons-management</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -83,12 +113,82 @@
 			<artifactId>aspectjrt</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-asm</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!--
 			| Test dependencies 
 		-->
 		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.service</groupId>
+			<artifactId>orderplacement.service.item.impl</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.test</groupId>
+			<artifactId>orderplacement.test.support</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.persistence</groupId>
+			<artifactId>orderplacement.persistence.testsupport</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
