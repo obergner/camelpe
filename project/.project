@@ -47,6 +47,11 @@
 			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/jee/pom.xml</locationURI>
 		</link>
 		<link>
+			<name>poms/log/pom.xml</name>
+			<type>1</type>
+			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/log/pom.xml</locationURI>
+		</link>
+		<link>
 			<name>poms/persistence/pom.xml</name>
 			<type>1</type>
 			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/persistence/pom.xml</locationURI>
