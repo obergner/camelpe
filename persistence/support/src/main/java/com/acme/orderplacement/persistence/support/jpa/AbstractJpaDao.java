@@ -80,7 +80,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 */
 	public void evict(final T persistentObject)
 			throws DataAccessRuntimeException, ObjectNotPersistentException {
-		// TODO Auto-generated method stub
+		getEntityManager().detach(persistentObject);
 	}
 
 	/**

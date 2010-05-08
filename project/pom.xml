@@ -65,6 +65,7 @@
 		-->
 		<deps.hibernate-validator.version>4.1.0.Beta1
 		</deps.hibernate-validator.version>
+		<deps.hibernate-tools.version>3.2.4.GA</deps.hibernate-tools.version>
 		<deps.camel.version>2.2.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
@@ -1078,6 +1079,11 @@
 				</exclusions>
 			</dependency>
 			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-tools</artifactId>
+				<version>${deps.hibernate-tools.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>antlr</groupId>
 				<artifactId>antlr</artifactId>
 				<version>2.7.6</version>
@@ -1499,6 +1505,7 @@
 				<module>../domain</module>
 				<module>../persistence</module>
 				<module>../service</module>
+				<module>../log</module>
 				<module>../integration</module>
 				<module>../jee</module>
 			</modules>
@@ -1671,6 +1678,21 @@
 			<url>http://download.java.net/maven/1
 			</url>
 			<layout>legacy</layout>
+		</pluginRepository>
+		<!--
+			Needed for hibernate-tools
+		-->
+		<pluginRepository>
+			<id>org.jboss.releaseRepository</id>
+			<name>JBoss Releases Repository</name>
+			<url>http://repository.jboss.com/maven2
+			</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
 

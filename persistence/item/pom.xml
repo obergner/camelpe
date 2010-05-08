@@ -160,13 +160,6 @@
 			| Test dependencies 
 		-->
 		<dependency>
-			<groupId>com.acme.orderplacement.domain
-			</groupId>
-			<artifactId>orderplacement.domain.testsupport
-			</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.acme.orderplacement.persistence
 			</groupId>
 			<artifactId>orderplacement.persistence.testsupport
@@ -209,34 +202,44 @@
 					<dependency>
 						<groupId>com.h2database</groupId>
 						<artifactId>h2</artifactId>
-						<version>1.1.105</version>
+						<version>${deps.h2.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>javax.validation</groupId>
+						<artifactId>validation-api</artifactId>
+						<version>${deps.validation-api.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>javax.xml.bind</groupId>
+						<artifactId>jaxb-api</artifactId>
+						<version>${deps.jaxb-api.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.hibernate</groupId>
 						<artifactId>hibernate-tools</artifactId>
-						<version>3.2.0.ga</version>
+						<version>${deps.hibernate-tools.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.hibernate</groupId>
 						<artifactId>hibernate-entitymanager
 						</artifactId>
-						<version>3.3.1.ga</version>
+						<version>${deps.hibernate.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.hibernate</groupId>
 						<artifactId>hibernate-annotations
 						</artifactId>
-						<version>3.3.0.ga</version>
+						<version>${deps.hibernate.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate</artifactId>
-						<version>3.2.5.ga</version>
+						<artifactId>hibernate-core</artifactId>
+						<version>${deps.hibernate.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.slf4j</groupId>
 						<artifactId>slf4j-log4j12</artifactId>
-						<version>1.5.6</version>
+						<version>${deps.slf4j.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>commons-logging</groupId>
@@ -251,30 +254,16 @@
 					<dependency>
 						<groupId>dom4j</groupId>
 						<artifactId>dom4j</artifactId>
-						<version>1.6</version>
+						<version>1.6.1</version>
 					</dependency>
 					<dependency>
 						<groupId>cglib</groupId>
-						<artifactId>cglib</artifactId>
-						<version>2.1_3</version>
+						<artifactId>cglib-nodep</artifactId>
+						<version>2.2</version>
 					</dependency>
 				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>org.jboss.maven2Repository</id>
-			<url>http://repository.jboss.com/maven2
-			</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 </project>

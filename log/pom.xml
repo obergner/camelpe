@@ -74,6 +74,23 @@
 		<!--
 			| Test dependencies 
 		-->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.test
+            </groupId>
+			<artifactId>orderplacement.test.support
+            </artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.persistence</groupId>
+			<artifactId>orderplacement.persistence.testsupport</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<modules>

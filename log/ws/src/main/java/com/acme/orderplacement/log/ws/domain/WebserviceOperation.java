@@ -6,25 +6,34 @@ package com.acme.orderplacement.log.ws.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * <p>
- * TODO: Insert short summary for WebserviceMethod
+ * TODO: Insert short summary for WebserviceOperation
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @Entity
-@Table(schema = "ITEM", name = "ITEM")
-@SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "ITEM.ID_SEQ_ITEM")
-@NamedQueries( { @NamedQuery(name = WebserviceMethod.Queries.BY_NAME, query = "from com.acme.orderplacement.log.ws.domain.WebserviceMethod wsm where wsm.name = :name") })
-public class WebserviceMethod implements Serializable {
+@Table(schema = "LOG", name = "WEBSERVICE_OPERATION")
+@SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "LOG.ID_SEQ_WEBSERVICE_OPERATION")
+@NamedQueries( { @NamedQuery(name = WebserviceOperation.Queries.BY_NAME, query = "from com.acme.orderplacement.log.ws.domain.WebserviceOperation wso where wso.name = :name") })
+public class WebserviceOperation implements Serializable {
 
 	// ------------------------------------------------------------------------
 	// Inner class defining query names
@@ -33,7 +42,7 @@ public class WebserviceMethod implements Serializable {
 	/**
 	 * <p>
 	 * An inner class defining the <i>names</i> of known HQL queries for
-	 * <code>WebserviceMethod</code>.
+	 * <code>WebserviceOperation</code>.
 	 * </p>
 	 * 
 	 * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -41,21 +50,37 @@ public class WebserviceMethod implements Serializable {
 	 */
 	public final static class Queries {
 
-		public static final String BY_NAME = "log.ws.webserviceMethod.byName";
+		public static final String BY_NAME = "log.ws.webserviceOperation.byName";
 	}
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
 
+	private static final long serialVersionUID = -8066188933734036144L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_SEQ_GEN")
+	@Column(name = "ID", nullable = false)
 	private Integer id;
 
+	@NotNull
+	@Size(min = 10, max = 200)
+	@Basic
+	@Column(name = "NAME", nullable = false, length = 200)
 	private String name;
 
+	@Basic
+	@Column(name = "LOGGED", nullable = false)
 	private boolean logged;
 
+	@Basic
+	@Column(name = "IDEMPOTENT", nullable = false)
 	private boolean idempotent;
 
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	@Column(name = "SINCE", nullable = false)
 	private Date since;
 
 	// -------------------------------------------------------------------------
@@ -65,7 +90,7 @@ public class WebserviceMethod implements Serializable {
 	/**
 	 * 
 	 */
-	public WebserviceMethod() {
+	public WebserviceOperation() {
 		// Intentionally left blank
 	}
 
@@ -183,7 +208,7 @@ public class WebserviceMethod implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final WebserviceMethod other = (WebserviceMethod) obj;
+		final WebserviceOperation other = (WebserviceOperation) obj;
 		if (this.id == null) {
 			if (other.id != null) {
 				return false;
@@ -219,7 +244,7 @@ public class WebserviceMethod implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "WebserviceMethod [id=" + this.id + ", idempotent="
+		return "WebserviceOperation [id=" + this.id + ", idempotent="
 				+ this.idempotent + ", logged=" + this.logged + ", name="
 				+ this.name + ", since=" + this.since + "]";
 	}

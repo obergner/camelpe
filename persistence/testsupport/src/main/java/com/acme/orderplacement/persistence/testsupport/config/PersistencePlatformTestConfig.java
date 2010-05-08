@@ -44,6 +44,12 @@ public class PersistencePlatformTestConfig implements
 	@Value("#{ testEnvironment['persistence.testsupport.dataClasspathLocation'] }")
 	private String dataClasspathLocation;
 
+	@Value("#{ testEnvironment['persistence.testsupport.persistenceUnitName'] }")
+	private String persistenceUnitName;
+
+	@Value("#{ testEnvironment['persistence.testsupport.databaseName'] }")
+	private String databaseName;
+
 	/**
 	 * @see com.acme.orderplacement.persistence.config.PlatformIntegrationConfig#transactionManager()
 	 */
@@ -63,7 +69,7 @@ public class PersistencePlatformTestConfig implements
 	@Bean(name = PlatformIntegrationConfig.DATASOURCE_COMPONENT_NAME)
 	public DataSource applicationDataSource() throws Exception {
 		final PrePopulatingInMemoryH2DataSourceFactory dataSourceFactory = new PrePopulatingInMemoryH2DataSourceFactory();
-		dataSourceFactory.setDatabaseName("persistence.item.testDataBase");
+		dataSourceFactory.setDatabaseName(this.databaseName);
 		dataSourceFactory.setSchemaLocation(new ClassPathResource(
 				this.schemaClasspathLocation));
 		dataSourceFactory.setDataLocation(new ClassPathResource(
@@ -85,7 +91,7 @@ public class PersistencePlatformTestConfig implements
 	public EntityManagerFactory entityManagerFactory() throws Exception {
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryFactory
-				.setPersistenceUnitName("persistence.item.ItemPU");
+				.setPersistenceUnitName(this.persistenceUnitName);
 		entityManagerFactoryFactory.setDataSource(applicationDataSource());
 		entityManagerFactoryFactory.setJpaVendorAdapter(jpaVendorAdapter());
 		entityManagerFactoryFactory.setJpaDialect(jpaDialect());

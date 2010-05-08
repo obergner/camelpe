@@ -6,7 +6,7 @@
                  http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
 	version="1.0">
 
-	<persistence-unit name="persistence.item.ItemPU"
+	<persistence-unit name="integration.inbound.itemimport.ItemPU"
 		transaction-type="RESOURCE_LOCAL">
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
