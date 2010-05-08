@@ -3,20 +3,11 @@
  */
 package com.acme.orderplacement.log.ws.service;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.TypedQuery;
 
-import org.apache.commons.lang.Validate;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.acme.orderplacement.log.ws.domain.WebserviceOperation;
-import com.acme.orderplacement.log.ws.domain.WebserviceRequest;
-import com.acme.orderplacement.log.ws.dto.WebserviceRequestDTO;
 
 /**
  * <p>
@@ -26,27 +17,9 @@ import com.acme.orderplacement.log.ws.dto.WebserviceRequestDTO;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@Service(WebserviceLogger.SERVICE_NAME)
-@Transactional
-public class WebserviceLogger {
+public interface WebserviceLogger {
 
-	// -------------------------------------------------------------------------
-	// Fields
-	// -------------------------------------------------------------------------
-
-	public static final String SERVICE_NAME = "log.ws.webserviceLogger";
-
-	/**
-	 * <p>
-	 * Our {@link javax.persistence.EntityManager <em>JPA EntityManager</em>}.
-	 * </p>
-	 */
-	@PersistenceContext(type = PersistenceContextType.TRANSACTION)
-	private EntityManager entityManager;
-
-	// -------------------------------------------------------------------------
-	// API
-	// -------------------------------------------------------------------------
+	String SERVICE_NAME = "log.ws.webserviceLogger";
 
 	/**
 	 * @param webserviceRequestDto
@@ -55,26 +28,17 @@ public class WebserviceLogger {
 	 * @throws NoResultException
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	public Long logWebserviceRequest(
-			final WebserviceRequestDTO webserviceRequestDto)
-			throws IllegalArgumentException, NoResultException {
-		Validate.notNull(webserviceRequestDto, "webserviceRequestDto");
+	Long logWebserviceRequest(final WebserviceRequestDto webserviceRequestDto)
+			throws IllegalArgumentException, NoResultException;
 
-		final TypedQuery<WebserviceOperation> wsOperationByName = this.entityManager
-				.createNamedQuery(WebserviceOperation.Queries.BY_NAME,
-						WebserviceOperation.class);
-		wsOperationByName.setParameter("name", webserviceRequestDto
-				.getOperationName());
-		final WebserviceOperation referencedWebserviceOperation = wsOperationByName
-				.getSingleResult();
+	/**
+	 * @param webserviceResponseDto
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws NoResultException
+	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	Long logWebserviceResponse(final WebserviceResponseDto webserviceResponseDto)
+			throws IllegalArgumentException, NoResultException;
 
-		final WebserviceRequest webserviceRequest = new WebserviceRequest(
-				webserviceRequestDto.getSourceIp(), webserviceRequestDto
-						.getReceivedOn(), webserviceRequestDto.getContent(),
-				referencedWebserviceOperation, webserviceRequestDto
-						.getHeaders());
-		this.entityManager.persist(webserviceRequest);
-
-		return webserviceRequest.getId();
-	}
 }

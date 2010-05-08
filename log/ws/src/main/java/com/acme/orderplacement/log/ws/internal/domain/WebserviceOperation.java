@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.log.ws.domain;
+package com.acme.orderplacement.log.ws.internal.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(schema = "LOG", name = "WEBSERVICE_OPERATION")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "LOG.ID_SEQ_WEBSERVICE_OPERATION")
-@NamedQueries( { @NamedQuery(name = WebserviceOperation.Queries.BY_NAME, query = "from com.acme.orderplacement.log.ws.domain.WebserviceOperation wso where wso.name = :name") })
+@NamedQueries( { @NamedQuery(name = WebserviceOperation.Queries.BY_NAME, query = "from com.acme.orderplacement.log.ws.internal.domain.WebserviceOperation wso where wso.name = :name") })
 public class WebserviceOperation implements Serializable {
 
 	// ------------------------------------------------------------------------

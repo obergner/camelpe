@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.log.ws.domain;
+package com.acme.orderplacement.log.ws.internal.domain;
 
 import java.io.Serializable;
 import java.util.Date;

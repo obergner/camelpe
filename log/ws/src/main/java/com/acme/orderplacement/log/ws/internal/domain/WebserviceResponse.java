@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.log.ws.domain;
+package com.acme.orderplacement.log.ws.internal.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -21,6 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.Validate;
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -65,6 +66,30 @@ public class WebserviceResponse implements Serializable {
 	@JoinColumn(name = "ID_WEBSERVICE_REQUEST")
 	@ForeignKey(name = "FK_WSRESPONSE_WSREQUEST")
 	private WebserviceRequest request;
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	public WebserviceResponse() {
+		// Intentionally left blank
+	}
+
+	/**
+	 * @param sentOn
+	 * @param content
+	 * @param request
+	 * @throws IllegalArgumentException
+	 */
+	public WebserviceResponse(final Date sentOn, final String content,
+			final WebserviceRequest request) throws IllegalArgumentException {
+		Validate.notNull(sentOn, "sentOn");
+		Validate.notEmpty(content, "content");
+		Validate.notNull(request, "request");
+		this.sentOn = sentOn;
+		this.content = content;
+		this.request = request;
+	}
 
 	// -------------------------------------------------------------------------
 	// Properties

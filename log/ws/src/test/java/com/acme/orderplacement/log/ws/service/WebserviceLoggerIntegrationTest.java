@@ -27,8 +27,9 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.acme.orderplacement.log.ws.domain.WebserviceRequest;
-import com.acme.orderplacement.log.ws.dto.WebserviceRequestDTO;
+import com.acme.orderplacement.log.ws.internal.domain.WebserviceRequest;
+import com.acme.orderplacement.log.ws.service.WebserviceLogger;
+import com.acme.orderplacement.log.ws.service.WebserviceRequestDto;
 import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
 
 /**
@@ -67,7 +68,7 @@ public class WebserviceLoggerIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.dto.WebserviceRequestDTO)}
+	 * {@link com.acme.orderplacement.log.ws.service.DefaultWebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -77,12 +78,12 @@ public class WebserviceLoggerIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.dto.WebserviceRequestDTO)}
+	 * {@link com.acme.orderplacement.log.ws.service.DefaultWebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
 	 * .
 	 */
 	@Test(expected = NoResultException.class)
 	public final void logWebserviceRequestShouldRefuseToLogRequestReferencingANonExistingWsOperation() {
-		final WebserviceRequestDTO webserviceRequestDto = new WebserviceRequestDTO(
+		final WebserviceRequestDto webserviceRequestDto = new WebserviceRequestDto(
 				NON_EXISTING_WS_OPERATION_NAME, "1.1.1.1", new Date(), "TEST",
 				Collections.<String, String> emptyMap());
 
@@ -91,12 +92,12 @@ public class WebserviceLoggerIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.dto.WebserviceRequestDTO)}
+	 * {@link com.acme.orderplacement.log.ws.service.DefaultWebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
 	 * .
 	 */
 	@Test
 	public final void logWebserviceRequestShouldLogRequestReferencingAnExistingWsOperation() {
-		final WebserviceRequestDTO webserviceRequestDto = new WebserviceRequestDTO(
+		final WebserviceRequestDto webserviceRequestDto = new WebserviceRequestDto(
 				EXISTING_WS_OPERATION_NAME, "1.1.1.1", new Date(), "TEST",
 				Collections.<String, String> emptyMap());
 
@@ -115,7 +116,7 @@ public class WebserviceLoggerIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.dto.WebserviceRequestDTO)}
+	 * {@link com.acme.orderplacement.log.ws.service.DefaultWebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
 	 * .
 	 */
 	@Test
@@ -123,7 +124,7 @@ public class WebserviceLoggerIntegrationTest {
 		final Map<String, String> headers = new HashMap<String, String>();
 		headers.put("header1", "value1");
 		headers.put("header2", "value2");
-		final WebserviceRequestDTO webserviceRequestDto = new WebserviceRequestDTO(
+		final WebserviceRequestDto webserviceRequestDto = new WebserviceRequestDto(
 				EXISTING_WS_OPERATION_NAME, "1.1.1.1", new Date(), "TEST",
 				headers);
 

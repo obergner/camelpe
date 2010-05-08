@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.log.ws.dto;
+package com.acme.orderplacement.log.ws.service;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -12,17 +12,19 @@ import org.apache.commons.lang.Validate;
 
 /**
  * <p>
- * TODO: Insert short summary for WebserviceRequestDTO
+ * TODO: Insert short summary for WebserviceRequestDto
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class WebserviceRequestDTO implements Serializable {
+public class WebserviceRequestDto implements Serializable {
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
+
+	private static final long serialVersionUID = -3441865128181678535L;
 
 	private final String operationName;
 
@@ -46,7 +48,7 @@ public class WebserviceRequestDTO implements Serializable {
 	 * @param headers
 	 * @throws IllegalArgumentException
 	 */
-	public WebserviceRequestDTO(final String operationName,
+	public WebserviceRequestDto(final String operationName,
 			final String sourceIp, final Date receivedOn, final String content,
 			final Map<String, String> headers) throws IllegalArgumentException {
 		Validate.notEmpty(operationName, "operationName");
@@ -140,7 +142,7 @@ public class WebserviceRequestDTO implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final WebserviceRequestDTO other = (WebserviceRequestDTO) obj;
+		final WebserviceRequestDto other = (WebserviceRequestDto) obj;
 		if (this.content == null) {
 			if (other.content != null) {
 				return false;
@@ -184,8 +186,7 @@ public class WebserviceRequestDTO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "WebserviceRequestDTO [content=" + this.content + ", headers="
-				+ this.headers + ", operationName=" + this.operationName
+		return "WebserviceRequestDto [operationName=" + this.operationName
 				+ ", receivedOn=" + this.receivedOn + ", sourceIp="
 				+ this.sourceIp + "]";
 	}
