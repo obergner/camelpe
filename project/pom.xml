@@ -366,6 +366,12 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
+				<groupId>com.acme.orderplacement.log</groupId>
+				<artifactId>orderplacement.log.ws</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
 				<groupId>com.acme.orderplacement.integration
 				</groupId>
 				<artifactId>orderplacement.integration

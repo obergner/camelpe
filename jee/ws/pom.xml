@@ -51,10 +51,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<!--
-			The following dependencies have - somewhat artificially - declared as
-			'provided' dependencies in order to force the maven-war-plugin to
-			exclude them from WEB-INF/lib since they will be provided by the
-			enclosing ear's lib directory.
+			The following dependencies have been - somewhat artificially -
+			declared as 'provided' dependencies in order to force the
+			maven-war-plugin to exclude them from WEB-INF/lib since they will be
+			provided by the enclosing ear's lib directory.
 		-->
 		<dependency>
 			<groupId>commons-lang</groupId>
