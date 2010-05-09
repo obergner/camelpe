@@ -28,8 +28,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.log.ws.internal.domain.WebserviceRequest;
-import com.acme.orderplacement.log.ws.service.WebserviceLogger;
-import com.acme.orderplacement.log.ws.service.WebserviceRequestDto;
+import com.acme.orderplacement.log.ws.internal.domain.WebserviceResponse;
 import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
 
 /**
@@ -56,6 +55,10 @@ public class WebserviceLoggerIntegrationTest {
 
 	private static final String NON_EXISTING_WS_OPERATION_NAME = "TestWS#/item/nonExistingOperation";
 
+	private static final Long NON_EXISTING_WS_REQUEST_ID = Long.valueOf(666L);
+
+	private static final Long EXISTING_WS_REQUEST_ID = Long.valueOf(-1L);
+
 	@PersistenceContext(type = PersistenceContextType.TRANSACTION)
 	private EntityManager entityManager;
 
@@ -68,7 +71,7 @@ public class WebserviceLoggerIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.log.ws.service.DefaultWebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
+	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -78,7 +81,7 @@ public class WebserviceLoggerIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.log.ws.service.DefaultWebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
+	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
 	 * .
 	 */
 	@Test(expected = NoResultException.class)
@@ -92,7 +95,7 @@ public class WebserviceLoggerIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.log.ws.service.DefaultWebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
+	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
 	 * .
 	 */
 	@Test
@@ -116,7 +119,7 @@ public class WebserviceLoggerIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.log.ws.service.DefaultWebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
+	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceRequest(com.acme.orderplacement.log.ws.service.WebserviceRequestDto)}
 	 * .
 	 */
 	@Test
@@ -144,5 +147,51 @@ public class WebserviceLoggerIntegrationTest {
 						+ webserviceRequestDto
 						+ ") did NOT persist the headers associated with the webservice request passed in",
 				2, persistedWebserviceRequest.getHeaders().size());
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceResponse(WebserviceResponseDto)}
+	 * .
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public final void logWebserviceResponseShouldRefuseToLogNullWebserviceResponse() {
+		this.classUnderTest.logWebserviceResponse(null);
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceResponse(WebserviceResponseDto)}
+	 * .
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public final void logWebserviceResponseShouldRefuseToLogAWebserviceResponseReferencingANonExistingWebserviceRequest() {
+		final WebserviceResponseDto webserviceResponseDto = new WebserviceResponseDto(
+				NON_EXISTING_WS_REQUEST_ID, new Date(), "CONTENT", false);
+
+		this.classUnderTest.logWebserviceResponse(webserviceResponseDto);
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.log.ws.service.WebserviceLogger#logWebserviceResponse(WebserviceResponseDto)}
+	 * .
+	 */
+	@Test
+	public final void logWebserviceResponseShouldLogAWebserviceResponseReferencingAnExistingWebserviceRequest() {
+		final WebserviceResponseDto webserviceResponseDto = new WebserviceResponseDto(
+				EXISTING_WS_REQUEST_ID, new Date(), "CONTENT", false);
+
+		final Long responseId = this.classUnderTest
+				.logWebserviceResponse(webserviceResponseDto);
+
+		assertNotNull("logWebserviceResponse(" + webserviceResponseDto
+				+ ") returned a NULL response id", responseId);
+
+		final WebserviceResponse persistedWebserviceResponse = this.entityManager
+				.find(WebserviceResponse.class, responseId);
+		assertNotNull("logWebserviceResponse(" + webserviceResponseDto
+				+ ") did NOT persist the passed on webservice response",
+				persistedWebserviceResponse);
 	}
 }
