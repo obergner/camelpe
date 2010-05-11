@@ -1,8 +1,9 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.wslog;
+package com.acme.orderplacement.jee.framework.wslog.handler;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -11,7 +12,9 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
+import com.acme.orderplacement.jee.framework.wslog.handler.internal.SOAPMessageContextToWebserviceRequestDtoConverter;
 import com.acme.orderplacement.log.ws.service.WebserviceLogger;
+import com.acme.orderplacement.log.ws.service.WebserviceRequestDto;
 
 /**
  * <p>
@@ -30,6 +33,8 @@ public class WebserviceExchangeLoggingSoapHandler implements
 
 	@Resource(name = WebserviceLogger.SERVICE_NAME)
 	private WebserviceLogger webserviceLogger;
+
+	private final SOAPMessageContextToWebserviceRequestDtoConverter converter = new SOAPMessageContextToWebserviceRequestDtoConverter();
 
 	// -------------------------------------------------------------------------
 	// Implementation of javax.xml.ws.handler.soap.SOAPHandler
@@ -61,19 +66,41 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	 * @see javax.xml.ws.handler.Handler#handleMessage(javax.xml.ws.handler.MessageContext)
 	 */
 	public boolean handleMessage(final SOAPMessageContext context) {
-		// TODO Auto-generated method stub
-		return false;
+		if (isInbound(context)) {
+			return handleInboundMessage(context);
+		}
+		return handleOutboundMessage(context);
 	}
 
 	// -------------------------------------------------------------------------
 	// Internal
 	// -------------------------------------------------------------------------
 
-	private void handleIncomingMessage(final SOAPMessageContext context) {
+	private boolean handleInboundMessage(final SOAPMessageContext context) {
+		try {
+			final WebserviceRequestDto webserviceRequestDto = this.converter
+					.convert(context, new Date());
+			final Long requestId = this.webserviceLogger
+					.logWebserviceRequest(webserviceRequestDto);
 
+			return true;
+		} catch (final Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+			return true;
+		}
 	}
 
-	private void handleOutgoingMessage(final SOAPMessageContext context) {
+	private boolean handleOutboundMessage(final SOAPMessageContext context) {
 
+		return true;
+	}
+
+	private boolean isInbound(final MessageContext context) {
+		final Boolean outbound = (Boolean) context
+				.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+
+		return !outbound.booleanValue();
 	}
 }

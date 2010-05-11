@@ -72,9 +72,19 @@
 			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/integration/inbound/pom.xml</locationURI>
 		</link>
 		<link>
+			<name>poms/jee/framework/pom.xml</name>
+			<type>1</type>
+			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/jee/framework/pom.xml</locationURI>
+		</link>
+		<link>
 			<name>poms/service/item/pom.xml</name>
 			<type>1</type>
 			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/service/item/pom.xml</locationURI>
+		</link>
+		<link>
+			<name>poms/jee/framework/wslog/pom.xml</name>
+			<type>1</type>
+			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/jee/framework/wslog/pom.xml</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

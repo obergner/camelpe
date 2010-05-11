@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.wslog.internal;
+package com.acme.orderplacement.jee.framework.wslog.handler.internal;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
