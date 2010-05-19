@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.acme.orderplacement.jee</groupId>
-	<artifactId>orderplacement.jee.framework.wslog.hander</artifactId>
+	<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -46,6 +46,11 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

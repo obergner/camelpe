@@ -110,8 +110,7 @@ public class JndiStoredParentContextAwareBeanFactoryLocator implements
 	// -------------------------------------------------------------------------
 
 	/**
-	 * @see org.springframework.beans.factory.access.BeanFactoryLocator#useBeanFactory
-	 *      (java.lang.String)
+	 * @see org.springframework.beans.factory.access.BeanFactoryLocator#useBeanFactory(java.lang.String)
 	 */
 	public BeanFactoryReference useBeanFactory(final String resourceLocation)
 			throws IllegalArgumentException, BeansException {

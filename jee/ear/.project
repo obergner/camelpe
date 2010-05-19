@@ -22,6 +22,8 @@
 		<project>com.acme.orderplacement.jee.app</project>
 		<project>com.acme.orderplacement.persistence.config</project>
 		<project>com.acme.orderplacement.integration.inbound.itemimport</project>
+		<project>com.acme.orderplacement.jee.framework.wslog.handler</project>
+		<project>com.acme.orderplacement.log.ws</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

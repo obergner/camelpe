@@ -55,6 +55,7 @@
 
 	<modules>
 		<module>support</module>
+		<module>framework</module>
 		<module>geronimo</module>
 		<module>ejb</module>
 		<module>wsapi</module>

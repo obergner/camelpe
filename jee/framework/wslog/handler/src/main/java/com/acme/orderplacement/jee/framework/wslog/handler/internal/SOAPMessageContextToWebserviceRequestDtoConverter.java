@@ -34,6 +34,8 @@ import com.acme.orderplacement.log.ws.service.WebserviceRequestDto;
  */
 public class SOAPMessageContextToWebserviceRequestDtoConverter {
 
+	private static final String DEFAULT_SOAP_MESSAGE_ENCODING = "utf-8";
+
 	private static final String UNKNOWN_WSDL_OPERATION = "<UNKNOWN>";
 
 	/**
@@ -75,6 +77,7 @@ public class SOAPMessageContextToWebserviceRequestDtoConverter {
 			convertedHttpRequestHeaders.put(header.getKey(), header.getValue()
 					.toString());
 		}
+
 		return convertedHttpRequestHeaders;
 	}
 
@@ -85,6 +88,7 @@ public class SOAPMessageContextToWebserviceRequestDtoConverter {
 		final String wsdlOperation = wsdlOperationQName != null ? wsdlOperationQName
 				.getLocalPart()
 				: UNKNOWN_WSDL_OPERATION;
+
 		return wsdlOperation;
 	}
 
@@ -92,19 +96,36 @@ public class SOAPMessageContextToWebserviceRequestDtoConverter {
 			final SOAPMessageContext soapMessageContext) {
 		final String sourceIp = ((HttpServletRequest) soapMessageContext
 				.get(MessageContext.SERVLET_REQUEST)).getRemoteAddr();
+
 		return sourceIp;
 	}
 
 	private String extractSoapMessageStringRepresentationFrom(
 			final SOAPMessageContext soapMessageContext) throws SOAPException,
 			IOException, UnsupportedEncodingException {
-		final SOAPMessage soapMessage = soapMessageContext.getMessage();
-		final ByteArrayOutputStream soapMessageAsBytes = new ByteArrayOutputStream();
-		final String soapMessageEncoding = (String) soapMessage
-				.getProperty(SOAPMessage.CHARACTER_SET_ENCODING);
-		soapMessage.writeTo(new BufferedOutputStream(soapMessageAsBytes));
-		final String soapMessageAsString = new String(soapMessageAsBytes
-				.toByteArray(), soapMessageEncoding);
-		return soapMessageAsString;
+		BufferedOutputStream soapMessageAsBytesBuffer = null;
+		try {
+			final SOAPMessage soapMessage = soapMessageContext.getMessage();
+
+			final String soapMessageEncoding = (String) soapMessage
+					.getProperty(SOAPMessage.CHARACTER_SET_ENCODING);
+
+			final ByteArrayOutputStream soapMessageAsBytes = new ByteArrayOutputStream();
+			soapMessageAsBytesBuffer = new BufferedOutputStream(
+					soapMessageAsBytes);
+			soapMessage.writeTo(soapMessageAsBytesBuffer);
+			soapMessageAsBytesBuffer.flush();
+
+			final String soapMessageAsString = new String(soapMessageAsBytes
+					.toByteArray(),
+					soapMessageEncoding != null ? soapMessageEncoding
+							: DEFAULT_SOAP_MESSAGE_ENCODING);
+
+			return soapMessageAsString;
+		} finally {
+			if (soapMessageAsBytesBuffer != null) {
+				soapMessageAsBytesBuffer.close();
+			}
+		}
 	}
 }

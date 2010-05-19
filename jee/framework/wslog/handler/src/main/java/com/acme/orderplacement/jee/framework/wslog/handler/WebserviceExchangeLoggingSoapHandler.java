@@ -3,14 +3,19 @@
  */
 package com.acme.orderplacement.jee.framework.wslog.handler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.xml.namespace.QName;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.acme.orderplacement.jee.framework.wslog.handler.internal.SOAPMessageContextToWebserviceRequestDtoConverter;
 import com.acme.orderplacement.log.ws.service.WebserviceLogger;
@@ -24,6 +29,7 @@ import com.acme.orderplacement.log.ws.service.WebserviceRequestDto;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@Component(WebserviceExchangeLoggingSoapHandler.COMPONENT_NAME)
 public class WebserviceExchangeLoggingSoapHandler implements
 		SOAPHandler<SOAPMessageContext> {
 
@@ -31,8 +37,10 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	// Fields
 	// -------------------------------------------------------------------------
 
-	@Resource(name = WebserviceLogger.SERVICE_NAME)
-	private WebserviceLogger webserviceLogger;
+	public static final String COMPONENT_NAME = "jee.framework.wslog.handler.webserviceExchangeLoggingSoapHandler";
+
+	// @Resource(name = WebserviceLogger.SERVICE_NAME)
+	// private WebserviceLogger webserviceLogger;
 
 	private final SOAPMessageContextToWebserviceRequestDtoConverter converter = new SOAPMessageContextToWebserviceRequestDtoConverter();
 
@@ -44,7 +52,7 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	 * @see javax.xml.ws.handler.soap.SOAPHandler#getHeaders()
 	 */
 	public Set<QName> getHeaders() {
-		return null;
+		return Collections.emptySet();
 	}
 
 	/**
@@ -80,7 +88,7 @@ public class WebserviceExchangeLoggingSoapHandler implements
 		try {
 			final WebserviceRequestDto webserviceRequestDto = this.converter
 					.convert(context, new Date());
-			final Long requestId = this.webserviceLogger
+			final Long requestId = obtainMessageLoggerFrom(context)
 					.logWebserviceRequest(webserviceRequestDto);
 
 			return true;
@@ -102,5 +110,21 @@ public class WebserviceExchangeLoggingSoapHandler implements
 				.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
 		return !outbound.booleanValue();
+	}
+
+	private WebserviceLogger obtainMessageLoggerFrom(
+			final MessageContext messageContext) throws IllegalStateException {
+
+		return obtainWebApplicationContextFrom(messageContext).getBean(
+				WebserviceLogger.SERVICE_NAME, WebserviceLogger.class);
+	}
+
+	private WebApplicationContext obtainWebApplicationContextFrom(
+			final MessageContext messageContext) throws IllegalStateException {
+		final ServletContext servlectContext = (ServletContext) messageContext
+				.get(MessageContext.SERVLET_CONTEXT);
+
+		return WebApplicationContextUtils
+				.getRequiredWebApplicationContext(servlectContext);
 	}
 }

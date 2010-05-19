@@ -427,13 +427,28 @@
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
+			<!--
+				<dependency> <groupId>com.acme.orderplacement.jee </groupId>
+				<artifactId>orderplacement.jee.shareddeps </artifactId>
+				<version>${project.version}</version> <type>pom</type> </dependency>
+			-->
 			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.shareddeps
-				</artifactId>
+				<groupId>com.acme.orderplacement.jee</groupId>
+				<artifactId>orderplacement.jee.framework</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee</groupId>
+				<artifactId>orderplacement.jee.framework.wslog</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee</groupId>
+				<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee
@@ -813,6 +828,12 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-expression</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
 				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>

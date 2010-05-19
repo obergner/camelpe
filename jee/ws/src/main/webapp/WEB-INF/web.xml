@@ -5,6 +5,15 @@
 	id="com.acme.orderplacement.jee.ws.WSLayer" version="2.5">
 	<display-name>Item Storage Service</display-name>
 
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>WEB-INF/spring/jee.ws.applicationContext.scontext</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
 	<servlet>
 		<display-name>ItemStorageService</display-name>
 		<servlet-name>ItemStorageService</servlet-name>

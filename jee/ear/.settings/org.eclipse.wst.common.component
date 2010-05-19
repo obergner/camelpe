@@ -329,5 +329,14 @@
         <dependent-module archiveName="/orderplacement.integration.inbound.itemimport-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.integration.inbound.itemimport/com.acme.orderplacement.integration.inbound.itemimport">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="/orderplacement.jee.framework.wslog.handler-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.jee.framework.wslog.handler/com.acme.orderplacement.jee.framework.wslog.handler">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.log.ws-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.log.ws/com.acme.orderplacement.log.ws">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/lib/spring-web-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-web/3.0.2.RELEASE/spring-web-3.0.2.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
