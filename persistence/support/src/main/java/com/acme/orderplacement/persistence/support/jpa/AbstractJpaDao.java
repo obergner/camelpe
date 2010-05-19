@@ -11,8 +11,6 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.Validate;
@@ -63,14 +61,6 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	private final Class<T> persistentClass = (Class<T>) ((ParameterizedType) this
 			.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
-	/**
-	 * <p>
-	 * Our {@link javax.persistence.EntityManager <em>JPA EntityManager</em>}.
-	 * </p>
-	 */
-	@PersistenceContext(type = PersistenceContextType.TRANSACTION)
-	private EntityManager entityManager;
-
 	// ------------------------------------------------------------------------
 	// Implementation of GenericJpaDao<T, ID>
 	// ------------------------------------------------------------------------
@@ -80,7 +70,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 */
 	public void evict(final T persistentObject)
 			throws DataAccessRuntimeException, ObjectNotPersistentException {
-		getEntityManager().detach(persistentObject);
+		entityManager().detach(persistentObject);
 	}
 
 	/**
@@ -89,7 +79,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	@ReadOnlyPersistenceOperation
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<T> findAll() throws DataAccessRuntimeException {
-		final List<T> allEntities = getEntityManager().createQuery(
+		final List<T> allEntities = entityManager().createQuery(
 				"From " + getPersistentClass().getName()).getResultList();
 		getLog().debug("Returned all ({}) entities of type = [{}].",
 				allEntities.size(), getPersistentClass().getName());
@@ -105,8 +95,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public T findById(final ID id, final boolean lock)
 			throws NoSuchPersistentObjectException, DataAccessRuntimeException {
-		final T matchingEntity = getEntityManager().find(getPersistentClass(),
-				id);
+		final T matchingEntity = entityManager().find(getPersistentClass(), id);
 		if (matchingEntity == null) {
 			getLog().error("Could not find entity of type [{}] with ID [{}]",
 					getPersistentClass(), id);
@@ -114,7 +103,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			throw new NoSuchPersistentObjectException(getPersistentClass(), id);
 		}
 		if (lock) {
-			getEntityManager().lock(matchingEntity, LockModeType.WRITE);
+			entityManager().lock(matchingEntity, LockModeType.WRITE);
 		}
 		getLog().debug("Found entity = [{}] with ID = [{}].", matchingEntity,
 				id);
@@ -131,7 +120,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			PersistentStateLockedException,
 			PersistentStateConcurrentlyModifiedException,
 			PersistentStateDeletedException {
-		getEntityManager().flush();
+		entityManager().flush();
 		getLog()
 				.debug(
 						"Flushed current Session. "
@@ -145,7 +134,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public T makePersistent(final T transientObject)
 			throws DataAccessRuntimeException, ObjectNotTransientException {
-		getEntityManager().persist(transientObject);
+		entityManager().persist(transientObject);
 		getLog().debug("Saved entity = [{}].", transientObject);
 
 		return transientObject;
@@ -159,7 +148,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	public T makePersistentOrUpdatePersistentState(
 			final T persistentOrDetachedObject)
 			throws DataAccessRuntimeException {
-		final T persistentObject = getEntityManager().merge(
+		final T persistentObject = entityManager().merge(
 				persistentOrDetachedObject);
 		getLog().debug("Updated entity = [{}]", persistentOrDetachedObject);
 
@@ -173,7 +162,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void makeTransient(final T persistentOrDetachedObject)
 			throws DataAccessRuntimeException, ObjectTransientException {
-		getEntityManager().remove(persistentOrDetachedObject);
+		entityManager().remove(persistentOrDetachedObject);
 		getLog().debug("Removed entity = [{}] from persistent storage.",
 				persistentOrDetachedObject);
 	}
@@ -190,7 +179,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	protected List<T> findByNamedQuery(final String queryName,
 			final Map<String, ?> parameters) throws DataAccessRuntimeException {
 		Validate.notNull(queryName, "queryName");
-		final Query namedQuery = getEntityManager().createNamedQuery(queryName);
+		final Query namedQuery = entityManager().createNamedQuery(queryName);
 		for (final Map.Entry<String, ?> param : parameters.entrySet()) {
 			namedQuery.setParameter(param.getKey(), param.getValue());
 		}
@@ -206,7 +195,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	protected List<T> findByNamedQuery(final String queryName,
 			final Object... parameters) throws DataAccessRuntimeException {
 		Validate.notNull(queryName, "queryName");
-		final Query namedQuery = getEntityManager().createNamedQuery(queryName);
+		final Query namedQuery = entityManager().createNamedQuery(queryName);
 		int idx = 1;
 		for (final Object param : parameters) {
 			namedQuery.setParameter(idx++, param);
@@ -270,8 +259,5 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 		return this.log;
 	}
 
-	protected final EntityManager getEntityManager() {
-
-		return this.entityManager;
-	}
+	protected abstract EntityManager entityManager();
 }

@@ -22,7 +22,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.acme.orderplacement.persistence.config.JpaProviderConfig;
+import com.acme.orderplacement.persistence.config.JpaEntityManagerFactoryConfig;
 import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
 import com.acme.orderplacement.persistence.testsupport.database.spring.PrePopulatingInMemoryH2DataSourceFactory;
 
@@ -36,7 +36,7 @@ import com.acme.orderplacement.persistence.testsupport.database.spring.PrePopula
  */
 @Configuration
 public class PersistencePlatformTestConfig implements
-		PlatformIntegrationConfig, JpaProviderConfig {
+		PlatformIntegrationConfig, JpaEntityManagerFactoryConfig {
 
 	@Value("#{ testEnvironment['persistence.testsupport.schemaClasspathLocation'] }")
 	private String schemaClasspathLocation;
@@ -87,7 +87,10 @@ public class PersistencePlatformTestConfig implements
 		return ManagementFactory.getPlatformMBeanServer();
 	}
 
-	@Bean(name = JpaProviderConfig.EMF_COMPONENT_NAME)
+	/**
+	 * @see com.acme.orderplacement.persistence.config.JpaEntityManagerFactoryConfig#entityManagerFactory()
+	 */
+	@Bean
 	public EntityManagerFactory entityManagerFactory() throws Exception {
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryFactory
@@ -100,19 +103,11 @@ public class PersistencePlatformTestConfig implements
 		return entityManagerFactoryFactory.getObject();
 	}
 
-	/**
-	 * @see com.acme.orderplacement.persistence.config.HibernateIntegrationConfig#jpaDialect()
-	 */
-	@Bean(name = JpaProviderConfig.JPA_DIALECT_COMPONENT_NAME)
-	public JpaDialect jpaDialect() {
+	private JpaDialect jpaDialect() {
 		return new HibernateJpaDialect();
 	}
 
-	/**
-	 * @see com.acme.orderplacement.persistence.config.HibernateIntegrationConfig#jpaVendorAdapter()
-	 */
-	@Bean(name = JpaProviderConfig.JPA_VENDOR_ADAPTER_COMPONENT_NAME)
-	public JpaVendorAdapter jpaVendorAdapter() {
+	private JpaVendorAdapter jpaVendorAdapter() {
 		final HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
 		hibernateJpaVendorAdapter.setDatabase(Database.H2);
 		hibernateJpaVendorAdapter.setShowSql(true);

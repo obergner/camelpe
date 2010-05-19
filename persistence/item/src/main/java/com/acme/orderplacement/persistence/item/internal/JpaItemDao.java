@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+
 import org.apache.commons.lang.Validate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,6 +27,18 @@ import com.acme.orderplacement.persistence.support.meta.annotation.ReadOnlyPersi
  */
 @Repository(ItemDao.REPOSITORY_NAME)
 public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
+
+	// -------------------------------------------------------------------------
+	// Fields
+	// -------------------------------------------------------------------------
+
+	/**
+	 * <p>
+	 * Our {@link javax.persistence.EntityManager <em>JPA EntityManager</em>}.
+	 * </p>
+	 */
+	@PersistenceContext(type = PersistenceContextType.TRANSACTION)
+	private EntityManager entityManager;
 
 	// ------------------------------------------------------------------------
 	// Implementation of ItemDao
@@ -52,5 +68,17 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 		parameters.put("name", "%" + itemName + "%");
 
 		return findByNamedQuery(Item.Queries.BY_NAME_LIKE, parameters);
+	}
+
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
+
+	/**
+	 * @see com.acme.orderplacement.persistence.support.jpa.AbstractJpaDao#entityManager()
+	 */
+	@Override
+	protected EntityManager entityManager() {
+		return this.entityManager;
 	}
 }
