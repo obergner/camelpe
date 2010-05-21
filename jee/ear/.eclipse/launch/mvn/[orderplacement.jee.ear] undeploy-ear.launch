@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.maven.ide.eclipse.Maven2LaunchConfigurationType">
 <booleanAttribute key="M2_DEBUG_OUTPUT" value="true"/>
-<stringAttribute key="M2_GOALS" value="clean install"/>
+<stringAttribute key="M2_GOALS" value="org.apache.geronimo.plugins:geronimo-maven-plugin:2.0.2:undeploy-module"/>
 <booleanAttribute key="M2_NON_RECURSIVE" value="false"/>
 <booleanAttribute key="M2_OFFLINE" value="false"/>
 <stringAttribute key="M2_PROFILES" value=""/>
@@ -10,7 +10,6 @@
 <booleanAttribute key="M2_SKIP_TESTS" value="false"/>
 <booleanAttribute key="M2_UPDATE_SNAPSHOTS" value="false"/>
 <booleanAttribute key="M2_WORKSPACE_RESOLUTION" value="true"/>
-<stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${project}"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.5.0_17"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:/com.acme.orderplacement.persistence.people}"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:/orderplacement.jee.ear}"/>
 </launchConfiguration>

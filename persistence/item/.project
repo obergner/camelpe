@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.acme.orderplacement.item.persistence</name>
+	<name>orderplacement.item.persistence</name>
 	<comment></comment>
 	<projects>
 	</projects>

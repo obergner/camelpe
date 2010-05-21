@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/com.acme.orderplacement.integration.inbound.itemimport/src/test/java/com/acme/orderplacement/integration/inbound/itemimport/ItemImportRoutesIntegrationTest.java"/>
+<listEntry value="/orderplacement.framework.wslog/src/test/java/com/acme/orderplacement/log/ws/service/WebserviceLoggerIntegrationTest.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -11,7 +11,7 @@
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.acme.orderplacement.integration.inbound.itemimport.ItemImportRoutesIntegrationTest"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="com.acme.orderplacement.integration.inbound.itemimport"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.acme.orderplacement.log.ws.service.WebserviceLoggerIntegrationTest"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="orderplacement.framework.wslog"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

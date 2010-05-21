@@ -401,5 +401,44 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="/orderplacement.service.item.impl-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.service.impl/orderplacement.item.service.impl">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.domain.item-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.entities/orderplacement.item.entities">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.log.ws-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.wslog/orderplacement.framework.wslog">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.persistence.item-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.persistence/orderplacement.item.persistence">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.service.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.service/orderplacement.framework.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.integration.inbound.external-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.integration.inbound.external/orderplacement.integration.inbound.external">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.service.item.api-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.service/orderplacement.item.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.integration.inbound.itemimport-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.integration.inbound.itemimport/orderplacement.integration.inbound.itemimport">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.persistence.config-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.persistence.config/orderplacement.framework.persistence.config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.persistence.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.persistence.common/orderplacement.framework.persistence.common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.domain.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.domain/orderplacement.framework.domain">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.common.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.common/orderplacement.framework.common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.aspect.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.aspect/orderplacement.framework.aspect">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

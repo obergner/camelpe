@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.acme.orderplacement.integration.inbound.external</name>
+	<name>orderplacement.integration.inbound.external</name>
 	<comment></comment>
 	<projects>
 	</projects>

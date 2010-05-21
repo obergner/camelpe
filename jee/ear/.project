@@ -35,6 +35,19 @@
 		<project>orderplacement.jee.item.ejb</project>
 		<project>orderplacement.jee.item.mdb</project>
 		<project>orderplacement.jee.item.ws</project>
+		<project>orderplacement.item.service.impl</project>
+		<project>orderplacement.item.entities</project>
+		<project>orderplacement.framework.wslog</project>
+		<project>orderplacement.item.persistence</project>
+		<project>orderplacement.framework.service</project>
+		<project>orderplacement.integration.inbound.external</project>
+		<project>orderplacement.item.service</project>
+		<project>orderplacement.integration.inbound.itemimport</project>
+		<project>orderplacement.framework.persistence.config</project>
+		<project>orderplacement.framework.persistence.common</project>
+		<project>orderplacement.framework.domain</project>
+		<project>orderplacement.framework.common</project>
+		<project>orderplacement.framework.aspect</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
