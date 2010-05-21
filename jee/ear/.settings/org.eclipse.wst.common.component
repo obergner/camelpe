@@ -2,10 +2,6 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="com.acme.orderplacement.jee.ear">
         <wb-resource deploy-path="/" source-path="/src/main/application"/>
-        <dependent-module deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.ws/com.acme.orderplacement.jee.ws">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/log4j-1.2.15.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.15/log4j-1.2.15.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -234,10 +230,6 @@
         <dependent-module archiveName="/lib/aspectjrt-1.6.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjrt/1.6.8/aspectjrt-1.6.8.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="orderplacement.jee.ejb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.ejb/com.acme.orderplacement.jee.ejb">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.domain.item-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.domain.item/com.acme.orderplacement.domain.item">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -248,10 +240,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="orderplacement.jee.integrationmdb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.integrationmdb/com.acme.orderplacement.jee.integrationmdb">
-            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/activemq-protobuf-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-protobuf/1.0/activemq-protobuf-1.0.jar">
@@ -336,6 +324,81 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/lib/spring-web-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-web/3.0.2.RELEASE/spring-web-3.0.2.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.common.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.framework.common/com.acme.orderplacement.framework.common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.aspect.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.framework.aspect/com.acme.orderplacement.framework.aspect">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.persistence.config-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.framework.persistence.config/com.acme.orderplacement.framework.persistence.config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.domain.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.framework.domain/com.acme.orderplacement.framework.domain">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.log.ws-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.framework.wslog/com.acme.orderplacement.framework.wslog">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.service.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.framework.service/com.acme.orderplacement.framework.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.persistence.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.framework.persistence.common/com.acme.orderplacement.framework.persistence.common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.domain.item-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.item.entities/com.acme.orderplacement.item.entities">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.persistence.item-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.item.persistence/com.acme.orderplacement.item.persistence">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.service.item.api-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.item.service/com.acme.orderplacement.item.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.service.item.impl-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.item.service.impl/com.acme.orderplacement.item.service.impl">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.jee.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.jee.framework.common/com.acme.orderplacement.jee.framework.common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="com.acme.orderplacement.jee.item.ejb.jar" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.item.ejb/com.acme.orderplacement.jee.item.ejb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="com.acme.orderplacement.jee.item.mdb.jar" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.item.mdb/com.acme.orderplacement.jee.item.mdb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="com.acme.orderplacement.jee.item.ws.war" deploy-path="/" handle="module:/resource/com.acme.orderplacement.jee.item.ws/com.acme.orderplacement.jee.item.ws">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.jee.geronimo-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/com.acme.orderplacement.jee.framework.geronimo/com.acme.orderplacement.jee.framework.geronimo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.jee.framework.wslog.handler-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.jee.framework.wslog.handler/orderplacement.jee.framework.wslog.handler">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.jee.framework.common-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.jee.framework.common/orderplacement.jee.framework.common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.jee.framework.config-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.jee.framework.config/orderplacement.jee.framework.config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.jee.framework.geronimo-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.jee.framework.geronimo/orderplacement.jee.framework.geronimo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="orderplacement.jee.item.ws-1.0-SNAPSHOT.war" deploy-path="/" handle="module:/resource/orderplacement.jee.item.ws/orderplacement.jee.item.ws">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="orderplacement.jee.item.ejb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/orderplacement.jee.item.ejb/orderplacement.jee.item.ejb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="orderplacement.jee.item.mdb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/orderplacement.jee.item.mdb/orderplacement.jee.item.mdb">
+            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

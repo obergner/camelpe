@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="orderplacement.jee.item.ws-1.0-SNAPSHOT">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.jee.item.wsapi/orderplacement.jee.item.wsapi">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/com.acme.orderplacement.framework.service/com.acme.orderplacement.framework.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/com.acme.orderplacement.framework.aspect/com.acme.orderplacement.framework.aspect">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/com.acme.orderplacement.framework.common/com.acme.orderplacement.framework.common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/com.acme.orderplacement.item.service/com.acme.orderplacement.item.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.jee.framework.wslog.handler/orderplacement.jee.framework.wslog.handler">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/com.acme.orderplacement.framework.wslog/com.acme.orderplacement.framework.wslog">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/com.acme.orderplacement.framework.persistence.common/com.acme.orderplacement.framework.persistence.common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path"/>
+        <property name="context-root" value="com.acme.orderplacement.jee.item.ws"/>
+    </wb-module>
+</project-modules>

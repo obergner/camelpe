@@ -29,7 +29,7 @@
 	<context:component-scan
 		base-package="com.acme.orderplacement.domain.support,
 					  com.acme.orderplacement.persistence,
-		              com.acme.orderplacement.jee.support,
+		              com.acme.orderplacement.jee.framework.common,
 		              com.acme.orderplacement.jee.geronimo,
 		              com.acme.orderplacement.jee.app" />
 	<context:annotation-config />

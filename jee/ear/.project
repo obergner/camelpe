@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.acme.orderplacement.jee.ear</name>
+	<name>orderplacement.jee.ear</name>
 	<comment></comment>
 	<projects>
-		<project>com.acme.orderplacement.jee.ws</project>
 		<project>com.acme.orderplacement.integration.inbound.support</project>
-		<project>com.acme.orderplacement.jee.geronimo</project>
+		<project>orderplacement.jee.framework.geronimo</project>
 		<project>com.acme.orderplacement.domain.support</project>
 		<project>com.acme.orderplacement.persistence.item</project>
 		<project>com.acme.orderplacement.service.item.impl</project>
@@ -14,16 +13,28 @@
 		<project>com.acme.orderplacement.service.support</project>
 		<project>com.acme.orderplacement.common.support</project>
 		<project>com.acme.orderplacement.aspect.support</project>
-		<project>com.acme.orderplacement.jee.ejb</project>
 		<project>com.acme.orderplacement.domain.item</project>
 		<project>com.acme.orderplacement.service.item.api</project>
-		<project>com.acme.orderplacement.jee.support</project>
-		<project>com.acme.orderplacement.jee.integrationmdb</project>
-		<project>com.acme.orderplacement.jee.app</project>
+		<project>orderplacement.jee.framework.common</project>
+		<project>orderplacement.jee.framework.config</project>
 		<project>com.acme.orderplacement.persistence.config</project>
 		<project>com.acme.orderplacement.integration.inbound.itemimport</project>
-		<project>com.acme.orderplacement.jee.framework.wslog.handler</project>
+		<project>orderplacement.jee.framework.wslog.handler</project>
 		<project>com.acme.orderplacement.log.ws</project>
+		<project>com.acme.orderplacement.framework.common</project>
+		<project>com.acme.orderplacement.framework.aspect</project>
+		<project>com.acme.orderplacement.framework.persistence.config</project>
+		<project>com.acme.orderplacement.framework.domain</project>
+		<project>com.acme.orderplacement.framework.wslog</project>
+		<project>com.acme.orderplacement.framework.service</project>
+		<project>com.acme.orderplacement.framework.persistence.common</project>
+		<project>com.acme.orderplacement.item.entities</project>
+		<project>com.acme.orderplacement.item.persistence</project>
+		<project>com.acme.orderplacement.item.service</project>
+		<project>com.acme.orderplacement.item.service.impl</project>
+		<project>orderplacement.jee.item.ejb</project>
+		<project>orderplacement.jee.item.mdb</project>
+		<project>orderplacement.jee.item.ws</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

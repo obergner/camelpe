@@ -59,11 +59,6 @@
 			<artifactId>orderplacement.common.support</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.domain</groupId>
-			<artifactId>orderplacement.domain.support</artifactId>
-			<scope>compile</scope>
-		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->

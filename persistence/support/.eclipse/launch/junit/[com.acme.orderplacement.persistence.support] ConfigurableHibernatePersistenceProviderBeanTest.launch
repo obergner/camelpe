@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/com.acme.orderplacement.persistence.support/src/test/java/com/acme/orderplacement/persistence/support/jpa/hibernate/ConfigurableHibernatePersistenceProviderBeanTest.java"/>
+<listEntry value="/com.acme.orderplacement.framework.persistence.common/src/test/java/com/acme/orderplacement/persistence/support/jpa/hibernate/ConfigurableHibernatePersistenceProviderBeanTest.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -12,6 +12,6 @@
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.acme.orderplacement.persistence.support.jpa.hibernate.ConfigurableHibernatePersistenceProviderBeanTest"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="com.acme.orderplacement.persistence.support"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="com.acme.orderplacement.framework.persistence.common"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

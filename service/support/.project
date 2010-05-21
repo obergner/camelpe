@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.acme.orderplacement.service.support</name>
+	<name>com.acme.orderplacement.framework.service</name>
 	<comment></comment>
 	<projects>
 	</projects>

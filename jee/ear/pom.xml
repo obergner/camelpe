@@ -2,22 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
 	<parent>
-		<groupId>com.acme.orderplacement.jee
-		</groupId>
-		<artifactId>orderplacement.jee
-		</artifactId>
+		<groupId>com.acme.orderplacement.jee</groupId>
+		<artifactId>orderplacement.jee</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.acme.orderplacement.jee
-	</groupId>
-	<artifactId>orderplacement.jee.ear
-	</artifactId>
+	<groupId>com.acme.orderplacement.jee</groupId>
+	<artifactId>orderplacement.jee.ear</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>ear</packaging>
 
-	<name><![CDATA[SOA Order :: JEE Integration :: EAR]]></name>
+	<name><![CDATA[SOA Order :: JEE :: EAR]]></name>
 
 	<dependencies>
 		<!--
@@ -64,57 +60,45 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.ejb
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.ejb</artifactId>
 			<type>ejb</type>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.integrationmdb
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.mdb</artifactId>
 			<type>ejb</type>
 			<scope>runtime</scope>
 		</dependency>
 		<!--
 			HACK: Due to some bug in m2eclipse, we have to explicitly declare a
 			dependency on this artifact in this pom, so that it gets included in
-			META-INF/lib. See below.
+			META-INF/lib. See below
 		-->
 		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.support
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.common</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee</groupId>
+			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 			<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.geronimo
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.geronimo</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.app
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.config</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee
-			</groupId>
-			<artifactId>orderplacement.jee.ws
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.ws</artifactId>
 			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
@@ -164,22 +148,16 @@
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
 						<rarModule>
-							<groupId>org.tranql
-							</groupId>
-							<artifactId>tranql-connector-postgresql-xa
-							</artifactId>
+							<groupId>org.tranql</groupId>
+							<artifactId>tranql-connector-postgresql-xa</artifactId>
 						</rarModule>
 						<ejbModule>
-							<groupId>com.acme.orderplacement.jee
-							</groupId>
-							<artifactId>orderplacement.jee.ejb
-							</artifactId>
+							<groupId>com.acme.orderplacement.jee.item</groupId>
+							<artifactId>orderplacement.jee.item.ejb</artifactId>
 						</ejbModule>
 						<ejbModule>
-							<groupId>com.acme.orderplacement.jee
-							</groupId>
-							<artifactId>orderplacement.jee.integrationmdb
-							</artifactId>
+							<groupId>com.acme.orderplacement.jee.item</groupId>
+							<artifactId>orderplacement.jee.item.mdb</artifactId>
 						</ejbModule>
 						<!--
 							TODO: I would like to explicitly set this web module's context
@@ -197,8 +175,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.geronimo.plugins
-				</groupId>
+				<groupId>org.apache.geronimo.plugins</groupId>
 				<artifactId>geronimo-maven-plugin</artifactId>
 				<configuration>
 					<geronimoHome>${geronimo.home}</geronimoHome>
@@ -207,12 +184,9 @@
 						${project.build.directory}/${project.build.finalName}.${project.packaging}
 					</moduleArchive>
 					<module>
-						<groupId>${geronimo.moduleId.groupId}
-						</groupId>
-						<artifactId>${geronimo.moduleId.artifactId}
-						</artifactId>
-						<version>${geronimo.moduleId.version}
-						</version>
+						<groupId>${geronimo.moduleId.groupId}</groupId>
+						<artifactId>${geronimo.moduleId.artifactId}</artifactId>
+						<version>${geronimo.moduleId.version}</version>
 						<type>${geronimo.moduleId.type}</type>
 					</module>
 				</configuration>

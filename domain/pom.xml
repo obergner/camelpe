@@ -66,11 +66,7 @@
 
 	<modules>
 		<module>support</module>
-		<module>testsupport</module>
-		<!-- module>people</module -->
-		<!--  >module>company</module -->
 		<module>item</module>
-		<!-- module>order</module -->
 	</modules>
 
 </project>

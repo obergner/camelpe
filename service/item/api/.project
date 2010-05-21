@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.acme.orderplacement.service.item.api</name>
+	<name>com.acme.orderplacement.item.service</name>
 	<comment></comment>
 	<projects>
 	</projects>

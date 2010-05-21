@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
+	<parent>
+		<groupId>com.acme.orderplacement.jee.item</groupId>
+		<artifactId>orderplacement.jee.item</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme.orderplacement.jee.item</groupId>
+	<artifactId>orderplacement.jee.item.ws</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name><![CDATA[SOA Order :: JEE :: Item :: Webservice]]></name>
+
+	<dependencies>
+		<!--
+			| Provided dependencies 
+		-->
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JAXB API -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			JSR 181 Specification
+		-->
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JAX-WS API -->
+		<dependency>
+			<groupId>javax.xml.ws</groupId>
+			<artifactId>jaxws-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.wsapi</artifactId>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.service</groupId>
+			<artifactId>orderplacement.service.support</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.service</groupId>
+			<artifactId>orderplacement.service.item.api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<!--
+			| Runtime dependencies 
+		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
+			<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+			| Test dependencies 
+		-->
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!--
+				Create a 'skinny' war suitable for being embedded into an ear: see
+				http://maven.apache.org/plugins/maven-war-plugin/examples/skinny-wars.html
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<packagingIncludes>WEB-INF/lib/orderplacement.jee.wsapi-${project.version}.jar,WEB-INF/classes/**/*,WEB-INF/spring/**/*
+					</packagingIncludes>
+					<archive>
+						<manifest>
+							<addClasspath>false</addClasspath>
+							<addDefaultSpecificationEntries>true
+							</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true
+							</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

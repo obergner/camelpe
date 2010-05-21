@@ -289,7 +289,7 @@
 	</sec:security>
 
 	<sys:gbean name="SharedApplicationContext"
-		class="com.acme.orderplacement.jee.geronimo.internal.spring.ApplicationContextGBean"
+		class="com.acme.orderplacement.jee.framework.geronimo.internal.spring.ApplicationContextGBean"
 		xsi:type="sys:gbeanType">
 		<sys:reference name="globalJndiContext">
 			<sys:name>GlobalContext</sys:name>

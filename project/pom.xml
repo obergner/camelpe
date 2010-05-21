@@ -420,105 +420,80 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee
-				</artifactId>
+				<groupId>com.acme.orderplacement.jee</groupId>
+				<artifactId>orderplacement.jee</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
-			<!--
-				<dependency> <groupId>com.acme.orderplacement.jee </groupId>
-				<artifactId>orderplacement.jee.shareddeps </artifactId>
-				<version>${project.version}</version> <type>pom</type> </dependency>
-			-->
 			<dependency>
-				<groupId>com.acme.orderplacement.jee</groupId>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
 				<artifactId>orderplacement.jee.framework</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee</groupId>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.geronimo</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.config</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 				<artifactId>orderplacement.jee.framework.wslog</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee</groupId>
+				<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 				<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.support
-				</artifactId>
+				<groupId>com.acme.orderplacement.jee.item</groupId>
+				<artifactId>orderplacement.jee.item</artifactId>
 				<version>${project.version}</version>
-				<type>jar</type>
+				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.geronimo
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.ejb
-				</artifactId>
+				<groupId>com.acme.orderplacement.jee.item</groupId>
+				<artifactId>orderplacement.jee.item.ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.integrationmdb
-				</artifactId>
+				<groupId>com.acme.orderplacement.jee.item</groupId>
+				<artifactId>orderplacement.jee.item.mdb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.wsapi
-				</artifactId>
+				<groupId>com.acme.orderplacement.jee.item</groupId>
+				<artifactId>orderplacement.jee.item.wsapi</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.ws
-				</artifactId>
+				<groupId>com.acme.orderplacement.jee.item</groupId>
+				<artifactId>orderplacement.jee.item.ws</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.integrationra
-				</artifactId>
-				<version>${project.version}</version>
-				<type>rar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.app
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee
-				</groupId>
-				<artifactId>orderplacement.jee.ear
-				</artifactId>
+				<groupId>com.acme.orderplacement.jee</groupId>
+				<artifactId>orderplacement.jee.ear</artifactId>
 				<version>${project.version}</version>
 				<type>ear</type>
 			</dependency>
