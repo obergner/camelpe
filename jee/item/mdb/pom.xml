@@ -73,13 +73,17 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.acme.orderplacement.service</groupId>
+			<artifactId>orderplacement.service.item.api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
 			<artifactId>orderplacement.jee.framework.common</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.integration
-			</groupId>
+			<groupId>com.acme.orderplacement.integration</groupId>
 			<artifactId>orderplacement.integration.inbound.itemimport
 			</artifactId>
 			<scope>compile</scope>

@@ -397,10 +397,6 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="orderplacement.jee.item.mdb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/orderplacement.jee.item.mdb/orderplacement.jee.item.mdb">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.service.item.impl-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.service.impl/orderplacement.item.service.impl">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -416,13 +412,7 @@
         <dependent-module archiveName="/orderplacement.service.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.service/orderplacement.framework.service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/orderplacement.integration.inbound.external-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.integration.inbound.external/orderplacement.integration.inbound.external">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.service.item.api-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.service/orderplacement.item.service">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/orderplacement.integration.inbound.itemimport-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.integration.inbound.itemimport/orderplacement.integration.inbound.itemimport">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.persistence.config-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.persistence.config/orderplacement.framework.persistence.config">
@@ -438,6 +428,19 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.aspect.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.aspect/orderplacement.framework.aspect">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.jee.item.service-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.jee.item.service/orderplacement.jee.item.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="orderplacement.jee.item.mdb-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/orderplacement.jee.item.mdb/orderplacement.jee.item.mdb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.integration.inbound.external-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.integration.inbound.external/orderplacement.integration.inbound.external">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="/orderplacement.integration.inbound.itemimport-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.integration.inbound.itemimport/orderplacement.integration.inbound.itemimport">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

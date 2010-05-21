@@ -11,7 +11,6 @@ import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.acme.orderplacement.integration.inbound.itemimport.config.ItemImportConfig;
 import com.acme.orderplacement.service.item.ItemStorageService;
 
 /**

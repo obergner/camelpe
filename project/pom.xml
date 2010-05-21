@@ -358,14 +358,6 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.service
-				</groupId>
-				<artifactId>orderplacement.service.item.impl
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
 				<groupId>com.acme.orderplacement.log</groupId>
 				<artifactId>orderplacement.log.ws</artifactId>
 				<version>${project.version}</version>
@@ -466,6 +458,12 @@
 				<artifactId>orderplacement.jee.item</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.item</groupId>
+				<artifactId>orderplacement.jee.item.service</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.item</groupId>

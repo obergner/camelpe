@@ -58,10 +58,8 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.service
-			</groupId>
-			<artifactId>orderplacement.service.item.api
-			</artifactId>
+			<groupId>com.acme.orderplacement.service</groupId>
+			<artifactId>orderplacement.service.item.api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -171,9 +169,13 @@
 			<artifactId>commons-pool</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--
+			TODO: Move "itemimport" into the JEE layer. Right now, we are not in
+			the JEE layer, yet have a dependency on it, as evidenced below.
+		-->
 		<dependency>
-			<groupId>com.acme.orderplacement.service</groupId>
-			<artifactId>orderplacement.service.item.impl</artifactId>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.service</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

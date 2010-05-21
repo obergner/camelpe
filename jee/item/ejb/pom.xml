@@ -106,10 +106,8 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.service
-			</groupId>
-			<artifactId>orderplacement.service.item.impl
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.service</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<!--
