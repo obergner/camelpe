@@ -36,8 +36,13 @@
 	<modules>
 		<module>common</module>
 		<module>aspect</module>
+		<module>domain</module>
 		<module>testsupport</module>
-		<module>persistence</module>
+		<module>wslog</module>
+		<module>persistence.config</module>
+		<module>persistence.common</module>
+		<module>persistence.testsupport</module>
+		<module>service</module>
 	</modules>
 
 </project>

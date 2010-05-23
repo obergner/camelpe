@@ -27,7 +27,7 @@
         http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<context:component-scan
-		base-package="com.acme.orderplacement.domain.support,
+		base-package="com.acme.orderplacement.framework.domain,
 					  com.acme.orderplacement.persistence,
 		              com.acme.orderplacement.jee.framework.common,
 		              com.acme.orderplacement.jee.geronimo,

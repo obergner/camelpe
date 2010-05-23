@@ -3,8 +3,8 @@
  */
 package com.acme.orderplacement.service.item;
 
+import com.acme.orderplacement.framework.service.exception.entity.EntityAlreadyRegisteredException;
 import com.acme.orderplacement.service.item.dto.ItemDto;
-import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;
 
 /**
  * <p>

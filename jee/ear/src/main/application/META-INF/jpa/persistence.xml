@@ -36,10 +36,10 @@
 
 	<persistence-unit name="log.ws.wslogPU"
 		transaction-type="JTA">
-		<class>com.acme.orderplacement.log.ws.internal.domain.WebserviceOperation</class>
-		<class>com.acme.orderplacement.log.ws.internal.domain.WebserviceRequest</class>
-		<class>com.acme.orderplacement.log.ws.internal.domain.WebserviceHeader</class>
-		<class>com.acme.orderplacement.log.ws.internal.domain.WebserviceResponse</class>
+		<class>com.acme.orderplacement.framework.wslog.internal.domain.WebserviceOperation</class>
+		<class>com.acme.orderplacement.framework.wslog.internal.domain.WebserviceRequest</class>
+		<class>com.acme.orderplacement.framework.wslog.internal.domain.WebserviceHeader</class>
+		<class>com.acme.orderplacement.framework.wslog.internal.domain.WebserviceResponse</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	</persistence-unit>
 

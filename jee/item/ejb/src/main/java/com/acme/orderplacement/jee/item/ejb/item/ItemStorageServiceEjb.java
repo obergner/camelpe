@@ -11,11 +11,11 @@ import javax.interceptor.Interceptors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.acme.orderplacement.common.support.role.ApplicationUserRole;
+import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
+import com.acme.orderplacement.framework.service.exception.entity.EntityAlreadyRegisteredException;
 import com.acme.orderplacement.jee.item.ejb.internal.spring.JndiEnabledServiceLayerSpringBeanAutowiringInterceptor;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
-import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;
 
 /**
  * <p>

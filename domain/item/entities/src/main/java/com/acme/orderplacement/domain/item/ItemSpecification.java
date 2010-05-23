@@ -29,9 +29,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.NaturalId;
 
-import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
-import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
-import com.acme.orderplacement.domain.support.meta.AuditInfo;
+import com.acme.orderplacement.framework.domain.exception.CollaborationPreconditionsNotMetException;
+import com.acme.orderplacement.framework.domain.meta.AbstractAuditableDomainObject;
+import com.acme.orderplacement.framework.domain.meta.AuditInfo;
 
 /**
  * <p>

@@ -16,13 +16,13 @@
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.common/orderplacement.framework.common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.item.service/orderplacement.item.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.jee.framework.wslog.handler/orderplacement.jee.framework.wslog.handler">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.wslog/orderplacement.framework.wslog">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.persistence.common/orderplacement.framework.persistence.common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path"/>

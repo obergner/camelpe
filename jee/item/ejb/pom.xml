@@ -53,8 +53,13 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.service</groupId>
-			<artifactId>orderplacement.service.item.api</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.common</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.domain.item</groupId>
+			<artifactId>orderplacement.domain.item.service</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

@@ -74,18 +74,18 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.common</groupId>
-			<artifactId>orderplacement.common.support</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.common</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.service</groupId>
-			<artifactId>orderplacement.service.item.api</artifactId>
+			<groupId>com.acme.orderplacement.domain.item</groupId>
+			<artifactId>orderplacement.domain.item.service</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.service</groupId>
-			<artifactId>orderplacement.service.support</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.service</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -107,10 +107,8 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.aspect
-			</groupId>
-			<artifactId>orderplacement.aspect.support
-			</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.aspect</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -208,13 +206,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.test</groupId>
-			<artifactId>orderplacement.test.support</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.testsupport</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.persistence</groupId>
-			<artifactId>orderplacement.persistence.testsupport</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.persistence.testsupport</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

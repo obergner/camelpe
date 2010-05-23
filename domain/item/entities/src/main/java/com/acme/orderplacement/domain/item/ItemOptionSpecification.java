@@ -22,8 +22,8 @@ import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.ForeignKey;
 
-import com.acme.orderplacement.domain.support.AbstractVersionedDomainObject;
-import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
+import com.acme.orderplacement.framework.domain.AbstractVersionedDomainObject;
+import com.acme.orderplacement.framework.domain.exception.CollaborationPreconditionsNotMetException;
 
 /**
  * <p>

@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.domain.item.Item;
+import com.acme.orderplacement.framework.persistence.common.jpa.AbstractJpaDao;
+import com.acme.orderplacement.framework.persistence.common.meta.annotation.ReadOnlyPersistenceOperation;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
-import com.acme.orderplacement.persistence.support.jpa.AbstractJpaDao;
-import com.acme.orderplacement.persistence.support.meta.annotation.ReadOnlyPersistenceOperation;
 
 /**
  * @author o.bergner
@@ -75,7 +75,7 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * @see com.acme.orderplacement.persistence.support.jpa.AbstractJpaDao#entityManager()
+	 * @see com.acme.orderplacement.framework.persistence.common.jpa.AbstractJpaDao#entityManager()
 	 */
 	@Override
 	protected EntityManager entityManager() {

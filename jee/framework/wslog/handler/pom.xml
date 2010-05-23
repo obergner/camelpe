@@ -28,10 +28,8 @@
 			JSR 181 Specification
 		-->
 		<dependency>
-			<groupId>org.apache.geronimo.specs
-				</groupId>
-			<artifactId>geronimo-ws-metadata_2.0_spec
-			</artifactId>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<!-- JAX-WS API -->
@@ -54,8 +52,8 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.log</groupId>
-			<artifactId>orderplacement.log.ws</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.wslog</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--

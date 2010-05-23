@@ -31,12 +31,12 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.domain.item.Item;
+import com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig;
+import com.acme.orderplacement.framework.testsupport.annotation.TestUser;
+import com.acme.orderplacement.framework.testsupport.annotation.spring.PrincipalRegistrationTestExecutionListener;
 import com.acme.orderplacement.jee.item.itemimport.ItemImportBoundaryRoutes;
 import com.acme.orderplacement.jee.item.itemimport.ItemImportCoreRoutes;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
-import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
-import com.acme.orderplacement.test.support.annotation.TestUser;
-import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrationTestExecutionListener;
 
 /**
  * <p>

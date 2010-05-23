@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.acme.orderplacement.common.support.auth.PrincipalAccess;
+import com.acme.orderplacement.framework.common.auth.PrincipalAccess;
 
 /**
  * <p>
@@ -28,7 +28,7 @@ public class GeronimoPrincipalAccess implements PrincipalAccess {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/**
-	 * @see com.acme.orderplacement.common.support.auth.PrincipalAccess#currentPrincipal()
+	 * @see com.acme.orderplacement.framework.common.auth.PrincipalAccess#currentPrincipal()
 	 */
 	public Principal currentPrincipal() {
 		this.log.debug("Trying to access Geronimo's current Principal ...");

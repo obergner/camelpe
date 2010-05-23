@@ -194,47 +194,63 @@
 		<dependencies>
 			<!-- com.acme.orderplacement -->
 			<dependency>
-				<groupId>com.acme.orderplacement.common
-				</groupId>
-				<artifactId>orderplacement.common</artifactId>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.common
-				</groupId>
-				<artifactId>orderplacement.common.support
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.aspect</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.testsupport</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.domain</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.persistence.config</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.persistence.common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.persistence.testsupport
 				</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.aspect
-				</groupId>
-				<artifactId>orderplacement.aspect</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.aspect
-				</groupId>
-				<artifactId>orderplacement.aspect.support
-				</artifactId>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.service</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.test
-				</groupId>
-				<artifactId>orderplacement.test</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.test
-				</groupId>
-				<artifactId>orderplacement.test.support
-				</artifactId>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.wslog</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -243,12 +259,6 @@
 				<artifactId>orderplacement.domain</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.domain</groupId>
-				<artifactId>orderplacement.domain.support</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.domain.item</groupId>
@@ -265,60 +275,6 @@
 			<dependency>
 				<groupId>com.acme.orderplacement.domain.item</groupId>
 				<artifactId>orderplacement.domain.item.service</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.domain
-				</groupId>
-				<artifactId>orderplacement.domain.testsupport
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.persistence</groupId>
-				<artifactId>orderplacement.persistence</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.persistence</groupId>
-				<artifactId>orderplacement.persistence.config</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.persistence</groupId>
-				<artifactId>orderplacement.persistence.testsupport</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.persistence</groupId>
-				<artifactId>orderplacement.persistence.support</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.service
-				</groupId>
-				<artifactId>orderplacement.service.support
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.service
-				</groupId>
-				<artifactId>orderplacement.service.item.api
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.log</groupId>
-				<artifactId>orderplacement.log.ws</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -1045,8 +1001,7 @@
 			<!-- SLF4J -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api
-                </artifactId>
+				<artifactId>slf4j-api</artifactId>
 				<version>${deps.slf4j.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -1143,6 +1098,26 @@
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -1440,13 +1415,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
-				<module>../common</module>
-				<module>../aspect</module>
-				<module>../test</module>
+				<module>../framework</module>
 				<module>../domain</module>
-				<module>../persistence</module>
-				<module>../service</module>
-				<module>../log</module>
 				<module>../integration</module>
 				<module>../jee</module>
 			</modules>

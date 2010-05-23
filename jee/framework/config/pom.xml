@@ -63,17 +63,17 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.persistence</groupId>
-			<artifactId>orderplacement.persistence.config</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.persistence.config</artifactId>
 			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
-					<groupId>com.acme.orderplacement.common</groupId>
-					<artifactId>orderplacement.common.support</artifactId>
+					<groupId>com.acme.orderplacement.framework</groupId>
+					<artifactId>orderplacement.framework.common</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>com.acme.orderplacement.domain</groupId>
-					<artifactId>orderplacement.domain.support</artifactId>
+					<groupId>com.acme.orderplacement.framework</groupId>
+					<artifactId>orderplacement.framework.domain</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

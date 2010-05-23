@@ -39,10 +39,8 @@
 			yet the maven-jaxws-plugin needs it in scope 'compile'
 		-->
 		<dependency>
-			<groupId>org.apache.geronimo.specs
-				</groupId>
-			<artifactId>geronimo-ws-metadata_2.0_spec
-			</artifactId>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--
@@ -67,10 +65,8 @@
 				</executions>
 				<configuration>
 					<!-- The name of your generated source package -->
-					<packageName>com.acme.orderplacement.jee.wsapi
-					</packageName>
-					<wsdlDirectory>${basedir}/src/main/wsdl
-					</wsdlDirectory>
+					<packageName>com.acme.orderplacement.jee.wsapi</packageName>
+					<wsdlDirectory>${basedir}/src/main/wsdl</wsdlDirectory>
 					<sourceDestDir>${project.build.directory}/gen/main/java
 					</sourceDestDir>
 					<keep>true</keep>

@@ -5,7 +5,7 @@ package com.acme.orderplacement.jee.item.itemimport;
 
 import org.apache.camel.builder.RouteBuilder;
 
-import com.acme.orderplacement.service.support.exception.IllegalServiceUsageException;
+import com.acme.orderplacement.framework.service.exception.IllegalServiceUsageException;
 
 /**
  * <p>

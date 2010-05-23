@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.acme.orderplacement.framework.wslog.service.WebserviceLogger;
+import com.acme.orderplacement.framework.wslog.service.WebserviceRequestDto;
 import com.acme.orderplacement.jee.framework.wslog.handler.internal.SOAPMessageContextToWebserviceRequestDtoConverter;
-import com.acme.orderplacement.log.ws.service.WebserviceLogger;
-import com.acme.orderplacement.log.ws.service.WebserviceRequestDto;
 
 /**
  * <p>

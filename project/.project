@@ -28,19 +28,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>poms/aspect/pom.xml</name>
-			<type>1</type>
-			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/aspect/pom.xml</location>
-		</link>
-		<link>
-			<name>poms/common/pom.xml</name>
-			<type>1</type>
-			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/common/pom.xml</location>
-		</link>
-		<link>
 			<name>poms/domain/pom.xml</name>
 			<type>1</type>
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/domain/pom.xml</location>
+		</link>
+		<link>
+			<name>poms/framework/pom.xml</name>
+			<type>1</type>
+			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/framework/pom.xml</locationURI>
 		</link>
 		<link>
 			<name>poms/integration/pom.xml</name>
@@ -51,26 +46,6 @@
 			<name>poms/jee/pom.xml</name>
 			<type>1</type>
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/jee/pom.xml</location>
-		</link>
-		<link>
-			<name>poms/log/pom.xml</name>
-			<type>1</type>
-			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/log/pom.xml</location>
-		</link>
-		<link>
-			<name>poms/persistence/pom.xml</name>
-			<type>1</type>
-			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/persistence/pom.xml</location>
-		</link>
-		<link>
-			<name>poms/service/pom.xml</name>
-			<type>1</type>
-			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/service/pom.xml</location>
-		</link>
-		<link>
-			<name>poms/test/pom.xml</name>
-			<type>1</type>
-			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/test/pom.xml</location>
 		</link>
 		<link>
 			<name>poms/domain/item/pom.xml</name>
@@ -91,11 +66,6 @@
 			<name>poms/jee/item/pom.xml</name>
 			<type>1</type>
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/jee/item/pom.xml</location>
-		</link>
-		<link>
-			<name>poms/service/item/pom.xml</name>
-			<type>1</type>
-			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/service/item/pom.xml</location>
 		</link>
 		<link>
 			<name>poms/jee/framework/wslog/pom.xml</name>

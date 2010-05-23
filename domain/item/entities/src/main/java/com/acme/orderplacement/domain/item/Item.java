@@ -35,9 +35,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 
-import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
-import com.acme.orderplacement.domain.support.meta.AbstractAuditableDomainObject;
-import com.acme.orderplacement.domain.support.meta.AuditInfo;
+import com.acme.orderplacement.framework.domain.exception.CollaborationPreconditionsNotMetException;
+import com.acme.orderplacement.framework.domain.meta.AbstractAuditableDomainObject;
+import com.acme.orderplacement.framework.domain.meta.AuditInfo;
 
 /**
  * <p>

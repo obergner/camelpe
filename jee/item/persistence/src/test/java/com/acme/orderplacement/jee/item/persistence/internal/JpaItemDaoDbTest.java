@@ -26,20 +26,20 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.domain.item.Item;
-import com.acme.orderplacement.domain.support.meta.AuditInfo;
+import com.acme.orderplacement.framework.domain.meta.AuditInfo;
+import com.acme.orderplacement.framework.persistence.common.exception.DataAccessRuntimeException;
+import com.acme.orderplacement.framework.persistence.common.exception.NoSuchPersistentObjectException;
+import com.acme.orderplacement.framework.persistence.common.exception.ObjectNotPersistentException;
+import com.acme.orderplacement.framework.persistence.common.exception.ObjectNotTransientException;
+import com.acme.orderplacement.framework.persistence.common.exception.ObjectTransientException;
+import com.acme.orderplacement.framework.persistence.common.exception.PersistentStateConcurrentlyModifiedException;
+import com.acme.orderplacement.framework.persistence.common.exception.PersistentStateDeletedException;
+import com.acme.orderplacement.framework.persistence.common.exception.PersistentStateLockedException;
+import com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig;
+import com.acme.orderplacement.framework.testsupport.annotation.TestUser;
+import com.acme.orderplacement.framework.testsupport.annotation.spring.PrincipalRegistrationTestExecutionListener;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
 import com.acme.orderplacement.jee.item.persistence.internal.JpaItemDao;
-import com.acme.orderplacement.persistence.config.PlatformIntegrationConfig;
-import com.acme.orderplacement.persistence.support.exception.DataAccessRuntimeException;
-import com.acme.orderplacement.persistence.support.exception.NoSuchPersistentObjectException;
-import com.acme.orderplacement.persistence.support.exception.ObjectNotPersistentException;
-import com.acme.orderplacement.persistence.support.exception.ObjectNotTransientException;
-import com.acme.orderplacement.persistence.support.exception.ObjectTransientException;
-import com.acme.orderplacement.persistence.support.exception.PersistentStateConcurrentlyModifiedException;
-import com.acme.orderplacement.persistence.support.exception.PersistentStateDeletedException;
-import com.acme.orderplacement.persistence.support.exception.PersistentStateLockedException;
-import com.acme.orderplacement.test.support.annotation.TestUser;
-import com.acme.orderplacement.test.support.annotation.spring.PrincipalRegistrationTestExecutionListener;
 
 /**
  * <p>

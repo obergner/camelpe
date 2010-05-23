@@ -10,6 +10,6 @@
 
 	<context:component-scan
 		base-package="com.acme.orderplacement.jee.framework.wslog.handler,
-					com.acme.orderplacement.log.ws" />
+					com.acme.orderplacement.framework.wslog" />
 
 </beans> 

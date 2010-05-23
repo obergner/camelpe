@@ -28,17 +28,13 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.common
-			</groupId>
-			<artifactId>orderplacement.common.support
-			</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.common</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.domain
-			</groupId>
-			<artifactId>orderplacement.domain.support
-			</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.domain</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--

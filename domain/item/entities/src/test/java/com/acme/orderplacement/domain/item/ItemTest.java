@@ -5,7 +5,7 @@ package com.acme.orderplacement.domain.item;
 
 import junit.framework.TestCase;
 
-import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
+import com.acme.orderplacement.framework.domain.exception.CollaborationPreconditionsNotMetException;
 
 /**
  * <p>

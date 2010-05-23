@@ -26,20 +26,17 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.geronimo.framework
-			</groupId>
+			<groupId>org.apache.geronimo.framework</groupId>
 			<artifactId>geronimo-kernel</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.geronimo.framework
-			</groupId>
+			<groupId>org.apache.geronimo.framework</groupId>
 			<artifactId>geronimo-naming</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.geronimo.framework
-			</groupId>
+			<groupId>org.apache.geronimo.framework</groupId>
 			<artifactId>geronimo-security</artifactId>
 			<scope>provided</scope>
 		</dependency>
@@ -77,10 +74,8 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.common
-			</groupId>
-			<artifactId>orderplacement.common.support
-			</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.common</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

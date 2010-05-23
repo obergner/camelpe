@@ -14,6 +14,7 @@ import javax.jws.WebService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.acme.orderplacement.framework.service.exception.entity.EntityAlreadyRegisteredException;
 import com.acme.orderplacement.jee.wsapi.Item;
 import com.acme.orderplacement.jee.wsapi.ItemAlreadyRegisteredFault;
 import com.acme.orderplacement.jee.wsapi.ItemAlreadyRegisteredFault_Exception;
@@ -25,7 +26,6 @@ import com.acme.orderplacement.jee.wsapi.ResponseCode;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
-import com.acme.orderplacement.service.support.exception.entity.EntityAlreadyRegisteredException;
 
 /**
  * <p>

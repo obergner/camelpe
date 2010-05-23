@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.acme.orderplacement.domain.support.AbstractVersionedDomainObject;
+import com.acme.orderplacement.framework.domain.AbstractVersionedDomainObject;
 
 /**
  * <p>
