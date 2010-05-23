@@ -10,7 +10,6 @@
 		<project>orderplacement.framework.service</project>
 		<project>orderplacement.framework.persistence.common</project>
 		<project>orderplacement.item.persistence</project>
-		<project>orderplacement.item.service</project>
 		<project>orderplacement.jee.framework.common</project>
 		<project>orderplacement.jee.framework.config</project>
 		<project>orderplacement.jee.framework.geronimo</project>
@@ -21,9 +20,9 @@
 		<project>orderplacement.integration.inbound.external</project>
 		<project>orderplacement.jee.integration.inbound.itemimport</project>
 		<project>orderplacement.jee.item.mdb</project>
-		<project>orderplacement.jee.item.persistence</project>
 		<project>orderplacement.jee.item.service</project>
 		<project>orderplacement.item.entities</project>
+		<project>orderplacement.jee.item.persistence</project>
 		<project>orderplacement.framework.domain</project>
 	</projects>
 	<buildSpec>

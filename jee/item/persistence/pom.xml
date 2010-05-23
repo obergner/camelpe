@@ -61,10 +61,8 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.domain
-			</groupId>
-			<artifactId>orderplacement.domain.item
-			</artifactId>
+			<groupId>com.acme.orderplacement.domain.item</groupId>
+			<artifactId>orderplacement.domain.item.entities</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--

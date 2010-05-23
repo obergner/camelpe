@@ -239,19 +239,34 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.domain
-				</groupId>
+				<groupId>com.acme.orderplacement.domain</groupId>
 				<artifactId>orderplacement.domain</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.domain
-				</groupId>
-				<artifactId>orderplacement.domain.support
-				</artifactId>
+				<groupId>com.acme.orderplacement.domain</groupId>
+				<artifactId>orderplacement.domain.support</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.domain.item</groupId>
+				<artifactId>orderplacement.domain.item</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.domain.item</groupId>
+				<artifactId>orderplacement.domain.item.entities</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.domain.item</groupId>
+				<artifactId>orderplacement.domain.item.service</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.domain
@@ -262,66 +277,26 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.domain
-				</groupId>
-				<artifactId>orderplacement.domain.people
-				</artifactId>
+				<groupId>com.acme.orderplacement.persistence</groupId>
+				<artifactId>orderplacement.persistence</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.domain
-				</groupId>
-				<artifactId>orderplacement.domain.company
-				</artifactId>
+				<groupId>com.acme.orderplacement.persistence</groupId>
+				<artifactId>orderplacement.persistence.config</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.domain
-				</groupId>
-				<artifactId>orderplacement.domain.item
-				</artifactId>
+				<groupId>com.acme.orderplacement.persistence</groupId>
+				<artifactId>orderplacement.persistence.testsupport</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.domain
-				</groupId>
-				<artifactId>orderplacement.domain.order
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.persistence
-				</groupId>
-				<artifactId>orderplacement.persistence
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.persistence
-				</groupId>
-				<artifactId>orderplacement.persistence.config
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.persistence
-				</groupId>
-				<artifactId>orderplacement.persistence.testsupport
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.persistence
-				</groupId>
-				<artifactId>orderplacement.persistence.support
-				</artifactId>
+				<groupId>com.acme.orderplacement.persistence</groupId>
+				<artifactId>orderplacement.persistence.support</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -332,14 +307,6 @@
 				</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.service
-				</groupId>
-				<artifactId>orderplacement.service.item
-				</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.service

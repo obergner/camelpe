@@ -73,6 +73,11 @@
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/test/pom.xml</location>
 		</link>
 		<link>
+			<name>poms/domain/item/pom.xml</name>
+			<type>1</type>
+			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/domain/item/pom.xml</locationURI>
+		</link>
+		<link>
 			<name>poms/integration/inbound/pom.xml</name>
 			<type>1</type>
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/integration/inbound/pom.xml</location>

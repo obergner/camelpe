@@ -367,9 +367,6 @@
         <dependent-module archiveName="/orderplacement.service.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.service/orderplacement.framework.service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/orderplacement.service.item.api-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.service/orderplacement.item.service">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.persistence.config-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.persistence.config/orderplacement.framework.persistence.config">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -437,31 +434,16 @@
         <dependent-module archiveName="/lib/cglib-nodep-2.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/cglib/cglib-nodep/2.2/cglib-nodep-2.2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.jee.item.persistence/orderplacement.jee.item.persistence">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/orderplacement.jee.item.service-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.jee.item.service/orderplacement.jee.item.service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/acme/orderplacement/jee/item/orderplacement.jee.item.persistence/1.0-SNAPSHOT/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar">
+        <dependent-module archiveName="/lib/orderplacement.service.item.api-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/acme/orderplacement/service/orderplacement.service.item.api/1.0-SNAPSHOT/orderplacement.service.item.api-1.0-SNAPSHOT.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/acme/orderplacement/jee/item/orderplacement.jee.item.persistence/1.0-SNAPSHOT/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar">
+        <dependent-module archiveName="/orderplacement.domain.item.entities-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.entities/orderplacement.item.entities">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/lib/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/acme/orderplacement/jee/item/orderplacement.jee.item.persistence/1.0-SNAPSHOT/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/acme/orderplacement/jee/item/orderplacement.jee.item.persistence/1.0-SNAPSHOT/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/acme/orderplacement/jee/item/orderplacement.jee.item.persistence/1.0-SNAPSHOT/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/lib/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/acme/orderplacement/jee/item/orderplacement.jee.item.persistence/1.0-SNAPSHOT/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="/orderplacement.domain.item-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.item.entities/orderplacement.item.entities">
+        <dependent-module archiveName="/orderplacement.jee.item.persistence-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.jee.item.persistence/orderplacement.jee.item.persistence">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="/orderplacement.domain.support-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.domain/orderplacement.framework.domain">
