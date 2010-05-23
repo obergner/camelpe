@@ -85,22 +85,12 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.test
-            </groupId>
-			<artifactId>orderplacement.test.support
-            </artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<modules>
 		<module>config</module>
 		<module>testsupport</module>
 		<module>support</module>
-		<!-- module>people</module -->
-		<!-- module>company</module -->
-		<module>item</module>
 	</modules>
 
 </project>

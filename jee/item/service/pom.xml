@@ -74,31 +74,23 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.common
-			</groupId>
-			<artifactId>orderplacement.common.support
-			</artifactId>
+			<groupId>com.acme.orderplacement.common</groupId>
+			<artifactId>orderplacement.common.support</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.service
-			</groupId>
-			<artifactId>orderplacement.service.item.api
-			</artifactId>
+			<groupId>com.acme.orderplacement.service</groupId>
+			<artifactId>orderplacement.service.item.api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.service
-			</groupId>
-			<artifactId>orderplacement.service.support
-			</artifactId>
+			<groupId>com.acme.orderplacement.service</groupId>
+			<artifactId>orderplacement.service.support</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.persistence
-			</groupId>
-			<artifactId>orderplacement.persistence.item
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.persistence</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--

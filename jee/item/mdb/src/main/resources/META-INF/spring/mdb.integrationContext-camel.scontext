@@ -20,7 +20,7 @@
 	<camel:camelContext id="integration.inbound.item.CamelContext">
 		<!-- will auto discover camel router in the specified package -->
 		<camel:packageScan>
-			<camel:package>com.acme.orderplacement.integration.inbound.itemimport</camel:package>
+			<camel:package>com.acme.orderplacement.jee.integration.inbound.itemimport</camel:package>
 		</camel:packageScan>
 		<camel:template id="integration.inbound.item.ProducerTemplate"
 			defaultEndpoint="direct:itemimport.incoming.raw" />

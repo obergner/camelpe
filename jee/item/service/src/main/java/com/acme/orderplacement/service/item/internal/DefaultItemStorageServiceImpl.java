@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.domain.item.ItemSpecification;
 import com.acme.orderplacement.domain.support.exception.CollaborationPreconditionsNotMetException;
-import com.acme.orderplacement.persistence.item.ItemDao;
+import com.acme.orderplacement.jee.item.persistence.ItemDao;
 import com.acme.orderplacement.persistence.support.exception.ObjectNotTransientException;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;

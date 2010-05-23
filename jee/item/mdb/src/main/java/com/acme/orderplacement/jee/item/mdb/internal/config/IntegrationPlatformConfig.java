@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean;
 
-import com.acme.orderplacement.integration.inbound.itemimport.config.ItemImportConfig;
+import com.acme.orderplacement.jee.item.itemimport.config.ItemImportConfig;
 import com.acme.orderplacement.service.item.ItemStorageService;
 
 /**
