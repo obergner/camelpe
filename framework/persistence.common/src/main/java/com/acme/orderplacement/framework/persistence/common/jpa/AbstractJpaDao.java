@@ -9,16 +9,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import javax.persistence.Query;
+import javax.persistence.NonUniqueResultException;
+import javax.persistence.TypedQuery;
 
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.framework.persistence.common.GenericJpaDao;
 import com.acme.orderplacement.framework.persistence.common.exception.DataAccessRuntimeException;
@@ -77,10 +77,11 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @see com.acme.orderplacement.framework.persistence.common.GenericJpaDao#findAll()
 	 */
 	@ReadOnlyPersistenceOperation
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List<T> findAll() throws DataAccessRuntimeException {
 		final List<T> allEntities = entityManager().createQuery(
-				"From " + getPersistentClass().getName()).getResultList();
+				"From " + getPersistentClass().getName(), getPersistentClass())
+				.getResultList();
 		getLog().debug("Returned all ({}) entities of type = [{}].",
 				allEntities.size(), getPersistentClass().getName());
 
@@ -92,7 +93,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 *      boolean)
 	 */
 	@ReadOnlyPersistenceOperation
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public T findById(final ID id, final boolean lock)
 			throws NoSuchPersistentObjectException, DataAccessRuntimeException {
 		final T matchingEntity = entityManager().find(getPersistentClass(), id);
@@ -131,7 +132,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @see com.acme.orderplacement.framework.persistence.common.GenericJpaDao#makePersistent(java.lang.Object)
 	 */
 	@StateModifyingPersistenceOperation(idempotent = false)
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public T makePersistent(final T transientObject)
 			throws DataAccessRuntimeException, ObjectNotTransientException {
 		entityManager().persist(transientObject);
@@ -144,7 +145,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @see com.acme.orderplacement.framework.persistence.common.GenericJpaDao#makePersistentOrUpdatePersistentState(java.lang.Object)
 	 */
 	@StateModifyingPersistenceOperation(idempotent = false)
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public T makePersistentOrUpdatePersistentState(
 			final T persistentOrDetachedObject)
 			throws DataAccessRuntimeException {
@@ -159,7 +160,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @see com.acme.orderplacement.framework.persistence.common.GenericJpaDao#makeTransient(java.lang.Object)
 	 */
 	@StateModifyingPersistenceOperation(idempotent = true)
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void makeTransient(final T persistentOrDetachedObject)
 			throws DataAccessRuntimeException, ObjectTransientException {
 		entityManager().remove(persistentOrDetachedObject);
@@ -179,7 +180,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	protected List<T> findByNamedQuery(final String queryName,
 			final Map<String, ?> parameters) throws DataAccessRuntimeException {
 		Validate.notNull(queryName, "queryName");
-		final Query namedQuery = entityManager().createNamedQuery(queryName);
+		final TypedQuery<T> namedQuery = entityManager().createNamedQuery(
+				queryName, getPersistentClass());
 		for (final Map.Entry<String, ?> param : parameters.entrySet()) {
 			namedQuery.setParameter(param.getKey(), param.getValue());
 		}
@@ -195,7 +197,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	protected List<T> findByNamedQuery(final String queryName,
 			final Object... parameters) throws DataAccessRuntimeException {
 		Validate.notNull(queryName, "queryName");
-		final Query namedQuery = entityManager().createNamedQuery(queryName);
+		final TypedQuery<T> namedQuery = entityManager().createNamedQuery(
+				queryName, getPersistentClass());
 		int idx = 1;
 		for (final Object param : parameters) {
 			namedQuery.setParameter(idx++, param);
@@ -210,7 +213,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @return
 	 */
 	protected T findUniqueByNamedQuery(final String queryName,
-			final Map<String, ?> parameters) throws DataAccessRuntimeException {
+			final Map<String, ?> parameters) throws DataAccessRuntimeException,
+			NonUniqueResultException {
 		Validate.notNull(queryName, "queryName");
 		final List<T> resultList = findByNamedQuery(queryName, parameters);
 		final T uniqueResult;
@@ -219,9 +223,11 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 		} else if (resultList.size() == 1) {
 			uniqueResult = resultList.get(0);
 		} else {
-			throw new IncorrectResultSizeDataAccessException("Query ["
-					+ queryName + "] did not return unique result", 1,
-					resultList.size());
+			throw new NonUniqueResultException(
+					"Query ["
+							+ queryName
+							+ "] did not return unique result: Expected exactly one result, got "
+							+ resultList.size() + " results");
 		}
 
 		return uniqueResult;
@@ -233,7 +239,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @return
 	 */
 	protected T findUniqueByNamedQuery(final String queryName,
-			final Object... parameters) throws DataAccessRuntimeException {
+			final Object... parameters) throws DataAccessRuntimeException,
+			NonUniqueResultException {
 		Validate.notNull(queryName, "queryName");
 		final List<T> resultList = findByNamedQuery(queryName, parameters);
 		final T uniqueResult;
@@ -242,9 +249,11 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 		} else if (resultList.size() == 1) {
 			uniqueResult = resultList.get(0);
 		} else {
-			throw new IncorrectResultSizeDataAccessException("Query ["
-					+ queryName + "] did not return unique result", 1,
-					resultList.size());
+			throw new NonUniqueResultException(
+					"Query ["
+							+ queryName
+							+ "] did not return unique result: Expected exactly one result, got "
+							+ resultList.size() + " results");
 		}
 
 		return uniqueResult;
