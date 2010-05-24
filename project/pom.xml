@@ -13,8 +13,12 @@
 	</description>
 
 	<properties>
-		<order.artifact.version>1.0-SNAPSHOT
-		</order.artifact.version>
+		<order.artifact.version>1.0-SNAPSHOT</order.artifact.version>
+		<!--
+			Make the build platform independent:
+			http://maven.apache.org/general.html#encoding-warning
+		-->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- 
 			javac settings 
 		-->
