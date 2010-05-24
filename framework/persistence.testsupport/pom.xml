@@ -9,7 +9,8 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.acme.orderplacement.framework</groupId>
-	<artifactId>orderplacement.framework.persistence.testsupport</artifactId>
+	<artifactId>orderplacement.framework.persistence.testsupport
+	</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -22,6 +23,11 @@
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<!--

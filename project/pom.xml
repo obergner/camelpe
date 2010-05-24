@@ -22,8 +22,8 @@
 		<!-- 
 			javac settings 
 		-->
-		<compiler.source>1.5</compiler.source>
-		<compiler.target>1.5</compiler.target>
+		<compiler.source>1.6</compiler.source>
+		<compiler.target>1.6</compiler.target>
 		<compiler.verbose>true</compiler.verbose>
 		<compiler.debug>true</compiler.debug>
 		<compiler.showWarnings>true</compiler.showWarnings>
@@ -46,15 +46,24 @@
 		<!--
 			Dependency versions 
 		 -->
-		<deps.ejb-api.version>3.0</deps.ejb-api.version>
+		<!-- Standard javax apis -->
+		<deps.javax-inject.version>1</deps.javax-inject.version>
+		<deps.cdi-api.version>1.0-SP1</deps.cdi-api.version>
+		<deps.ejb-api.version>3.1.0</deps.ejb-api.version>
+		<deps.interceptor-api.version>1.1</deps.interceptor-api.version>
 		<deps.jta.version>1.1</deps.jta.version>
 		<deps.jms.version>1.1</deps.jms.version>
 		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
 		<deps.jaxb-api.version>2.1</deps.jaxb-api.version>
 		<deps.jaxb-impl.version>2.1.9</deps.jaxb-impl.version>
-		<deps.hibernate-jpa-api.version>1.0.0.Final
-		</deps.hibernate-jpa-api.version>
+		<deps.servlet-api.version>2.5</deps.servlet-api.version>
+		<deps.jsr181-api.version>1.0-MR1</deps.jsr181-api.version>
+		<deps.jaxws-api.version>2.1-1</deps.jaxws-api.version>
+		<deps.hibernate-jpa-2.0-api.version>1.0.0.Final
+		</deps.hibernate-jpa-2.0-api.version>
+		<!-- Proprietary -->
 		<deps.junit.version>4.8.1</deps.junit.version>
+		<deps.arquillian.version>1.0.0.Alpha1</deps.arquillian.version>
 		<deps.easymock.version>2.5.2</deps.easymock.version>
 		<deps.slf4j.version>1.5.11</deps.slf4j.version>
 		<deps.log4j.version>1.2.15</deps.log4j.version>
@@ -196,7 +205,9 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- com.acme.orderplacement -->
+			<!-- =========================================== -->
+			<!-- Application modules                         -->
+			<!-- =========================================== -->
 			<dependency>
 				<groupId>com.acme.orderplacement.framework</groupId>
 				<artifactId>orderplacement.framework</artifactId>
@@ -396,6 +407,16 @@
 				<version>${project.version}</version>
 				<type>ear</type>
 			</dependency>
+			<!-- =========================================== -->
+			<!-- Standard Javax APIs                         -->
+			<!-- =========================================== -->
+			<!-- JSR 330: @Inject etc -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${deps.javax-inject.version}</version>
+				<type>jar</type>
+			</dependency>
 			<!-- JSR 250 Annotations: @Resource etc -->
 			<dependency>
 				<groupId>javax.annotation</groupId>
@@ -403,11 +424,42 @@
 				<version>${deps.jsr250-api.version}</version>
 				<type>jar</type>
 			</dependency>
-			<!-- EJB 3.0 API -->
+			<!-- JSR 299/CDI etc -->
 			<dependency>
-				<groupId>javax.ejb</groupId>
-				<artifactId>ejb-api</artifactId>
+				<groupId>javax.enterprise</groupId>
+				<artifactId>cdi-api</artifactId>
+				<version>${deps.cdi-api.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- EJB 3.1 API - TODO: Replace with standard javax.ejb -->
+			<dependency>
+				<groupId>org.jboss.ejb3</groupId>
+				<artifactId>jboss-ejb3-api</artifactId>
 				<version>${deps.ejb-api.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<artifactId>jboss-jaxrpc</artifactId>
+						<groupId>jbossws</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>jboss-transaction-api</artifactId>
+						<groupId>org.jboss.javaee</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>jboss-jaxrpc</artifactId>
+						<groupId>jboss.jbossws</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!--
+				Javax Interceptor API - TODO: Replace with standard
+				javax.interceptor
+			-->
+			<dependency>
+				<groupId>org.jboss.interceptor</groupId>
+				<artifactId>jboss-interceptor-api</artifactId>
+				<version>${deps.interceptor-api.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Javax Transaction API -->
@@ -428,7 +480,7 @@
 			<dependency>
 				<groupId>org.hibernate.javax.persistence</groupId>
 				<artifactId>hibernate-jpa-2.0-api</artifactId>
-				<version>${deps.hibernate-jpa-api.version}</version>
+				<version>${deps.hibernate-jpa-2.0-api.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- JAXB API -->
@@ -438,25 +490,22 @@
 				<version>${deps.jaxb-api.version}</version>
 				<type>jar</type>
 			</dependency>
-			<!-- JAXB2 RI Implementation (SUN) -->
+			<!-- JSR 181 API: Annotations for Webservices -->
 			<dependency>
-				<groupId>com.sun.xml.bind</groupId>
-				<artifactId>jaxb-impl</artifactId>
-				<version>${deps.jaxb-impl.version}</version>
+				<groupId>javax.jws</groupId>
+				<artifactId>jsr181-api</artifactId>
+				<version>${deps.jsr181-api.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- JAX-WS API -->
 			<dependency>
 				<groupId>javax.xml.ws</groupId>
 				<artifactId>jaxws-api</artifactId>
-				<version>2.1-1</version>
+				<version>${deps.jaxws-api.version}</version>
 				<type>jar</type>
 				<exclusions>
 					<!--
-						Provided by
-						org.apache.geronimo.specs:geronimo-ws-metadata_2.0_spec: To the
-						best of my knowledge, there is no javax.jws:jsr181:1.0:jar
-						available in any public repository.
+						We want to use the jsr181-api version from above.
 					-->
 					<exclusion>
 						<groupId>javax.jws</groupId>
@@ -468,7 +517,7 @@
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
-				<version>2.5</version>
+				<version>${deps.servlet-api.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Bean Validation API -->
@@ -476,6 +525,23 @@
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
 				<version>${deps.validation-api.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- J2EE Management Specification -->
+			<dependency>
+				<groupId>org.apache.geronimo.specs</groupId>
+				<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
+				<version>1.0.1</version>
+				<type>jar</type>
+			</dependency>
+			<!-- =========================================== -->
+			<!-- Implementations of standard javax APIs      -->
+			<!-- =========================================== -->
+			<!-- JAXB2 RI Implementation (SUN) -->
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>${deps.jaxb-impl.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Hibernate Bean Validation Implementation -->
@@ -498,24 +564,9 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			<!-- JSR 181 Specification -->
-			<dependency>
-				<groupId>org.apache.geronimo.specs
-				</groupId>
-				<artifactId>geronimo-ws-metadata_2.0_spec
-				</artifactId>
-				<version>1.1.2</version>
-				<type>jar</type>
-			</dependency>
-			<!-- J2EE Management Specification -->
-			<dependency>
-				<groupId>org.apache.geronimo.specs
-				</groupId>
-				<artifactId>geronimo-j2ee-management_1.1_spec
-				</artifactId>
-				<version>1.0.1</version>
-				<type>jar</type>
-			</dependency>
+			<!-- =========================================== -->
+			<!-- Proprietary                                 -->
+			<!-- =========================================== -->
 			<!-- Apache -->
 			<dependency>
 				<groupId>commons-lang</groupId>
@@ -1017,47 +1068,69 @@
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12
-                </artifactId>
+				<artifactId>slf4j-log4j12</artifactId>
 				<version>${deps.slf4j.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Tranql: PostgreSQL XA Connector -->
 			<dependency>
 				<groupId>org.tranql</groupId>
-				<artifactId>tranql-connector-postgresql-xa
-				</artifactId>
+				<artifactId>tranql-connector-postgresql-xa</artifactId>
 				<version>1.2</version>
 				<type>rar</type>
 			</dependency>
 			<!-- Geronimo -->
 			<dependency>
-				<groupId>org.apache.geronimo.framework
-				</groupId>
+				<groupId>org.apache.geronimo.framework</groupId>
 				<artifactId>geronimo-kernel</artifactId>
 				<version>${deps.geronimo.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.geronimo.framework
-				</groupId>
+				<groupId>org.apache.geronimo.framework</groupId>
 				<artifactId>geronimo-naming</artifactId>
 				<version>${deps.geronimo.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.geronimo.framework
-				</groupId>
+				<groupId>org.apache.geronimo.framework</groupId>
 				<artifactId>geronimo-security</artifactId>
 				<version>${deps.geronimo.version}</version>
 				<type>jar</type>
 			</dependency>
+			<!-- =========================================== -->
+			<!-- Test dependencies                           -->
+			<!-- =========================================== -->
 			<!-- JUnit -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${deps.junit.version}</version>
 				<type>jar</type>
+			</dependency>
+			<!-- Arquillian: Test framework for CDI, Glassfish, JBoss -->
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-junit</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.container</groupId>
+				<artifactId>arquillian-weld-embedded</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<!--
+						We don't use jdk14 logging. If we wouldn't exclude it here SLF4J
+						would keep complaining about finding to bindings - one for log4j
+						and one for jdk14 - when running test cases.
+					-->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<!-- Easymock -->
 			<dependency>
@@ -1068,8 +1141,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.easymock</groupId>
-				<artifactId>easymockclassextension
-				</artifactId>
+				<artifactId>easymockclassextension</artifactId>
 				<version>${deps.easymock.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -1098,11 +1170,27 @@
 
 	<!-- shared dependencies across modules -->
 	<dependencies>
+		<!-- =========================================== -->
+		<!-- Provided                                    -->
+		<!-- =========================================== -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- =========================================== -->
+		<!-- Compile                                     -->
+		<!-- =========================================== -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -1113,6 +1201,9 @@
 			<artifactId>commons-lang</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<!-- =========================================== -->
+		<!-- Runtime                                     -->
+		<!-- =========================================== -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -1123,9 +1214,22 @@
 			<artifactId>log4j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- =========================================== -->
+		<!-- Test                                        -->
+		<!-- =========================================== -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian</groupId>
+			<artifactId>arquillian-junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-weld-embedded</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -1526,8 +1630,7 @@
 		<repository>
 			<id>org.jboss.releaseRepository</id>
 			<name>JBoss Releases Repository</name>
-			<url>http://repository.jboss.com/maven2
-			</url>
+			<url>http://repository.jboss.com/maven2</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -1542,14 +1645,12 @@
 		<repository>
 			<id>dev.java.net.maven2Repository</id>
 			<name>Java.net Maven 2 Repository</name>
-			<url>http://download.java.net/maven/2
-			</url>
+			<url>http://download.java.net/maven/2</url>
 		</repository>
 		<repository>
 			<id>dev.java.net.maven1Repository</id>
 			<name>Java.net Maven 1 Repository (legacy)</name>
-			<url>http://download.java.net/maven/1
-			</url>
+			<url>http://download.java.net/maven/1</url>
 			<layout>legacy</layout>
 		</repository>
 	</repositories>

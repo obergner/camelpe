@@ -39,8 +39,8 @@
 			yet the maven-jaxws-plugin needs it in scope 'compile'
 		-->
 		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
+			<groupId>javax.jws</groupId>
+			<artifactId>jsr181-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--

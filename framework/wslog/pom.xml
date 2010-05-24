@@ -22,16 +22,15 @@
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>${deps.hibernate-jpa-api.version}</version>
-			<type>jar</type>
+			<scope>provided</scope>
 		</dependency>
 		<!--
 			Only needed to make AspectJ's PointcutParser correctly parse pointcut
 			definitions that use the javax.ejb.TransactionAttribute annotation.
 		-->
 		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -281,13 +280,23 @@
 					</dependency>
 					<dependency>
 						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+						<version>${deps.slf4j.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.slf4j</groupId>
 						<artifactId>slf4j-log4j12</artifactId>
 						<version>${deps.slf4j.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging</artifactId>
-						<version>1.0.4</version>
+						<version>1.1.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>jcl-over-slf4j</artifactId>
+						<version>${deps.slf4j.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>commons-collections</groupId>

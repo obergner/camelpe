@@ -20,6 +20,11 @@
 			| Provided dependencies 
 		-->
 		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<scope>provided</scope>
@@ -141,8 +146,8 @@
 			| Test dependencies 
 		-->
 		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-api</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

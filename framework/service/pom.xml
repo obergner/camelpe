@@ -14,7 +14,7 @@
 	<packaging>jar</packaging>
 
 	<name><![CDATA[SOA Order :: Framework :: Service]]></name>
-	
+
 	<dependencies>
 		<!--
 			| Provided dependencies 
@@ -29,8 +29,8 @@
 			more explicit.
 		-->
 		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<!--

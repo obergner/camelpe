@@ -34,9 +34,9 @@
 			more explicit.
 		-->
 		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
-			<scope>provided</scope>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-api</artifactId>
+			<scope>compile</scope>
 		</dependency>
 		<!--
 			| Compile time dependencies 

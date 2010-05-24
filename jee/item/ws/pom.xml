@@ -19,11 +19,6 @@
 		<!--
 			| Provided dependencies 
 		-->
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<!-- JAXB API -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -34,8 +29,8 @@
 			JSR 181 Specification
 		-->
 		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
+			<groupId>javax.jws</groupId>
+			<artifactId>jsr181-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<!-- JAX-WS API -->

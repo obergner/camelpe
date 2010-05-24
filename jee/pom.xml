@@ -22,6 +22,11 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--
 			| Compile time dependencies 
 		-->

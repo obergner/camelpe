@@ -20,6 +20,11 @@
 			| Provided dependencies 
 		-->
 		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<scope>provided</scope>
@@ -27,15 +32,6 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<!--
-			Only needed to make AspectJ's PointcutParser correctly parse pointcut
-			definitions that use the javax.ejb.TransactionAttribute annotation.
-		-->
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -96,11 +92,6 @@
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -212,7 +203,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.framework</groupId>
-			<artifactId>orderplacement.framework.persistence.testsupport</artifactId>
+			<artifactId>orderplacement.framework.persistence.testsupport
+			</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
