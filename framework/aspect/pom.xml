@@ -28,73 +28,13 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.acme.orderplacement.framework</groupId>
 			<artifactId>orderplacement.framework.common</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>aopalliance</groupId>
-			<artifactId>aopalliance</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-asm</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<!--
 			| Test dependencies 
 		-->
