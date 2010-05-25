@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.framework.persistence.config;
+package com.acme.orderplacement.framework.persistence.config.obsolete;
 
 import java.util.Properties;
 

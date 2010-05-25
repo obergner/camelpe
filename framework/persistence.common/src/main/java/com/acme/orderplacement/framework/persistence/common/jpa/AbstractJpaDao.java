@@ -50,9 +50,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	// Fields
 	// ------------------------------------------------------------------------
 
-	/**
-	 * Our faithful logger.
-	 */
+	// @Inject
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/**

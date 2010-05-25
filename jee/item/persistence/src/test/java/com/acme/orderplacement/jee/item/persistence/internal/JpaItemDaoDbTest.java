@@ -35,7 +35,7 @@ import com.acme.orderplacement.framework.persistence.common.exception.ObjectTran
 import com.acme.orderplacement.framework.persistence.common.exception.PersistentStateConcurrentlyModifiedException;
 import com.acme.orderplacement.framework.persistence.common.exception.PersistentStateDeletedException;
 import com.acme.orderplacement.framework.persistence.common.exception.PersistentStateLockedException;
-import com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig;
+import com.acme.orderplacement.framework.persistence.config.obsolete.PlatformIntegrationConfig;
 import com.acme.orderplacement.framework.testsupport.annotation.TestUser;
 import com.acme.orderplacement.framework.testsupport.annotation.spring.PrincipalRegistrationTestExecutionListener;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;

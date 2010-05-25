@@ -452,5 +452,8 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="/lib/weld-logger-1.0.0-CR2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jboss/weld/weld-logger/1.0.0-CR2/weld-logger-1.0.0-CR2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

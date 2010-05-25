@@ -10,9 +10,9 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.jpa.vendor.Database;
 
-import com.acme.orderplacement.framework.persistence.config.AbstractJpaEntityManagerFactoryConfig;
-import com.acme.orderplacement.framework.persistence.config.JpaEntityManagerFactoryConfig;
-import com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig;
+import com.acme.orderplacement.framework.persistence.config.obsolete.AbstractJpaEntityManagerFactoryConfig;
+import com.acme.orderplacement.framework.persistence.config.obsolete.JpaEntityManagerFactoryConfig;
+import com.acme.orderplacement.framework.persistence.config.obsolete.PlatformIntegrationConfig;
 import com.acme.orderplacement.jee.framework.config.ApplicationPersistenceUnit;
 
 /**
@@ -31,7 +31,7 @@ public class ApplicationJpaEntityManagerFactoryConfig extends
 	private DataSource applicationDataSource;
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.JpaEntityManagerFactoryConfig#entityManagerFactory()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.JpaEntityManagerFactoryConfig#entityManagerFactory()
 	 */
 	@Bean
 	public EntityManagerFactory entityManagerFactory() throws Exception {
@@ -40,7 +40,7 @@ public class ApplicationJpaEntityManagerFactoryConfig extends
 	}
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.AbstractJpaEntityManagerFactoryConfig#applicationDataSource()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.AbstractJpaEntityManagerFactoryConfig#applicationDataSource()
 	 */
 	@Override
 	protected DataSource applicationDataSource() {
@@ -48,7 +48,7 @@ public class ApplicationJpaEntityManagerFactoryConfig extends
 	}
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.AbstractJpaEntityManagerFactoryConfig#persistenceXmlLocation()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.AbstractJpaEntityManagerFactoryConfig#persistenceXmlLocation()
 	 */
 	@Override
 	protected String persistenceXmlLocation() {
@@ -56,7 +56,7 @@ public class ApplicationJpaEntityManagerFactoryConfig extends
 	}
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.AbstractJpaEntityManagerFactoryConfig#persistenceUnitName()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.AbstractJpaEntityManagerFactoryConfig#persistenceUnitName()
 	 */
 	@Override
 	protected String persistenceUnitName() {
@@ -64,7 +64,7 @@ public class ApplicationJpaEntityManagerFactoryConfig extends
 	}
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.AbstractJpaEntityManagerFactoryConfig#databaseType()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.AbstractJpaEntityManagerFactoryConfig#databaseType()
 	 */
 	@Override
 	protected Database databaseType() {

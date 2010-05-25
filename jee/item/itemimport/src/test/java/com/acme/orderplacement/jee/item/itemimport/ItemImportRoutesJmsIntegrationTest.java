@@ -31,7 +31,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.domain.item.Item;
-import com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig;
+import com.acme.orderplacement.framework.persistence.config.obsolete.PlatformIntegrationConfig;
 import com.acme.orderplacement.framework.testsupport.annotation.TestUser;
 import com.acme.orderplacement.framework.testsupport.annotation.spring.PrincipalRegistrationTestExecutionListener;
 import com.acme.orderplacement.jee.item.itemimport.ItemImportBoundaryRoutes;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.framework.persistence.testsupport.config;
+package com.acme.orderplacement.framework.persistence.testsupport.config.obsolete;
 
 import java.lang.management.ManagementFactory;
 
@@ -22,8 +22,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.acme.orderplacement.framework.persistence.config.JpaEntityManagerFactoryConfig;
-import com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig;
+import com.acme.orderplacement.framework.persistence.config.obsolete.JpaEntityManagerFactoryConfig;
+import com.acme.orderplacement.framework.persistence.config.obsolete.PlatformIntegrationConfig;
 import com.acme.orderplacement.framework.persistence.testsupport.database.spring.PrePopulatingInMemoryH2DataSourceFactory;
 
 /**
@@ -51,7 +51,7 @@ public class PersistencePlatformTestConfig implements
 	private String databaseName;
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig#transactionManager()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.PlatformIntegrationConfig#transactionManager()
 	 */
 	@Bean(name = PlatformIntegrationConfig.TXMANAGER_COMPONENT_NAME)
 	public PlatformTransactionManager transactionManager() throws Exception {
@@ -64,7 +64,7 @@ public class PersistencePlatformTestConfig implements
 	}
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig#applicationDataSource()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.PlatformIntegrationConfig#applicationDataSource()
 	 */
 	@Bean(name = PlatformIntegrationConfig.DATASOURCE_COMPONENT_NAME)
 	public DataSource applicationDataSource() throws Exception {
@@ -79,7 +79,7 @@ public class PersistencePlatformTestConfig implements
 	}
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig#platformMBeanServer()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.PlatformIntegrationConfig#platformMBeanServer()
 	 */
 	@Bean(name = PlatformIntegrationConfig.MBEAN_SERVER_COMPONENT_NAME)
 	public MBeanServer platformMBeanServer() {
@@ -88,7 +88,7 @@ public class PersistencePlatformTestConfig implements
 	}
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.config.JpaEntityManagerFactoryConfig#entityManagerFactory()
+	 * @see com.acme.orderplacement.framework.persistence.config.obsolete.JpaEntityManagerFactoryConfig#entityManagerFactory()
 	 */
 	@Bean
 	public EntityManagerFactory entityManagerFactory() throws Exception {

@@ -27,7 +27,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.acme.orderplacement.framework.persistence.config.PlatformIntegrationConfig;
+import com.acme.orderplacement.framework.persistence.config.obsolete.PlatformIntegrationConfig;
 import com.acme.orderplacement.framework.wslog.internal.domain.WebserviceRequest;
 import com.acme.orderplacement.framework.wslog.internal.domain.WebserviceResponse;
 import com.acme.orderplacement.framework.wslog.service.WebserviceLogger;

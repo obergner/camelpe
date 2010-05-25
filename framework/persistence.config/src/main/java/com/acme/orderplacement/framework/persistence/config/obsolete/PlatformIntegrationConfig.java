@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.framework.persistence.config;
+package com.acme.orderplacement.framework.persistence.config.obsolete;
 
 import javax.management.MBeanServer;
 import javax.sql.DataSource;

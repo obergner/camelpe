@@ -61,6 +61,7 @@
 		<deps.jaxws-api.version>2.1-1</deps.jaxws-api.version>
 		<deps.hibernate-jpa-2.0-api.version>1.0.0.Final
 		</deps.hibernate-jpa-2.0-api.version>
+		<deps.javaee-api.version>6.0</deps.javaee-api.version>
 		<!-- Proprietary -->
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.arquillian.version>1.0.0.Alpha1</deps.arquillian.version>
@@ -534,6 +535,13 @@
 				<version>1.0.1</version>
 				<type>jar</type>
 			</dependency>
+			<!-- JEE 6 API -->
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>${deps.javaee-api.version}</version>
+				<type>jar</type>
+			</dependency>
 			<!-- =========================================== -->
 			<!-- Implementations of standard javax APIs      -->
 			<!-- =========================================== -->
@@ -564,6 +572,14 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+			<!-- CDI extensions -->
+			<dependency>
+				<groupId>org.jboss.weld</groupId>
+				<artifactId>weld-logger</artifactId>
+				<version>1.0.0-CR2</version>
+				<type>jar</type>
+			</dependency>
+			<!-- Hibernate Bean Validation Implementation -->
 			<!-- =========================================== -->
 			<!-- Proprietary                                 -->
 			<!-- =========================================== -->
