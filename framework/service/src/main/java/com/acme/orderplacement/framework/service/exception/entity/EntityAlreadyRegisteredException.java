@@ -3,6 +3,8 @@
  */
 package com.acme.orderplacement.framework.service.exception.entity;
 
+import javax.ejb.ApplicationException;
+
 import com.acme.orderplacement.framework.service.exception.IllegalServiceUsageException;
 
 /**
@@ -14,6 +16,7 @@ import com.acme.orderplacement.framework.service.exception.IllegalServiceUsageEx
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@ApplicationException(rollback = true)
 public class EntityAlreadyRegisteredException extends
 		IllegalServiceUsageException {
 

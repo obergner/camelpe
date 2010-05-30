@@ -63,9 +63,6 @@
 		</deps.hibernate-jpa-2.0-api.version>
 		<deps.javaee-api.version>6.0</deps.javaee-api.version>
 		<!-- Proprietary -->
-		<deps.junit.version>4.8.1</deps.junit.version>
-		<deps.arquillian.version>1.0.0.Alpha1</deps.arquillian.version>
-		<deps.easymock.version>2.5.2</deps.easymock.version>
 		<deps.slf4j.version>1.5.11</deps.slf4j.version>
 		<deps.log4j.version>1.2.15</deps.log4j.version>
 		<deps.aspectj.version>1.6.8</deps.aspectj.version>
@@ -84,8 +81,17 @@
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
 		<deps.geronimo.version>2.2</deps.geronimo.version>
+		<!-- Testing -->
+		<deps.junit.version>4.8.1</deps.junit.version>
+		<deps.arquillian.version>1.0.0.Alpha2</deps.arquillian.version>
+		<deps.easymock.version>2.5.2</deps.easymock.version>
+		<deps.unitils.version>3.1</deps.unitils.version>
+		<deps.dbunit.version>2.2.2</deps.dbunit.version>
+		<deps.hsqldb.version>1.8.0.10</deps.hsqldb.version>
 		<deps.h2.version>1.2.134</deps.h2.version>
 		<deps.xbean-naming.version>3.6</deps.xbean-naming.version>
+		<deps.commons-dbcp.version>1.4</deps.commons-dbcp.version>
+		<deps.commons-dbutils.version>1.3</deps.commons-dbutils.version>
 		<!--
 			Plugin versions 
 		 -->
@@ -247,26 +253,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.persistence.common</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.persistence.testsupport
-				</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
 				<artifactId>orderplacement.framework.service</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.wslog</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -332,13 +319,13 @@
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.geronimo</artifactId>
+				<artifactId>orderplacement.jee.framework.config</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.config</artifactId>
+				<artifactId>orderplacement.jee.framework.persistence</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -347,6 +334,12 @@
 				<artifactId>orderplacement.jee.framework.wslog</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
+				<artifactId>orderplacement.jee.framework.wslog.service</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
@@ -364,17 +357,11 @@
 				<groupId>com.acme.orderplacement.jee.item</groupId>
 				<artifactId>orderplacement.jee.item.persistence</artifactId>
 				<version>${project.version}</version>
-				<type>jar</type>
+				<type>ejb</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.item</groupId>
 				<artifactId>orderplacement.jee.item.service</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.item</groupId>
-				<artifactId>orderplacement.jee.item.ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
 			</dependency>
@@ -382,7 +369,7 @@
 				<groupId>com.acme.orderplacement.jee.item</groupId>
 				<artifactId>orderplacement.jee.item.itemimport</artifactId>
 				<version>${project.version}</version>
-				<type>jar</type>
+				<type>ejb</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.item</groupId>
@@ -416,6 +403,7 @@
 				<groupId>javax.inject</groupId>
 				<artifactId>javax.inject</artifactId>
 				<version>${deps.javax-inject.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- JSR 250 Annotations: @Resource etc -->
@@ -423,6 +411,7 @@
 				<groupId>javax.annotation</groupId>
 				<artifactId>jsr250-api</artifactId>
 				<version>${deps.jsr250-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- JSR 299/CDI etc -->
@@ -430,6 +419,7 @@
 				<groupId>javax.enterprise</groupId>
 				<artifactId>cdi-api</artifactId>
 				<version>${deps.cdi-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- EJB 3.1 API - TODO: Replace with standard javax.ejb -->
@@ -437,6 +427,7 @@
 				<groupId>org.jboss.ejb3</groupId>
 				<artifactId>jboss-ejb3-api</artifactId>
 				<version>${deps.ejb-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 				<exclusions>
 					<exclusion>
@@ -461,6 +452,7 @@
 				<groupId>org.jboss.interceptor</groupId>
 				<artifactId>jboss-interceptor-api</artifactId>
 				<version>${deps.interceptor-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- Javax Transaction API -->
@@ -468,6 +460,7 @@
 				<groupId>javax.transaction</groupId>
 				<artifactId>jta</artifactId>
 				<version>${deps.jta.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- Javax JMS API -->
@@ -475,6 +468,7 @@
 				<groupId>javax.jms</groupId>
 				<artifactId>jms</artifactId>
 				<version>${deps.jms.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- Javax Persistence API -->
@@ -482,6 +476,7 @@
 				<groupId>org.hibernate.javax.persistence</groupId>
 				<artifactId>hibernate-jpa-2.0-api</artifactId>
 				<version>${deps.hibernate-jpa-2.0-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- JAXB API -->
@@ -489,6 +484,7 @@
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
 				<version>${deps.jaxb-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- JSR 181 API: Annotations for Webservices -->
@@ -496,6 +492,7 @@
 				<groupId>javax.jws</groupId>
 				<artifactId>jsr181-api</artifactId>
 				<version>${deps.jsr181-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- JAX-WS API -->
@@ -503,6 +500,7 @@
 				<groupId>javax.xml.ws</groupId>
 				<artifactId>jaxws-api</artifactId>
 				<version>${deps.jaxws-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 				<exclusions>
 					<!--
@@ -519,6 +517,7 @@
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
 				<version>${deps.servlet-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- Bean Validation API -->
@@ -526,6 +525,7 @@
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
 				<version>${deps.validation-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- J2EE Management Specification -->
@@ -533,6 +533,7 @@
 				<groupId>org.apache.geronimo.specs</groupId>
 				<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
 				<version>1.0.1</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- JEE 6 API -->
@@ -540,6 +541,7 @@
 				<groupId>javax</groupId>
 				<artifactId>javaee-api</artifactId>
 				<version>${deps.javaee-api.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- =========================================== -->
@@ -550,6 +552,7 @@
 				<groupId>com.sun.xml.bind</groupId>
 				<artifactId>jaxb-impl</artifactId>
 				<version>${deps.jaxb-impl.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- Hibernate Bean Validation Implementation -->
@@ -557,6 +560,7 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
 				<version>${deps.hibernate-validator.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 				<exclusions>
 					<!--
@@ -970,8 +974,7 @@
 			</dependency>
 			<!-- Google -->
 			<dependency>
-				<groupId>com.google.code.google-collections
-				</groupId>
+				<groupId>com.google.code.google-collections</groupId>
 				<artifactId>google-collect</artifactId>
 				<version>snapshot-20080530</version>
 				<type>jar</type>
@@ -1122,6 +1125,7 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${deps.junit.version}</version>
+				<scope>test</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- Arquillian: Test framework for CDI, Glassfish, JBoss -->
@@ -1129,17 +1133,19 @@
 				<groupId>org.jboss.arquillian</groupId>
 				<artifactId>arquillian-junit</artifactId>
 				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.arquillian.container</groupId>
 				<artifactId>arquillian-weld-embedded</artifactId>
 				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
 				<type>jar</type>
 				<exclusions>
 					<!--
 						We don't use jdk14 logging. If we wouldn't exclude it here SLF4J
-						would keep complaining about finding to bindings - one for log4j
+						would keep complaining about finding two bindings - one for log4j
 						and one for jdk14 - when running test cases.
 					-->
 					<exclusion>
@@ -1148,18 +1154,82 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.container</groupId>
+				<artifactId>arquillian-glassfish-embedded-30</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.extras</groupId>
+				<artifactId>glassfish-embedded-all</artifactId>
+				<version>3.0.1-b02</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
 			<!-- Easymock -->
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
 				<version>${deps.easymock.version}</version>
+				<scope>test</scope>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymockclassextension</artifactId>
 				<version>${deps.easymock.version}</version>
+				<scope>test</scope>
 				<type>jar</type>
+			</dependency>
+			<!-- Unitils for JPA integration testing -->
+			<dependency>
+				<groupId>org.dbunit</groupId>
+				<artifactId>dbunit</artifactId>
+				<version>${deps.dbunit.version}</version>
+				<scope>test</scope>
+				<exclusions>
+					<!--
+						We use log4j. If we wouldn't exclude it here SLF4J would keep
+						complaining about finding two bindings - one for log4j and one for
+						jdk14 - when running test cases.
+					-->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-nop</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-test</artifactId>
+				<version>${deps.unitils.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-dbunit</artifactId>
+				<version>${deps.unitils.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-orm</artifactId>
+				<version>${deps.unitils.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-dbmaintainer</artifactId>
+				<version>${deps.unitils.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-easymock</artifactId>
+				<version>${deps.unitils.version}</version>
+				<scope>test</scope>
 			</dependency>
 			<!-- Spring-Test -->
 			<dependency>
@@ -1167,6 +1237,12 @@
 				<artifactId>spring-test</artifactId>
 				<version>${deps.spring.version}</version>
 				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>${deps.hsqldb.version}</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>com.h2database</groupId>
@@ -1179,6 +1255,20 @@
 				<groupId>org.apache.xbean</groupId>
 				<artifactId>xbean-naming</artifactId>
 				<version>${deps.xbean-naming.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- We need a DataSource implementation for testing purposes -->
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>${deps.commons-dbcp.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- Let's make testing the database layer easier -->
+			<dependency>
+				<groupId>commons-dbutils</groupId>
+				<artifactId>commons-dbutils</artifactId>
+				<version>${deps.commons-dbutils.version}</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>
@@ -1236,16 +1326,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian</groupId>
-			<artifactId>arquillian-junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian.container</groupId>
-			<artifactId>arquillian-weld-embedded</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -1655,6 +1735,20 @@
 			</snapshots>
 		</repository>
 		<!--
+			This JBoss repository provides the latest Arquillian jars.
+		-->
+		<repository>
+			<id>org.jboss.arquillianRepository</id>
+			<name>JBoss Arquillian Repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!--
 			The following two repositories are needed for the JAXB2 Maven2
 			Pluging: https://maven-jaxb2-plugin.dev.java.net/docs/guide.html
 		-->
@@ -1668,6 +1762,21 @@
 			<name>Java.net Maven 1 Repository (legacy)</name>
 			<url>http://download.java.net/maven/1</url>
 			<layout>legacy</layout>
+		</repository>
+		<!--
+			The following repository is needed to obtain the glassfish-embedded
+			container used in integration tests.
+		-->
+		<repository>
+			<id>dev.java.net.glassfishRepository</id>
+			<name>Java.net Glassfish Repository</name>
+			<url>http://download.java.net/maven/glassfish</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 

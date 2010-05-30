@@ -56,13 +56,13 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.item</groupId>
-			<artifactId>orderplacement.jee.item.ejb</artifactId>
+			<artifactId>orderplacement.jee.item.service</artifactId>
 			<type>ejb</type>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.item</groupId>
-			<artifactId>orderplacement.jee.item.mdb</artifactId>
+			<artifactId>orderplacement.jee.item.itemimport</artifactId>
 			<type>ejb</type>
 			<scope>runtime</scope>
 		</dependency>
@@ -83,11 +83,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
-			<artifactId>orderplacement.jee.framework.geronimo</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.jee.framework</groupId>
 			<artifactId>orderplacement.jee.framework.config</artifactId>
 			<scope>runtime</scope>
 		</dependency>
@@ -101,11 +96,6 @@
 			Has to be explicitly included due to the skinny wars-problem:
 			http://maven.apache.org/plugins/maven-war-plugin/examples/skinny-wars.html
 		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<!--
 			| Test dependencies 
 		-->
@@ -123,7 +113,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
-					<version>5</version>
+					<version>6</version>
 					<!--
 						Needed to make resource filtering work: see
 						http://www.mail-archive.com/users@maven.apache.org/msg59229.html
@@ -148,7 +138,7 @@
 						</rarModule>
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee.item</groupId>
-							<artifactId>orderplacement.jee.item.ejb</artifactId>
+							<artifactId>orderplacement.jee.item.service</artifactId>
 						</ejbModule>
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee.item</groupId>

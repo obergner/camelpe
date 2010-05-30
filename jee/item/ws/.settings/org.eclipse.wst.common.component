@@ -10,19 +10,16 @@
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.service/orderplacement.framework.service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.aspect/orderplacement.framework.aspect">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.common/orderplacement.framework.common">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.item.service/orderplacement.item.service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.jee.framework.wslog.handler/orderplacement.jee.framework.wslog.handler">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.wslog/orderplacement.framework.wslog">
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.jee.framework.wslog.service/orderplacement.jee.framework.wslog.service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.common/orderplacement.framework.common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path"/>

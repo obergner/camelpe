@@ -7,25 +7,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Local;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import org.apache.commons.lang.Validate;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.acme.orderplacement.domain.item.Item;
-import com.acme.orderplacement.framework.persistence.common.jpa.AbstractJpaDao;
-import com.acme.orderplacement.framework.persistence.common.meta.annotation.ReadOnlyPersistenceOperation;
+import com.acme.orderplacement.jee.framework.persistence.jpa.AbstractJpaDao;
+import com.acme.orderplacement.jee.framework.persistence.meta.annotation.ReadOnlyPersistenceOperation;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
 
 /**
  * @author o.bergner
  * 
  */
-@Repository(ItemDao.REPOSITORY_NAME)
+@Stateless
+@Local(ItemDao.class)
 public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 
 	// -------------------------------------------------------------------------
@@ -48,7 +50,7 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 	 * @see com.acme.orderplacement.jee.item.persistence.ItemDao.domain.ItemDAO#findByItemNumber(java.lang.String)
 	 */
 	@ReadOnlyPersistenceOperation
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public Item findByItemNumber(final String itemNumber) {
 		Validate.notNull(itemNumber, "itemNumber");
 		final Map<String, String> parameters = new HashMap<String, String>(1);
@@ -61,7 +63,7 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 	 * @see com.acme.orderplacement.jee.item.persistence.ItemDao.domain.ItemDAO#findByNameLike(java.lang.String)
 	 */
 	@ReadOnlyPersistenceOperation
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List<Item> findByNameLike(final String itemName) {
 		Validate.notNull(itemName, "itemName");
 		final Map<String, String> parameters = new HashMap<String, String>(1);
@@ -75,7 +77,7 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * @see com.acme.orderplacement.framework.persistence.common.jpa.AbstractJpaDao#entityManager()
+	 * @see com.acme.orderplacement.jee.framework.persistence.jpa.AbstractJpaDao#entityManager()
 	 */
 	@Override
 	protected EntityManager entityManager() {

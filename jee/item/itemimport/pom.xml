@@ -11,7 +11,7 @@
 	<groupId>com.acme.orderplacement.jee.item</groupId>
 	<artifactId>orderplacement.jee.item.itemimport</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>ejb</packaging>
 
 	<name><![CDATA[SOA Order :: JEE :: Item :: Item Import]]></name>
 
@@ -51,12 +51,6 @@
 			<groupId>com.acme.orderplacement.framework</groupId>
 			<artifactId>orderplacement.framework.service</artifactId>
 			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>com.acme.orderplacement.framework</groupId>
-					<artifactId>orderplacement.framework.aspect</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.domain.item</groupId>
@@ -170,31 +164,50 @@
 			<artifactId>commons-pool</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--
-			TODO: Move "itemimport" into the JEE layer. Right now, we are not in
-			the JEE layer, yet have a dependency on it, as evidenced below.
-		-->
-		<dependency>
-			<groupId>com.acme.orderplacement.jee.item</groupId>
-			<artifactId>orderplacement.jee.item.service</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.framework</groupId>
 			<artifactId>orderplacement.framework.testsupport</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.framework</groupId>
-			<artifactId>orderplacement.framework.persistence.testsupport
-			</artifactId>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.service</artifactId>
+			<type>ejb</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.persistence</artifactId>
+			<type>ejb</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<configuration>
+					<ejbVersion>3.0</ejbVersion>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>false</addClasspath>
+							<addDefaultSpecificationEntries>true
+							</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true
+							</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

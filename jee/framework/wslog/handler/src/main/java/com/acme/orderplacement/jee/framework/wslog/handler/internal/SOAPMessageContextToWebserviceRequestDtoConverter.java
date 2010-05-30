@@ -21,7 +21,7 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import org.apache.commons.lang.Validate;
 
-import com.acme.orderplacement.framework.wslog.service.WebserviceRequestDto;
+import com.acme.orderplacement.jee.framework.wslog.service.WebserviceRequestDto;
 
 /**
  * <p>

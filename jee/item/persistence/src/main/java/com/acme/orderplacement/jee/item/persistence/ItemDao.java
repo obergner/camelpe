@@ -9,7 +9,7 @@ import javax.annotation.security.RolesAllowed;
 
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
-import com.acme.orderplacement.framework.persistence.common.GenericJpaDao;
+import com.acme.orderplacement.jee.framework.persistence.GenericJpaDao;
 
 /**
  * @author o.bergner

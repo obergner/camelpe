@@ -36,7 +36,6 @@
 	<modules>
 		<module>persistence</module>
 		<module>service</module>
-		<module>ejb</module>
 		<module>itemimport</module>
 		<module>mdb</module>
 		<module>wsapi</module>
