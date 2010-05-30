@@ -42,16 +42,6 @@
 			| Compile time dependencies 
 		-->
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 			<artifactId>orderplacement.jee.framework.wslog.service</artifactId>
 			<type>ejb</type>

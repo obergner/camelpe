@@ -19,9 +19,6 @@
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.jee.framework.wslog.service/orderplacement.jee.framework.wslog.service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.common/orderplacement.framework.common">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="java-output-path"/>
         <property name="context-root" value="com.acme.orderplacement.jee.item.ws"/>
     </wb-module>

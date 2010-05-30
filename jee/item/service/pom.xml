@@ -42,17 +42,11 @@
 		<!--
 			| Compile time dependencies 
 		-->
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<scope>compile</scope>
-		</dependency>
 		<!--
-			Needed in compile scope since otherwise javac 1.5_17 will throw an
+			Needed in compile scope since otherwise javac will throw an
 			exception, i.e. compilation will NOT fail due to a compilation error
 			but rather due to a bug in the compiler - or else it might indeed be
-			a compilation problem that cannot be properly handled by that javac
-			version.
+			a compilation problem that cannot be properly handled by javac.
 		-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -102,6 +96,16 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>javax.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.jboss.arquillian</groupId>
 			<artifactId>arquillian-junit</artifactId>
 			<scope>test</scope>
@@ -116,6 +120,14 @@
 			<artifactId>glassfish-embedded-all</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--
+			<dependency> <groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-weld-embedded</artifactId> <scope>test</scope>
+			</dependency> <dependency> <groupId>org.jboss.weld</groupId>
+			<artifactId>weld-core</artifactId> <scope>test</scope> </dependency>
+			<dependency> <groupId>org.jboss.weld</groupId>
+			<artifactId>weld-api</artifactId> <scope>test</scope> </dependency>
+		-->
 	</dependencies>
 
 	<build>
@@ -124,7 +136,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ejb-plugin</artifactId>
 				<configuration>
-					<ejbVersion>3.0</ejbVersion>
+					<ejbVersion>3.1</ejbVersion>
 					<archive>
 						<index>true</index>
 						<manifest>

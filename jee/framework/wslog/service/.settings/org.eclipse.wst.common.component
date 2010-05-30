@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="orderplacement.framework.wslog-1.0-SNAPSHOT">
+    <wb-module deploy-name="orderplacement.jee.framework.wslog.service-1.0-SNAPSHOT">
         <wb-resource deploy-path="/" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/ejbModule"/>
+        <wb-resource deploy-path="/" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/src/test/resources"/>
+        <property name="java-output-path" value="/orderplacement.jee.framework.wslog.service/target/classes"/>
     </wb-module>
 </project-modules>

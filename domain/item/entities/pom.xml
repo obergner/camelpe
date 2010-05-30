@@ -19,19 +19,14 @@
 		<!--
 			| Provided dependencies 
 		-->
-		<!--
-			| Compile time dependencies 
-		-->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.framework</groupId>
-			<artifactId>orderplacement.framework.common</artifactId>
-			<scope>compile</scope>
-		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
 		<dependency>
 			<groupId>com.acme.orderplacement.framework</groupId>
 			<artifactId>orderplacement.framework.domain</artifactId>
@@ -40,41 +35,6 @@
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>aopalliance</groupId>
-			<artifactId>aopalliance</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<!--
 			| Test dependencies 
 		-->

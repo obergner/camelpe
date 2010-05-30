@@ -7,6 +7,13 @@
 		<security-role>
 			<role-name>ROLE_ADMIN</role-name>
 		</security-role>
+		<method-permission>
+			<unchecked />
+			<method>
+				<ejb-name>ItemStorageServiceBean</ejb-name>
+				<method-name>registerItem</method-name>
+			</method>
+		</method-permission>
 		<application-exception>
 			<exception-class>java.lang.IllegalArgumentException</exception-class>
 			<rollback>true</rollback>

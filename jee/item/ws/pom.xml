@@ -46,12 +46,6 @@
 			<groupId>com.acme.orderplacement.jee.item</groupId>
 			<artifactId>orderplacement.jee.item.wsapi</artifactId>
 			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.geronimo.specs</groupId>
-					<artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.framework</groupId>
@@ -69,11 +63,6 @@
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 			<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<!--

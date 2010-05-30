@@ -56,6 +56,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.persistence</artifactId>
+			<type>ejb</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
 			<artifactId>orderplacement.jee.item.service</artifactId>
 			<type>ejb</type>
 			<scope>runtime</scope>
@@ -64,6 +70,18 @@
 			<groupId>com.acme.orderplacement.jee.item</groupId>
 			<artifactId>orderplacement.jee.item.itemimport</artifactId>
 			<type>ejb</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
+			<artifactId>orderplacement.jee.framework.wslog.service</artifactId>
+			<type>ejb</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.ws</artifactId>
+			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
 		<!--
@@ -84,12 +102,6 @@
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
 			<artifactId>orderplacement.jee.framework.config</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.jee.item</groupId>
-			<artifactId>orderplacement.jee.item.ws</artifactId>
-			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
 		<!--
@@ -138,11 +150,20 @@
 						</rarModule>
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee.item</groupId>
+							<artifactId>orderplacement.jee.item.persistence</artifactId>
+						</ejbModule>
+						<ejbModule>
+							<groupId>com.acme.orderplacement.jee.item</groupId>
 							<artifactId>orderplacement.jee.item.service</artifactId>
 						</ejbModule>
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee.item</groupId>
-							<artifactId>orderplacement.jee.item.mdb</artifactId>
+							<artifactId>orderplacement.jee.item.itemimport</artifactId>
+						</ejbModule>
+						<ejbModule>
+							<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
+							<artifactId>orderplacement.jee.framework.wslog.service
+							</artifactId>
 						</ejbModule>
 						<!--
 							TODO: I would like to explicitly set this web module's context

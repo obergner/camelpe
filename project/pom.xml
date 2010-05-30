@@ -69,6 +69,8 @@
 		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
 		<deps.hibernate.version>3.5.0-Final</deps.hibernate.version>
 		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
+		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
+		<deps.el-api.version>2.2</deps.el-api.version>
 		<!--
 			We use Hibernate Validator 4.1.0.Beta1 because its pom correctly
 			registers the dependencies on jaxb in scope 'provided' instead of
@@ -76,6 +78,8 @@
 		-->
 		<deps.hibernate-validator.version>4.1.0.Beta1
 		</deps.hibernate-validator.version>
+		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
+		<deps.weld.version>1.0.1-SP1</deps.weld.version>
 		<deps.hibernate-tools.version>3.2.4.GA</deps.hibernate-tools.version>
 		<deps.camel.version>2.2.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
@@ -536,6 +540,22 @@
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
+			<!-- Java Server Faces -->
+			<dependency>
+				<groupId>javax.faces</groupId>
+				<artifactId>jsf-api</artifactId>
+				<version>${deps.jsf-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Expression Language -->
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>el-api</artifactId>
+				<version>${deps.el-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
 			<!-- JEE 6 API -->
 			<dependency>
 				<groupId>javax</groupId>
@@ -575,6 +595,13 @@
 						<artifactId>slf4j-api</artifactId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>javax.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>${deps.jsf-ri.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
 			</dependency>
 			<!-- CDI extensions -->
 			<dependency>
@@ -1128,6 +1155,13 @@
 				<scope>test</scope>
 				<type>jar</type>
 			</dependency>
+			<dependency>
+				<groupId>org.jboss.weld</groupId>
+				<artifactId>weld-core-bom</artifactId>
+				<version>${deps.weld.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<!-- Arquillian: Test framework for CDI, Glassfish, JBoss -->
 			<dependency>
 				<groupId>org.jboss.arquillian</groupId>
@@ -1390,10 +1424,10 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${plugins.surefire.version}</version>
-					<!-- Don't for VM in order to be able to debug test cases -->
+					<!-- Don't fork VM in order to be able to debug test cases -->
 					<configuration>
-						<forkMode>never</forkMode>
-						<!-- forkMode>perTest</forkMode -->
+						<!-- forkMode>never</forkMode -->
+						<forkMode>perTest</forkMode>
 					</configuration>
 				</plugin>
 				<plugin>

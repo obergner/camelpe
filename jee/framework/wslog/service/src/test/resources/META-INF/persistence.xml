@@ -10,29 +10,31 @@
 		transaction-type="RESOURCE_LOCAL">
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
 		<class>com.acme.orderplacement.jee.framework.wslog.service.internal.domain.WebserviceOperation</class>
 		<class>com.acme.orderplacement.jee.framework.wslog.service.internal.domain.WebserviceRequest</class>
 		<class>com.acme.orderplacement.jee.framework.wslog.service.internal.domain.WebserviceHeader</class>
 		<class>com.acme.orderplacement.jee.framework.wslog.service.internal.domain.WebserviceResponse</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+
 		<properties>
+			<property name="hibernate.connection.provider_class"
+				value="org.hibernate.connection.DriverManagerConnectionProvider" />
 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
-			<property name="hibernate.connection.driver_class" value="org.h2.Driver" />
+			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver" />
 			<property name="hibernate.connection.url"
-				value="jdbc:h2:file:target/test-classes/testdb/testDB" />
+				value="jdbc:hsqldb:mem:framework.wslog.testDataBase" />
 			<property name="hibernate.connection.username" value="sa" />
 			<property name="hibernate.connection.password" value="" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-			<!--
-				<property name="hibernate.dialect"
-				value="org.hibernate.dialect.PostgreSQLDialect" />
-			-->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
 			<!-- Print SQL to stdout -->
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
 
 	</persistence-unit>
 
-	<persistence-unit name="log.ws.postgresql.wslogPU"
+	<persistence-unit name="jee.framework.postgresql.wslogPU"
 		transaction-type="RESOURCE_LOCAL">
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>

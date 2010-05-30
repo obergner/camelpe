@@ -18,12 +18,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.LoggerFactory;
-import org.springframework.jmx.export.annotation.ManagedAttribute;
-import org.springframework.jmx.export.annotation.ManagedOperation;
-import org.springframework.jmx.export.annotation.ManagedOperationParameter;
-import org.springframework.jmx.export.annotation.ManagedOperationParameters;
-import org.springframework.jmx.export.annotation.ManagedResource;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -34,15 +28,11 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@Component(Log4JLogManager.COMPONENT_NAME)
-@ManagedResource(objectName = "com.acme.orderplacement:layer=PlatformLayer,type=Log4JComponent,name=Log4JLogManager", description = "An MBean for dynamically changing a category's log level at runtime")
 public class Log4JLogManager {
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
-
-	public static final String COMPONENT_NAME = "jee.support.log.Log4JLogManager";
 
 	public static final String DEFAULT_PROPERTIES_LOCATION = "META-INF/conf/log4j-ear.properties";
 
@@ -61,7 +51,6 @@ public class Log4JLogManager {
 	/**
 	 * @return the configurationPropertiesLocation
 	 */
-	@ManagedAttribute(defaultValue = Log4JLogManager.DEFAULT_PROPERTIES_LOCATION)
 	public String getConfigurationPropertiesLocation() {
 		return this.configurationPropertiesLocation;
 	}
@@ -70,7 +59,6 @@ public class Log4JLogManager {
 	 * @param configurationPropertiesLocation
 	 * @throws IllegalArgumentException
 	 */
-	@ManagedAttribute(description = "Where our log4j.properties are to be found on the classpath", defaultValue = Log4JLogManager.DEFAULT_PROPERTIES_LOCATION)
 	public void setConfigurationPropertiesLocation(
 			final String configurationPropertiesLocation)
 			throws IllegalArgumentException {
@@ -83,7 +71,6 @@ public class Log4JLogManager {
 	 * 
 	 */
 	@PostConstruct
-	@ManagedOperation(description = "(Re)Configure Log4J")
 	public void configure() {
 		logToStdout("(Re)Configuring Log4J using ["
 				+ getConfigurationPropertiesLocation() + "] ...");
@@ -97,7 +84,6 @@ public class Log4JLogManager {
 	 * 
 	 */
 	@PreDestroy
-	@ManagedOperation(description = "Stop Log4J")
 	public void close() {
 		logToStdout("Stopping Log4J ...");
 		LogManager.shutdown();
@@ -128,10 +114,6 @@ public class Log4JLogManager {
 	 *             If any of the arguments is <code>null</code> or
 	 *             <code>empty</code>
 	 */
-	@ManagedOperation(description = "Set the log level for the supplied package to the supplied new log level, returning the former log level")
-	@ManagedOperationParameters( {
-			@ManagedOperationParameter(name = "packageName", description = "Name of the java package whose log level is to be changed"),
-			@ManagedOperationParameter(name = "newLogLevel", description = "The log level to change to") })
 	public String changeLogLevel(final String packageName,
 			final String newLogLevel) throws IllegalArgumentException {
 		Validate.notEmpty(packageName, "packageName");
@@ -157,7 +139,6 @@ public class Log4JLogManager {
 	/**
 	 * @return
 	 */
-	@ManagedAttribute(description = "The list of all Loggers currently known to the Log4J hierarchy")
 	public List<String> getLoggerNames() {
 		final Enumeration<Logger> currentLoggers = LogManager
 				.getCurrentLoggers();

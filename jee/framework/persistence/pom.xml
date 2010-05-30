@@ -25,11 +25,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
-			<artifactId>jboss-ejb3-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<scope>provided</scope>
@@ -38,18 +33,8 @@
 			| Compile time dependencies 
 		-->
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.acme.orderplacement.framework</groupId>
 			<artifactId>orderplacement.framework.common</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.framework</groupId>
-			<artifactId>orderplacement.framework.aspect</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--

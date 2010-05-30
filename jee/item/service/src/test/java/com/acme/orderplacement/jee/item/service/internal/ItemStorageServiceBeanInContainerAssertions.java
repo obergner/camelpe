@@ -3,7 +3,10 @@
  */
 package com.acme.orderplacement.jee.item.service.internal;
 
+import java.security.Principal;
+
 import javax.ejb.EJB;
+import javax.enterprise.inject.Produces;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.api.Deployment;
@@ -72,13 +75,25 @@ public class ItemStorageServiceBeanInContainerAssertions {
 				ItemStorageService.class.getPackage(),
 				ItemDao.class.getPackage(),
 				ItemStorageServiceBean.class.getPackage()).addManifestResource(
-				"META-INF/persistence.xml",
+				"META-INF/glassfish/persistence.xml",
 				ArchivePaths.create("persistence.xml")).addManifestResource(
 				"META-INF/ejb-jar.xml", ArchivePaths.create("ejb-jar.xml"))
-				.addManifestResource("META-INF/sun-ejb-jar.xml",
+				.addManifestResource("META-INF/glassfish/sun-ejb-jar.xml",
 						ArchivePaths.create("sun-ejb-jar.xml"));
 
 		return itemServiceEjbModule;
+	}
+
+	@Produces
+	public Principal testPrincipal() {
+		return new Principal() {
+
+			@Override
+			public String getName() {
+
+				return "Tester";
+			}
+		};
 	}
 
 	@Before
@@ -89,7 +104,7 @@ public class ItemStorageServiceBeanInContainerAssertions {
 	@Before
 	public void login() throws Exception {
 		final ProgrammaticLogin login = new ProgrammaticLogin();
-		login.login("admin", "admin", "file", true);
+		login.login("employee", "employee", "file", true);
 	}
 
 	@After

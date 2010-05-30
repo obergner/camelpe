@@ -31,7 +31,6 @@ import com.acme.orderplacement.jee.item.persistence.ItemDao;
 import com.acme.orderplacement.jee.item.persistence.internal.JpaItemDao;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
-import com.sun.appserv.security.ProgrammaticLogin;
 
 /**
  * <p>
@@ -85,11 +84,11 @@ public class ItemStorageServiceBeanClientAssertions {
 		AuditInfoManagingEntityListener.registerTestUsername("TESTER");
 	}
 
-	@Before
-	public void login() throws Exception {
-		final ProgrammaticLogin login = new ProgrammaticLogin();
-		login.login("admin", "admin", "file", true);
-	}
+	// @Before
+	// public void login() throws Exception {
+	// final ProgrammaticLogin login = new ProgrammaticLogin();
+	// login.login("admin", "admin", "file", true);
+	// }
 
 	@After
 	public void unregisterTestUsername() {

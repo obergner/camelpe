@@ -181,3 +181,9 @@ grant  codeBase "file:${com.sun.aas.installRoot}/jruby/lib/-"{
     permission java.lang.RuntimePermission "getenv.*";
 };
 
+// DO NOT USE IN PRODUCTION! - Grants all permissions to everyone!
+grant {
+	permission javax.security.jacc.EJBMethodPermission;
+}
+
+

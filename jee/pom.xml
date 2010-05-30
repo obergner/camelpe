@@ -22,7 +22,9 @@
 		<!--
 			| Provided dependencies 
 		-->
-		<!-- JEE 6 API -->
+		<!--
+			JEE 6 API 
+		-->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>

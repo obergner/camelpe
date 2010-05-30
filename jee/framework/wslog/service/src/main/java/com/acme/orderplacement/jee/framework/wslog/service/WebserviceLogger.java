@@ -5,10 +5,6 @@ package com.acme.orderplacement.jee.framework.wslog.service;
 
 import javax.persistence.NoResultException;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-
 /**
  * <p>
  * TODO: Insert short summary for WebserviceLogger
@@ -27,7 +23,6 @@ public interface WebserviceLogger {
 	 * @throws IllegalArgumentException
 	 * @throws NoResultException
 	 */
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	Long logWebserviceRequest(final WebserviceRequestDto webserviceRequestDto)
 			throws IllegalArgumentException, NoResultException;
 
@@ -37,7 +32,6 @@ public interface WebserviceLogger {
 	 * @throws IllegalArgumentException
 	 * @throws NoResultException
 	 */
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	Long logWebserviceResponse(final WebserviceResponseDto webserviceResponseDto)
 			throws IllegalArgumentException, NoResultException;
 
