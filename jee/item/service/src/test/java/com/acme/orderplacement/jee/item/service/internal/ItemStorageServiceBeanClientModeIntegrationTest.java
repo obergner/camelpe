@@ -75,7 +75,6 @@ public class ItemStorageServiceBeanClientModeIntegrationTest {
 				"META-INF/ejb-jar.xml", ArchivePaths.create("ejb-jar.xml"))
 				.addManifestResource("META-INF/glassfish/sun-ejb-jar.xml",
 						ArchivePaths.create("sun-ejb-jar.xml"));
-		System.out.println(deployment.toString(true));
 
 		return deployment;
 	}
@@ -100,6 +99,10 @@ public class ItemStorageServiceBeanClientModeIntegrationTest {
 	public void unregisterTestUsername() {
 		AuditInfoManagingEntityListener.registerTestUsername(null);
 	}
+
+	// ------------------------------------------------------------------------
+	// Tests
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Test method for

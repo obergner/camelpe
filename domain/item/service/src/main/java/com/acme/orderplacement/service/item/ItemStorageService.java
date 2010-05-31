@@ -17,8 +17,6 @@ import com.acme.orderplacement.service.item.dto.ItemDto;
  */
 public interface ItemStorageService {
 
-	String SERVICE_NAME = "service.item.ItemStorageService";
-
 	/**
 	 * @param newItemToRegister
 	 * @throws EntityAlreadyRegisteredException
