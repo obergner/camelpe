@@ -31,6 +31,7 @@ import com.acme.orderplacement.jee.item.persistence.ItemDao;
 import com.acme.orderplacement.jee.item.persistence.internal.JpaItemDao;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
+import com.sun.appserv.security.ProgrammaticLogin;
 
 /**
  * <p>
@@ -42,7 +43,7 @@ import com.acme.orderplacement.service.item.dto.ItemDto;
  */
 @RunWith(Arquillian.class)
 @Run(RunModeType.AS_CLIENT)
-public class ItemStorageServiceBeanClientAssertions {
+public class ItemStorageServiceBeanClientModeIntegrationTest {
 
 	// ------------------------------------------------------------------------
 	// Fields
@@ -69,26 +70,31 @@ public class ItemStorageServiceBeanClientAssertions {
 				ItemStorageService.class.getPackage(),
 				ItemDao.class.getPackage(),
 				ItemStorageServiceBean.class.getPackage()).addManifestResource(
-				"META-INF/persistence.xml",
+				"META-INF/glassfish/persistence.xml",
 				ArchivePaths.create("persistence.xml")).addManifestResource(
 				"META-INF/ejb-jar.xml", ArchivePaths.create("ejb-jar.xml"))
-				.addManifestResource("META-INF/sun-ejb-jar.xml",
+				.addManifestResource("META-INF/glassfish/sun-ejb-jar.xml",
 						ArchivePaths.create("sun-ejb-jar.xml"));
 		System.out.println(deployment.toString(true));
 
 		return deployment;
 	}
 
+	/**
+	 * TODO: Why is this needed? The embedded Glassfish v3 server should inject
+	 * the current principal into our
+	 * <code>AuditInfoManagingEntityListener</code>.
+	 */
 	@Before
 	public void registerTestUsername() {
 		AuditInfoManagingEntityListener.registerTestUsername("TESTER");
 	}
 
-	// @Before
-	// public void login() throws Exception {
-	// final ProgrammaticLogin login = new ProgrammaticLogin();
-	// login.login("admin", "admin", "file", true);
-	// }
+	@Before
+	public void login() throws Exception {
+		final ProgrammaticLogin login = new ProgrammaticLogin();
+		login.login("admin", "admin", "file", true);
+	}
 
 	@After
 	public void unregisterTestUsername() {
@@ -164,19 +170,21 @@ public class ItemStorageServiceBeanClientAssertions {
 	private ItemStorageService lookupService() throws NamingException {
 		final InitialContext ic = new InitialContext();
 
-		return new ItemStorageServiceDelegate((ItemStorageService) ic
-				.lookup("java:global/test/ItemStorageServiceBean"));
+		return new EjbExceptionUnwrappingItemStorageServiceDelegate(
+				(ItemStorageService) ic
+						.lookup("java:global/test/ItemStorageServiceBean"));
 	}
 
-	private static class ItemStorageServiceDelegate implements
-			ItemStorageService {
+	private static class EjbExceptionUnwrappingItemStorageServiceDelegate
+			implements ItemStorageService {
 
 		private final ItemStorageService delegate;
 
 		/**
 		 * @param delegate
 		 */
-		ItemStorageServiceDelegate(final ItemStorageService delegate) {
+		EjbExceptionUnwrappingItemStorageServiceDelegate(
+				final ItemStorageService delegate) {
 			this.delegate = delegate;
 		}
 

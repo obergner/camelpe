@@ -39,9 +39,12 @@ import com.sun.appserv.security.ProgrammaticLogin;
  * <p>
  * Test {@link JpaItemDao <code>JpaItemDao</code>}.
  * </p>
+ * <p>
+ * FIXME: Due to restrictions in Arquillian-1.0.0.Alpha2 this test will
+ * currently fail.
+ * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
- * 
  */
 @RunWith(Arquillian.class)
 @Run(RunModeType.IN_CONTAINER)

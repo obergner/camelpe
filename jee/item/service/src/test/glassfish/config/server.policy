@@ -182,8 +182,8 @@ grant  codeBase "file:${com.sun.aas.installRoot}/jruby/lib/-"{
 };
 
 // DO NOT USE IN PRODUCTION! - Grants all permissions to everyone!
-grant {
-	permission javax.security.jacc.EJBMethodPermission;
-}
+//grant {
+//	permission javax.security.jacc.EJBMethodPermission;
+//}
 
 
