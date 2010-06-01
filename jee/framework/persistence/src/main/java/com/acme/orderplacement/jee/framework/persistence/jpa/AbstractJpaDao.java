@@ -189,9 +189,19 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void makeTransient(final T persistentOrDetachedObject)
 			throws DataAccessRuntimeException, ObjectTransientException {
-		entityManager().remove(persistentOrDetachedObject);
+		final T managedEntity;
+		if (!entityManager().contains(persistentOrDetachedObject)) {
+			/*
+			 * FIXME: This will help in removing entities that have never been
+			 * persisted!
+			 */
+			managedEntity = entityManager().merge(persistentOrDetachedObject);
+		} else {
+			managedEntity = persistentOrDetachedObject;
+		}
+		entityManager().remove(managedEntity);
 		getLog().debug("Removed entity = [{}] from persistent storage.",
-				persistentOrDetachedObject);
+				managedEntity);
 	}
 
 	// ------------------------------------------------------------------------

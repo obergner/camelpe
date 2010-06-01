@@ -1,7 +1,5 @@
+CREATE USER SA PASSWORD "" ADMIN
 /*C1*/SET SCHEMA PUBLIC
-CONNECT USER SA
-DISCONNECT
-/*C2*/SET SCHEMA PUBLIC
 CONNECT USER SA
 CREATE SCHEMA ITEM AUTHORIZATION DBA
 SET SCHEMA ITEM
@@ -27,42 +25,5 @@ create sequence ITEM.ID_SEQ_ITEM_OPTION_SPEC
 create sequence ITEM.ID_SEQ_ITEM_SPEC
 create sequence ITEM.ID_SEQ_OFFER
 create sequence ITEM.ID_SEQ_PROMOTION
-SET AUTOCOMMIT TRUE
-alter table "ITEM"."ITEM_OPTION_SPECIFICATION" drop constraint "FK_ITEMOPTIONSPEC_ITEMOPTION"
-alter table "ITEM"."ITEM_OPTION_SPECIFICATION" drop constraint "FK_ITEMOPTIONSPEC_ITEMSPEC"
-alter table "ITEM"."ITEM_ITEM_OPTION_ASSOC" drop constraint "FK_ITEMOPTION_ITEM"
-alter table "ITEM"."ITEM_SPECIFICATION" drop constraint "FK_ITEMSPEC_ITEM"
-alter table "ITEM"."ITEM_ITEM_OPTION_ASSOC" drop constraint "FK_ITEM_ITEMOPTION"
-alter table "ITEM"."OFFER" drop constraint "FK_OFFER_ITEM"
-alter table "ITEM"."PROMOTION" drop constraint "FK_PROMOTION_OFFER"
-alter table "ITEM"."ITEM" drop constraint "SYS_CT_56"
-alter table "ITEM"."ITEM" drop constraint "SYS_CT_57"
-alter table "ITEM"."ITEM_OPTION" drop constraint "SYS_CT_64"
-alter table "ITEM"."ITEM_SPECIFICATION" drop constraint "SYS_CT_70"
-alter table "ITEM"."OFFER" drop constraint "SYS_CT_74"
-alter table "ITEM"."PROMOTION" drop constraint "SYS_CT_78"
-alter table "ITEM"."PROMOTION" drop constraint "SYS_CT_79"
-alter table "ITEM"."ITEM" alter column "AUDIT_CREATED_BY" set null
-alter table "ITEM"."ITEM" alter column "AUDIT_CREATED_ON" set null
-alter table "ITEM"."ITEM" alter column "AUDIT_LAST_UPDATED_BY" set null
-alter table "ITEM"."ITEM" alter column "AUDIT_LAST_UPDATED_ON" set null
-alter table "ITEM"."ITEM" alter column "DESCRIPTION" set null
-alter table "ITEM"."ITEM" alter column "ITEM_NUMBER" set null
-alter table "ITEM"."ITEM" alter column "NAME" set null
-alter table "ITEM"."ITEM_OPTION" alter column "DESCRIPTION" set null
-alter table "ITEM"."ITEM_OPTION" alter column "NAME" set null
-alter table "ITEM"."ITEM_OPTION" alter column "TYPE" set null
-alter table "ITEM"."ITEM_OPTION_SPECIFICATION" alter column "NAME" set null
-alter table "ITEM"."ITEM_OPTION_SPECIFICATION" alter column "ID_ITEM_SPECIFICATION" set null
-alter table "ITEM"."ITEM_OPTION_SPECIFICATION" alter column "ID_ITEM_OPTION" set null
-alter table "ITEM"."ITEM_SPECIFICATION" alter column "AUDIT_CREATED_BY" set null
-alter table "ITEM"."ITEM_SPECIFICATION" alter column "AUDIT_CREATED_ON" set null
-alter table "ITEM"."ITEM_SPECIFICATION" alter column "AUDIT_LAST_UPDATED_BY" set null
-alter table "ITEM"."ITEM_SPECIFICATION" alter column "AUDIT_LAST_UPDATED_ON" set null
-alter table "ITEM"."ITEM_SPECIFICATION" alter column "ITEM_SPECIFICATION_NUMBER" set null
-alter table "ITEM"."ITEM_SPECIFICATION" alter column "ID_ITEM" set null
-alter table "ITEM"."OFFER" alter column "AUDIT_CREATED_BY" set null
-alter table "ITEM"."OFFER" alter column "AUDIT_CREATED_ON" set null
-alter table "ITEM"."OFFER" alter column "AUDIT_LAST_UPDATED_BY" set null
-alter table "ITEM"."OFFER" alter column "AUDIT_LAST_UPDATED_ON" set null
-alter table "ITEM"."OFFER" alter column "NAME" set null
+SET SCHEMA ITEM
+INSERT INTO ITEM VALUES(1,0,'TESTER','1970-01-01 01:01:01.000000000','TESTER','1970-01-01 01:01:01.000000000','TEST','ITM-TEST-001-04711','Test Item No. 1')

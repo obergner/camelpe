@@ -74,6 +74,8 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 
 	private static final String NON_EXISTING_ITEM_NAME_PART = "NON_EXISTING_ITEM_NAME_PART";
 
+	private ItemDao cachedItemDao;
+
 	// -------------------------------------------------------------------------
 	// Test fixture
 	// -------------------------------------------------------------------------
@@ -411,11 +413,15 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	}
 
 	private ItemDao lookupItemDao() throws NamingException {
-		final InitialContext ic = new InitialContext();
+		if (this.cachedItemDao == null) {
+			final InitialContext ic = new InitialContext();
 
-		return new EjbExceptionUnwrappingItemDaoDelegate(
-				(ItemDao) ic
-						.lookup("java:global/test/TransactionInitiatingItemDaoProxyBean"));
+			this.cachedItemDao = new EjbExceptionUnwrappingItemDaoDelegate(
+					(ItemDao) ic
+							.lookup("java:global/test/TransactionInitiatingItemDaoProxyBean"));
+		}
+
+		return this.cachedItemDao;
 	}
 
 	private static class EjbExceptionUnwrappingItemDaoDelegate implements
