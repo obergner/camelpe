@@ -191,10 +191,6 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			throws DataAccessRuntimeException, ObjectTransientException {
 		final T managedEntity;
 		if (!entityManager().contains(persistentOrDetachedObject)) {
-			/*
-			 * FIXME: This will help in removing entities that have never been
-			 * persisted!
-			 */
 			managedEntity = entityManager().merge(persistentOrDetachedObject);
 		} else {
 			managedEntity = persistentOrDetachedObject;

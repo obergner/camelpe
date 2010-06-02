@@ -19,7 +19,7 @@ alter table ITEM.ITEM_OPTION_SPECIFICATION \u000a        add constraint FK_ITEMO
 alter table ITEM.ITEM_SPECIFICATION \u000a        add constraint FK_ITEMSPEC_ITEM \u000a        foreign key (ID_ITEM) \u000a        references ITEM.ITEM \u000a        on delete cascade
 alter table ITEM.OFFER \u000a        add constraint FK_OFFER_ITEM \u000a        foreign key (ID_ITEM) \u000a        references ITEM.ITEM
 alter table ITEM.PROMOTION \u000a        add constraint FK_PROMOTION_OFFER \u000a        foreign key (ID_OFFER) \u000a        references ITEM.OFFER
-create sequence ITEM.ID_SEQ_ITEM
+create sequence ITEM.ID_SEQ_ITEM start with 1000
 create sequence ITEM.ID_SEQ_ITEM_OPTION
 create sequence ITEM.ID_SEQ_ITEM_OPTION_SPEC
 create sequence ITEM.ID_SEQ_ITEM_SPEC

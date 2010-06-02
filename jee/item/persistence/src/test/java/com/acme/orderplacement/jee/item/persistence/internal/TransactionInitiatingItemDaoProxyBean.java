@@ -3,6 +3,7 @@
  */
 package com.acme.orderplacement.jee.item.persistence.internal;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,6 +11,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.jee.framework.persistence.exception.DataAccessRuntimeException;
@@ -40,6 +42,9 @@ import com.acme.orderplacement.jee.item.persistence.ItemDao;
 @Local(ItemDao.class)
 public class TransactionInitiatingItemDaoProxyBean implements ItemDao {
 
+	@Inject
+	private Principal user;
+
 	@EJB(lookup = "java:global/test/JpaItemDao")
 	private ItemDao delegate;
 
@@ -62,6 +67,7 @@ public class TransactionInitiatingItemDaoProxyBean implements ItemDao {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Item> findAll() throws DataAccessRuntimeException {
+		System.out.println("USER -> " + this.user);
 		return this.delegate.findAll();
 	}
 

@@ -94,7 +94,6 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 				"META-INF/ejb-jar.xml", ArchivePaths.create("ejb-jar.xml"))
 				.addManifestResource("META-INF/glassfish/sun-ejb-jar.xml",
 						ArchivePaths.create("sun-ejb-jar.xml"));
-		System.out.println(deployment.toString(true));
 
 		return deployment;
 	}
@@ -123,6 +122,42 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	// ------------------------------------------------------------------------
 	// Tests
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#evict(java.lang.Object)}
+	 * .
+	 * 
+	 * @throws ObjectNotPersistentException
+	 * @throws DataAccessRuntimeException
+	 * @throws NamingException
+	 */
+	@Test
+	public void testEvict() throws DataAccessRuntimeException,
+			ObjectNotPersistentException, NamingException {
+		final Item existingItem = createDetachedTestItem();
+
+		lookupItemDao().evict(existingItem);
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#flush()}
+	 * .
+	 * 
+	 * @throws NamingException
+	 * @throws DataAccessRuntimeException
+	 * @throws PersistentStateDeletedException
+	 * @throws PersistentStateConcurrentlyModifiedException
+	 * @throws PersistentStateLockedException
+	 */
+	@Test
+	public void testFlush() throws PersistentStateLockedException,
+			PersistentStateConcurrentlyModifiedException,
+			PersistentStateDeletedException, DataAccessRuntimeException,
+			NamingException {
+		lookupItemDao().flush();
+	}
 
 	/**
 	 * Test method for
@@ -204,40 +239,6 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makeTransient(java.lang.Object)}
-	 * .
-	 * 
-	 * @throws ObjectTransientException
-	 * @throws DataAccessRuntimeException
-	 * @throws PersistentStateLockedException
-	 * @throws PersistentStateDeletedException
-	 * @throws PersistentStateConcurrentlyModifiedException
-	 * @throws NoSuchPersistentObjectException
-	 * @throws NamingException
-	 */
-	@Test
-	public void testMakeTransient_DeletesItem()
-			throws PersistentStateConcurrentlyModifiedException,
-			PersistentStateDeletedException, PersistentStateLockedException,
-			DataAccessRuntimeException, ObjectTransientException,
-			NoSuchPersistentObjectException, NamingException {
-		final Item existingItem = lookupItemDao().findById(EXISTING_ITEM_ID,
-				false);
-
-		final int numberOfItemsBefore = lookupItemDao().findAll().size();
-
-		lookupItemDao().makeTransient(existingItem);
-		lookupItemDao().flush();
-
-		final int numberOfItemsAfter = lookupItemDao().findAll().size();
-
-		assertEquals("makeTransient('" + existingItem
-				+ "') did NOT delete Item", numberOfItemsBefore - 1,
-				numberOfItemsAfter);
-	}
-
-	/**
-	 * Test method for
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#findAll()}
 	 * .
 	 * 
@@ -277,6 +278,40 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 
 	/**
 	 * Test method for
+	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makeTransient(java.lang.Object)}
+	 * .
+	 * 
+	 * @throws ObjectTransientException
+	 * @throws DataAccessRuntimeException
+	 * @throws PersistentStateLockedException
+	 * @throws PersistentStateDeletedException
+	 * @throws PersistentStateConcurrentlyModifiedException
+	 * @throws NoSuchPersistentObjectException
+	 * @throws NamingException
+	 */
+	@Test
+	public void testMakeTransient_DeletesItem()
+			throws PersistentStateConcurrentlyModifiedException,
+			PersistentStateDeletedException, PersistentStateLockedException,
+			DataAccessRuntimeException, ObjectTransientException,
+			NoSuchPersistentObjectException, NamingException {
+		final Item existingItem = lookupItemDao().findById(EXISTING_ITEM_ID,
+				false);
+
+		final int numberOfItemsBefore = lookupItemDao().findAll().size();
+
+		lookupItemDao().makeTransient(existingItem);
+		lookupItemDao().flush();
+
+		final int numberOfItemsAfter = lookupItemDao().findAll().size();
+
+		assertEquals("makeTransient('" + existingItem
+				+ "') did NOT delete Item", numberOfItemsBefore - 1,
+				numberOfItemsAfter);
+	}
+
+	/**
+	 * Test method for
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistent(java.lang.Object)}
 	 * .
 	 * 
@@ -307,6 +342,8 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistentOrUpdatePersistentState(java.lang.Object)}
 	 * .
 	 * 
+	 * FIXME: Make this test pass.
+	 * 
 	 * @throws DataAccessRuntimeException
 	 * @throws NamingException
 	 */
@@ -330,6 +367,8 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistentOrUpdatePersistentState(java.lang.Object)}
 	 * .
 	 * 
+	 * FIXME: Make this test pass.
+	 * 
 	 * @throws DataAccessRuntimeException
 	 * @throws NamingException
 	 */
@@ -348,42 +387,6 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 		assertEquals("makePersistentOrUpdatePersistentState('" + item
 				+ "') did NOT persist transient Item", numberOfItemsBefore + 1,
 				numberOfItemsAfter);
-	}
-
-	/**
-	 * Test method for
-	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#evict(java.lang.Object)}
-	 * .
-	 * 
-	 * @throws ObjectNotPersistentException
-	 * @throws DataAccessRuntimeException
-	 * @throws NamingException
-	 */
-	@Test
-	public void testEvict() throws DataAccessRuntimeException,
-			ObjectNotPersistentException, NamingException {
-		final Item existingItem = createDetachedTestItem();
-
-		lookupItemDao().evict(existingItem);
-	}
-
-	/**
-	 * Test method for
-	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#flush()}
-	 * .
-	 * 
-	 * @throws NamingException
-	 * @throws DataAccessRuntimeException
-	 * @throws PersistentStateDeletedException
-	 * @throws PersistentStateConcurrentlyModifiedException
-	 * @throws PersistentStateLockedException
-	 */
-	@Test
-	public void testFlush() throws PersistentStateLockedException,
-			PersistentStateConcurrentlyModifiedException,
-			PersistentStateDeletedException, DataAccessRuntimeException,
-			NamingException {
-		lookupItemDao().flush();
 	}
 
 	// ------------------------------------------------------------------------
