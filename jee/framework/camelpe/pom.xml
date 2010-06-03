@@ -19,6 +19,11 @@
 		<!--
 			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--
 			| Compile time dependencies 
 		-->

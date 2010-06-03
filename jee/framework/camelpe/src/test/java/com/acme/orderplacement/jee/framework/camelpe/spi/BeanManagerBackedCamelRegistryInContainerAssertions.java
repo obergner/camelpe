@@ -3,6 +3,9 @@
  */
 package com.acme.orderplacement.jee.framework.camelpe.spi;
 
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertSame;
+
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 
@@ -52,6 +55,7 @@ import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.impl.base.asset.ByteArrayAsset;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -73,7 +77,6 @@ public class BeanManagerBackedCamelRegistryInContainerAssertions {
 	@Inject
 	private BeanManager beanManager;
 
-	// -------------------------------------------------------------------------
 	// Test fixture
 	// -------------------------------------------------------------------------
 
@@ -81,8 +84,10 @@ public class BeanManagerBackedCamelRegistryInContainerAssertions {
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap.create("test.jar",
 				JavaArchive.class).addPackages(true,
-				Validate.class.getPackage(), CamelContext.class.getPackage(),
-				Builder.class.getPackage(), TimeUnitAdapter.class.getPackage(),
+				Validate.class.getPackage(),
+				ApplicationScopedBean.class.getPackage(),
+				CamelContext.class.getPackage(), Builder.class.getPackage(),
+				TimeUnitAdapter.class.getPackage(),
 				CamelInvocationHandler.class.getPackage(),
 				BrowseComponent.class.getPackage(),
 				DataSetEndpoint.class.getPackage(),
@@ -122,6 +127,34 @@ public class BeanManagerBackedCamelRegistryInContainerAssertions {
 						ArchivePaths.create("beans.xml"));
 
 		return testModule;
+	}
+
+	// -------------------------------------------------------------------------
+	// Tests
+	// -------------------------------------------------------------------------
+
+	@Test
+	public void assertThatBeanManagerBackedCamelRegistryCanLookupApplicationScopedCdiBean() {
+		final Object applicationScopedCdiBean = classUnderTest().lookup(
+				ApplicationScopedBean.NAME);
+
+		assertNotNull("lookup(" + ApplicationScopedBean.NAME
+				+ ") should have returned an instance of ["
+				+ ApplicationScopedBean.class.getName() + "] yet it didn't",
+				applicationScopedCdiBean);
+	}
+
+	@Test
+	public void assertThatLookingUpAnApplicationScopedCdiBeanAlwaysReturnsTheSameInstance() {
+		final Object applicationScopedCdiBean1 = classUnderTest().lookup(
+				ApplicationScopedBean.NAME);
+		final Object applicationScopedCdiBean2 = classUnderTest().lookup(
+				ApplicationScopedBean.NAME);
+
+		assertSame("lookup(" + ApplicationScopedBean.NAME
+				+ ") should always return the same instance of ["
+				+ ApplicationScopedBean.class.getName() + "] yet it didn't",
+				applicationScopedCdiBean1, applicationScopedCdiBean2);
 	}
 
 	// -------------------------------------------------------------------------
