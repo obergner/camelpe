@@ -94,7 +94,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 				"From " + getPersistentClass().getName(), getPersistentClass())
 				.getResultList();
 		getLog().debug("Returned all ({}) entities of type = [{}].",
-				allEntities.size(), getPersistentClass().getName());
+				Integer.valueOf(allEntities.size()),
+				getPersistentClass().getName());
 
 		return Collections.<T> unmodifiableList(allEntities);
 	}

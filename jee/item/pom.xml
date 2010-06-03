@@ -36,9 +36,9 @@
 	<modules>
 		<module>persistence</module>
 		<module>service</module>
-		<module>itemimport</module>
 		<module>wsapi</module>
 		<module>ws</module>
+		<module>itemimport</module>
 	</modules>
 
 </project>

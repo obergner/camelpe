@@ -15,8 +15,6 @@ import javax.persistence.NoResultException;
  */
 public interface WebserviceLogger {
 
-	String SERVICE_NAME = "log.ws.webserviceLogger";
-
 	/**
 	 * @param webserviceRequestDto
 	 * @return
