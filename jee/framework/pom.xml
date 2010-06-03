@@ -38,6 +38,7 @@
 		<module>common</module>
 		<module>persistence</module>
 		<module>wslog</module>
+		<module>camelpe</module>
 	</modules>
 
 </project>

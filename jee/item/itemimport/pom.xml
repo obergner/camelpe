@@ -38,11 +38,6 @@
 			| Compile time dependencies 
 		-->
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.acme.orderplacement.integration</groupId>
 			<artifactId>orderplacement.integration.inbound.external</artifactId>
 			<scope>compile</scope>

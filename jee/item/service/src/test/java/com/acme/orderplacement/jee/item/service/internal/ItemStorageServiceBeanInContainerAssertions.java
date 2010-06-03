@@ -126,7 +126,6 @@ public class ItemStorageServiceBeanInContainerAssertions {
 	@Test(expected = IllegalArgumentException.class)
 	public final void registerItemShouldRefuseToRegisterNullItem()
 			throws EntityAlreadyRegisteredException, IllegalArgumentException {
-		System.out.println("CLASS_UNDER_TEST -----> " + this.classUnderTest);
 		this.classUnderTest.registerItem(null);
 	}
 
