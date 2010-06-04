@@ -8,16 +8,16 @@ import javax.inject.Named;
 
 /**
  * <p>
- * TODO: Insert short summary for ApplicationScopedBean
+ * TODO: Insert short summary for ExplicitlyNamedApplicationScopedBean
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@Named(ApplicationScopedBean.NAME)
+@Named(ExplicitlyNamedApplicationScopedBean.NAME)
 @ApplicationScoped
-public class ApplicationScopedBean {
+public class ExplicitlyNamedApplicationScopedBean {
 
-	public static final String NAME = "applicationScopedBean";
+	public static final String NAME = "explicitlyNamedApplicationScopedBean";
 
 }

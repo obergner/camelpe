@@ -11,7 +11,6 @@ import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.acme.orderplacement.jee.item.itemimport.config.ItemImportConfig;
 import com.acme.orderplacement.service.item.ItemStorageService;
 
 /**
@@ -27,7 +26,7 @@ public class SampleItemImportConfig implements ItemImportConfig {
 
 	private static final String BROKER_URL = "vm://localhost?broker.persistent=false";
 
-	@Resource(name = ItemStorageService.SERVICE_NAME)
+	@Resource
 	private ItemStorageService itemStorageService;
 
 	/**
