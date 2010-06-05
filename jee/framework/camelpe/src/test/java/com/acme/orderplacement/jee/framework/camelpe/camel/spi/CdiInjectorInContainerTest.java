@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.spi;
+package com.acme.orderplacement.jee.framework.camelpe.camel.spi;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertSame;
@@ -20,11 +20,11 @@ import org.jboss.shrinkwrap.impl.base.asset.ByteArrayAsset;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.acme.orderplacement.jee.framework.camelpe.spi.beans.injector.ApplicationScopedBean;
-import com.acme.orderplacement.jee.framework.camelpe.spi.beans.injector.BeanHavingNoInjectionPoints;
-import com.acme.orderplacement.jee.framework.camelpe.spi.beans.injector.BeanHavingOneInjectionPoint;
-import com.acme.orderplacement.jee.framework.camelpe.spi.beans.injector.BeanHavingPostConstructAnnotatedMethod;
-import com.acme.orderplacement.jee.framework.camelpe.spi.beans.injector.SingletonScopedBean;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector.ApplicationScopedBean;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector.BeanHavingNoInjectionPoints;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector.BeanHavingOneInjectionPoint;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector.BeanHavingPostConstructAnnotatedMethod;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector.SingletonScopedBean;
 
 /**
  * <p>

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.spi;
+package com.acme.orderplacement.jee.framework.camelpe.camel.spi;
 
 import java.util.Collections;
 import java.util.HashMap;

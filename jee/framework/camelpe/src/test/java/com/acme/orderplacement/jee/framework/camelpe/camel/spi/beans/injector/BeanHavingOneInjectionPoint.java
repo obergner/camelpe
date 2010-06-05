@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.spi.beans.injector;
+package com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector;
 
 import javax.inject.Inject;
 

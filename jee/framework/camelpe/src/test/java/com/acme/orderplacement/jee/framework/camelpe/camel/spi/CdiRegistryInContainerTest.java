@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.spi;
+package com.acme.orderplacement.jee.framework.camelpe.camel.spi;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -61,9 +61,9 @@ import org.jboss.shrinkwrap.impl.base.asset.ByteArrayAsset;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.acme.orderplacement.jee.framework.camelpe.spi.beans.registry.CdiBeansSharingTheSameSuperclass;
-import com.acme.orderplacement.jee.framework.camelpe.spi.beans.registry.ExplicitlyNamedApplicationScopedBean;
-import com.acme.orderplacement.jee.framework.camelpe.spi.beans.registry.ExplicitlyNamedRequestScopedBean;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.registry.CdiBeansSharingTheSameSuperclass;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.registry.ExplicitlyNamedApplicationScopedBean;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.registry.ExplicitlyNamedRequestScopedBean;
 
 /**
  * <p>
