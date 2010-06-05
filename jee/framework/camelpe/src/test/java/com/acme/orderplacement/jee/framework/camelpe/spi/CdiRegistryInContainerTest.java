@@ -61,17 +61,20 @@ import org.jboss.shrinkwrap.impl.base.asset.ByteArrayAsset;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.acme.orderplacement.jee.framework.camelpe.spi.beans.registry.CdiBeansSharingTheSameSuperclass;
+import com.acme.orderplacement.jee.framework.camelpe.spi.beans.registry.ExplicitlyNamedApplicationScopedBean;
+import com.acme.orderplacement.jee.framework.camelpe.spi.beans.registry.ExplicitlyNamedRequestScopedBean;
+
 /**
  * <p>
- * Test {@link BeanManagerBackedCamelRegistry
- * <code>BeanManagerBackedCamelRegistry</code>}.
+ * Test {@link CdiRegistry <code>CdiRegistry</code>}.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  */
 @RunWith(Arquillian.class)
 @Run(RunModeType.IN_CONTAINER)
-public class BeanManagerBackedCamelRegistryInContainerTest {
+public class CdiRegistryInContainerTest {
 
 	// ------------------------------------------------------------------------
 	// Fields
@@ -137,7 +140,7 @@ public class BeanManagerBackedCamelRegistryInContainerTest {
 	// -------------------------------------------------------------------------
 
 	@Test
-	public void assertThatBeanManagerBackedCamelRegistryCanLookupApplicationScopedCdiBean() {
+	public void assertThatCdiRegistryCanLookupApplicationScopedCdiBean() {
 		final Object applicationScopedCdiBean = classUnderTest().lookup(
 				ExplicitlyNamedApplicationScopedBean.NAME);
 
@@ -148,7 +151,7 @@ public class BeanManagerBackedCamelRegistryInContainerTest {
 	}
 
 	@Test
-	public void assertThatBeanManagerBackedCamelRegistryCanLookupApplicationScopedCdiBeanRestrictedByType() {
+	public void assertThatCdiRegistryCanLookupApplicationScopedCdiBeanRestrictedByType() {
 		final ExplicitlyNamedApplicationScopedBean applicationScopedCdiBean = classUnderTest()
 				.lookup(ExplicitlyNamedApplicationScopedBean.NAME,
 						ExplicitlyNamedApplicationScopedBean.class);
@@ -189,7 +192,7 @@ public class BeanManagerBackedCamelRegistryInContainerTest {
 	}
 
 	@Test
-	public void assertThatBeanManagerBackedCamelRegistryLooksUpAllMatchingCdiBeansByType() {
+	public void assertThatCdiRegistryLooksUpAllMatchingCdiBeansByType() {
 		final Map<String, CdiBeansSharingTheSameSuperclass> matchingBeansByName = classUnderTest()
 				.lookupByType(CdiBeansSharingTheSameSuperclass.class);
 
@@ -207,7 +210,7 @@ public class BeanManagerBackedCamelRegistryInContainerTest {
 	// Internal
 	// -------------------------------------------------------------------------
 
-	private BeanManagerBackedCamelRegistry classUnderTest() {
-		return new BeanManagerBackedCamelRegistry(this.beanManager);
+	private CdiRegistry classUnderTest() {
+		return new CdiRegistry(this.beanManager);
 	}
 }

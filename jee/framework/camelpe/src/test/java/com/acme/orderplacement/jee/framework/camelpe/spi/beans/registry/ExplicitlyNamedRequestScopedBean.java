@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.spi;
+package com.acme.orderplacement.jee.framework.camelpe.spi.beans.registry;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
