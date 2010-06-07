@@ -28,18 +28,23 @@
 			| Compile time dependencies 
 		-->
 		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-core</artifactId>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--
 			| Runtime dependencies
 		-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!--
 			| Test dependencies 
 		-->
@@ -67,6 +72,15 @@
 			<groupId>org.jboss.weld</groupId>
 			<artifactId>weld-core</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<!--
+						Replaced by its successor Guava above 
+					 -->
+					<groupId>com.google.collections</groupId>
+					<artifactId>google-collections</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld</groupId>

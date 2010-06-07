@@ -52,6 +52,8 @@ public class CdiRegistry implements Registry {
 
 		final Set<Bean<?>> beans = this.delegate.getBeans(name);
 		if (beans.isEmpty()) {
+			this.log.debug(
+					"Found no bean matching name = [{}] in CDI registry", name);
 			return null;
 		}
 		if (beans.size() > 1) {

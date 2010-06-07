@@ -4,7 +4,6 @@
 package com.acme.orderplacement.jee.framework.camelpe.cdi.spi;
 
 import java.lang.reflect.Field;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.enterprise.context.spi.CreationalContext;
@@ -14,7 +13,6 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.InjectionTarget;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.EndpointInject;
 import org.apache.camel.impl.CamelPostProcessorHelper;
 import org.apache.commons.lang.Validate;
 
@@ -49,60 +47,14 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 		Validate.notNull(annotatedType, "annotatedType");
 		Validate.notNull(originalInjectionTarget, "originalInjectionTarget");
 		Validate.notNull(camelContext, "camelContext");
+		AnnotatedFieldProcessor
+				.ensureNoConflictingAnnotationsPresentOn(annotatedType
+						.getJavaClass());
 
-		return needsInjectionTargetWrapper(annotatedType.getJavaClass()) ? new CamelInjectionTargetWrapper<X>(
+		return AnnotatedFieldProcessor
+				.hasCamelInjectAnnotatedFields(annotatedType.getJavaClass()) ? new CamelInjectionTargetWrapper<X>(
 				originalInjectionTarget, camelContext)
 				: originalInjectionTarget;
-	}
-
-	private static <X> boolean needsInjectionTargetWrapper(final Class<X> type)
-			throws ResolutionException {
-		return !endpointInjectAnnotatedFieldsOf(type).isEmpty();
-	}
-
-	private static <X> Set<Field> endpointInjectAnnotatedFieldsOf(
-			final Class<X> type) throws ResolutionException {
-		final Field[] allFields = type.getFields();
-		final Set<Field> answer = new HashSet<Field>(allFields.length);
-		for (final Field aField : allFields) {
-			if (aField
-					.isAnnotationPresent(org.apache.camel.EndpointInject.class)) {
-				ensureNoConflictingAnnotationsPresentOn(aField);
-
-				answer.add(aField);
-			}
-		}
-
-		return answer;
-	}
-
-	private static void ensureNoConflictingAnnotationsPresentOn(
-			final Field endpointInjectAnnotatedField)
-			throws ResolutionException {
-		if (endpointInjectAnnotatedField
-				.isAnnotationPresent(javax.inject.Inject.class)) {
-
-			throw new ResolutionException(
-					"The field ["
-							+ endpointInjectAnnotatedField
-							+ "] is annotated with ["
-							+ org.apache.camel.EndpointInject.class.getName()
-							+ "] as well as with ["
-							+ javax.inject.Inject.class.getName()
-							+ "]. This, however, is illegal. No more than one of these two annotations must be present on any given field.");
-		}
-		if (endpointInjectAnnotatedField
-				.isAnnotationPresent(javax.enterprise.inject.Produces.class)) {
-
-			throw new ResolutionException(
-					"The field ["
-							+ endpointInjectAnnotatedField
-							+ "] is annotated with ["
-							+ org.apache.camel.EndpointInject.class.getName()
-							+ "] as well as with ["
-							+ javax.enterprise.inject.Produces.class.getName()
-							+ "]. This, however, is illegal. No more than one of these two annotations must be present on any given field.");
-		}
 	}
 
 	// -------------------------------------------------------------------------
@@ -190,24 +142,40 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 
 	private void injectEndpointsInto(final T instance)
 			throws ResolutionException {
-		final Set<Field> endpointInjectAnnotatedFields = endpointInjectAnnotatedFieldsOf(instance
-				.getClass());
-		for (final Field endpointInjectAnnotatedField : endpointInjectAnnotatedFields) {
-			injectEndpointInto(instance, endpointInjectAnnotatedField);
+		final Set<Field> camelInjectAnnotatedFields = AnnotatedFieldProcessor
+				.camelInjectAnnotatedFieldsIn(instance.getClass());
+		for (final Field camelInjectAnnotatedField : camelInjectAnnotatedFields) {
+			injectEndpointInto(instance, camelInjectAnnotatedField);
 		}
 	}
 
 	private void injectEndpointInto(final T instance,
-			final Field endpointInjectAnnotatedField)
-			throws ResolutionException {
-		final EndpointInject endpointInjectAnnotation = endpointInjectAnnotatedField
-				.getAnnotation(org.apache.camel.EndpointInject.class);
-		final Object valueToInject = this.camelPostProcessorHelper
-				.getInjectionValue(endpointInjectAnnotatedField.getType(),
-						endpointInjectAnnotation.uri(),
-						endpointInjectAnnotation.ref(),
-						endpointInjectAnnotatedField.getName());
-		setField(instance, endpointInjectAnnotatedField, valueToInject);
+			final Field camelInjectAnnotatedField) throws ResolutionException {
+		final Object valueToInject;
+		if (camelInjectAnnotatedField
+				.isAnnotationPresent(org.apache.camel.EndpointInject.class)) {
+			final org.apache.camel.EndpointInject endpointInjectAnnotation = camelInjectAnnotatedField
+					.getAnnotation(org.apache.camel.EndpointInject.class);
+			valueToInject = this.camelPostProcessorHelper.getInjectionValue(
+					camelInjectAnnotatedField.getType(),
+					endpointInjectAnnotation.uri(), endpointInjectAnnotation
+							.ref(), camelInjectAnnotatedField.getName());
+		} else if (camelInjectAnnotatedField
+				.isAnnotationPresent(org.apache.camel.Produce.class)) {
+			final org.apache.camel.Produce endpointInjectAnnotation = camelInjectAnnotatedField
+					.getAnnotation(org.apache.camel.Produce.class);
+			valueToInject = this.camelPostProcessorHelper.getInjectionValue(
+					camelInjectAnnotatedField.getType(),
+					endpointInjectAnnotation.uri(), endpointInjectAnnotation
+							.ref(), camelInjectAnnotatedField.getName());
+		} else {
+			throw new IllegalStateException("Neither ["
+					+ org.apache.camel.EndpointInject.class.getName()
+					+ "] nor [" + org.apache.camel.Produce.class
+					+ "] are present on field ["
+					+ camelInjectAnnotatedField.toString() + "]");
+		}
+		setField(instance, camelInjectAnnotatedField, valueToInject);
 	}
 
 	private void setField(final T instance, final Field fieldToSet,

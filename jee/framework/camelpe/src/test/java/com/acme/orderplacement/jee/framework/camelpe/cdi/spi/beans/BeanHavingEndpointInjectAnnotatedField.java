@@ -21,7 +21,7 @@ public class BeanHavingEndpointInjectAnnotatedField {
 
 	public static final String NAME = "beanHavingEndpointInjectAnnotatedField";
 
-	public static final String ENDPOINT_URI = "mock://testEndpoint";
+	public static final String ENDPOINT_URI = "mock://endpointInjectEndpoint";
 
 	@EndpointInject(uri = BeanHavingEndpointInjectAnnotatedField.ENDPOINT_URI)
 	public ProducerTemplate producerTemplate;

@@ -35,6 +35,7 @@ import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingEnd
 import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingEndpointInjectAndProducesAnnotatedField;
 import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingEndpointInjectAnnotatedField;
 import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingNoEndpointInjectAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingProduceAnnotatedField;
 
 /**
  * <p>
@@ -123,6 +124,30 @@ public class CamelInjectionTargetWrapperInContainerTest {
 						.isAssignableFrom(newInjectionTarget.getClass()));
 	}
 
+	@Test
+	public void assertThatInjectionTargetForReturnsWrappedInjectionTargetForBeanHavingProduceAnnotatedField() {
+		final AnnotatedType<BeanHavingProduceAnnotatedField> annotatedType = this.beanManager
+				.createAnnotatedType(BeanHavingProduceAnnotatedField.class);
+		final InjectionTarget<BeanHavingProduceAnnotatedField> originalInjectionTarget = this.beanManager
+				.createInjectionTarget(annotatedType);
+
+		final InjectionTarget<BeanHavingProduceAnnotatedField> newInjectionTarget = CamelInjectionTargetWrapper
+				.injectionTargetFor(annotatedType, originalInjectionTarget,
+						this.camelContext);
+
+		assertTrue(
+				"injectionTargetFor("
+						+ annotatedType
+						+ ", "
+						+ originalInjectionTarget
+						+ ", "
+						+ this.camelContext
+						+ ") should have returned a wrapper for the InjectionTarget passed in as the supplied "
+						+ "AnnotatedType does define a field annotated with @Produce, "
+						+ "yet it didn't", CamelInjectionTargetWrapper.class
+						.isAssignableFrom(newInjectionTarget.getClass()));
+	}
+
 	@Test(expected = ResolutionException.class)
 	public void assertThatInjectionTargetForRejectsBeanHavingEndpointInjectAndInjectAnnotatedField() {
 		final AnnotatedType<BeanHavingEndpointInjectAndInjectAnnotatedField> annotatedType = this.beanManager
@@ -179,5 +204,40 @@ public class CamelInjectionTargetWrapperInContainerTest {
 						+ creationalContext
 						+ ") should have injected a ProducerTemplate into the @EnpointInject annotated field of the supplied instance, yet it didn't",
 				instance.producerTemplate);
+	}
+
+	@Test
+	public void assertThatCamelInjectionTargetWrapperInjectsEndpointIntoProduceAnnotatedField()
+			throws Exception {
+		final Endpoint endpointToInject = new MockEndpoint(
+				BeanHavingProduceAnnotatedField.ENDPOINT_URI);
+		this.camelContext.addEndpoint(
+				BeanHavingProduceAnnotatedField.ENDPOINT_URI, endpointToInject);
+
+		final AnnotatedType<BeanHavingProduceAnnotatedField> annotatedType = this.beanManager
+				.createAnnotatedType(BeanHavingProduceAnnotatedField.class);
+		final InjectionTarget<BeanHavingProduceAnnotatedField> originalInjectionTarget = this.beanManager
+				.createInjectionTarget(annotatedType);
+
+		final Bean<BeanHavingProduceAnnotatedField> bean = (Bean<BeanHavingProduceAnnotatedField>) this.beanManager
+				.getBeans(BeanHavingProduceAnnotatedField.NAME).iterator()
+				.next();
+		final CreationalContext<BeanHavingProduceAnnotatedField> creationalContext = this.beanManager
+				.createCreationalContext(bean);
+		final BeanHavingProduceAnnotatedField instance = bean
+				.create(creationalContext);
+
+		final InjectionTarget<BeanHavingProduceAnnotatedField> wrappedInjectionTarget = CamelInjectionTargetWrapper
+				.injectionTargetFor(annotatedType, originalInjectionTarget,
+						this.camelContext);
+		wrappedInjectionTarget.inject(instance, creationalContext);
+
+		assertNotNull(
+				"inject("
+						+ instance
+						+ ", "
+						+ creationalContext
+						+ ") should have injected a ProducerTemplate into the @Produce annotated field of the supplied instance, yet it didn't",
+				instance.producer);
 	}
 }
