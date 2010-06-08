@@ -8,8 +8,6 @@ import static junit.framework.Assert.assertFalse;
 import javax.inject.Inject;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.EndpointInject;
-import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.jboss.arquillian.api.Deployment;
@@ -24,7 +22,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
-import com.acme.orderplacement.jee.framework.camelpe.routes.SampleRoutes;
 
 /**
  * <p>
@@ -44,11 +41,8 @@ public class CamelExtensionInContainerTest {
 	@Inject
 	private CamelContext camelContext;
 
-	@EndpointInject(uri = "mock:sampleTarget")
-	private MockEndpoint resultEndpoint;
-
-	@Produce(uri = "direct:testOut")
-	private ProducerTemplate template;
+	@Inject
+	private SampleProducer sampleProducer;
 
 	// -------------------------------------------------------------------------
 	// Test fixture
@@ -66,13 +60,8 @@ public class CamelExtensionInContainerTest {
 								.create("services/javax.enterprise.inject.spi.Extension"))
 				.addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
 						ArchivePaths.create("beans.xml"));
-		System.out.println(testModule.toString(true));
 
 		return testModule;
-	}
-
-	public void addMockEndpointsToCamelContext() {
-
 	}
 
 	// -------------------------------------------------------------------------
@@ -80,7 +69,41 @@ public class CamelExtensionInContainerTest {
 	// -------------------------------------------------------------------------
 
 	@Test
-	public void assertThatCamelExtensionRegistersNewlyDiscoveredRouteBuilder() {
-		assertFalse(this.camelContext.getRouteDefinitions().isEmpty());
+	public void assertThatCamelExtensionDiscoversAndRegistersRoute() {
+		assertFalse(
+				"Camel CDI extension should have registered at least one Route "
+						+ "with CamelContext. This, however, is not the case.",
+				this.camelContext.getRouteDefinitions().isEmpty());
+	}
+
+	@Test
+	public void assertThatRouteDiscoveredAndRegisteredByCamelExtensionBasicallyWorks()
+			throws Exception {
+		final String testMessage = "Test message";
+
+		final MockEndpoint mockEndpoint = this.camelContext.getEndpoint(
+				SampleRoutes.SAMPLE_TARGET_EP, MockEndpoint.class);
+		mockEndpoint.expectedMinimumMessageCount(1);
+
+		final ProducerTemplate producerTemplate = this.camelContext
+				.createProducerTemplate();
+		producerTemplate.sendBodyAndHeader(SampleRoutes.SAMPLE_SOURCE_EP,
+				testMessage, "foo", "bar");
+
+		mockEndpoint.assertIsSatisfied();
+	}
+
+	@Test
+	public void assertThatCdiConfiguredProducerBasicallyWorks()
+			throws Exception {
+		final String testMessage = "Test message";
+
+		final MockEndpoint mockEndpoint = this.camelContext.getEndpoint(
+				SampleRoutes.SAMPLE_TARGET_EP, MockEndpoint.class);
+		mockEndpoint.expectedMinimumMessageCount(1);
+
+		this.sampleProducer.sendBody(testMessage);
+
+		mockEndpoint.assertIsSatisfied();
 	}
 }

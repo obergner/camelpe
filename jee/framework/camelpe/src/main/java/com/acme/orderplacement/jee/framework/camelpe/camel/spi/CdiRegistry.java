@@ -47,13 +47,15 @@ public class CdiRegistry implements Registry {
 	@Override
 	public Object lookup(final String name) {
 		Validate.notEmpty(name, "name");
-		this.log.trace("Looking up bean using name = [{}] in CDI registry ...",
+		getLog().trace("Looking up bean using name = [{}] in CDI registry ...",
 				name);
 
-		final Set<Bean<?>> beans = this.delegate.getBeans(name);
+		final Set<Bean<?>> beans = getDelegate().getBeans(name);
 		if (beans.isEmpty()) {
-			this.log.debug(
-					"Found no bean matching name = [{}] in CDI registry", name);
+			getLog()
+					.debug(
+							"Found no bean matching name = [{}] in CDI registry.",
+							name);
 			return null;
 		}
 		if (beans.size() > 1) {
@@ -62,13 +64,13 @@ public class CdiRegistry implements Registry {
 							+ "], but got [" + beans.size() + "]");
 		}
 		final Bean<?> bean = beans.iterator().next();
-		this.log.debug("Found bean [{}] matching name = [{}] in CDI registry",
+		getLog().debug("Found bean [{}] matching name = [{}] in CDI registry.",
 				bean, name);
 
-		final CreationalContext<?> creationalContext = this.delegate
+		final CreationalContext<?> creationalContext = getDelegate()
 				.createCreationalContext(null);
 
-		return this.delegate.getReference(bean, bean.getBeanClass(),
+		return getDelegate().getReference(bean, bean.getBeanClass(),
 				creationalContext);
 	}
 
@@ -80,7 +82,7 @@ public class CdiRegistry implements Registry {
 	public <T> T lookup(final String name, final Class<T> type) {
 		Validate.notEmpty(name, "name");
 		Validate.notNull(type, "type");
-		this.log
+		getLog()
 				.trace(
 						"Looking up bean using name = [{}] having expected type = [{}] in CDI registry ...",
 						name, type.getName());
@@ -94,32 +96,41 @@ public class CdiRegistry implements Registry {
 	@Override
 	public <T> Map<String, T> lookupByType(final Class<T> type) {
 		Validate.notNull(type, "type");
-		this.log
+		getLog()
 				.trace(
 						"Looking up all beans having expected type = [{}] in CDI registry ...",
 						type.getName());
 
-		final Set<Bean<?>> beans = this.delegate.getBeans(type);
+		final Set<Bean<?>> beans = getDelegate().getBeans(type);
 		if (beans.isEmpty()) {
-			this.log
+			getLog()
 					.debug(
-							"Found no beans having expected type = [{}] in CDI registry",
+							"Found no beans having expected type = [{}] in CDI registry.",
 							type.getName());
 
 			return Collections.emptyMap();
 		}
-		this.log.debug(
-				"Found [{}] beans having expected type = [{}] in CDI registry",
-				Integer.valueOf(beans.size()), type.getName());
+		getLog()
+				.debug(
+						"Found [{}] beans having expected type = [{}] in CDI registry.",
+						Integer.valueOf(beans.size()), type.getName());
 
 		final Map<String, T> beansByName = new HashMap<String, T>(beans.size());
-		final CreationalContext<?> creationalContext = this.delegate
+		final CreationalContext<?> creationalContext = getDelegate()
 				.createCreationalContext(null);
 		for (final Bean<?> bean : beans) {
-			beansByName.put(bean.getName(), type.cast(this.delegate
+			beansByName.put(bean.getName(), type.cast(getDelegate()
 					.getReference(bean, type, creationalContext)));
 		}
 
 		return beansByName;
+	}
+
+	private Logger getLog() {
+		return this.log;
+	}
+
+	private BeanManager getDelegate() {
+		return this.delegate;
 	}
 }

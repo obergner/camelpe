@@ -181,6 +181,7 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	private void setField(final T instance, final Field fieldToSet,
 			final Object valueToInject) throws ResolutionException {
 		try {
+			fieldToSet.setAccessible(true);
 			fieldToSet.set(instance, valueToInject);
 		} catch (final Exception e) {
 			throw new ResolutionException("Failed to inject [" + valueToInject

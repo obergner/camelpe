@@ -77,6 +77,6 @@ class CdiCamelContext extends DefaultCamelContext {
 	@Override
 	public String toString() {
 		return "CDI CamelContext [name = " + getName() + " | beanManager = "
-				+ this.beanManager + "]";
+				+ this.beanManager.getClass().getName() + "]";
 	}
 }

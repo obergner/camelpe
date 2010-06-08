@@ -65,6 +65,7 @@ public class CamelContextBean implements Bean<CamelContext> {
 	/**
 	 * @see javax.enterprise.inject.spi.Bean#getQualifiers()
 	 */
+	@SuppressWarnings("serial")
 	@Override
 	public Set<Annotation> getQualifiers() {
 		final Set<Annotation> qualifiers = new HashSet<Annotation>();

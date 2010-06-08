@@ -3,16 +3,16 @@
  */
 package com.acme.orderplacement.jee.framework.camelpe;
 
+import java.util.Set;
+
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AfterDeploymentValidation;
-import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.BeforeBeanDiscovery;
 import javax.enterprise.inject.spi.Extension;
-import javax.enterprise.inject.spi.InjectionTarget;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.inject.spi.ProcessInjectionTarget;
 
 import org.apache.camel.CamelContext;
@@ -32,87 +32,118 @@ import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.CamelInjectionTarge
  */
 class CamelExtension implements Extension {
 
+	// -------------------------------------------------------------------------
+	// Fields
+	// -------------------------------------------------------------------------
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	private CamelContext cdiCamelContext;
 
-	void intializeCamel(@Observes final BeforeBeanDiscovery bbd,
+	// -------------------------------------------------------------------------
+	// Lifecycle callbacks
+	// -------------------------------------------------------------------------
+
+	void intializeCamelContext(@Observes final BeforeBeanDiscovery bbd,
 			final BeanManager beanManager) {
-		this.log.debug("Initializing the Camel subsystem ...");
+		getLog().debug("Initializing CamelContext ...");
 
 		this.cdiCamelContext = new CdiCamelContext(beanManager);
 
-		this.log.debug("Finished initializing the Camel subsystem [{}]",
+		getLog().debug("Finished initializing CamelContext [{}].",
 				this.cdiCamelContext);
 	}
 
-	<T> void processAnnotatedType(@Observes final ProcessAnnotatedType<T> pat,
-			final BeanManager beanManager) throws Exception {
-		this.log.debug("Processing type [{}] ...", pat.getAnnotatedType()
-				.getJavaClass().getName());
-
-		if (RouteBuilder.class.isAssignableFrom(pat.getAnnotatedType()
-				.getJavaClass())) {
-			processRouteBuilder(pat, beanManager);
-		}
-	}
-
-	<T> void processInjectionTarget(
+	<T> void customizeInjectionTargetForEndpointInjection(
 			@Observes final ProcessInjectionTarget<T> pit) {
-		this.log.debug("Processing injection target [{}] ...", pit);
-
 		pit.setInjectionTarget(CamelInjectionTargetWrapper.injectionTargetFor(
 				pit.getAnnotatedType(), pit.getInjectionTarget(),
 				this.cdiCamelContext));
 
-		this.log.debug("Finished processing injection target [{}]", pit);
+		getLog().debug(
+				"Customized InjectionTarget [{}] for AnnotatedType [{}] in "
+						+ "order to enable Camel endpoint injection.", pit,
+				pit.getAnnotatedType());
 	}
 
 	void registerCamelContext(@Observes final AfterBeanDiscovery abd) {
 		abd.addBean(new CamelContextBean(this.cdiCamelContext));
-		this.log
-				.debug(
-						"Camel subsystem [{}] has been registered with the BeanManager",
-						this.cdiCamelContext);
+
+		getLog().debug(
+				"CamelContext [{}] has been registered with the BeanManager.",
+				this.cdiCamelContext);
 	}
 
-	void startCamel(@Observes final AfterDeploymentValidation adv) {
+	void afterDeploymentValidation(
+			@Observes final AfterDeploymentValidation adv,
+			final BeanManager beanManager) {
+		registerDiscoveredRoutes(adv, beanManager);
+		startCamelContext(adv);
+	}
+
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
+
+	private void startCamelContext(final AfterDeploymentValidation adv) {
 		try {
-			this.log.debug("Starting the Camel subsystem [{}] ...",
+			getLog().debug("Starting CamelContext [{}] ...",
 					this.cdiCamelContext);
 
 			this.cdiCamelContext.start();
 
-			this.log.debug("Camel subsystem [{}] has been started",
+			getLog().debug("CamelContext [{}] has been started.",
 					this.cdiCamelContext);
 		} catch (final Exception e) {
-			this.log.error(
-					"Failed to start Camel subsystem: " + e.getMessage(), e);
+			getLog()
+					.error("Failed to start CamelContext: " + e.getMessage(), e);
 			adv.addDeploymentProblem(e);
 		}
 	}
 
-	private <T> void processRouteBuilder(final ProcessAnnotatedType<T> pat,
-			final BeanManager beanManager) throws Exception {
-		final AnnotatedType<RouteBuilder> routeBuilderType = (AnnotatedType<RouteBuilder>) pat
-				.getAnnotatedType();
+	private <T> void registerDiscoveredRoutes(
+			final AfterDeploymentValidation adv, final BeanManager beanManager) {
+		try {
+			getLog().debug(
+					"Registering discovered Routes with CamelContext [{}] ...",
+					this.cdiCamelContext);
 
-		this.log.debug("Processing RouteBuilder definition [{}] ...", pat
-				.getAnnotatedType().getJavaClass().getName());
+			final Set<Bean<?>> routeBuilderBeans = beanManager
+					.getBeans(RouteBuilder.class);
+			for (final Bean<?> routeBuilderBean : routeBuilderBeans) {
+				registerOneDiscoveredRoute(beanManager, routeBuilderBean);
+			}
 
-		final InjectionTarget<RouteBuilder> injectionTarget = beanManager
-				.createInjectionTarget(routeBuilderType);
-		final CreationalContext<RouteBuilder> creationalContext = beanManager
-				.createCreationalContext(null);
+			getLog()
+					.debug(
+							"Registered [{}] discovered Route(s) with CamelContext [{}].",
+							Integer.valueOf(routeBuilderBeans.size()),
+							this.cdiCamelContext);
+		} catch (final Exception e) {
+			getLog().error(
+					"Failed to register discovered Route with CamelContext: "
+							+ e.getMessage(), e);
+			adv.addDeploymentProblem(e);
+		}
+	}
 
-		final RouteBuilder routeBuilder = injectionTarget
-				.produce(creationalContext);
-		injectionTarget.inject(routeBuilder, creationalContext);
+	private void registerOneDiscoveredRoute(final BeanManager beanManager,
+			final Bean<?> routeBuilderBean) throws Exception {
+		final CreationalContext<?> creationalContext = beanManager
+				.createCreationalContext(routeBuilderBean);
+		final RouteBuilder routeBuilderInstance = RouteBuilder.class
+				.cast(beanManager.getReference(routeBuilderBean,
+						RouteBuilder.class, creationalContext));
+		this.cdiCamelContext.addRoutes(routeBuilderInstance);
+		getLog().debug(
+				"Registered discovered Route [{}] with CamelContext [{}].",
+				routeBuilderInstance, this.cdiCamelContext);
+	}
 
-		this.cdiCamelContext.addRoutes(routeBuilder);
-
-		this.log.debug(
-				"New RouteBuilder instance [{}] added to Camel context [{}]",
-				routeBuilder, this.cdiCamelContext);
+	/**
+	 * @return the log
+	 */
+	private Logger getLog() {
+		return this.log;
 	}
 }

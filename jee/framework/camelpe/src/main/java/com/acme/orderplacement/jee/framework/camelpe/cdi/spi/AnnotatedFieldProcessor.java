@@ -5,6 +5,9 @@ package com.acme.orderplacement.jee.framework.camelpe.cdi.spi;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import javax.enterprise.inject.Produces;
@@ -49,7 +52,7 @@ abstract class AnnotatedFieldProcessor {
 	public static <X> void ensureNoConflictingAnnotationsPresentOn(
 			final Class<X> type) throws ResolutionException {
 		final Set<Field> fieldsHavingConflictingAnnotations = Sets.filter(
-				ImmutableSet.copyOf(type.getFields()),
+				ImmutableSet.copyOf(allFieldsAndSuperclassFieldsIn(type)),
 				HAS_CONFLICTING_CDI_ANNOTATIONS);
 		if (!fieldsHavingConflictingAnnotations.isEmpty()) {
 			final String error = buildErrorMessageFrom(fieldsHavingConflictingAnnotations);
@@ -74,8 +77,21 @@ abstract class AnnotatedFieldProcessor {
 	 */
 	public static <X> Set<Field> camelInjectAnnotatedFieldsIn(
 			final Class<X> type) {
-		return Sets.filter(ImmutableSet.copyOf(type.getFields()),
+		return Sets.filter(ImmutableSet
+				.copyOf(allFieldsAndSuperclassFieldsIn(type)),
 				IS_CAMEL_INJECT_ANNOTATED);
+	}
+
+	private static <X> Field[] allFieldsAndSuperclassFieldsIn(
+			final Class<X> type) throws SecurityException {
+		final List<Field> answer = new ArrayList<Field>();
+		Class<? super X> currentType = type;
+		while ((currentType != null) && (currentType != Object.class)) {
+			answer.addAll(Arrays.asList(currentType.getDeclaredFields()));
+			currentType = currentType.getSuperclass();
+		}
+
+		return answer.toArray(new Field[answer.size()]);
 	}
 
 	private static String buildErrorMessageFrom(
@@ -84,21 +100,21 @@ abstract class AnnotatedFieldProcessor {
 		for (final Field fieldHavingConflictingAnnotations : fieldsHavingConflictingAnnotations) {
 			error.append(fieldHavingConflictingAnnotations).append(", ");
 		}
-		error.delete(error.lastIndexOf(","), error.lastIndexOf(",") + 1)
+		error.delete(error.lastIndexOf(","), error.lastIndexOf(",") + 2)
 				.append("]");
 
 		error.append(" is/are annotated with one of [");
 		for (final Class<? extends Annotation> camelAnnotation : CAMEL) {
 			error.append(camelAnnotation.getName()).append(", ");
 		}
-		error.delete(error.lastIndexOf(","), error.lastIndexOf(",") + 1)
+		error.delete(error.lastIndexOf(","), error.lastIndexOf(",") + 2)
 				.append("]");
 
 		error.append(" as well as with one of [");
 		for (final Class<? extends Annotation> cdiAnnotation : CDI_CONFLICTS) {
 			error.append(cdiAnnotation.getName()).append(", ");
 		}
-		error.delete(error.lastIndexOf(","), error.lastIndexOf(",") + 1)
+		error.delete(error.lastIndexOf(","), error.lastIndexOf(",") + 2)
 				.append("].");
 
 		error
