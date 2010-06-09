@@ -38,7 +38,11 @@
 		<module>common</module>
 		<module>persistence</module>
 		<module>wslog</module>
-		<module>camelpe</module>
+		<!--
+			Disabled for now. Will come back to it once the port to CDI is
+			completed.
+		-->
+		<!-- module>camelpe</module -->
 	</modules>
 
 </project>
