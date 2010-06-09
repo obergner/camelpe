@@ -92,7 +92,7 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	 */
 	@Override
 	public void inject(final T instance, final CreationalContext<T> ctx) {
-		this.wrapped.inject(instance, ctx);
+		getWrapped().inject(instance, ctx);
 		injectEndpointsInto(instance);
 	}
 
@@ -101,7 +101,7 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	 */
 	@Override
 	public void postConstruct(final T instance) {
-		this.wrapped.postConstruct(instance);
+		getWrapped().postConstruct(instance);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	 */
 	@Override
 	public void preDestroy(final T instance) {
-		this.wrapped.preDestroy(instance);
+		getWrapped().preDestroy(instance);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	 */
 	@Override
 	public void dispose(final T instance) {
-		this.wrapped.dispose(instance);
+		getWrapped().dispose(instance);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	 */
 	@Override
 	public Set<InjectionPoint> getInjectionPoints() {
-		return this.wrapped.getInjectionPoints();
+		return getWrapped().getInjectionPoints();
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	 */
 	@Override
 	public T produce(final CreationalContext<T> ctx) {
-		return this.wrapped.produce(ctx);
+		return getWrapped().produce(ctx);
 	}
 
 	// -------------------------------------------------------------------------
@@ -156,18 +156,20 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 				.isAnnotationPresent(org.apache.camel.EndpointInject.class)) {
 			final org.apache.camel.EndpointInject endpointInjectAnnotation = camelInjectAnnotatedField
 					.getAnnotation(org.apache.camel.EndpointInject.class);
-			valueToInject = this.camelPostProcessorHelper.getInjectionValue(
+			valueToInject = getCamelPostProcessorHelper().getInjectionValue(
 					camelInjectAnnotatedField.getType(),
-					endpointInjectAnnotation.uri(), endpointInjectAnnotation
-							.ref(), camelInjectAnnotatedField.getName());
+					endpointInjectAnnotation.uri(),
+					endpointInjectAnnotation.ref(),
+					camelInjectAnnotatedField.getName());
 		} else if (camelInjectAnnotatedField
 				.isAnnotationPresent(org.apache.camel.Produce.class)) {
 			final org.apache.camel.Produce endpointInjectAnnotation = camelInjectAnnotatedField
 					.getAnnotation(org.apache.camel.Produce.class);
-			valueToInject = this.camelPostProcessorHelper.getInjectionValue(
+			valueToInject = getCamelPostProcessorHelper().getInjectionValue(
 					camelInjectAnnotatedField.getType(),
-					endpointInjectAnnotation.uri(), endpointInjectAnnotation
-							.ref(), camelInjectAnnotatedField.getName());
+					endpointInjectAnnotation.uri(),
+					endpointInjectAnnotation.ref(),
+					camelInjectAnnotatedField.getName());
 		} else {
 			throw new IllegalStateException("Neither ["
 					+ org.apache.camel.EndpointInject.class.getName()
@@ -188,5 +190,19 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 					+ "] into field [" + fieldToSet + "] on instance ["
 					+ instance + "]: " + e.getMessage(), e);
 		}
+	}
+
+	/**
+	 * @return the wrapped
+	 */
+	private InjectionTarget<T> getWrapped() {
+		return this.wrapped;
+	}
+
+	/**
+	 * @return the camelPostProcessorHelper
+	 */
+	private CamelPostProcessorHelper getCamelPostProcessorHelper() {
+		return this.camelPostProcessorHelper;
 	}
 }
