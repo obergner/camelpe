@@ -7,6 +7,9 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertSame;
 import static junit.framework.Assert.assertTrue;
 
+import java.io.File;
+import java.net.URL;
+
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.ResolutionException;
 import javax.enterprise.inject.spi.AnnotatedType;
@@ -27,6 +30,7 @@ import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.impl.base.asset.ByteArrayAsset;
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,6 +56,43 @@ public class CamelInjectionTargetWrapperInContainerTest {
 	// Fields
 	// ------------------------------------------------------------------------
 
+	private static final String CDIPE_SERVICE_FILE_PATH = "META-INF/services/javax.enterprise.inject.spi.Extension";
+
+	private static final String CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX = ".DISABLED";
+
+	static {
+		/*
+		 * HACK: As soon as the embedded Weld container sees the file
+		 * "META-INF/services/javax.enterprise.inject.spi.Extension" on the
+		 * classpath - it need not be deployed into the container - it will look
+		 * for the fqn of a CDI extension in that file. In our case, it will
+		 * find the fqn of our Camel Portable Extension and will happily deploy
+		 * it. This, however, will cause this test to fail since (a) this test
+		 * consciously deploys at least one "invalid" bean into Weld and (b) our
+		 * Camel PE employs the class to be tested by this test,
+		 * CamelInjectionTargetWrapper, for wrapping its own InjectionTarget.
+		 * Now, Weld will recognize - via CamelInjectionTargetWrapper - that
+		 * something is wrong with one of the deployed beans and consequently
+		 * fail at startup.
+		 * 
+		 * I would like to move this piece of code to some @BeforeClass
+		 * annotated method. However, Arquillian starts Weld even before
+		 * 
+		 * @BeforeClass methods are executed. Thus, a static initializer block.
+		 */
+		final URL cdiServiceFileUrl = CamelInjectionTargetWrapperInContainerTest.class
+				.getClassLoader().getResource(CDIPE_SERVICE_FILE_PATH);
+		if (cdiServiceFileUrl != null) {
+
+			final File cdiServiceFile = new File(cdiServiceFileUrl.getFile());
+			final File cdiServiceFileDisabled = new File(cdiServiceFileUrl
+					.getFile()
+					+ CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
+
+			cdiServiceFile.renameTo(cdiServiceFileDisabled);
+		}
+	}
+
 	@Inject
 	private BeanManager beanManager;
 
@@ -70,6 +111,24 @@ public class CamelInjectionTargetWrapperInContainerTest {
 						ArchivePaths.create("beans.xml"));
 
 		return testModule;
+	}
+
+	@AfterClass
+	public static void enableCamelPE() {
+		final URL cdiServiceFileDisabledUrl = CamelInjectionTargetWrapperInContainerTest.class
+				.getClassLoader().getResource(
+						CDIPE_SERVICE_FILE_PATH
+								+ CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
+		if (cdiServiceFileDisabledUrl == null) {
+			return;
+		}
+
+		final File cdiServiceFileDisabled = new File(cdiServiceFileDisabledUrl
+				.getFile());
+		final File cdiServiceFile = new File(cdiServiceFileDisabledUrl
+				.getFile().replace(CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX, ""));
+
+		cdiServiceFileDisabled.renameTo(cdiServiceFile);
 	}
 
 	// -------------------------------------------------------------------------
