@@ -240,19 +240,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.testsupport</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
 				<artifactId>orderplacement.framework.domain</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.persistence.config</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -324,7 +312,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.config</artifactId>
+				<artifactId>orderplacement.jee.framework.glassfish</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -395,6 +383,18 @@
 				<type>war</type>
 			</dependency>
 			<dependency>
+				<groupId>com.acme.orderplacement.jee.app</groupId>
+				<artifactId>orderplacement.jee.app</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.app</groupId>
+				<artifactId>orderplacement.jee.app.config</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
 				<groupId>com.acme.orderplacement.jee</groupId>
 				<artifactId>orderplacement.jee.ear</artifactId>
 				<version>${project.version}</version>
@@ -436,16 +436,16 @@
 				<type>jar</type>
 				<exclusions>
 					<exclusion>
-						<artifactId>jboss-jaxrpc</artifactId>
 						<groupId>jbossws</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>jboss-transaction-api</artifactId>
-						<groupId>org.jboss.javaee</groupId>
-					</exclusion>
-					<exclusion>
 						<artifactId>jboss-jaxrpc</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jboss.javaee</groupId>
+						<artifactId>jboss-transaction-api</artifactId>
+					</exclusion>
+					<exclusion>
 						<groupId>jboss.jbossws</groupId>
+						<artifactId>jboss-jaxrpc</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
@@ -476,7 +476,7 @@
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
-			<!-- Javax Persistence API -->
+			<!-- Javax Persistence API 2.0 - TODO: Replace with standard -->
 			<dependency>
 				<groupId>org.hibernate.javax.persistence</groupId>
 				<artifactId>hibernate-jpa-2.0-api</artifactId>
@@ -712,104 +712,6 @@
 				<version>1.0</version>
 				<type>jar</type>
 			</dependency>
-			<!-- AspectJ -->
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjrt</artifactId>
-				<version>${deps.aspectj.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
-				<version>${deps.aspectj.version}</version>
-				<type>jar</type>
-			</dependency>
-			<!-- Spring -->
-			<dependency>
-				<groupId>aopalliance</groupId>
-				<artifactId>aopalliance</artifactId>
-				<version>1.0</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jms</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-oxm</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-asm</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-expression</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
 			<!-- 
 				Apache Camel 
 			-->
@@ -993,18 +895,18 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			<!-- CGLIB -->
-			<dependency>
-				<groupId>cglib</groupId>
-				<artifactId>cglib-nodep</artifactId>
-				<version>2.2</version>
-				<type>jar</type>
-			</dependency>
 			<!-- Google -->
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>${deps.google-guava.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- CGLIB -->
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib-nodep</artifactId>
+				<version>2.2</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Hibernate -->
@@ -1126,23 +1028,12 @@
 				<version>1.2</version>
 				<type>rar</type>
 			</dependency>
-			<!-- Geronimo -->
+			<!-- Glassfish -->
 			<dependency>
-				<groupId>org.apache.geronimo.framework</groupId>
-				<artifactId>geronimo-kernel</artifactId>
-				<version>${deps.geronimo.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.geronimo.framework</groupId>
-				<artifactId>geronimo-naming</artifactId>
-				<version>${deps.geronimo.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.geronimo.framework</groupId>
-				<artifactId>geronimo-security</artifactId>
-				<version>${deps.geronimo.version}</version>
+				<groupId>org.glassfish.security</groupId>
+				<artifactId>security</artifactId>
+				<version>3.0.1-b20</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- =========================================== -->
@@ -1266,6 +1157,107 @@
 				<version>${deps.unitils.version}</version>
 				<scope>test</scope>
 			</dependency>
+			<!-- AspectJ -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${deps.aspectj.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${deps.aspectj.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!--
+				Spring: We need to upgrade Spring to 3.0 in order to make Unitils
+				work with JPA 2.0
+			-->
+			<dependency>
+				<groupId>aopalliance</groupId>
+				<artifactId>aopalliance</artifactId>
+				<version>1.0</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jms</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-oxm</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-asm</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
 			<!-- Spring-Test -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -1290,13 +1282,6 @@
 				<groupId>org.apache.xbean</groupId>
 				<artifactId>xbean-naming</artifactId>
 				<version>${deps.xbean-naming.version}</version>
-				<type>jar</type>
-			</dependency>
-			<!-- We need a DataSource implementation for testing purposes -->
-			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>${deps.commons-dbcp.version}</version>
 				<type>jar</type>
 			</dependency>
 			<!-- Let's make testing the database layer easier -->

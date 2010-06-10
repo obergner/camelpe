@@ -60,11 +60,13 @@
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
+		<!-- Not yet working -->
+		<!--
+			<dependency>
 			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 			<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+			<scope>runtime</scope> </dependency>
+		-->
 		<!--
 			| Test dependencies 
 		-->

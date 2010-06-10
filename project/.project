@@ -58,6 +58,11 @@
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/integration/inbound/pom.xml</location>
 		</link>
 		<link>
+			<name>poms/jee/app/pom.xml</name>
+			<type>1</type>
+			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/jee/app/pom.xml</locationURI>
+		</link>
+		<link>
 			<name>poms/jee/framework/pom.xml</name>
 			<type>1</type>
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/jee/framework/pom.xml</location>

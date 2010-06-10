@@ -8,12 +8,12 @@
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.acme.orderplacement.jee.framework</groupId>
-	<artifactId>orderplacement.jee.framework</artifactId>
+	<groupId>com.acme.orderplacement.jee.app</groupId>
+	<artifactId>orderplacement.jee.app</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name><![CDATA[SOA Order :: JEE :: Framework]]></name>
+	<name><![CDATA[SOA Order :: JEE :: Application]]></name>
 
 	<properties></properties>
 
@@ -34,15 +34,7 @@
 	</dependencies>
 
 	<modules>
-		<module>common</module>
-		<module>glassfish</module>
-		<module>persistence</module>
-		<module>wslog</module>
-		<!--
-			Disabled for now. Will come back to it once the port to CDI is
-			completed.
-		-->
-		<!-- module>camelpe</module -->
+		<module>config</module>
 	</modules>
 
 </project>

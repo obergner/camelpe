@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:application="http://java.sun.com/xml/ns/javaee/application_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd" version="5">
+  <display-name>orderplacement.jee.ear</display-name>
+  <module>
+    <connector>tranql-connector-postgresql-xa-1.2.rar</connector>
+  </module>
+  <module>
+    <web>
+      <web-uri>orderplacement.jee.item.ws-1.0-SNAPSHOT.war</web-uri>
+      <context-root>com.acme.orderplacement.jee.item.ws</context-root>
+    </web>
+  </module>
+  <module>
+    <java>lib//lib/hibernate-core-3.5.0-Final.jar</java>
+  </module>
+  <module>
+    <ejb>orderplacement.jee.item.service-1.0-SNAPSHOT.ejb</ejb>
+  </module>
+  <module>
+    <java>lib//lib/javassist-3.9.0.GA.jar</java>
+  </module>
+  <module>
+    <ejb>orderplacement.jee.framework.wslog.service-1.0-SNAPSHOT.ejb</ejb>
+  </module>
+  <module>
+    <ejb>orderplacement.jee.item.mdb-1.0-SNAPSHOT.jar</ejb>
+  </module>
+  <library-directory>lib</library-directory>
+</application>

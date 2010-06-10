@@ -75,6 +75,7 @@
 	<modules>
 		<module>framework</module>
 		<module>item</module>
+		<module>app</module>
 		<module>ear</module>
 	</modules>
 

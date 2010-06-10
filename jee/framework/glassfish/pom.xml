@@ -9,16 +9,21 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.acme.orderplacement.jee.framework</groupId>
-	<artifactId>orderplacement.jee.framework.testsupport</artifactId>
+	<artifactId>orderplacement.jee.framework.glassfish</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name><![CDATA[SOA Order :: JEE :: Framework :: Testsupport]]></name>
+	<name><![CDATA[SOA Order :: JEE :: Framework :: Glassfish]]></name>
 
 	<dependencies>
 		<!--
 			| Provided dependencies 
 		-->
+		<dependency>
+			<groupId>org.glassfish.security</groupId>
+			<artifactId>security</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--
 			| Compile time dependencies 
 		-->

@@ -5,7 +5,6 @@
 	<projects>
 		<project>orderplacement.item.persistence</project>
 		<project>orderplacement.integration.inbound.itemimport</project>
-		<project>orderplacement.framework.persistence.config</project>
 		<project>orderplacement.jee.framework.config</project>
 		<project>orderplacement.framework.common</project>
 		<project>orderplacement.jee.integration.inbound.itemimport</project>

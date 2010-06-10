@@ -99,9 +99,9 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	}
 
 	/**
-	 * TODO: Why is this needed? The embedded Glassfish v3 server should inject
-	 * the current principal into our
-	 * <code>AuditInfoManagingEntityListener</code>.
+	 * Unfortunately, JPA mananged objects are neither JEE resources nor CDI
+	 * beans and thus cannot be a target of CDI injection. Therefore, for the
+	 * time being we need to register our test user manually.
 	 */
 	@Before
 	public void registerTestUsername() {

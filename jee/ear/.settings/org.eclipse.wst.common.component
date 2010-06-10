@@ -2,6 +2,7 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="com.acme.orderplacement.jee.ear">
         <wb-resource deploy-path="/" source-path="/src/main/application"/>
+        <wb-resource deploy-path="/" source-path="/target/classes"/>
         <dependent-module archiveName="/lib/log4j-1.2.15.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.15/log4j-1.2.15.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -308,9 +309,6 @@
         <dependent-module archiveName="/lib/dom4j-1.6.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="/orderplacement.framework.persistence.config-1.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/orderplacement.framework.persistence.config/orderplacement.framework.persistence.config">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/spring-orm-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-orm/3.0.2.RELEASE/spring-orm-3.0.2.RELEASE.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -500,9 +498,16 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="orderplacement.jee.framework.wslog.service-1.0-SNAPSHOT.ejb" deploy-path="/" handle="module:/resource/orderplacement.jee.framework.wslog.service/orderplacement.jee.framework.wslog.service">
+            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="orderplacement.jee.item.mdb-1.0-SNAPSHOT.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/com/acme/orderplacement/jee/item/orderplacement.jee.item.mdb/1.0-SNAPSHOT/orderplacement.jee.item.mdb-1.0-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="lib//lib/hibernate-core-3.5.0-Final.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-core/3.5.0-Final/hibernate-core-3.5.0-Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="lib//lib/javassist-3.9.0.GA.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/javassist/javassist/3.9.0.GA/javassist-3.9.0.GA.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

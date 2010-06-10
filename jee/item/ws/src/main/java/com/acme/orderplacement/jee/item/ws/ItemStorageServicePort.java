@@ -8,7 +8,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.ejb.EJB;
-import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
 import org.slf4j.Logger;
@@ -36,7 +35,7 @@ import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
  * 
  */
 @WebService(endpointInterface = "com.acme.orderplacement.jee.wsapi.ItemStorageServicePortType")
-@HandlerChain(file = "/conf/jaxws-handlers.xml")
+// @HandlerChain(file = "/conf/jaxws-handlers.xml")
 public class ItemStorageServicePort implements ItemStorageServicePortType {
 
 	// -------------------------------------------------------------------------
@@ -53,7 +52,7 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 	 * </p>
 	 */
 	@EJB
-	private com.acme.orderplacement.service.item.ItemStorageService itemStorageService;
+	private ItemStorageService itemStorageService;
 
 	// -------------------------------------------------------------------------
 	// API

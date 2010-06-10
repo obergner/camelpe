@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
 
-import javax.inject.Inject;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -42,7 +41,6 @@ public class AuditInfoManagingEntityListener {
 	 */
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Inject
 	private Principal currentUser;
 
 	// ------------------------------------------------------------------------
@@ -135,7 +133,7 @@ public class AuditInfoManagingEntityListener {
 	protected String currentUser() throws IllegalStateException {
 		if (testUsername != null) {
 			this.log
-					.info(
+					.warn(
 							"Returning statically defined user [{}]. This is only allowed "
 									+ "during tests and must not be used in production.",
 							testUsername);
