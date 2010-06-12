@@ -20,8 +20,6 @@ import com.acme.orderplacement.jee.framework.persistence.GenericJpaDao;
 		ApplicationUserRole.ROLE_ADMIN })
 public interface ItemDao extends GenericJpaDao<Item, Long> {
 
-	String REPOSITORY_NAME = "persistence.item.ItemDao";
-
 	/**
 	 * @param itemNumber
 	 * @return

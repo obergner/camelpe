@@ -28,8 +28,8 @@
 			| Compile time dependencies 
 		-->
 		<dependency>
-			<groupId>com.acme.orderplacement.jee.framework</groupId>
-			<artifactId>orderplacement.jee.framework.common</artifactId>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.common</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--

@@ -4,7 +4,6 @@
 package com.acme.orderplacement.framework.domain.meta.jpa;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.Date;
 
 import javax.persistence.PrePersist;
@@ -13,6 +12,7 @@ import javax.persistence.PreUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.acme.orderplacement.framework.common.auth.PrincipalAccess;
 import com.acme.orderplacement.framework.domain.meta.AuditInfo;
 import com.acme.orderplacement.framework.domain.meta.AuditableDomainObject;
 
@@ -21,8 +21,8 @@ import com.acme.orderplacement.framework.domain.meta.AuditableDomainObject;
  * A <tt>JPA</tt> <code>EntityListener</code> for initially setting and updating
  * an {@link AuditableDomainObject <code>AuditableDomainObject</code>}'s
  * {@link AuditInfo <code>AuditInfo</code>} component, using information
- * obtained from the {@link SecurityContext <code>SecurityContext</code>}
- * associated with the current thread.
+ * obtained from the <code>SecurityContext</code> associated with the current
+ * thread.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -34,14 +34,10 @@ public class AuditInfoManagingEntityListener {
 	// Fields
 	// ------------------------------------------------------------------------
 
-	private static String testUsername;
-
 	/**
 	 * Our faithful logger.
 	 */
 	private final Logger log = LoggerFactory.getLogger(getClass());
-
-	private Principal currentUser;
 
 	// ------------------------------------------------------------------------
 	// Public API
@@ -105,24 +101,6 @@ public class AuditInfoManagingEntityListener {
 	}
 
 	// ------------------------------------------------------------------------
-	// Public Test API
-	// ------------------------------------------------------------------------
-
-	/**
-	 * <p>
-	 * Register the supplied <code>testUsername</code> for testing purposes.
-	 * </p>
-	 * 
-	 * TODO: Find a better solution and get rid of this.
-	 * 
-	 * @param testUsername
-	 */
-	public static void registerTestUsername(final String testUsername) {
-
-		AuditInfoManagingEntityListener.testUsername = testUsername;
-	}
-
-	// ------------------------------------------------------------------------
 	// Internal
 	// ------------------------------------------------------------------------
 
@@ -131,36 +109,7 @@ public class AuditInfoManagingEntityListener {
 	 * @throws IllegalStateException
 	 */
 	protected String currentUser() throws IllegalStateException {
-		if (testUsername != null) {
-			this.log
-					.warn(
-							"Returning statically defined user [{}]. This is only allowed "
-									+ "during tests and must not be used in production.",
-							testUsername);
-
-			return testUsername;
-		}
-		if (this.currentUser == null) {
-			final String error = "There is no Principal associated with the current thread: "
-					+ "Unable to determine the current user.";
-			this.log.error(error);
-
-			throw new IllegalStateException(error);
-		}
-		this.log.debug("Obtained Principal [{}] from the current thread.",
-				this.currentUser);
-
-		final String username = this.currentUser.getName();
-		if (username == null) {
-			final String error = "Unable to determine the current user: No username found in the current Principal.";
-			this.log.error(error);
-
-			throw new IllegalArgumentException(error);
-		}
-		this.log.debug(
-				"Extracted current user [{}] from the current Principal.",
-				username);
-
-		return username;
+		return PrincipalAccess.FACTORY.getPrincipalAccess().currentPrincipal()
+				.getName();
 	}
 }

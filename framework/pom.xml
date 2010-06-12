@@ -35,6 +35,7 @@
 
 	<modules>
 		<module>common</module>
+		<module>testsupport</module>
 		<module>aspect</module>
 		<module>domain</module>
 		<module>service</module>

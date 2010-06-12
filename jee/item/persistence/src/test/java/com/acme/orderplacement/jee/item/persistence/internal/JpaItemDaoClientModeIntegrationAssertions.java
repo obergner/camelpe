@@ -22,7 +22,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +30,6 @@ import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
 import com.acme.orderplacement.framework.domain.IdentifiableDomainObject;
 import com.acme.orderplacement.framework.domain.meta.AuditInfo;
-import com.acme.orderplacement.framework.domain.meta.jpa.AuditInfoManagingEntityListener;
 import com.acme.orderplacement.jee.framework.persistence.GenericJpaDao;
 import com.acme.orderplacement.jee.framework.persistence.exception.DataAccessRuntimeException;
 import com.acme.orderplacement.jee.framework.persistence.exception.NoSuchPersistentObjectException;
@@ -98,25 +96,10 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 		return deployment;
 	}
 
-	/**
-	 * Unfortunately, JPA mananged objects are neither JEE resources nor CDI
-	 * beans and thus cannot be a target of CDI injection. Therefore, for the
-	 * time being we need to register our test user manually.
-	 */
-	@Before
-	public void registerTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername("TESTER");
-	}
-
 	@Before
 	public void login() throws Exception {
 		final ProgrammaticLogin login = new ProgrammaticLogin();
 		login.login("admin", "admin", "file", true);
-	}
-
-	@After
-	public void unregisterTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername(null);
 	}
 
 	// ------------------------------------------------------------------------

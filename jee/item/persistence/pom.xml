@@ -73,6 +73,11 @@
 			<artifactId>commons-dbutils</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.testsupport</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

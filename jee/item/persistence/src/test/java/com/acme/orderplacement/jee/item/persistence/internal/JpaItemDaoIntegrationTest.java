@@ -19,8 +19,6 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.hibernate.engine.SessionImplementor;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.unitils.UnitilsJUnit4TestClassRunner;
@@ -31,7 +29,6 @@ import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.framework.domain.meta.AuditInfo;
-import com.acme.orderplacement.framework.domain.meta.jpa.AuditInfoManagingEntityListener;
 import com.acme.orderplacement.jee.framework.persistence.exception.DataAccessRuntimeException;
 import com.acme.orderplacement.jee.framework.persistence.exception.NoSuchPersistentObjectException;
 import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotPersistentException;
@@ -80,20 +77,6 @@ public class JpaItemDaoIntegrationTest {
 	private EntityManager entityManager;
 
 	private final QueryRunner queryRunner = new QueryRunner();
-
-	// -------------------------------------------------------------------------
-	// Test fixture
-	// -------------------------------------------------------------------------
-
-	@Before
-	public void registerTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername("TESTER");
-	}
-
-	@After
-	public void unregisterTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername(null);
-	}
 
 	// ------------------------------------------------------------------------
 	// Tests

@@ -27,6 +27,10 @@
 		<!--
 			| Compile time dependencies 
 		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.common</artifactId>
+		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->

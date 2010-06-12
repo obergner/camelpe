@@ -14,7 +14,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,20 +21,19 @@ import org.junit.runner.RunWith;
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
 import com.acme.orderplacement.framework.domain.IdentifiableDomainObject;
-import com.acme.orderplacement.framework.domain.meta.jpa.AuditInfoManagingEntityListener;
 import com.acme.orderplacement.framework.service.exception.IllegalServiceUsageException;
 import com.acme.orderplacement.framework.service.exception.entity.EntityAlreadyRegisteredException;
 import com.acme.orderplacement.framework.service.meta.annotation.ServiceOperation;
 import com.acme.orderplacement.jee.framework.persistence.GenericJpaDao;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
-import com.acme.orderplacement.jee.item.persistence.internal.JpaItemDao;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.sun.appserv.security.ProgrammaticLogin;
 
 /**
  * <p>
- * Test {@link JpaItemDao <code>JpaItemDao</code>}.
+ * Test {@link com.acme.orderplacement.jee.item.persistence.internal.JpaItemDao
+ * <code>JpaItemDao</code>}.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -79,25 +77,10 @@ public class ItemStorageServiceBeanClientModeIntegrationTest {
 		return deployment;
 	}
 
-	/**
-	 * TODO: Why is this needed? The embedded Glassfish v3 server should inject
-	 * the current principal into our
-	 * <code>AuditInfoManagingEntityListener</code>.
-	 */
-	@Before
-	public void registerTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername("TESTER");
-	}
-
 	@Before
 	public void login() throws Exception {
 		final ProgrammaticLogin login = new ProgrammaticLogin();
 		login.login("admin", "admin", "file", true);
-	}
-
-	@After
-	public void unregisterTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername(null);
 	}
 
 	// ------------------------------------------------------------------------

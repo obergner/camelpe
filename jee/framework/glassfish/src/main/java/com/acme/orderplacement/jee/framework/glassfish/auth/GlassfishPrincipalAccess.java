@@ -5,12 +5,16 @@ package com.acme.orderplacement.jee.framework.glassfish.auth;
 
 import java.security.Principal;
 
-import com.acme.orderplacement.jee.framework.common.auth.PrincipalAccess;
+import com.acme.orderplacement.framework.common.auth.PrincipalAccess;
 import com.sun.enterprise.security.SecurityContext;
 
 /**
  * <p>
- * TODO: Insert short summary for GlassfishPrincipalAccess
+ * A <a href="http://dev.java.net.glassfish">Glassfish</a> specific
+ * implementation of {@link PrincipalAccess <code>PrincipalAccess</code>} that
+ * delegates to Glassfish's {@link com.sun.enterprise.security.SecurityContext
+ * <code>com.sun.enterprise.security.SecurityContext</code>} when obtaining the
+ * current <code>Principal</code>.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -19,7 +23,7 @@ import com.sun.enterprise.security.SecurityContext;
 public class GlassfishPrincipalAccess implements PrincipalAccess {
 
 	/**
-	 * @see com.acme.orderplacement.jee.framework.common.auth.PrincipalAccess#currentPrincipal()
+	 * @see com.acme.orderplacement.framework.common.auth.PrincipalAccess#currentPrincipal()
 	 */
 	@Override
 	public Principal currentPrincipal() {

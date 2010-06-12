@@ -3,10 +3,7 @@
  */
 package com.acme.orderplacement.jee.item.service.internal;
 
-import java.security.Principal;
-
 import javax.ejb.EJB;
-import javax.enterprise.inject.Produces;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.api.Deployment;
@@ -16,7 +13,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +20,6 @@ import org.junit.runner.RunWith;
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
 import com.acme.orderplacement.framework.domain.IdentifiableDomainObject;
-import com.acme.orderplacement.framework.domain.meta.jpa.AuditInfoManagingEntityListener;
 import com.acme.orderplacement.framework.service.exception.IllegalServiceUsageException;
 import com.acme.orderplacement.framework.service.exception.entity.EntityAlreadyRegisteredException;
 import com.acme.orderplacement.framework.service.meta.annotation.ServiceOperation;
@@ -87,32 +82,10 @@ public class ItemStorageServiceBeanInContainerAssertions {
 		return itemServiceEjbModule;
 	}
 
-	@Produces
-	public Principal testPrincipal() {
-		return new Principal() {
-
-			@Override
-			public String getName() {
-
-				return "Tester";
-			}
-		};
-	}
-
-	@Before
-	public void registerTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername("TESTER");
-	}
-
 	@Before
 	public void login() throws Exception {
 		final ProgrammaticLogin login = new ProgrammaticLogin();
 		login.login("employee", "employee", "file", true);
-	}
-
-	@After
-	public void unregisterTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername(null);
 	}
 
 	/**

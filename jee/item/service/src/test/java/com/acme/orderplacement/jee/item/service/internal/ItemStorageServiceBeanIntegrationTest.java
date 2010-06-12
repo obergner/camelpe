@@ -3,7 +3,6 @@
  */
 package com.acme.orderplacement.jee.item.service.internal;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import org.unitils.inject.annotation.TestedObject;
 import org.unitils.orm.jpa.JpaUnitils;
 import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
-import com.acme.orderplacement.framework.domain.meta.jpa.AuditInfoManagingEntityListener;
 import com.acme.orderplacement.framework.service.exception.entity.EntityAlreadyRegisteredException;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
 import com.acme.orderplacement.jee.item.persistence.internal.JpaItemDao;
@@ -52,18 +50,8 @@ public class ItemStorageServiceBeanIntegrationTest {
 	// -------------------------------------------------------------------------
 
 	@Before
-	public void registerTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername("TESTER");
-	}
-
-	@Before
 	public void injectEntityManager() {
 		JpaUnitils.injectEntityManagerInto(this.itemDao);
-	}
-
-	@After
-	public void unregisterTestUsername() {
-		AuditInfoManagingEntityListener.registerTestUsername(null);
 	}
 
 	// -------------------------------------------------------------------------

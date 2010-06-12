@@ -2,18 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
 	<parent>
-		<groupId>com.acme.orderplacement.framework</groupId>
-		<artifactId>orderplacement.framework</artifactId>
+		<groupId>com.acme.orderplacement.jee.framework</groupId>
+		<artifactId>orderplacement.jee.framework</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.acme.orderplacement.framework</groupId>
-	<artifactId>orderplacement.framework.testsupport</artifactId>
+	<groupId>com.acme.orderplacement.jee.framework</groupId>
+	<artifactId>orderplacement.jee.framework.testsupport</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name><![CDATA[SOA Order :: Framework :: Testsupport]]></name>
+	<name><![CDATA[SOA Order :: JEE :: Framework :: Testsupport]]></name>
 
 	<dependencies>
 		<!--
@@ -22,6 +22,11 @@
 		<!--
 			| Compile time dependencies 
 		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.common</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->
