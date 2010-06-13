@@ -176,14 +176,13 @@ public class ItemStorageServiceBeanClientModeIntegrationTest {
 
 		@Override
 		public void registerItem(final ItemDto newItemToRegister)
-				throws EntityAlreadyRegisteredException,
-				IllegalArgumentException {
+				throws RuntimeException, EntityAlreadyRegisteredException {
 			try {
 				this.delegate.registerItem(newItemToRegister);
 			} catch (final javax.ejb.EJBException e) {
 				final Exception cause = e.getCausedByException();
-				if (cause instanceof IllegalArgumentException) {
-					throw (IllegalArgumentException) cause;
+				if (cause instanceof RuntimeException) {
+					throw (RuntimeException) cause;
 				}
 				if (cause instanceof EntityAlreadyRegisteredException) {
 					throw (EntityAlreadyRegisteredException) cause;

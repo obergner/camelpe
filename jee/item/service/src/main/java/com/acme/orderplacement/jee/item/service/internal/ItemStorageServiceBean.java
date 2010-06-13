@@ -10,6 +10,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
@@ -21,7 +22,6 @@ import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
 import com.acme.orderplacement.framework.domain.exception.CollaborationPreconditionsNotMetException;
 import com.acme.orderplacement.framework.service.exception.entity.EntityAlreadyRegisteredException;
 import com.acme.orderplacement.framework.service.meta.annotation.ServiceOperation;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotTransientException;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
@@ -70,24 +70,15 @@ public class ItemStorageServiceBean implements ItemStorageService {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void registerItem(final ItemDto newItemToRegister)
 			throws EntityAlreadyRegisteredException, IllegalArgumentException,
-			RuntimeException {
-		try {
-			Validate.notNull(newItemToRegister, "newItemToRegister");
-			this.log.info("Registering item [{}] ...", newItemToRegister);
-			ensureNotExistsItemHavingItemNumber(newItemToRegister
-					.getItemNumber());
+			PersistenceException {
+		Validate.notNull(newItemToRegister, "newItemToRegister");
+		this.log.info("Registering item [{}] ...", newItemToRegister);
+		ensureNotExistsItemHavingItemNumber(newItemToRegister.getItemNumber());
 
-			final Item registeredItem = getItemDao().makePersistent(
-					convertIntoItem(newItemToRegister));
+		final Item registeredItem = getItemDao().makePersistent(
+				convertIntoItem(newItemToRegister));
 
-			this.log.info("Item [{}] successfully registered", registeredItem);
-		} catch (final ObjectNotTransientException e) {
-			/*
-			 * This cannot happen since it is impossible that the Item which has
-			 * been newly created from the ItemDto passed is not transient.
-			 */
-			throw new RuntimeException(e);
-		}
+		this.log.info("Item [{}] successfully registered", registeredItem);
 	}
 
 	// -------------------------------------------------------------------------
@@ -110,10 +101,6 @@ public class ItemStorageServiceBean implements ItemStorageService {
 		final Item itemHavingItemNumber = getItemDao().findByItemNumber(
 				itemNumber);
 		if (itemHavingItemNumber != null) {
-			this.log
-					.error(
-							"An item [{}] having the same item number [{}] as the one to register has already been registered",
-							itemHavingItemNumber, itemNumber);
 
 			throw new EntityAlreadyRegisteredException(itemHavingItemNumber);
 		}

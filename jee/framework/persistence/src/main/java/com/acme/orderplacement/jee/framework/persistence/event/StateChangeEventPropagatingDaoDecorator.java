@@ -7,11 +7,10 @@ import java.io.Serializable;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
+import javax.persistence.TransactionRequiredException;
 
 import com.acme.orderplacement.jee.framework.persistence.GenericJpaDao;
-import com.acme.orderplacement.jee.framework.persistence.exception.DataAccessRuntimeException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectTransientException;
 
 /**
  * <p>
@@ -29,7 +28,16 @@ public abstract class StateChangeEventPropagatingDaoDecorator<T, ID extends Seri
 	// -------------------------------------------------------------------------
 
 	@Inject
-	private Event<T> stateChangeEvents;
+	@Created
+	private Event<T> entityCreatedEvent;
+
+	@Inject
+	@Updated
+	private Event<T> entityUpdatedEvent;
+
+	@Inject
+	@Deleted
+	private Event<T> entityDeletedEvent;
 
 	// -------------------------------------------------------------------------
 	// Decorated methods
@@ -40,11 +48,12 @@ public abstract class StateChangeEventPropagatingDaoDecorator<T, ID extends Seri
 	 */
 	@Override
 	public T makePersistent(final T transientObject)
-			throws DataAccessRuntimeException, ObjectNotTransientException {
+			throws IllegalArgumentException, TransactionRequiredException,
+			PersistenceException {
 		final T persistentObject = getDelegate()
 				.makePersistent(transientObject);
 
-		this.stateChangeEvents.fire(persistentObject);
+		this.entityCreatedEvent.fire(persistentObject);
 
 		return persistentObject;
 	}
@@ -54,11 +63,12 @@ public abstract class StateChangeEventPropagatingDaoDecorator<T, ID extends Seri
 	 */
 	@Override
 	public T makePersistentOrUpdatePersistentState(final T object)
-			throws DataAccessRuntimeException {
+			throws IllegalArgumentException, TransactionRequiredException,
+			PersistenceException {
 		final T persistedOrUpdatedObject = getDelegate()
 				.makePersistentOrUpdatePersistentState(object);
 
-		this.stateChangeEvents.fire(persistedOrUpdatedObject);
+		this.entityUpdatedEvent.fire(persistedOrUpdatedObject);
 
 		return persistedOrUpdatedObject;
 	}
@@ -68,10 +78,11 @@ public abstract class StateChangeEventPropagatingDaoDecorator<T, ID extends Seri
 	 */
 	@Override
 	public void makeTransient(final T persistentOrDetachedObject)
-			throws DataAccessRuntimeException, ObjectTransientException {
+			throws IllegalArgumentException, TransactionRequiredException,
+			PersistenceException {
 		getDelegate().makeTransient(persistentOrDetachedObject);
 
-		this.stateChangeEvents.fire(persistentOrDetachedObject);
+		this.entityDeletedEvent.fire(persistentOrDetachedObject);
 	}
 
 	// -------------------------------------------------------------------------

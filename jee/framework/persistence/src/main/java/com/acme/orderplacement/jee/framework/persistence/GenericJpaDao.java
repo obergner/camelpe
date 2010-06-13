@@ -7,16 +7,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
+import javax.persistence.TransactionRequiredException;
 
 import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
-import com.acme.orderplacement.jee.framework.persistence.exception.DataAccessRuntimeException;
-import com.acme.orderplacement.jee.framework.persistence.exception.NoSuchPersistentObjectException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotPersistentException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateConcurrentlyModifiedException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateDeletedException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateLockedException;
 
 /**
  * <p>
@@ -42,21 +37,24 @@ public interface GenericJpaDao<T, ID extends Serializable> {
 	 * 
 	 * @return
 	 * 
-	 * @throws NoSuchPersistentObjectException
-	 *             If no entity with the ID <code>id</code> could be found in
-	 *             the underlying datastore
-	 * @throws DataAccessRuntimeException
+	 * @throws IllegalArgumentException
+	 *             If <code>id</code> is <code>null</code>
+	 * @throws EntityNotFoundException
+	 *             If not entity having the specified <code>id</code> could be
+	 *             found
+	 * @throws PersistenceException
 	 *             If an unexpected technical error outside of the client's
 	 *             control occurs while accessing the underlying datastore
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	T findById(ID id, boolean lock) throws NoSuchPersistentObjectException,
-			DataAccessRuntimeException;
+	T findById(ID id, boolean lock) throws IllegalArgumentException,
+			EntityNotFoundException, PersistenceException;
 
 	/**
 	 * @return
-	 * @throws DataAccessRuntimeException
+	 * 
+	 * @throws PersistenceException
 	 *             If an unexpected technical error outside of the client's
 	 *             control occurs while accessing the underlying datastore
 	 */
@@ -64,89 +62,85 @@ public interface GenericJpaDao<T, ID extends Serializable> {
 			ApplicationUserRole.ROLE_EXTERNAL_USER,
 			ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	List<T> findAll() throws DataAccessRuntimeException;
+	List<T> findAll() throws PersistenceException;
 
 	/**
 	 * @param transientObject
 	 * 
 	 * @return
 	 * 
-	 * @throws DataAccessRuntimeException
+	 * @throws IllegalArgumentException
+	 *             If <code>transientObject</code> is <code>null</code>
+	 * @throws TransactionRequiredException
+	 *             If the concrete implementation requires a transaction and
+	 *             none is associated with the current thread
+	 * @throws PersistenceException
 	 *             If an unexpected technical error outside of the client's
 	 *             control occurs while accessing the underlying datastore
-	 * @throws ObjectNotTransientException
-	 *             If <code>transientObject</code> is not transient, i.e.
-	 *             already has a persistent representation in the underlying
-	 *             datastore
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	T makePersistent(T transientObject) throws DataAccessRuntimeException,
-			ObjectNotTransientException;
+	T makePersistent(T transientObject) throws IllegalArgumentException,
+			TransactionRequiredException, PersistenceException;
 
 	/**
 	 * @param object
 	 * 
 	 * @return
-	 * @throws DataAccessRuntimeException
+	 * 
+	 * @throws IllegalArgumentException
+	 *             If <code>object</code> is <code>null</code>
+	 * @throws TransactionRequiredException
+	 *             If the concrete implementation requires a transaction and
+	 *             none is associated with the current thread
+	 * @throws PersistenceException
 	 *             If an unexpected technical error outside of the client's
 	 *             control occurs while accessing the underlying datastore
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	T makePersistentOrUpdatePersistentState(T object)
-			throws DataAccessRuntimeException;
+			throws IllegalArgumentException, TransactionRequiredException,
+			PersistenceException;
 
 	/**
 	 * @param persistentOrDetachedObject
-	 * @throws DataAccessRuntimeException
+	 * 
+	 * @throws IllegalArgumentException
+	 *             If <code>persistentOrDetachedObject</code> is
+	 *             <code>null</code>
+	 * @throws TransactionRequiredException
+	 *             If the concrete implementation requires a transaction and
+	 *             none is associated with the current thread
+	 * @throws PersistenceException
 	 *             If an unexpected technical error outside of the client's
 	 *             control occurs while accessing the underlying datastore
-	 * @throws ObjectTransientException
-	 *             If <code>persistentOrDetachedObject</code> is neither
-	 *             <tt>persistent</tt> nor <tt>detached</tt>, i.e. has no
-	 *             <tt>Persistent State</tt> in the underlying datastore
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_ACCOUNTANT,
 			ApplicationUserRole.ROLE_ADMIN })
 	void makeTransient(T persistentOrDetachedObject)
-			throws DataAccessRuntimeException, ObjectTransientException;
+			throws IllegalArgumentException, TransactionRequiredException,
+			PersistenceException;
 
 	/**
-	 * @throws DataAccessRuntimeException
+	 * @throws TransactionRequiredException
+	 *             If the concrete implementation requires a transaction and
+	 *             none is associated with the current thread
+	 * @throws PersistenceException
 	 *             If an unexpected technical error outside of the client's
 	 *             control occurs while accessing the underlying datastore
-	 * @throws PersistentStateLockedException
-	 *             If the <tt>Persistent State</tt> of some
-	 *             <tt>Persistent Object</tt> associated with this <tt>DAO</tt>
-	 *             is currently locked by another thread/process
-	 * @throws PersistentStateConcurrentlyModifiedException
-	 *             If the <tt>Persistent State</tt> of some
-	 *             <tt>Persistent Object</tt> associated with this <tt>DAO</tt>
-	 *             has concurrently been modified by another thread/process
-	 * @throws PersistentStateDeletedException
-	 *             If the <tt>Persistent State</tt> of some
-	 *             <tt>Persistent Object</tt> associated with this <tt>DAO</tt>
-	 *             has been deleted another thread/process
-	 * 
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_ADMIN })
-	void flush() throws DataAccessRuntimeException,
-			PersistentStateLockedException,
-			PersistentStateConcurrentlyModifiedException,
-			PersistentStateDeletedException;
+	void flush() throws TransactionRequiredException, PersistenceException;
 
 	/**
 	 * @param persistentObject
 	 * 
-	 * @throws DataAccessRuntimeException
-	 *             If an unexpected technical error outside of the client's
-	 *             control occurs while accessing the underlying datastore
-	 * @throws ObjectNotPersistentException
-	 *             If <code>persistentObject</code> is not peristent, i.e. not
-	 *             associated with the current <code>Session</code>
+	 * @throws IllegalArgumentException
+	 *             If <code>persistentObject</code> is not persistent, i.e. not
+	 *             associated with the current <code>Session</code>, or if is
+	 *             <code>null</code>
 	 */
 	@RolesAllowed( { ApplicationUserRole.ROLE_ADMIN })
-	void evict(T persistentObject) throws DataAccessRuntimeException,
-			ObjectNotPersistentException;
+	void evict(T persistentObject) throws IllegalArgumentException;
 }

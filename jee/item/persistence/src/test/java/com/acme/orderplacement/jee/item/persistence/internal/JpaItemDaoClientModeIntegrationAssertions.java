@@ -31,14 +31,6 @@ import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
 import com.acme.orderplacement.framework.domain.IdentifiableDomainObject;
 import com.acme.orderplacement.framework.domain.meta.AuditInfo;
 import com.acme.orderplacement.jee.framework.persistence.GenericJpaDao;
-import com.acme.orderplacement.jee.framework.persistence.exception.DataAccessRuntimeException;
-import com.acme.orderplacement.jee.framework.persistence.exception.NoSuchPersistentObjectException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotPersistentException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateConcurrentlyModifiedException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateDeletedException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateLockedException;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
 import com.sun.appserv.security.ProgrammaticLogin;
 
@@ -109,15 +101,12 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	/**
 	 * Test method for
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#evict(java.lang.Object)}
-	 * .
 	 * 
-	 * @throws ObjectNotPersistentException
-	 * @throws DataAccessRuntimeException
 	 * @throws NamingException
+	 * @throws IllegalArgumentException
 	 */
 	@Test
-	public void testEvict() throws DataAccessRuntimeException,
-			ObjectNotPersistentException, NamingException {
+	public void testEvict() throws IllegalArgumentException, NamingException {
 		final Item existingItem = createDetachedTestItem();
 
 		lookupItemDao().evict(existingItem);
@@ -129,16 +118,9 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * .
 	 * 
 	 * @throws NamingException
-	 * @throws DataAccessRuntimeException
-	 * @throws PersistentStateDeletedException
-	 * @throws PersistentStateConcurrentlyModifiedException
-	 * @throws PersistentStateLockedException
 	 */
 	@Test
-	public void testFlush() throws PersistentStateLockedException,
-			PersistentStateConcurrentlyModifiedException,
-			PersistentStateDeletedException, DataAccessRuntimeException,
-			NamingException {
+	public void testFlush() throws NamingException {
 		lookupItemDao().flush();
 	}
 
@@ -226,11 +208,9 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * .
 	 * 
 	 * @throws NamingException
-	 * @throws DataAccessRuntimeException
 	 */
 	@Test
-	public void testFindAll() throws DataAccessRuntimeException,
-			NamingException {
+	public void testFindAll() throws NamingException {
 		final List<Item> allItems = lookupItemDao().findAll();
 
 		assertEquals("findAll() returned wrong number of Items", 1, allItems
@@ -242,14 +222,10 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#findById(java.io.Serializable, boolean)}
 	 * .
 	 * 
-	 * @throws DataAccessRuntimeException
-	 * @throws NoSuchPersistentObjectException
 	 * @throws NamingException
 	 */
 	@Test
-	public void testFindById_FindsMatchingItem()
-			throws NoSuchPersistentObjectException, DataAccessRuntimeException,
-			NamingException {
+	public void testFindById_FindsMatchingItem() throws NamingException {
 		final Item matchingItem = lookupItemDao().findById(EXISTING_ITEM_ID,
 				false);
 
@@ -264,20 +240,10 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makeTransient(java.lang.Object)}
 	 * .
 	 * 
-	 * @throws ObjectTransientException
-	 * @throws DataAccessRuntimeException
-	 * @throws PersistentStateLockedException
-	 * @throws PersistentStateDeletedException
-	 * @throws PersistentStateConcurrentlyModifiedException
-	 * @throws NoSuchPersistentObjectException
 	 * @throws NamingException
 	 */
 	@Test
-	public void testMakeTransient_DeletesItem()
-			throws PersistentStateConcurrentlyModifiedException,
-			PersistentStateDeletedException, PersistentStateLockedException,
-			DataAccessRuntimeException, ObjectTransientException,
-			NoSuchPersistentObjectException, NamingException {
+	public void testMakeTransient_DeletesItem() throws NamingException {
 		final Item existingItem = lookupItemDao().findById(EXISTING_ITEM_ID,
 				false);
 
@@ -298,14 +264,10 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistent(java.lang.Object)}
 	 * .
 	 * 
-	 * @throws ObjectNotTransientException
-	 * @throws DataAccessRuntimeException
 	 * @throws NamingException
 	 */
 	@Test
-	public void testMakePersistent_SavesItem()
-			throws DataAccessRuntimeException, ObjectNotTransientException,
-			NamingException {
+	public void testMakePersistent_SavesItem() throws NamingException {
 		final Item item = createTransientItemToSave();
 
 		final int numberOfItemsBefore = lookupItemDao().findAll().size();
@@ -325,14 +287,11 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistentOrUpdatePersistentState(java.lang.Object)}
 	 * .
 	 * 
-	 * FIXME: Make this test pass.
-	 * 
-	 * @throws DataAccessRuntimeException
 	 * @throws NamingException
 	 */
 	@Test
 	public void testMakePersistentOrUpdatePersistentState_UpdatesItem()
-			throws DataAccessRuntimeException, NamingException {
+			throws NamingException {
 		final Item item = createDetachedTestItem();
 		final String updatedItemName = "NAME_UPDATED_BY_UNIT_TEST";
 		item.setName(updatedItemName);
@@ -350,14 +309,11 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistentOrUpdatePersistentState(java.lang.Object)}
 	 * .
 	 * 
-	 * FIXME: Make this test pass.
-	 * 
-	 * @throws DataAccessRuntimeException
 	 * @throws NamingException
 	 */
 	@Test
 	public void testMakePersistentOrUpdatePersistentState_SavesItem()
-			throws DataAccessRuntimeException, NamingException {
+			throws NamingException {
 		final Item item = createTransientItemToSave();
 
 		final int numberOfItemsBefore = lookupItemDao().findAll().size();
@@ -376,7 +332,7 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 	// Internal
 	// ------------------------------------------------------------------------
 
-	private Item createTransientItemToSave() throws DataAccessRuntimeException {
+	private Item createTransientItemToSave() {
 		final Item item = new Item();
 		item.setItemNumber(NON_EXISTING_ITEM_NUMBER);
 		item.setName(NON_EXISTING_ITEM_NAME);
@@ -385,7 +341,7 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 		return item;
 	}
 
-	private Item createDetachedTestItem() throws DataAccessRuntimeException {
+	private Item createDetachedTestItem() {
 		final Item item = new Item();
 		item.setId(EXISTING_ITEM_ID);
 		item.setItemNumber(EXISTING_ITEM_NUMBER);
@@ -422,104 +378,39 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 			this.delegate = delegate;
 		}
 
-		/**
-		 * @param persistentObject
-		 * @throws DataAccessRuntimeException
-		 * @throws ObjectNotPersistentException
-		 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#evict(java.lang.Object)
-		 */
-		public void evict(final Item persistentObject)
-				throws DataAccessRuntimeException, ObjectNotPersistentException {
+		public void evict(final Item persistentObject) {
 			this.delegate.evict(persistentObject);
 		}
 
-		/**
-		 * @return
-		 * @throws DataAccessRuntimeException
-		 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#findAll()
-		 */
-		public List<Item> findAll() throws DataAccessRuntimeException {
+		public List<Item> findAll() {
 			return this.delegate.findAll();
 		}
 
-		/**
-		 * @param id
-		 * @param lock
-		 * @return
-		 * @throws NoSuchPersistentObjectException
-		 * @throws DataAccessRuntimeException
-		 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#findById(java.io.Serializable,
-		 *      boolean)
-		 */
-		public Item findById(final Long id, final boolean lock)
-				throws NoSuchPersistentObjectException,
-				DataAccessRuntimeException {
+		public Item findById(final Long id, final boolean lock) {
 			return this.delegate.findById(id, lock);
 		}
 
-		/**
-		 * @param itemNumber
-		 * @return
-		 * @see com.acme.orderplacement.jee.item.persistence.ItemDao#findByItemNumber(java.lang.String)
-		 */
 		public Item findByItemNumber(final String itemNumber) {
 			return this.delegate.findByItemNumber(itemNumber);
 		}
 
-		/**
-		 * @param itemName
-		 * @return
-		 * @see com.acme.orderplacement.jee.item.persistence.ItemDao#findByNameLike(java.lang.String)
-		 */
 		public List<Item> findByNameLike(final String itemName) {
 			return this.delegate.findByNameLike(itemName);
 		}
 
-		/**
-		 * @throws DataAccessRuntimeException
-		 * @throws PersistentStateLockedException
-		 * @throws PersistentStateConcurrentlyModifiedException
-		 * @throws PersistentStateDeletedException
-		 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#flush()
-		 */
-		public void flush() throws DataAccessRuntimeException,
-				PersistentStateLockedException,
-				PersistentStateConcurrentlyModifiedException,
-				PersistentStateDeletedException {
+		public void flush() {
 			this.delegate.flush();
 		}
 
-		/**
-		 * @param transientObject
-		 * @return
-		 * @throws DataAccessRuntimeException
-		 * @throws ObjectNotTransientException
-		 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#makePersistent(java.lang.Object)
-		 */
-		public Item makePersistent(final Item transientObject)
-				throws DataAccessRuntimeException, ObjectNotTransientException {
+		public Item makePersistent(final Item transientObject) {
 			return this.delegate.makePersistent(transientObject);
 		}
 
-		/**
-		 * @param object
-		 * @return
-		 * @throws DataAccessRuntimeException
-		 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#makePersistentOrUpdatePersistentState(java.lang.Object)
-		 */
-		public Item makePersistentOrUpdatePersistentState(final Item object)
-				throws DataAccessRuntimeException {
+		public Item makePersistentOrUpdatePersistentState(final Item object) {
 			return this.delegate.makePersistentOrUpdatePersistentState(object);
 		}
 
-		/**
-		 * @param persistentOrDetachedObject
-		 * @throws DataAccessRuntimeException
-		 * @throws ObjectTransientException
-		 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#makeTransient(java.lang.Object)
-		 */
-		public void makeTransient(final Item persistentOrDetachedObject)
-				throws DataAccessRuntimeException, ObjectTransientException {
+		public void makeTransient(final Item persistentOrDetachedObject) {
 			this.delegate.makeTransient(persistentOrDetachedObject);
 		}
 	}

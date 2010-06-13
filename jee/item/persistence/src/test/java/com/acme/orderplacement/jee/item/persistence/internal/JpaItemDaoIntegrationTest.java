@@ -29,14 +29,6 @@ import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
 import com.acme.orderplacement.domain.item.Item;
 import com.acme.orderplacement.framework.domain.meta.AuditInfo;
-import com.acme.orderplacement.jee.framework.persistence.exception.DataAccessRuntimeException;
-import com.acme.orderplacement.jee.framework.persistence.exception.NoSuchPersistentObjectException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotPersistentException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateConcurrentlyModifiedException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateDeletedException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateLockedException;
 
 /**
  * <p>
@@ -156,20 +148,10 @@ public class JpaItemDaoIntegrationTest {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makeTransient(java.lang.Object)}
 	 * .
 	 * 
-	 * @throws ObjectTransientException
-	 * @throws DataAccessRuntimeException
-	 * @throws PersistentStateLockedException
-	 * @throws PersistentStateDeletedException
-	 * @throws PersistentStateConcurrentlyModifiedException
-	 * @throws NoSuchPersistentObjectException
 	 * @throws SQLException
 	 */
 	@Test
-	public void testMakeTransient_DeletesItem()
-			throws PersistentStateConcurrentlyModifiedException,
-			PersistentStateDeletedException, PersistentStateLockedException,
-			DataAccessRuntimeException, ObjectTransientException,
-			NoSuchPersistentObjectException, SQLException {
+	public void testMakeTransient_DeletesItem() throws SQLException {
 		final Item existingItem = this.classUnderTest.findById(
 				EXISTING_ITEM_ID, false);
 
@@ -206,13 +188,9 @@ public class JpaItemDaoIntegrationTest {
 	 * Test method for
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#findById(java.io.Serializable, boolean)}
 	 * .
-	 * 
-	 * @throws DataAccessRuntimeException
-	 * @throws NoSuchPersistentObjectException
 	 */
 	@Test
-	public void testFindById_FindsMatchingItem()
-			throws NoSuchPersistentObjectException, DataAccessRuntimeException {
+	public void testFindById_FindsMatchingItem() {
 		final Item matchingItem = this.classUnderTest.findById(
 				EXISTING_ITEM_ID, false);
 
@@ -227,14 +205,10 @@ public class JpaItemDaoIntegrationTest {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistent(java.lang.Object)}
 	 * .
 	 * 
-	 * @throws ObjectNotTransientException
-	 * @throws DataAccessRuntimeException
 	 * @throws SQLException
 	 */
 	@Test
-	public void testMakePersistent_SavesItem()
-			throws DataAccessRuntimeException, ObjectNotTransientException,
-			SQLException {
+	public void testMakePersistent_SavesItem() throws SQLException {
 		final Item item = createTransientItemToSave();
 
 		final int numberOfItemsBefore = (Integer) this.queryRunner.query(
@@ -258,12 +232,11 @@ public class JpaItemDaoIntegrationTest {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistentOrUpdatePersistentState(java.lang.Object)}
 	 * .
 	 * 
-	 * @throws DataAccessRuntimeException
 	 * @throws SQLException
 	 */
 	@Test
 	public void testMakePersistentOrUpdatePersistentState_UpdatesItem()
-			throws DataAccessRuntimeException, SQLException {
+			throws SQLException {
 		final Item item = createDetachedTestItem();
 		final String updatedItemName = "NAME_UPDATED_BY_UNIT_TEST";
 		item.setName(updatedItemName);
@@ -283,12 +256,11 @@ public class JpaItemDaoIntegrationTest {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#makePersistentOrUpdatePersistentState(java.lang.Object)}
 	 * .
 	 * 
-	 * @throws DataAccessRuntimeException
 	 * @throws SQLException
 	 */
 	@Test
 	public void testMakePersistentOrUpdatePersistentState_SavesItem()
-			throws DataAccessRuntimeException, SQLException {
+			throws SQLException {
 		final Item item = createTransientItemToSave();
 
 		final int numberOfItemsBefore = (Integer) this.queryRunner.query(
@@ -312,12 +284,9 @@ public class JpaItemDaoIntegrationTest {
 	 * {@link com.acme.orderplacement.jee.item.persistence.hibernate.AbstractHibernateDAO#evict(java.lang.Object)}
 	 * .
 	 * 
-	 * @throws ObjectNotPersistentException
-	 * @throws DataAccessRuntimeException
 	 */
 	@Test
-	public void testEvict() throws DataAccessRuntimeException,
-			ObjectNotPersistentException {
+	public void testEvict() {
 		final Item existingItem = createDetachedTestItem();
 
 		this.classUnderTest.evict(existingItem);
@@ -337,7 +306,7 @@ public class JpaItemDaoIntegrationTest {
 	// Internal
 	// ------------------------------------------------------------------------
 
-	private Item createTransientItemToSave() throws DataAccessRuntimeException {
+	private Item createTransientItemToSave() {
 		final Item item = new Item();
 		item.setItemNumber(NON_EXISTING_ITEM_NUMBER);
 		item.setName(NON_EXISTING_ITEM_NAME);
@@ -346,7 +315,7 @@ public class JpaItemDaoIntegrationTest {
 		return item;
 	}
 
-	private Item createDetachedTestItem() throws DataAccessRuntimeException {
+	private Item createDetachedTestItem() {
 		final Item item = new Item();
 		item.setId(EXISTING_ITEM_ID);
 		item.setItemNumber(EXISTING_ITEM_NUMBER);

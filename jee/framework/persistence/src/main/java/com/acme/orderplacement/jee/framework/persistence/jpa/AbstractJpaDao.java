@@ -14,8 +14,15 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.LockModeType;
+import javax.persistence.LockTimeoutException;
+import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import javax.persistence.PersistenceException;
+import javax.persistence.PessimisticLockException;
+import javax.persistence.QueryTimeoutException;
+import javax.persistence.TransactionRequiredException;
 import javax.persistence.TypedQuery;
 
 import org.apache.commons.lang.Validate;
@@ -24,14 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
 import com.acme.orderplacement.jee.framework.persistence.GenericJpaDao;
-import com.acme.orderplacement.jee.framework.persistence.exception.DataAccessRuntimeException;
-import com.acme.orderplacement.jee.framework.persistence.exception.NoSuchPersistentObjectException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotPersistentException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectNotTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.ObjectTransientException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateConcurrentlyModifiedException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateDeletedException;
-import com.acme.orderplacement.jee.framework.persistence.exception.PersistentStateLockedException;
 import com.acme.orderplacement.jee.framework.persistence.meta.annotation.ReadOnlyPersistenceOperation;
 import com.acme.orderplacement.jee.framework.persistence.meta.annotation.StateModifyingPersistenceOperation;
 
@@ -76,8 +75,9 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
 			ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	public void evict(final T persistentObject)
-			throws DataAccessRuntimeException, ObjectNotPersistentException {
+	public void evict(final T persistentObject) throws IllegalArgumentException {
+		Validate.notNull(persistentObject, "persistentObject");
+
 		entityManager().detach(persistentObject);
 	}
 
@@ -89,7 +89,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public List<T> findAll() throws DataAccessRuntimeException {
+	public List<T> findAll() throws PersistenceException {
 		final List<T> allEntities = entityManager().createQuery(
 				"From " + getPersistentClass().getName(), getPersistentClass())
 				.getResultList();
@@ -110,13 +110,18 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public T findById(final ID id, final boolean lock)
-			throws NoSuchPersistentObjectException, DataAccessRuntimeException {
+			throws IllegalArgumentException, EntityNotFoundException,
+			PersistenceException {
+		Validate.notNull(id, "id");
+
 		final T matchingEntity = entityManager().find(getPersistentClass(), id);
 		if (matchingEntity == null) {
 			getLog().error("Could not find entity of type [{}] with ID [{}]",
 					getPersistentClass(), id);
 
-			throw new NoSuchPersistentObjectException(getPersistentClass(), id);
+			throw new EntityNotFoundException("No entity of type ["
+					+ getPersistentClass().getName() + "] having ID = [" + id
+					+ "] could be found");
 		}
 		if (lock) {
 			entityManager().lock(matchingEntity, LockModeType.WRITE);
@@ -135,10 +140,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
 			ApplicationUserRole.ROLE_EMPLOYEE,
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
-	public void flush() throws DataAccessRuntimeException,
-			PersistentStateLockedException,
-			PersistentStateConcurrentlyModifiedException,
-			PersistentStateDeletedException {
+	public void flush() throws TransactionRequiredException,
+			PersistenceException {
 		entityManager().flush();
 		getLog()
 				.debug(
@@ -155,7 +158,10 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public T makePersistent(final T transientObject)
-			throws DataAccessRuntimeException, ObjectNotTransientException {
+			throws IllegalArgumentException, TransactionRequiredException,
+			PersistenceException {
+		Validate.notNull(transientObject, "transientObject");
+
 		entityManager().persist(transientObject);
 		getLog().debug("Saved entity = [{}].", transientObject);
 
@@ -172,7 +178,11 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public T makePersistentOrUpdatePersistentState(
 			final T persistentOrDetachedObject)
-			throws DataAccessRuntimeException {
+			throws IllegalArgumentException, TransactionRequiredException,
+			PersistenceException {
+		Validate.notNull(persistentOrDetachedObject,
+				"persistentOrDetachedObject");
+
 		final T persistentObject = entityManager().merge(
 				persistentOrDetachedObject);
 		getLog().debug("Updated entity = [{}]", persistentOrDetachedObject);
@@ -189,7 +199,11 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void makeTransient(final T persistentOrDetachedObject)
-			throws DataAccessRuntimeException, ObjectTransientException {
+			throws IllegalArgumentException, TransactionRequiredException,
+			PersistenceException {
+		Validate.notNull(persistentOrDetachedObject,
+				"persistentOrDetachedObject");
+
 		final T managedEntity;
 		if (!entityManager().contains(persistentOrDetachedObject)) {
 			managedEntity = entityManager().merge(persistentOrDetachedObject);
@@ -211,7 +225,10 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @return
 	 */
 	protected List<T> findByNamedQuery(final String queryName,
-			final Map<String, ?> parameters) throws DataAccessRuntimeException {
+			final Map<String, ?> parameters) throws IllegalArgumentException,
+			IllegalStateException, QueryTimeoutException,
+			TransactionRequiredException, PessimisticLockException,
+			LockTimeoutException, PersistenceException {
 		Validate.notNull(queryName, "queryName");
 		final TypedQuery<T> namedQuery = entityManager().createNamedQuery(
 				queryName, getPersistentClass());
@@ -228,7 +245,10 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @return
 	 */
 	protected List<T> findByNamedQuery(final String queryName,
-			final Object... parameters) throws DataAccessRuntimeException {
+			final Object... parameters) throws IllegalArgumentException,
+			IllegalStateException, QueryTimeoutException,
+			TransactionRequiredException, PessimisticLockException,
+			LockTimeoutException, PersistenceException {
 		Validate.notNull(queryName, "queryName");
 		final TypedQuery<T> namedQuery = entityManager().createNamedQuery(
 				queryName, getPersistentClass());
@@ -246,24 +266,25 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @return
 	 */
 	protected T findUniqueByNamedQuery(final String queryName,
-			final Map<String, ?> parameters) throws DataAccessRuntimeException,
-			NonUniqueResultException {
-		Validate.notNull(queryName, "queryName");
-		final List<T> resultList = findByNamedQuery(queryName, parameters);
-		final T uniqueResult;
-		if (resultList.isEmpty()) {
-			uniqueResult = null;
-		} else if (resultList.size() == 1) {
-			uniqueResult = resultList.get(0);
-		} else {
-			throw new NonUniqueResultException(
-					"Query ["
-							+ queryName
-							+ "] did not return unique result: Expected exactly one result, got "
-							+ resultList.size() + " results");
-		}
+			final Map<String, ?> parameters) throws IllegalArgumentException,
+			IllegalStateException, NonUniqueResultException,
+			QueryTimeoutException, TransactionRequiredException,
+			PessimisticLockException, LockTimeoutException,
+			PersistenceException {
+		try {
+			Validate.notNull(queryName, "queryName");
 
-		return uniqueResult;
+			final TypedQuery<T> namedQuery = entityManager().createNamedQuery(
+					queryName, getPersistentClass());
+			for (final Map.Entry<String, ?> param : parameters.entrySet()) {
+				namedQuery.setParameter(param.getKey(), param.getValue());
+			}
+
+			return namedQuery.getSingleResult();
+		} catch (final NoResultException e) {
+
+			return null;
+		}
 	}
 
 	/**
@@ -272,24 +293,26 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @return
 	 */
 	protected T findUniqueByNamedQuery(final String queryName,
-			final Object... parameters) throws DataAccessRuntimeException,
-			NonUniqueResultException {
-		Validate.notNull(queryName, "queryName");
-		final List<T> resultList = findByNamedQuery(queryName, parameters);
-		final T uniqueResult;
-		if (resultList.isEmpty()) {
-			uniqueResult = null;
-		} else if (resultList.size() == 1) {
-			uniqueResult = resultList.get(0);
-		} else {
-			throw new NonUniqueResultException(
-					"Query ["
-							+ queryName
-							+ "] did not return unique result: Expected exactly one result, got "
-							+ resultList.size() + " results");
-		}
+			final Object... parameters) throws IllegalArgumentException,
+			IllegalStateException, NonUniqueResultException,
+			QueryTimeoutException, TransactionRequiredException,
+			PessimisticLockException, LockTimeoutException,
+			PersistenceException {
+		try {
+			Validate.notNull(queryName, "queryName");
 
-		return uniqueResult;
+			final TypedQuery<T> namedQuery = entityManager().createNamedQuery(
+					queryName, getPersistentClass());
+			int idx = 1;
+			for (final Object param : parameters) {
+				namedQuery.setParameter(idx++, param);
+			}
+
+			return namedQuery.getSingleResult();
+		} catch (final NoResultException e) {
+
+			return null;
+		}
 	}
 
 	protected Class<T> getPersistentClass() {
