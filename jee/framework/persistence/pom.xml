@@ -40,11 +40,6 @@
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>org.jboss.weld</groupId>
-			<artifactId>weld-logger</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<!--
 			| Test dependencies 
 		-->

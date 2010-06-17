@@ -48,10 +48,8 @@
 			| Runtime dependencies 
 		-->
 		<dependency>
-			<groupId>org.tranql</groupId>
-			<artifactId>tranql-connector-postgresql-xa
-			</artifactId>
-			<type>rar</type>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -72,12 +70,12 @@
 			<artifactId>orderplacement.jee.item.itemimport</artifactId>
 			<type>ejb</type> <scope>runtime</scope> </dependency>
 		-->
-		<dependency>
+		<!--
+			<dependency>
 			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 			<artifactId>orderplacement.jee.framework.wslog.service</artifactId>
-			<type>ejb</type>
-			<scope>runtime</scope>
-		</dependency>
+			<type>ejb</type> <scope>runtime</scope> </dependency>
+		-->
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.item</groupId>
 			<artifactId>orderplacement.jee.item.ws</artifactId>
@@ -95,10 +93,16 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
-			<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.glassfish</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!--
+			<dependency>
+			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
+			<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
+			<scope>runtime</scope> </dependency>
+		-->
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.app</groupId>
 			<artifactId>orderplacement.jee.app.config</artifactId>
@@ -144,10 +148,6 @@
 					</archive>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
-						<rarModule>
-							<groupId>org.tranql</groupId>
-							<artifactId>tranql-connector-postgresql-xa</artifactId>
-						</rarModule>
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee.item</groupId>
 							<artifactId>orderplacement.jee.item.persistence</artifactId>
@@ -159,13 +159,11 @@
 						<!--
 							<ejbModule> <groupId>com.acme.orderplacement.jee.item</groupId>
 							<artifactId>orderplacement.jee.item.itemimport</artifactId>
-							</ejbModule>
-						-->
-						<ejbModule>
+							</ejbModule> <ejbModule>
 							<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 							<artifactId>orderplacement.jee.framework.wslog.service
-							</artifactId>
-						</ejbModule>
+							</artifactId> </ejbModule>
+						-->
 						<!--
 							TODO: I would like to explicitly set this web module's context
 							root to a proper value instead of the '/orderplacement.jee.ws'
@@ -179,23 +177,6 @@
 							<contextRoot>orderplacement</contextRoot> </warModule>
 						-->
 					</modules>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.geronimo.plugins</groupId>
-				<artifactId>geronimo-maven-plugin</artifactId>
-				<configuration>
-					<geronimoHome>${geronimo.home}</geronimoHome>
-					<logOutput>true</logOutput>
-					<moduleArchive>
-						${project.build.directory}/${project.build.finalName}.${project.packaging}
-					</moduleArchive>
-					<module>
-						<groupId>${geronimo.moduleId.groupId}</groupId>
-						<artifactId>${geronimo.moduleId.artifactId}</artifactId>
-						<version>${geronimo.moduleId.version}</version>
-						<type>${geronimo.moduleId.type}</type>
-					</module>
 				</configuration>
 			</plugin>
 		</plugins>

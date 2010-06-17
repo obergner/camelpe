@@ -4,16 +4,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.jee.item.wsapi/orderplacement.jee.item.wsapi">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.framework.service/orderplacement.framework.service">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/orderplacement.item.service/orderplacement.item.service">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <property name="java-output-path"/>
-        <property name="context-root" value="com.acme.orderplacement.jee.item.ws"/>
+        <property name="context-root" value="orderplacement.jee.item.ws"/>
+        <property name="java-output-path" value="/orderplacement.jee.item.ws/target/classes"/>
     </wb-module>
 </project-modules>

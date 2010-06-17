@@ -34,8 +34,8 @@ import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@WebService(endpointInterface = "com.acme.orderplacement.jee.wsapi.ItemStorageServicePortType")
-// @HandlerChain(file = "/conf/jaxws-handlers.xml")
+@WebService(endpointInterface = "com.acme.orderplacement.jee.wsapi.ItemStorageServicePortType", name = "itemstorage", serviceName = "ItemStorageWs")
+// @HandlerChain(file = "META-INF/conf/jaxws-handlers.xml")
 public class ItemStorageServicePort implements ItemStorageServicePortType {
 
 	// -------------------------------------------------------------------------

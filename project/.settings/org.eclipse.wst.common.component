@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="orderplacement.project">
+        <wb-resource deploy-path="/" source-path="/src/soapui"/>
+        <wb-resource deploy-path="/" source-path="/src/site/fr"/>
+        <wb-resource deploy-path="/" source-path="/src/site/apt"/>
+        <wb-resource deploy-path="/" source-path="/src/site/fml"/>
+        <wb-resource deploy-path="/" source-path="/src/site/xdoc"/>
+    </wb-module>
+</project-modules>

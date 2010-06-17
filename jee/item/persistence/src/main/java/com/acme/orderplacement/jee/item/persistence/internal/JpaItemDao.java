@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -19,7 +18,6 @@ import javax.persistence.PersistenceContextType;
 import org.apache.commons.lang.Validate;
 
 import com.acme.orderplacement.domain.item.Item;
-import com.acme.orderplacement.framework.common.role.ApplicationUserRole;
 import com.acme.orderplacement.jee.framework.persistence.jpa.AbstractJpaDao;
 import com.acme.orderplacement.jee.framework.persistence.meta.annotation.ReadOnlyPersistenceOperation;
 import com.acme.orderplacement.jee.item.persistence.ItemDao;
@@ -52,9 +50,6 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 	 * @see com.acme.orderplacement.jee.item.persistence.ItemDao.domain.ItemDAO#findByItemNumber(java.lang.String)
 	 */
 	@ReadOnlyPersistenceOperation
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public Item findByItemNumber(final String itemNumber) {
 		Validate.notNull(itemNumber, "itemNumber");
@@ -68,9 +63,6 @@ public class JpaItemDao extends AbstractJpaDao<Item, Long> implements ItemDao {
 	 * @see com.acme.orderplacement.jee.item.persistence.ItemDao.domain.ItemDAO#findByNameLike(java.lang.String)
 	 */
 	@ReadOnlyPersistenceOperation
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List<Item> findByNameLike(final String itemName) {
 		Validate.notNull(itemName, "itemName");

@@ -3,6 +3,25 @@
 	<name>orderplacement.jee.item.ws</name>
 	<comment></comment>
 	<projects>
+		<project>orderplacement.jee.item.service</project>
+		<project>orderplacement.item.entities</project>
+		<project>orderplacement.jee.item.persistence</project>
+		<project>wtptest</project>
+		<project>orderplacement.integration.inbound.external</project>
+		<project>orderplacement.jee.framework.persistence</project>
+		<project>orderplacement.framework.service</project>
+		<project>orderplacement.project</project>
+		<project>orderplacement.jee.framework.wslog.service</project>
+		<project>orderplacement.jee.framework.wslog.handler</project>
+		<project>orderplacement.jee.app.config</project>
+		<project>orderplacement.framework.common</project>
+		<project>orderplacement.framework.domain</project>
+		<project>orderplacement.jee.item.wsapi</project>
+		<project>orderplacement.framework.testsupport</project>
+		<project>orderplacement.item.service</project>
+		<project>orderplacement.framework.aspect</project>
+		<project>orderplacement.jee.framework.glassfish</project>
+		<project>orderplacement.jee.framework.common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -33,10 +52,10 @@
 	</buildSpec>
 	<natures>
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
+		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
+		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
-		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
-		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
 </projectDescription>

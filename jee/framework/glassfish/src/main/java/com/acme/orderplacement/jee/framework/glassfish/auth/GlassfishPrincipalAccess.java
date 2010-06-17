@@ -22,12 +22,22 @@ import com.sun.enterprise.security.SecurityContext;
  */
 public class GlassfishPrincipalAccess implements PrincipalAccess {
 
+	private static final String DEFAULT_PRINICPAL_NAME = "SECURITY_DISABLED";
+
 	/**
 	 * @see com.acme.orderplacement.framework.common.auth.PrincipalAccess#currentPrincipal()
 	 */
 	@Override
 	public Principal currentPrincipal() {
-		return SecurityContext.getCurrent().getCallerPrincipal();
+		final Principal callerPrincipal = SecurityContext.getCurrent()
+				.getCallerPrincipal();
+
+		return callerPrincipal != null ? callerPrincipal : new Principal() {
+			@Override
+			public String getName() {
+				return DEFAULT_PRINICPAL_NAME;
+			}
+		};
 	}
 
 }

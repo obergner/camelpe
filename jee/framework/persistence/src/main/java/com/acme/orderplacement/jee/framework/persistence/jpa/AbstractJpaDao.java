@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -72,9 +71,9 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	/**
 	 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#evict(java.lang.Object)
 	 */
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	// @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+	// ApplicationUserRole.ROLE_EMPLOYEE,
+	// ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	public void evict(final T persistentObject) throws IllegalArgumentException {
 		Validate.notNull(persistentObject, "persistentObject");
 
@@ -85,9 +84,9 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#findAll()
 	 */
 	@ReadOnlyPersistenceOperation
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	// @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+	// ApplicationUserRole.ROLE_EMPLOYEE,
+	// ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List<T> findAll() throws PersistenceException {
 		final List<T> allEntities = entityManager().createQuery(
@@ -105,9 +104,9 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 *      boolean)
 	 */
 	@ReadOnlyPersistenceOperation
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	// @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+	// ApplicationUserRole.ROLE_EMPLOYEE,
+	// ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public T findById(final ID id, final boolean lock)
 			throws IllegalArgumentException, EntityNotFoundException,
@@ -137,9 +136,9 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * 
 	 *      TODO: Does this method need to be marked @Transactional?
 	 */
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	// @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+	// ApplicationUserRole.ROLE_EMPLOYEE,
+	// ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	public void flush() throws TransactionRequiredException,
 			PersistenceException {
 		entityManager().flush();
@@ -153,9 +152,9 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#makePersistent(java.lang.Object)
 	 */
 	@StateModifyingPersistenceOperation(idempotent = false)
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	// @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+	// ApplicationUserRole.ROLE_EMPLOYEE,
+	// ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public T makePersistent(final T transientObject)
 			throws IllegalArgumentException, TransactionRequiredException,
@@ -172,9 +171,9 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#makePersistentOrUpdatePersistentState(java.lang.Object)
 	 */
 	@StateModifyingPersistenceOperation(idempotent = false)
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	// @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+	// ApplicationUserRole.ROLE_EMPLOYEE,
+	// ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public T makePersistentOrUpdatePersistentState(
 			final T persistentOrDetachedObject)
@@ -194,9 +193,9 @@ public abstract class AbstractJpaDao<T, ID extends Serializable> implements
 	 * @see com.acme.orderplacement.jee.framework.persistence.GenericJpaDao#makeTransient(java.lang.Object)
 	 */
 	@StateModifyingPersistenceOperation(idempotent = true)
-	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-			ApplicationUserRole.ROLE_EMPLOYEE,
-			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	// @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+	// ApplicationUserRole.ROLE_EMPLOYEE,
+	// ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void makeTransient(final T persistentOrDetachedObject)
 			throws IllegalArgumentException, TransactionRequiredException,

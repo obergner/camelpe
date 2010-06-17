@@ -11,9 +11,9 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<jta-data-source>java:app/jdbc/orderplacement/domainDataSource</jta-data-source>
+		<jta-data-source>jdbc/orderplacement/domainDataSource</jta-data-source>
 
-		<jar-file>lib/orderplacement.item.entities-${project.version}.jar</jar-file>
+		<jar-file>orderplacement.domain.item.entities-${project.version}.jar</jar-file>
 
 		<class>com.acme.orderplacement.domain.item.Item</class>
 		<class>com.acme.orderplacement.domain.item.ItemOption</class>
