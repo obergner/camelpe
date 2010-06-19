@@ -3,9 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee">
 	<handler-chain>
-		<handler>
-			<handler-name>WebserviceExchangeLogger</handler-name>
+		<!--
+			<handler> <handler-name>WebserviceExchangeLogger</handler-name>
 			<handler-class>com.acme.orderplacement.jee.framework.wslog.handler.WebserviceExchangeLoggingSoapHandler
+			</handler-class> </handler>
+		-->
+		<handler>
+			<handler-name>AuthenticationHandler</handler-name>
+			<handler-class>com.acme.orderplacement.jee.item.ws.handler.AuthenticationHandler
 			</handler-class>
 		</handler>
 	</handler-chain>

@@ -10,8 +10,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.acme.orderplacement.framework.common.auth.PrincipalAccess.Factory;
-
 /**
  * <p>
  * TODO: Insert short summary for CachingPrincipalAccessFactory
@@ -20,7 +18,7 @@ import com.acme.orderplacement.framework.common.auth.PrincipalAccess.Factory;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-class CachingPrincipalAccessFactory implements Factory {
+class CachingPrincipalAccessFactory implements PrincipalAccess.Factory {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 

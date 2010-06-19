@@ -66,9 +66,8 @@
 				<configuration>
 					<!-- The name of your generated source package -->
 					<packageName>com.acme.orderplacement.jee.wsapi</packageName>
-					<wsdlDirectory>${basedir}/src/main/wsdl</wsdlDirectory>
-					<sourceDestDir>${project.build.directory}/gen/main/java
-					</sourceDestDir>
+					<wsdlDirectory>${basedir}/src/main/resources/META-INF/wsdl</wsdlDirectory>
+					<sourceDestDir>${project.build.directory}/gen/main/java</sourceDestDir>
 					<keep>true</keep>
 					<verbose>true</verbose>
 					<xdebug>true</xdebug>

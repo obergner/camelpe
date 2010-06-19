@@ -8,6 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.ejb.EJB;
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
 import org.slf4j.Logger;
@@ -34,8 +35,8 @@ import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@WebService(endpointInterface = "com.acme.orderplacement.jee.wsapi.ItemStorageServicePortType", name = "itemstorage", serviceName = "ItemStorageWs")
-// @HandlerChain(file = "META-INF/conf/jaxws-handlers.xml")
+@WebService(endpointInterface = "com.acme.orderplacement.jee.wsapi.ItemStorageServicePortType", name = "itemstorage", serviceName = "ItemStorageWs", wsdlLocation = "classpath:META-INF/wsdl/itemstorageservice-1.0.wsdl")
+@HandlerChain(file = "META-INF/conf/jaxws-handlers.xml")
 public class ItemStorageServicePort implements ItemStorageServicePortType {
 
 	// -------------------------------------------------------------------------

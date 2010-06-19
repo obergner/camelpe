@@ -65,6 +65,11 @@
 			<artifactId>orderplacement.domain.item.service</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.common</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->
