@@ -43,6 +43,11 @@
 			<artifactId>jsr181-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.wsapi</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->
@@ -64,10 +69,13 @@
 					</execution>
 				</executions>
 				<configuration>
+					<catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml
+					</catalog>
 					<!-- The name of your generated source package -->
-					<packageName>com.acme.orderplacement.jee.wsapi</packageName>
-					<wsdlDirectory>${basedir}/src/main/resources/META-INF/wsdl</wsdlDirectory>
-					<sourceDestDir>${project.build.directory}/gen/main/java</sourceDestDir>
+					<packageName>com.acme.orderplacement.jee.item.wsapi</packageName>
+					<wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+					<sourceDestDir>${project.build.directory}/gen/main/java
+					</sourceDestDir>
 					<keep>true</keep>
 					<verbose>true</verbose>
 					<xdebug>true</xdebug>

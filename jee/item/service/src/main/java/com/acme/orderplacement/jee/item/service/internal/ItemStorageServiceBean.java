@@ -4,6 +4,7 @@
 package com.acme.orderplacement.jee.item.service.internal;
 
 import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -63,9 +64,9 @@ public class ItemStorageServiceBean implements ItemStorageService {
 	 * @see com.acme.orderplacement.service.item.ItemStorageService#registerItem(com.acme.orderplacement.service.item.dto.ItemDto)
 	 */
 	@ServiceOperation(idempotent = true)
-	// @RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
-	// ApplicationUserRole.ROLE_EMPLOYEE,
-	// ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
+	@RolesAllowed( { ApplicationUserRole.ROLE_GUEST,
+			ApplicationUserRole.ROLE_EMPLOYEE,
+			ApplicationUserRole.ROLE_ACCOUNTANT, ApplicationUserRole.ROLE_ADMIN })
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void registerItem(final ItemDto newItemToRegister)
 			throws EntityAlreadyRegisteredException, IllegalArgumentException,

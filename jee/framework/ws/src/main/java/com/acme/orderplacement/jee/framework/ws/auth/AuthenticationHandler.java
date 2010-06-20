@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.item.ws.handler;
+package com.acme.orderplacement.jee.framework.ws.auth;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,10 +22,9 @@ import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.NodeList;
 
 import com.acme.orderplacement.jee.framework.common.auth.AuthenticationService;
-import com.acme.orderplacement.jee.item.wsapi.ItemstorageQNames;
+import com.acme.orderplacement.jee.framework.wsapi.SOAPHeaders;
 
 /**
  * <p>
@@ -43,7 +42,7 @@ public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
 	@Override
 	public Set<QName> getHeaders() {
 		final Set<QName> headers = new HashSet<QName>();
-		headers.add(ItemstorageQNames.AUTHENTICATION_HEADER);
+		headers.add(SOAPHeaders.AuthenticationContext.QN_AUTHENTICATION_HEADER);
 
 		return Collections.unmodifiableSet(headers);
 	}
@@ -77,12 +76,8 @@ public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
 				return true;
 			}
 
-			final SOAPHeader header = retrieveSOAPHeaderFrom(context);
-
-			final SOAPElement authenticationHeader = retrieveAuthenticationHeaderFrom(header);
-
+			final SOAPElement authenticationHeader = retrieveAuthenticationHeaderFrom(context);
 			username = retrieveUsernameFrom(authenticationHeader);
-
 			final String password = retrievePasswordFrom(authenticationHeader);
 
 			AuthenticationService.FACTORY.getAuthenticationService().login(
@@ -98,6 +93,24 @@ public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
 		}
 	}
 
+	private SOAPElement retrieveAuthenticationHeaderFrom(
+			final SOAPMessageContext context) throws IllegalArgumentException,
+			SOAPException {
+		final SOAPHeader header = retrieveSOAPHeaderFrom(context);
+
+		final Iterator<SOAPElement> authenticationHeaders = header
+				.getChildElements(SOAPHeaders.AuthenticationContext.QN_AUTHENTICATION_HEADER);
+		final SOAPElement authenticationHeader = authenticationHeaders.next();
+		if (authenticationHeader == null) {
+			throw new IllegalArgumentException(
+					"No ["
+							+ SOAPHeaders.AuthenticationContext.QN_AUTHENTICATION_HEADER
+							+ "] header found in webservice request. Cannot perform login.");
+		}
+
+		return authenticationHeader;
+	}
+
 	private SOAPHeader retrieveSOAPHeaderFrom(final SOAPMessageContext context)
 			throws SOAPException, IllegalArgumentException {
 		final SOAPMessage message = context.getMessage();
@@ -109,43 +122,35 @@ public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
 		return header;
 	}
 
-	private SOAPElement retrieveAuthenticationHeaderFrom(final SOAPHeader header)
-			throws IllegalArgumentException {
-		final Iterator<SOAPElement> authenticationHeaders = header
-				.getChildElements(ItemstorageQNames.AUTHENTICATION_HEADER);
-		final SOAPElement authenticationHeader = authenticationHeaders.next();
-		if (authenticationHeader == null) {
-			throw new IllegalArgumentException(
-					"No ["
-							+ ItemstorageQNames.AUTHENTICATION_HEADER
-							+ "] header found in webservice request. Cannot perform login.");
-		}
-		return authenticationHeader;
-	}
-
 	private String retrieveUsernameFrom(final SOAPElement authenticationHeader)
 			throws IllegalArgumentException, DOMException {
-		final NodeList usernameElements = authenticationHeader
-				.getElementsByTagName("username");
-		if (usernameElements.getLength() == 0) {
-			throw new IllegalArgumentException(
-					"No [username] element found in authentication header ["
-							+ authenticationHeader + "]. Cannot perform login.");
+		final Iterator<SOAPElement> usernameElements = authenticationHeader
+				.getChildElements(SOAPHeaders.AuthenticationContext.QN_USERNAME);
+		final SOAPElement usernameElement = usernameElements.next();
+		if (usernameElement == null) {
+			throw new IllegalArgumentException("No ["
+					+ SOAPHeaders.AuthenticationContext.QN_USERNAME
+					+ "] element found in authentication header ["
+					+ authenticationHeader + "]. Cannot perform login.");
 		}
-		final String username = usernameElements.item(0).getTextContent();
+		final String username = usernameElement.getValue();
+
 		return username;
 	}
 
 	private String retrievePasswordFrom(final SOAPElement authenticationHeader)
 			throws IllegalArgumentException, DOMException {
-		final NodeList passwordElements = authenticationHeader
-				.getElementsByTagName("password");
-		if (passwordElements.getLength() == 0) {
-			throw new IllegalArgumentException(
-					"No [password] element found in authentication header ["
-							+ authenticationHeader + "]. Cannot perform login.");
+		final Iterator<SOAPElement> passwordElements = authenticationHeader
+				.getChildElements(SOAPHeaders.AuthenticationContext.QN_PASSWORD);
+		final SOAPElement passwordElement = passwordElements.next();
+		if (passwordElement == null) {
+			throw new IllegalArgumentException("No ["
+					+ SOAPHeaders.AuthenticationContext.QN_PASSWORD
+					+ "] element found in authentication header ["
+					+ authenticationHeader + "]. Cannot perform login.");
 		}
-		final String password = passwordElements.item(0).getTextContent();
+		final String password = passwordElement.getValue();
+
 		return password;
 	}
 
@@ -153,16 +158,23 @@ public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
 			final String username, final FailedLoginException e)
 			throws RuntimeException {
 		try {
+			final SOAPHeader header = retrieveSOAPHeaderFrom(context);
+			header.detachNode();
+
+			final Iterator<SOAPElement> soapBodyElements = context.getMessage()
+					.getSOAPBody().getChildElements();
+			while (soapBodyElements.hasNext()) {
+				soapBodyElements.next().detachNode();
+			}
+
 			final SOAPFault authenticationFault = context.getMessage()
 					.getSOAPBody().addFault();
 			authenticationFault.setFaultCode("Client");
-			authenticationFault
-					.setFaultString("Failed to authenticate remote user using username = ["
-							+ username + "] and password = [HIDDEN]");
+			authenticationFault.setFaultString("INVALID CREDENTIALS");
 			final Detail faultDetail = authenticationFault.addDetail();
 			final DetailEntry detailEntry = faultDetail
 					.addDetailEntry(new QName("detail"));
-			detailEntry.setTextContent(e.getMessage());
+			detailEntry.setValue(e.getMessage());
 
 			context.getMessage().saveChanges();
 		} catch (final SOAPException se) {

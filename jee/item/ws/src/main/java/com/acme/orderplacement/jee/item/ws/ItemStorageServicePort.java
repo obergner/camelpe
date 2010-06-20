@@ -15,14 +15,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.acme.orderplacement.framework.service.exception.entity.EntityAlreadyRegisteredException;
-import com.acme.orderplacement.jee.wsapi.Item;
-import com.acme.orderplacement.jee.wsapi.ItemAlreadyRegisteredFault;
-import com.acme.orderplacement.jee.wsapi.ItemAlreadyRegisteredFault_Exception;
-import com.acme.orderplacement.jee.wsapi.ItemSpecification;
-import com.acme.orderplacement.jee.wsapi.ItemStorageServicePortType;
-import com.acme.orderplacement.jee.wsapi.RegisterItemRequest;
-import com.acme.orderplacement.jee.wsapi.RegisterItemResponse;
-import com.acme.orderplacement.jee.wsapi.ResponseCode;
+import com.acme.orderplacement.jee.item.wsapi.Item;
+import com.acme.orderplacement.jee.item.wsapi.ItemAlreadyRegisteredFault;
+import com.acme.orderplacement.jee.item.wsapi.ItemAlreadyRegisteredFault_Exception;
+import com.acme.orderplacement.jee.item.wsapi.ItemSpecification;
+import com.acme.orderplacement.jee.item.wsapi.ItemStorageServicePortType;
+import com.acme.orderplacement.jee.item.wsapi.ItemstorageNamespaces;
+import com.acme.orderplacement.jee.item.wsapi.RegisterItemRequest;
+import com.acme.orderplacement.jee.item.wsapi.RegisterItemResponse;
+import com.acme.orderplacement.jee.item.wsapi.ResponseCode;
 import com.acme.orderplacement.service.item.ItemStorageService;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
@@ -35,8 +36,8 @@ import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@WebService(endpointInterface = "com.acme.orderplacement.jee.wsapi.ItemStorageServicePortType", name = "itemstorage", serviceName = "ItemStorageWs", wsdlLocation = "classpath:META-INF/wsdl/itemstorageservice-1.0.wsdl")
-@HandlerChain(file = "META-INF/conf/jaxws-handlers.xml")
+@WebService(endpointInterface = "com.acme.orderplacement.jee.wsapi.ItemStorageServicePortType", name = "ItemStorageServicePortType", serviceName = "ItemStorageService", targetNamespace = ItemstorageNamespaces.NS_SERVICE_1_0, portName = "ItemStorageServicePort", wsdlLocation = "itemstorageservice-1.0.wsdl")
+@HandlerChain(file = "jaxws-handlers.xml")
 public class ItemStorageServicePort implements ItemStorageServicePortType {
 
 	// -------------------------------------------------------------------------

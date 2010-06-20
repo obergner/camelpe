@@ -67,12 +67,17 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
-			<artifactId>orderplacement.jee.framework.common</artifactId>
+			<artifactId>orderplacement.jee.framework.wsapi</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.ws</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- Not yet working -->
 		<!--
 			<dependency>
@@ -92,8 +97,58 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>copy-soap-headers-to-web-inf-wsdl</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<!--
+									We need to unpack our wsdl and its dependent xsds into
+									WEB-INF/wsdl.
+								-->
+								<artifactItem>
+									<groupId>com.acme.orderplacement.jee.framework</groupId>
+									<artifactId>orderplacement.jee.framework.wsapi</artifactId>
+									<version>${project.version}</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+								</artifactItem>
+							</artifactItems>
+							<includes>wsdl/**/*</includes>
+							<outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF
+							</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-wsdl-to-web-inf-wsdl</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<!--
+									We need to unpack our wsdl and its dependent xsds into
+									WEB-INF/wsdl.
+								-->
+								<artifactItem>
+									<groupId>com.acme.orderplacement.jee.item</groupId>
+									<artifactId>orderplacement.jee.item.wsapi</artifactId>
+									<version>${project.version}</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+								</artifactItem>
+							</artifactItems>
+							<includes>wsdl/**/*</includes>
+							<outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF
+							</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
 						<id>copy-wsapi-to-web-inf-lib</id>
-						<phase>process-resources</phase>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>copy</goal>
 						</goals>
@@ -126,7 +181,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<packagingIncludes>WEB-INF/lib/orderplacement.jee.item.wsapi-${project.version}.jar,WEB-INF/classes/**/*,META-INF/**/*
+					<packagingIncludes>WEB-INF/lib/orderplacement.jee.item.wsapi-${project.version}.jar,WEB-INF/classes/**/*,WEB-INF/wsdl/**/*,META-INF/**/*
 					</packagingIncludes>
 					<archive>
 						<index>true</index>

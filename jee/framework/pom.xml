@@ -37,6 +37,8 @@
 		<module>common</module>
 		<module>glassfish</module>
 		<module>persistence</module>
+		<module>wsapi</module>
+		<module>ws</module>
 		<module>wslog</module>
 		<!--
 			Disabled for now. Will come back to it once the port to CDI is

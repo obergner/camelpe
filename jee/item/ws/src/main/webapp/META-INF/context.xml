@@ -24,6 +24,8 @@
 		Glassfish/Tomcat looks not for lib/dep1.jar inside the enclosing ear, but
 		rather for lib/lib/dep1.jar. This leads to nasty warnings upon startup. 
 		Since we don't use tag libraries anyway, we simply disable tld scanning.
+		
+		EXCEPT THAT IT DOESN'T WORK!
 	-->
 <Context path="/orderplacement" processTlds="false">
 </Context>

@@ -13,8 +13,6 @@ package com.acme.orderplacement.jee.item.wsapi;
  */
 public abstract class ItemstorageNamespaces {
 
-	public static final String NS_AUTHENTICATION_HEADER_1_0 = "http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/";
-
 	public static final String NS_REQUEST_1_0 = "http://www.acme.com/schema/ns/itemstorageservice/request/1.0/";
 
 	public static final String NS_RESPONSE_1_0 = "http://www.acme.com/schema/ns/itemstorageservice/response/1.0/";
@@ -22,4 +20,6 @@ public abstract class ItemstorageNamespaces {
 	public static final String NS_FAULT_1_0 = "http://www.acme.com/schema/ns/itemstorageservice/fault/1.0/";
 
 	public static final String NS_MODEL_1_0 = "http://www.acme.com/schema/ns/itemstorageservice/model/1.0/";
+
+	public static final String NS_SERVICE_1_0 = "http://www.acme.com/service/ns/itemstorageservice/1.0/";
 }

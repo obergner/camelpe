@@ -3,6 +3,7 @@
     <wb-module deploy-name="orderplacement.jee.item.ws-1.0-SNAPSHOT">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <property name="context-root" value="orderplacement.jee.item.ws"/>
         <property name="java-output-path" value="/orderplacement.jee.item.ws/target/classes"/>
     </wb-module>

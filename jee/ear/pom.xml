@@ -94,6 +94,16 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.wsapi</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.ws</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
 			<artifactId>orderplacement.jee.framework.glassfish</artifactId>
 			<scope>runtime</scope>
 		</dependency>

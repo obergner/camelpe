@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?oasis-xml-catalog catalog="../META-INF/jax-ws-catalog.xml"?>
+
 <wsdl:definitions name="ItemStorageService"
 	targetNamespace="http://www.acme.com/service/ns/itemstorageservice/1.0/"
 	xmlns:tns="http://www.acme.com/service/ns/itemstorageservice/1.0/"
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:auth="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/"
 	xmlns:request="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/"
 	xmlns:response="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/"
 	xmlns:fault="http://www.acme.com/schema/ns/itemstorageservice/fault/1.0/">
@@ -34,6 +37,9 @@
 		Messages
 	-->
 
+	<wsdl:message name="AuthenticationContextHeader">
+		<wsdl:part element="auth:AuthenticationContext" name="AuthenticationContextHeader" />
+	</wsdl:message>
 	<wsdl:message name="RegisterItemRequest">
 		<wsdl:part element="request:RegisterItemRequest" name="RegisterItemRequest" />
 	</wsdl:message>
@@ -68,6 +74,8 @@
 				soapAction="http://www.acme.com/service/ns/itemstorageservice/1.0/registerItem" />
 			<wsdl:input name="RegisterItemRequest">
 				<soap:body use="literal" />
+				<soap:header use="literal" part="AuthenticationContextHeader"
+					message="tns:AuthenticationContextHeader" wsdl:required="true" />
 			</wsdl:input>
 			<wsdl:output name="RegisterItemResponse">
 				<soap:body use="literal" />

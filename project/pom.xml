@@ -318,6 +318,18 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.wsapi</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.ws</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
 				<artifactId>orderplacement.jee.framework.wslog</artifactId>
 				<version>${project.version}</version>
