@@ -3,11 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee">
 	<handler-chain>
-		<!--
-			<handler> <handler-name>WebserviceExchangeLogger</handler-name>
-			<handler-class>com.acme.orderplacement.jee.framework.wslog.handler.WebserviceExchangeLoggingSoapHandler
-			</handler-class> </handler>
-		-->
+		<handler>
+			<handler-name>WebserviceExchangeLogger</handler-name>
+			<handler-class><![CDATA[com.acme.orderplacement.jee.framework.ws.wslog.WebserviceExchangeLoggingSoapHandler]]></handler-class>
+		</handler>
 		<handler>
 			<handler-name>AuthenticationHandler</handler-name>
 			<handler-class><![CDATA[com.acme.orderplacement.jee.framework.ws.auth.AuthenticationHandler]]></handler-class>

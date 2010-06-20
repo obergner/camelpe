@@ -55,6 +55,11 @@
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/jee/pom.xml</location>
 		</link>
 		<link>
+			<name>src/dependencies/weld-1.0.1-SP2</name>
+			<type>2</type>
+			<locationURI>WELD_1_0_1_SP2_SRC_HOME/impl/src/main/java</locationURI>
+		</link>
+		<link>
 			<name>poms/domain/item/pom.xml</name>
 			<type>1</type>
 			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/domain/item/pom.xml</locationURI>

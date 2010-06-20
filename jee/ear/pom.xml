@@ -70,12 +70,12 @@
 			<artifactId>orderplacement.jee.item.itemimport</artifactId>
 			<type>ejb</type> <scope>runtime</scope> </dependency>
 		-->
-		<!--
-			<dependency>
-			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
-			<artifactId>orderplacement.jee.framework.wslog.service</artifactId>
-			<type>ejb</type> <scope>runtime</scope> </dependency>
-		-->
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.wslog</artifactId>
+			<type>ejb</type>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.item</groupId>
 			<artifactId>orderplacement.jee.item.ws</artifactId>
@@ -107,12 +107,6 @@
 			<artifactId>orderplacement.jee.framework.glassfish</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!--
-			<dependency>
-			<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
-			<artifactId>orderplacement.jee.framework.wslog.handler</artifactId>
-			<scope>runtime</scope> </dependency>
-		-->
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.app</groupId>
 			<artifactId>orderplacement.jee.app.config</artifactId>
@@ -169,11 +163,12 @@
 						<!--
 							<ejbModule> <groupId>com.acme.orderplacement.jee.item</groupId>
 							<artifactId>orderplacement.jee.item.itemimport</artifactId>
-							</ejbModule> <ejbModule>
-							<groupId>com.acme.orderplacement.jee.framework.wslog</groupId>
-							<artifactId>orderplacement.jee.framework.wslog.service
-							</artifactId> </ejbModule>
+							</ejbModule>
 						-->
+						<ejbModule>
+							<groupId>com.acme.orderplacement.jee.framework</groupId>
+							<artifactId>orderplacement.jee.framework.wslog</artifactId>
+						</ejbModule>
 						<!--
 							TODO: I would like to explicitly set this web module's context
 							root to a proper value instead of the '/orderplacement.jee.ws'
