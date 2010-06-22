@@ -18,6 +18,11 @@
 	<wsdl:types>
 		<xsd:schema>
 			<xsd:import
+				namespace="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/"
+				schemaLocation="headers/authentication-header-1.0.xsd" />
+		</xsd:schema>
+		<xsd:schema>
+			<xsd:import
 				namespace="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/"
 				schemaLocation="itemstorageservice-request-1.0.xsd" />
 		</xsd:schema>

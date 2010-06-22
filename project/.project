@@ -84,10 +84,5 @@
 			<type>1</type>
 			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/jee/item/pom.xml</location>
 		</link>
-		<link>
-			<name>poms/jee/framework/wslog/pom.xml</name>
-			<type>1</type>
-			<location>E:/Projects/Orderplacement/Src/com.acme.orderplacement/jee/framework/wslog/pom.xml</location>
-		</link>
 	</linkedResources>
 </projectDescription>

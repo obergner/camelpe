@@ -8,9 +8,32 @@
 	<version>1.0-SNAPSHOT</version>
 	<name><![CDATA[SOA Order]]></name>
 	<url></url>
-	<description><![CDATA[
-]]>
+	<description><![CDATA[]]>
 	</description>
+
+	<profiles>
+		<profile>
+			<id>profile.appsrv.Glassfish</id>
+			<properties>
+				<!--
+					Glassfish settings. Note that glassfish.home should be overridden
+					in your own ~/.m2/settings.xml.
+				-->
+				<glassfishVersion>3.0.1-b22</glassfishVersion>
+				<glassfish.home>D:/Apps/GlassfishHome/Glassfish-v3.0.1-b22
+				</glassfish.home>
+			</properties>
+		</profile>
+		<profile>
+			<id>profile.appsrv.JBoss</id>
+			<properties>
+				<!--
+					JBoss settings. Note that jboss.home should be overridden in your
+					own ~/.m2/settings.xml.
+				-->
+			</properties>
+		</profile>
+	</profiles>
 
 	<properties>
 		<order.artifact.version>1.0-SNAPSHOT</order.artifact.version>
@@ -28,13 +51,6 @@
 		<compiler.debug>true</compiler.debug>
 		<compiler.showWarnings>true</compiler.showWarnings>
 		<compiler.showDeprecation>true</compiler.showDeprecation>
-		<!--
-			Glassfish settings. Note that glassfish.home should be overridden in
-			your own ~/.m2/settings.xml.
-		-->
-		<glassfishVersion>3.0.1-b22</glassfishVersion>
-		<glassfish.home>D:/Apps/GlassfishHome/Glassfish-v3.0.1-b22
-		</glassfish.home>
 		<!--
 			Dependency versions 
 		 -->
@@ -77,6 +93,7 @@
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
 		<deps.google-guava.version>r05</deps.google-guava.version>
+		<deps.jboss-as.version>6.0.0.M1</deps.jboss-as.version>
 		<!-- Testing -->
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.arquillian.version>1.0.0.Alpha2</deps.arquillian.version>
@@ -314,6 +331,12 @@
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework</groupId>
 				<artifactId>orderplacement.jee.framework.glassfish</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.jboss</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -1041,11 +1064,21 @@
 				<version>1.2</version>
 				<type>rar</type>
 			</dependency>
-			<!-- Glassfish -->
+			<!--
+				Glassfish 
+			-->
 			<dependency>
 				<groupId>org.glassfish.security</groupId>
 				<artifactId>security</artifactId>
 				<version>3.0.1-b20</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- JBoss -->
+			<dependency>
+				<groupId>org.jboss.jbossas</groupId>
+				<artifactId>jboss-as-security</artifactId>
+				<version>${deps.jboss-as.version}</version>
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
@@ -1624,23 +1657,15 @@
 	</build>
 
 	<!-- =================================================== -->
-	<!-- Project Profiles                                    -->
+	<!-- Project modules                                     -->
 	<!-- =================================================== -->
 
-	<profiles>
-		<profile>
-			<id>standalone</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../framework</module>
-				<module>../domain</module>
-				<module>../integration</module>
-				<module>../jee</module>
-			</modules>
-		</profile>
-	</profiles>
+	<modules>
+		<module>../framework</module>
+		<module>../domain</module>
+		<module>../integration</module>
+		<module>../jee</module>
+	</modules>
 
 	<!-- =================================================== -->
 	<!-- Project Reporting                                   -->

@@ -15,6 +15,57 @@
 
 	<name><![CDATA[SOA Order :: JEE :: Item :: Persistence]]></name>
 
+	<profiles>
+		<profile>
+			<id>profile.appsrv.Glassfish</id>
+			<dependencies>
+				<!--
+					Provided dependencies
+				-->
+				<!--
+					| Compile time dependencies 
+				-->
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-annotations</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<!--
+					| Runtime dependencies 
+				-->
+			</dependencies>
+		</profile>
+		<profile>
+			<id>profile.appsrv.JBoss</id>
+			<dependencies>
+				<!--
+					Provided dependencies
+				-->
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-annotations</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<!--
+					| Compile time dependencies 
+				-->
+				<!--
+					| Runtime dependencies 
+				-->
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<!--
 			| Provided dependencies 
