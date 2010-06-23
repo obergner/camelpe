@@ -15,6 +15,61 @@
 
 	<name><![CDATA[SOA Order :: JEE :: EAR]]></name>
 
+	<profiles>
+		<profile>
+			<id>profile.appsrv.Glassfish</id>
+			<dependencies>
+				<!--
+					Provided dependencies: Note that these dependencies' default scope
+					of 'provided' is overridden in favor of the 'compile' or 'runtime'
+					scope if we do not explicitly reset it to 'provided' here.
+				-->
+				<dependency>
+					<groupId>org.hibernate.javax.persistence</groupId>
+					<artifactId>hibernate-jpa-2.0-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<!--
+					| Compile time dependencies 
+				-->
+				<!--
+					| Runtime dependencies 
+				-->
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-entitymanager</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>com.acme.orderplacement.jee.framework</groupId>
+					<artifactId>orderplacement.jee.framework.glassfish</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>profile.appsrv.JBoss</id>
+			<dependencies>
+				<!--
+					Provided dependencies: Note that these dependencies' default scope
+					of 'provided' is overridden in favor of the 'compile' or 'runtime'
+					scope if we do not explicitly reset it to 'provided' here.
+				-->
+				<!--
+					| Compile time dependencies 
+				-->
+				<!--
+					| Runtime dependencies 
+				-->
+				<dependency>
+					<groupId>com.acme.orderplacement.jee.framework</groupId>
+					<artifactId>orderplacement.jee.framework.jboss</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<!--
 			Provided dependencies: Note that these dependencies' default scope of
@@ -36,22 +91,12 @@
 			<artifactId>jta</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<!--
 			| Compile time dependencies 
 		-->
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.item</groupId>
 			<artifactId>orderplacement.jee.item.persistence</artifactId>
@@ -100,11 +145,6 @@
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
 			<artifactId>orderplacement.jee.framework.ws</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.jee.framework</groupId>
-			<artifactId>orderplacement.jee.framework.glassfish</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

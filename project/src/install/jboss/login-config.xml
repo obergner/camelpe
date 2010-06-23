@@ -25,6 +25,7 @@ $Revision: 102506 $
 -->
 
 <policy>
+<<<<<<< HEAD:project/src/install/jboss/login-config.xml
   <!-- Used by clients within the application server VM such as
   mbeans and servlets that access EJBs.
   -->
@@ -159,6 +160,11 @@ $Revision: 102506 $
   </application-policy>
 
   <!-- Properties files based security configuration for the orderplacement application.
+=======
+
+  <!-- 
+  	Properties files based security configuration for the orderplacement application.
+>>>>>>> 2783e200e540ea02246b9c601bccf4afe8e4fee0:project/src/install/jboss/login-config.xml
   -->
   <application-policy name="orderplacement">
     <authentication>

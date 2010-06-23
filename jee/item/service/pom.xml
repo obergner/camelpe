@@ -15,6 +15,57 @@
 
 	<name><![CDATA[SOA Order :: JEE :: Item :: Service]]></name>
 
+	<profiles>
+		<profile>
+			<id>profile.appsrv.Glassfish</id>
+			<dependencies>
+				<!--
+					Provided dependencies
+				-->
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-annotations</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<!--
+					| Compile time dependencies 
+				-->
+				<!--
+					| Runtime dependencies 
+				-->
+			</dependencies>
+		</profile>
+		<profile>
+			<id>profile.appsrv.JBoss</id>
+			<dependencies>
+				<!--
+					Provided dependencies
+				-->
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-annotations</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<!--
+					| Compile time dependencies 
+				-->
+				<!--
+					| Runtime dependencies 
+				-->
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<!--
 			| Provided dependencies 
@@ -44,20 +95,14 @@
 			<artifactId>xml-apis</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--
 			| Compile time dependencies 
 		-->
-		<!--
-			Needed in compile scope since otherwise javac will throw an
-			exception, i.e. compilation will NOT fail due to a compilation error
-			but rather due to a bug in the compiler - or else it might indeed be
-			a compilation problem that cannot be properly handled by javac.
-		-->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<scope>compile</scope>
-		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.framework</groupId>
 			<artifactId>orderplacement.framework.common</artifactId>
@@ -87,16 +132,13 @@
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+		<!--
+			GLASSFSIH <dependency> <groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId> <scope>runtime</scope>
+			</dependency> <dependency> <groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId> <scope>runtime</scope>
+			</dependency>
+		-->
 		<!--
 			| Test dependencies 
 		-->

@@ -34,7 +34,11 @@ public class JaasAuthenticationService implements AuthenticationService {
 					new ConstantUsernamePasswordCallbackHandler(username,
 							password));
 			loginContext.login();
+<<<<<<< HEAD:jee/framework/jboss/src/main/java/com/acme/orderplacement/jee/framework/jboss/auth/JaasAuthenticationService.java
 		} catch (LoginException e) {
+=======
+		} catch (final LoginException e) {
+>>>>>>> 2783e200e540ea02246b9c601bccf4afe8e4fee0:jee/framework/jboss/src/main/java/com/acme/orderplacement/jee/framework/jboss/auth/JaasAuthenticationService.java
 			throw new FailedLoginException(
 					"Failed to authenticate user identified by username = ["
 							+ username + "] and password = [HIDDEN]: "

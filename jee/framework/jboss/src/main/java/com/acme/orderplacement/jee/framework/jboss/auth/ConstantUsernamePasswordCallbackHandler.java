@@ -51,7 +51,11 @@ public class ConstantUsernamePasswordCallbackHandler implements CallbackHandler 
 						"Callback class not supported");
 			}
 		}
+<<<<<<< HEAD:jee/framework/jboss/src/main/java/com/acme/orderplacement/jee/framework/jboss/auth/ConstantUsernamePasswordCallbackHandler.java
 
 	}
 
+=======
+	}
+>>>>>>> 2783e200e540ea02246b9c601bccf4afe8e4fee0:jee/framework/jboss/src/main/java/com/acme/orderplacement/jee/framework/jboss/auth/ConstantUsernamePasswordCallbackHandler.java
 }

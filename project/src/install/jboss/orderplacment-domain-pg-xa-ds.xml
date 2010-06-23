@@ -2,6 +2,7 @@
 
 	<!--
 		=====================================================================
+<<<<<<< HEAD:project/src/install/jboss/orderplacment-domain-pg-xa-ds.xml
 	-->
 	<!--
 	-->
@@ -11,6 +12,9 @@
 	<!--
 	-->
 	<!--
+=======
+		JBoss Server Configuration
+>>>>>>> 2783e200e540ea02246b9c601bccf4afe8e4fee0:project/src/install/jboss/orderplacment-domain-pg-xa-ds.xml
 		=====================================================================
 	-->
 

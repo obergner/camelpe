@@ -83,6 +83,12 @@
 								</artifactItem>
 							</artifactItems>
 							<includes>wsdl/**/*</includes>
+<<<<<<< HEAD:jee/item/wsapi/pom.xml
+=======
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+>>>>>>> 2783e200e540ea02246b9c601bccf4afe8e4fee0:jee/item/wsapi/pom.xml
 							<outputDirectory>${basedir}/src/main/resources
 							</outputDirectory>
 						</configuration>

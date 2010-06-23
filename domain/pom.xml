@@ -15,6 +15,85 @@
 
 	<name><![CDATA[SOA Order :: Domain]]></name>
 
+	<profiles>
+		<profile>
+			<id>profile.appsrv.Glassfish</id>
+			<dependencies>
+				<!--
+					| Compile time dependencies
+				-->
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-annotations</artifactId>
+					<scope>compile</scope>
+					<exclusions>
+						<exclusion>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-core</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>dom4j</groupId>
+							<artifactId>dom4j</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<!--
+					| Runtime dependencies 
+				-->
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+					<scope>runtime</scope>
+					<exclusions>
+						<exclusion>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-core</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>profile.appsrv.JBoss</id>
+			<dependencies>
+				<!--
+					| Provided dependencies 
+				-->
+				<dependency>
+					<groupId>org.hibernate.javax.persistence</groupId>
+					<artifactId>hibernate-jpa-2.0-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-annotations</artifactId>
+					<scope>provided</scope>
+					<exclusions>
+						<exclusion>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-core</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>dom4j</groupId>
+							<artifactId>dom4j</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+					<scope>provided</scope>
+					<exclusions>
+						<exclusion>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-core</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<properties></properties>
 
 	<!-- shared dependencies -->
@@ -30,35 +109,9 @@
 		<!--
 			| Compile time dependencies
 		-->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>dom4j</groupId>
-					<artifactId>dom4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<!--
 			| Runtime dependencies 
 		-->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<!--
 			| Test dependencies 
 		-->

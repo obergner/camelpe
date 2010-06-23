@@ -117,6 +117,9 @@
 								</artifactItem>
 							</artifactItems>
 							<includes>wsdl/**/*</includes>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
 							<outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF
 							</outputDirectory>
 						</configuration>

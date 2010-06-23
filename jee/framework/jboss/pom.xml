@@ -19,6 +19,14 @@
 		<!--
 			| Provided dependencies 
 		-->
+<<<<<<< HEAD:jee/framework/jboss/pom.xml
+=======
+		<dependency>
+			<groupId>org.jboss.jbossas</groupId>
+			<artifactId>jboss-as-security</artifactId>
+			<scope>provided</scope>
+		</dependency>
+>>>>>>> 2783e200e540ea02246b9c601bccf4afe8e4fee0:jee/framework/jboss/pom.xml
 		<!--
 			| Compile time dependencies 
 		-->
