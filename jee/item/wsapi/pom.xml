@@ -59,6 +59,37 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-soap-headers-to-src-wsdl</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<!--
+									We need to unpack our wsdl and its dependent xsds into
+									WEB-INF/wsdl.
+								-->
+								<artifactItem>
+									<groupId>com.acme.orderplacement.jee.framework</groupId>
+									<artifactId>orderplacement.jee.framework.wsapi</artifactId>
+									<version>${project.version}</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+								</artifactItem>
+							</artifactItems>
+							<includes>wsdl/**/*</includes>
+							<outputDirectory>${basedir}/src/main/resources
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<executions>
