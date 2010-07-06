@@ -15,6 +15,8 @@ import javax.persistence.NoResultException;
  */
 public interface WebserviceLogger {
 
+	String SERVICE_NAME = "orderplacement.framework.webserviceLogger";
+
 	/**
 	 * @param webserviceRequestDto
 	 * @return

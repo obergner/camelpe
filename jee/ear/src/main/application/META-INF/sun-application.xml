@@ -2,7 +2,7 @@
 <sun-application>
 	<web>
 		<web-uri>orderplacement.jee.item.ws-${project.version}.war</web-uri>
-		<context-root>orderplacement</context-root>
+		<context-root>/orderplacement</context-root>
 	</web>
 	<unique-id>67488732739338240</unique-id>
 	<security-role-mapping>

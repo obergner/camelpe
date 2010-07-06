@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.ejb.EJB;
+import javax.annotation.PostConstruct;
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +38,7 @@ import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@WebService(endpointInterface = "com.acme.orderplacement.jee.item.wsapi.ItemStorageServicePortType", name = "ItemStorageServicePortType", serviceName = "ItemStorageService", targetNamespace = ItemstorageNamespaces.NS_SERVICE_1_0, portName = "ItemStorageServicePort", wsdlLocation = "itemstorageservice-1.0.wsdl")
+@WebService(endpointInterface = "com.acme.orderplacement.jee.item.wsapi.ItemStorageServicePortType", name = "ItemStorageServicePortType", serviceName = "ItemStorageService", targetNamespace = ItemstorageNamespaces.NS_SERVICE_1_0, portName = "ItemStorageServicePort", wsdlLocation = "WEB-INF/wsdl/itemstorageservice-1.0.wsdl")
 @HandlerChain(file = "jaxws-handlers.xml")
 public class ItemStorageServicePort implements ItemStorageServicePortType {
 
@@ -52,8 +54,11 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 	 * {@link ItemStorageService <code>ItemStorageService</code>} we delegate
 	 * all calls to.
 	 * </p>
+	 * 
+	 * FIXME: Why doesn't this work? Problem posted to JBoss AS user forum:
+	 * https://community.jboss.org/thread/153870?tstart=0
 	 */
-	@EJB
+	// @EJB
 	private ItemStorageService itemStorageService;
 
 	// -------------------------------------------------------------------------
@@ -61,8 +66,7 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * @see com.acme.orderplacement.jee.item.ws.api.ItemStorageServicePortType#registerItem
-	 *      (com.acme.orderplacement.jee.item.ws.api.RegisterItemRequest)
+	 * @see com.acme.orderplacement.jee.item.ws.api.ItemStorageServicePortType#registerItem(com.acme.orderplacement.jee.item.ws.api.RegisterItemRequest)
 	 */
 	public RegisterItemResponse registerItem(
 			final RegisterItemRequest registerItemRequest)
@@ -97,6 +101,26 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 							+ registerItemRequest.getItemToRegister()
 									.getItemNumber()
 							+ "] has already been registered", faultInfo, e);
+		}
+	}
+
+	// -------------------------------------------------------------------------
+	// Lifecycle callbacks
+	// -------------------------------------------------------------------------
+
+	/**
+	 * HACK: To be removed as soon as @EJB above works.
+	 */
+	@PostConstruct
+	public void lookupDependencies() throws RuntimeException {
+		try {
+			final InitialContext ic = new InitialContext();
+			this.itemStorageService = (ItemStorageService) ic
+					.lookup("orderplacement.jee.ear-1.0-SNAPSHOT/ItemStorageServiceBean/local");
+			ic.close();
+		} catch (final NamingException e) {
+			throw new IllegalStateException("Failed to look up dependencies: "
+					+ e.getMessage(), e);
 		}
 	}
 

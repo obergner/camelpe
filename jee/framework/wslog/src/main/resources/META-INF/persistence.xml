@@ -11,7 +11,7 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<jta-data-source>jdbc/orderplacement/domainDataSource</jta-data-source>
+		<jta-data-source>${datasource.domain.jndiName}</jta-data-source>
 
 		<class>com.acme.orderplacement.jee.framework.wslog.internal.domain.WebserviceOperation</class>
 		<class>com.acme.orderplacement.jee.framework.wslog.internal.domain.WebserviceRequest</class>

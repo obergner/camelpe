@@ -48,9 +48,13 @@ public class WebserviceLoggerClientModeIntegrationTest {
 	// Fields
 	// ------------------------------------------------------------------------
 
-	private static final String EXISTING_WS_OPERATION_NAME = "TestWS#/item/registerItem";
+	private static final String EXISTING_CONTEXT_ROOT = "/test";
 
-	private static final String NON_EXISTING_WS_OPERATION_NAME = "TestWS#/item/nonExistingOperation";
+	private static final String EXISTING_WS_SERVICE_NAME = "TestWS";
+
+	private static final String EXISTING_WS_OPERATION_NAME = "registerItem";
+
+	private static final String NON_EXISTING_WS_OPERATION_NAME = "nonExistingOperation";
 
 	private static final Long NON_EXISTING_WS_REQUEST_ID = Long.valueOf(666L);
 
@@ -110,6 +114,7 @@ public class WebserviceLoggerClientModeIntegrationTest {
 			throws Exception {
 		try {
 			final WebserviceRequestDto webserviceRequestDto = new WebserviceRequestDto(
+					EXISTING_CONTEXT_ROOT, EXISTING_WS_SERVICE_NAME,
 					NON_EXISTING_WS_OPERATION_NAME, "1.1.1.1", new Date(),
 					"TEST", Collections.<String, String> emptyMap());
 
@@ -132,6 +137,7 @@ public class WebserviceLoggerClientModeIntegrationTest {
 	public final void assertThatLogWebserviceRequestLogsRequestReferencingAnExistingWsOperation()
 			throws NoResultException, IllegalArgumentException, NamingException {
 		final WebserviceRequestDto webserviceRequestDto = new WebserviceRequestDto(
+				EXISTING_CONTEXT_ROOT, EXISTING_WS_SERVICE_NAME,
 				EXISTING_WS_OPERATION_NAME, "1.1.1.1", new Date(), "TEST",
 				Collections.<String, String> emptyMap());
 
@@ -158,6 +164,7 @@ public class WebserviceLoggerClientModeIntegrationTest {
 		headers.put("header1", "value1");
 		headers.put("header2", "value2");
 		final WebserviceRequestDto webserviceRequestDto = new WebserviceRequestDto(
+				EXISTING_CONTEXT_ROOT, EXISTING_WS_SERVICE_NAME,
 				EXISTING_WS_OPERATION_NAME, "1.1.1.1", new Date(), "TEST",
 				headers);
 

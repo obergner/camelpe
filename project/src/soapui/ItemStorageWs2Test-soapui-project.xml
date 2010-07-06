@@ -157,7 +157,7 @@
       <element name="itemToRegister" minOccurs="1" maxOccurs="1" nillable="false" type="model:Item"/>
     </sequence>
   </complexType>
-</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/orderplacement/ItemStorageService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://www.acme.com/service/ns/itemstorageservice/1.0/registerItem" name="registerItem" bindingOperationName="registerItem" type="Request-Response" outputName="RegisterItemResponse" inputName="RegisterItemRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="InvalidCredentials"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/orderplacement/ItemStorageService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/" xmlns:ns1="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns2="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/">
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/orderplacement/ItemStorageService</con:endpoint><con:endpoint>http://localhost:8080/orderplacement.jee.item.ws</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://www.acme.com/service/ns/itemstorageservice/1.0/registerItem" name="registerItem" bindingOperationName="registerItem" type="Request-Response" outputName="RegisterItemResponse" inputName="RegisterItemRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="InvalidCredentials"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/orderplacement/ItemStorageService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/" xmlns:ns1="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns2="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/">
    <soapenv:Header>
       <ns:AuthenticationContext>
          <ns:username>blah</ns:username>
@@ -201,7 +201,7 @@
          </ns1:itemToRegister>
       </ns1:RegisterItemRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.acme.com/service/ns/itemstorageservice/1.0/ItemStorageServicePortType/RegisterItemRequest"/></con:call><con:call name="ValidRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/orderplacement/ItemStorageService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/" xmlns:ns1="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns2="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/">
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.acme.com/service/ns/itemstorageservice/1.0/ItemStorageServicePortType/RegisterItemRequest"/></con:call><con:call name="ValidRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/orderplacement.jee.item.ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/" xmlns:ns1="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns2="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/">
    <soapenv:Header>
       <ns:AuthenticationContext>
          <ns:username>guest</ns:username>
@@ -211,13 +211,13 @@
    <soapenv:Body>
       <ns1:RegisterItemRequest>
          <ns1:itemToRegister>
-            <ns2:itemNumber>ITM-003-000000034</ns2:itemNumber>
-            <ns2:name>New Test Item 34</ns2:name>
+            <ns2:itemNumber>ITM-003-000000035</ns2:itemNumber>
+            <ns2:name>New Test Item 35</ns2:name>
             <ns2:description>Test item description</ns2:description>
             <ns2:itemSpecifications>
                <ns2:itemSpecification>
-                  <ns2:itemSpecificationNumber>ITMSPEC-003-000034</ns2:itemSpecificationNumber>
-                  <ns2:name>New Test Item Spec 34</ns2:name>
+                  <ns2:itemSpecificationNumber>ITMSPEC-003-000035</ns2:itemSpecificationNumber>
+                  <ns2:name>New Test Item Spec 35</ns2:name>
                </ns2:itemSpecification>
             </ns2:itemSpecifications>
          </ns1:itemToRegister>

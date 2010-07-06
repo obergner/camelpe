@@ -22,7 +22,39 @@
 				<glassfishVersion>3.0.1-b22</glassfishVersion>
 				<glassfish.home>D:/Apps/GlassfishHome/Glassfish-v3.0.1-b22
 				</glassfish.home>
+				<jee.applicationXml.version><![CDATA[6]]></jee.applicationXml.version>
+				<datasource.domain.jndiName><![CDATA[jdbc/orderplacement/domainDataSource]]></datasource.domain.jndiName>
+				<ws.itemimport.wsdlLocation><![CDATA[itemstorageservice-1.0.wsdl]]></ws.itemimport.wsdlLocation>
 			</properties>
+			<dependencies>
+				<!-- =========================================== -->
+				<!-- Provided                                    -->
+				<!-- =========================================== -->
+				<!-- =========================================== -->
+				<!-- Compile                                     -->
+				<!-- =========================================== -->
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<!-- =========================================== -->
+				<!-- Runtime                                     -->
+				<!-- =========================================== -->
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+				<!-- =========================================== -->
+				<!-- Test                                        -->
+				<!-- =========================================== -->
+			</dependencies>
 		</profile>
 		<profile>
 			<id>profile.appsrv.JBoss</id>
@@ -31,7 +63,39 @@
 					JBoss settings. Note that jboss.home should be overridden in your
 					own ~/.m2/settings.xml.
 				-->
+				<jee.applicationXml.version><![CDATA[5]]></jee.applicationXml.version>
+				<datasource.domain.jndiName><![CDATA[java:jdbc/orderplacement/domainDataSource]]></datasource.domain.jndiName>
+				<ws.itemimport.wsdlLocation><![CDATA[WEB-INF/wsdl/itemstorageservice-1.0.wsdl]]></ws.itemimport.wsdlLocation>
 			</properties>
+			<dependencies>
+				<!-- =========================================== -->
+				<!-- Provided                                    -->
+				<!-- =========================================== -->
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<!-- =========================================== -->
+				<!-- Compile                                     -->
+				<!-- =========================================== -->
+				<!-- =========================================== -->
+				<!-- Runtime                                     -->
+				<!-- =========================================== -->
+				<!-- =========================================== -->
+				<!-- Test                                        -->
+				<!-- =========================================== -->
+			</dependencies>
 		</profile>
 	</profiles>
 
@@ -124,9 +188,7 @@
 		<plugins.cobertura.version>2.3</plugins.cobertura.version>
 		<plugins.jaxb2.version>0.7.3</plugins.jaxb2.version>
 		<plugins.jaxws.version>1.12</plugins.jaxws.version>
-		<plugins.bundle.version>2.0.1</plugins.bundle.version>
-		<plugins.geronimo.version>2.0.2</plugins.geronimo.version>
-		<plugins.geronimo-car.version>2.2</plugins.geronimo-car.version>
+		<plugins.build-helper.version>1.5</plugins.build-helper.version>
 	</properties>
 
 	<organization>
@@ -1082,6 +1144,13 @@
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
+			<dependency>
+				<groupId>org.jboss.jbossas</groupId>
+				<artifactId>jboss-as-tomcat</artifactId>
+				<version>${deps.jboss-as.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
 			<!-- =========================================== -->
 			<!-- Test dependencies                           -->
 			<!-- =========================================== -->
@@ -1358,11 +1427,6 @@
 		<!-- Compile                                     -->
 		<!-- =========================================== -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<scope>compile</scope>
@@ -1370,16 +1434,6 @@
 		<!-- =========================================== -->
 		<!-- Runtime                                     -->
 		<!-- =========================================== -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<!-- =========================================== -->
 		<!-- Test                                        -->
 		<!-- =========================================== -->
@@ -1582,6 +1636,11 @@
 					<artifactId>maven-jaxb2-plugin</artifactId>
 					<version>${plugins.jaxb2.version}</version>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${plugins.build-helper.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -1652,6 +1711,10 @@
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

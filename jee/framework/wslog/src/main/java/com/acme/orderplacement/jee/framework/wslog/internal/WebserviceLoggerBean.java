@@ -66,11 +66,16 @@ public class WebserviceLoggerBean implements WebserviceLogger {
 		this.log.debug("About to log webservice request [{}] ...",
 				webserviceRequestDto);
 
+		final String fullyQualifiedOperationName = webserviceRequestDto
+				.getContextRoot()
+				+ "/"
+				+ webserviceRequestDto.getServiceName()
+				+ "#"
+				+ webserviceRequestDto.getOperationName();
 		final TypedQuery<WebserviceOperation> wsOperationByName = this.entityManager
 				.createNamedQuery(WebserviceOperation.Queries.BY_NAME,
 						WebserviceOperation.class);
-		wsOperationByName.setParameter("name", webserviceRequestDto
-				.getOperationName());
+		wsOperationByName.setParameter("name", fullyQualifiedOperationName);
 		final WebserviceOperation referencedWebserviceOperation = wsOperationByName
 				.getSingleResult();
 

@@ -41,15 +41,13 @@ import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
 		ApplicationUserRole.ROLE_EXTERNAL_USER,
 		ApplicationUserRole.ROLE_EMPLOYEE, ApplicationUserRole.ROLE_ACCOUNTANT,
 		ApplicationUserRole.ROLE_ADMIN })
-@Stateless(name = ItemStorageServiceBean.BEAN_NAME)
+@Stateless
 @Local( { ItemStorageService.class })
 public class ItemStorageServiceBean implements ItemStorageService {
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
-
-	public static final String BEAN_NAME = "ItemStorageServiceBean";
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 

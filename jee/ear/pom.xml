@@ -173,7 +173,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
-					<version>6</version>
+					<version>${jee.applicationXml.version}</version>
 					<!--
 						Needed to make resource filtering work: see
 						http://www.mail-archive.com/users@maven.apache.org/msg59229.html

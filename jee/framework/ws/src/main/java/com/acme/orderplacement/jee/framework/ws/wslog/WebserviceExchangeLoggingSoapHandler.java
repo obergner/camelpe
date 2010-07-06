@@ -7,14 +7,20 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
-import javax.ejb.EJB;
+import javax.annotation.PostConstruct;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.xml.namespace.QName;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.acme.orderplacement.framework.wslog.WebserviceLogger;
 import com.acme.orderplacement.framework.wslog.WebserviceRequestDto;
+import com.acme.orderplacement.jee.framework.ws.WebServiceContext;
 import com.acme.orderplacement.jee.framework.ws.internal.wslog.SOAPMessageContextToWebserviceRequestDtoConverter;
 
 /**
@@ -32,10 +38,16 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	// Fields
 	// -------------------------------------------------------------------------
 
-	@EJB
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	/**
+	 * FIXME: Why doesn't this work? Problem posted to JBoss AS user forum:
+	 * https://community.jboss.org/thread/153870?tstart=0
+	 */
+	// @EJB
 	private WebserviceLogger webserviceLogger;
 
-	private final SOAPMessageContextToWebserviceRequestDtoConverter converter = new SOAPMessageContextToWebserviceRequestDtoConverter();
+	private final SOAPMessageContextToWebserviceRequestDtoConverter requestConverter = new SOAPMessageContextToWebserviceRequestDtoConverter();
 
 	// -------------------------------------------------------------------------
 	// Implementation of javax.xml.ws.handler.soap.SOAPHandler
@@ -59,8 +71,8 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	 * @see javax.xml.ws.handler.Handler#handleFault(javax.xml.ws.handler.MessageContext)
 	 */
 	public boolean handleFault(final SOAPMessageContext context) {
-		// TODO Auto-generated method stub
-		return false;
+		// Let faults be handled elsewhere
+		return true;
 	}
 
 	/**
@@ -74,20 +86,51 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	}
 
 	// -------------------------------------------------------------------------
+	// Lifecycle callbacks
+	// -------------------------------------------------------------------------
+
+	/**
+	 * HACK: To be removed as soon as @EJB above works.
+	 */
+	@PostConstruct
+	public void lookupDependencies() throws RuntimeException {
+		try {
+			final InitialContext ic = new InitialContext();
+			this.webserviceLogger = (WebserviceLogger) ic
+					.lookup("orderplacement.jee.ear-1.0-SNAPSHOT/WebserviceLoggerBean/local");
+			ic.close();
+		} catch (final NamingException e) {
+			throw new IllegalStateException("Failed to look up dependencies: "
+					+ e.getMessage(), e);
+		}
+	}
+
+	// -------------------------------------------------------------------------
 	// Internal
 	// -------------------------------------------------------------------------
 
 	private boolean handleInboundMessage(final SOAPMessageContext context) {
+		WebserviceRequestDto webserviceRequestDto = null;
 		try {
-			final WebserviceRequestDto webserviceRequestDto = this.converter
-					.convert(context, new Date());
+			webserviceRequestDto = this.requestConverter.convert(context,
+					new Date());
 			final Long requestId = this.webserviceLogger
 					.logWebserviceRequest(webserviceRequestDto);
 
+			/*
+			 * Store request id in web service context for use further
+			 * downstream as well as when logging the response.
+			 */
+			context.put(WebServiceContext.WS_REQUEST_ID, requestId);
+
 			return true;
 		} catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.log
+					.error(
+							"Failed to log web service request ["
+									+ webserviceRequestDto
+									+ "] to database (error will be ignored, processing continues): "
+									+ e.getMessage(), e);
 
 			return true;
 		}

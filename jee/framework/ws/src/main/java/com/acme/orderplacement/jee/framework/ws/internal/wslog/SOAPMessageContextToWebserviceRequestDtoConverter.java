@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPException;
@@ -56,15 +57,19 @@ public class SOAPMessageContextToWebserviceRequestDtoConverter {
 
 		final Map<String, String> convertedHttpRequestHeaders = extractHttpRequestHeadersFrom(soapMessageContext);
 
+		final String contextRoot = extractContextRootFrom(soapMessageContext);
+
+		final String wsdlServiceName = extractWsdlServiceNameFrom(soapMessageContext);
+
 		final String wsdlOperation = extractWsdlOperationNameFrom(soapMessageContext);
 
 		final String sourceIp = extractSourceIpFrom(soapMessageContext);
 
 		final String soapMessageAsString = extractSoapMessageStringRepresentationFrom(soapMessageContext);
 
-		return new WebserviceRequestDto(wsdlOperation, sourceIp,
-				messageReceivedOn, soapMessageAsString,
-				convertedHttpRequestHeaders);
+		return new WebserviceRequestDto(contextRoot, wsdlServiceName,
+				wsdlOperation, sourceIp, messageReceivedOn,
+				soapMessageAsString, convertedHttpRequestHeaders);
 	}
 
 	private Map<String, String> extractHttpRequestHeadersFrom(
@@ -79,6 +84,22 @@ public class SOAPMessageContextToWebserviceRequestDtoConverter {
 		}
 
 		return convertedHttpRequestHeaders;
+	}
+
+	private String extractContextRootFrom(
+			final SOAPMessageContext soapMessageContext) {
+		final ServletContext servletContext = (ServletContext) soapMessageContext
+				.get(MessageContext.SERVLET_CONTEXT);
+
+		return servletContext.getContextPath();
+	}
+
+	private String extractWsdlServiceNameFrom(
+			final SOAPMessageContext soapMessageContext) {
+		final QName wsdlServiceQName = (QName) soapMessageContext
+				.get(MessageContext.WSDL_SERVICE);
+
+		return wsdlServiceQName.getLocalPart();
 	}
 
 	private String extractWsdlOperationNameFrom(

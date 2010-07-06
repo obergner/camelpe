@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="ItemStorageServiceJBossWsTest" resourceRoot="" soapui-version="2.5.1" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="ProjectSettings@projectRoot">E:\Projects\Orderplacement\Src\com.acme.orderplacement\project\src\soapui</con:setting></con:settings><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ItemStorageServiceSOAPBinding" type="wsdl" bindingName="{http://www.acme.com/service/ns/itemstorageservice/1.0/}ItemStorageServiceSOAPBinding" soapVersion="1_1" anonymous="optional" definition="http://127.0.0.1:8080/orderplacement?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://127.0.0.1:8080/orderplacement?wsdl"><con:part><con:url>http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=headers/authentication-header-1.0.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/">
+  <!--Top level elements-->
+  <element name="AuthenticationContext" nillable="false" type="tns:AuthenticationContext"/>
+  <!--Types-->
+  <simpleType name="username">
+    <restriction base="string">
+      <length value="15"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="password">
+    <restriction base="string">
+      <length value="30"/>
+    </restriction>
+  </simpleType>
+  <complexType name="AuthenticationContext">
+    <sequence>
+      <element maxOccurs="1" minOccurs="1" name="username" nillable="false" type="tns:username"/>
+      <element maxOccurs="1" minOccurs="1" name="password" nillable="false" type="tns:password"/>
+    </sequence>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-model-1.0.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/">
+  <!--Item specification-->
+  <simpleType name="ItemSpecificationNumber">
+    <restriction base="string">
+      <length value="30"/>
+    </restriction>
+  </simpleType>
+  <complexType name="ItemSpecification">
+    <sequence>
+      <element maxOccurs="1" minOccurs="1" name="itemSpecificationNumber" nillable="false" type="tns:ItemSpecificationNumber"/>
+      <element maxOccurs="1" minOccurs="1" name="name" nillable="false" type="string"/>
+    </sequence>
+  </complexType>
+  <complexType name="ItemSpecifications">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="1" name="itemSpecification" nillable="false" type="tns:ItemSpecification"/>
+    </sequence>
+  </complexType>
+  <!--Item-->
+  <simpleType name="ItemNumber">
+    <restriction base="string">
+      <length value="30"/>
+    </restriction>
+  </simpleType>
+  <complexType name="Item">
+    <sequence>
+      <element maxOccurs="1" minOccurs="1" name="itemNumber" nillable="false" type="tns:ItemNumber"/>
+      <element maxOccurs="1" minOccurs="1" name="name" nillable="false" type="string"/>
+      <element maxOccurs="1" minOccurs="0" name="description" nillable="false" type="string"/>
+      <element maxOccurs="1" minOccurs="1" name="itemSpecifications" nillable="false" type="tns:ItemSpecifications"/>
+    </sequence>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-fault-1.0.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.acme.com/schema/ns/itemstorageservice/fault/1.0/" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:model="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/" xmlns:tns="http://www.acme.com/schema/ns/itemstorageservice/fault/1.0/">
+  <!--Imports-->
+  <import namespace="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/" schemaLocation="http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-model-1.0.xsd"/>
+  <!--Top level elements-->
+  <element name="ItemAlreadyRegisteredFault" nillable="false" type="tns:ItemAlreadyRegisteredFault"/>
+  <!--SOAP Faults-->
+  <complexType name="ItemAlreadyRegisteredFault">
+    <sequence>
+      <element maxOccurs="1" minOccurs="1" name="alreadyRegisteredItem" nillable="false" type="model:Item"/>
+    </sequence>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-response-1.0.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:model="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/" xmlns:tns="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/">
+  <!--Imports-->
+  <import namespace="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/" schemaLocation="http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-model-1.0.xsd"/>
+  <!--Top level elements-->
+  <element name="RegisterItemResponse" nillable="false" type="tns:RegisterItemResponse"/>
+  <!--Requests-->
+  <simpleType name="ResponseCode">
+    <restriction base="string">
+      <enumeration value="SUCCESS"/>
+      <enumeration value="WARNING"/>
+      <enumeration value="FAILURE"/>
+    </restriction>
+  </simpleType>
+  <complexType name="RegisterItemResponse">
+    <sequence>
+      <element maxOccurs="1" minOccurs="1" name="responseCode" nillable="false" type="tns:ResponseCode"/>
+      <element maxOccurs="1" minOccurs="1" name="message" nillable="false" type="string"/>
+    </sequence>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-request-1.0.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:model="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/" xmlns:tns="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/">
+  <!--Imports-->
+  <import namespace="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/" schemaLocation="http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-model-1.0.xsd"/>
+  <!--Top level elements-->
+  <element name="RegisterItemRequest" nillable="false" type="tns:RegisterItemRequest"/>
+  <!--Requests-->
+  <complexType name="RegisterItemRequest">
+    <sequence>
+      <element maxOccurs="1" minOccurs="1" name="itemToRegister" nillable="false" type="model:Item"/>
+    </sequence>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.0.1:8080/orderplacement?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ItemStorageService" targetNamespace="http://www.acme.com/service/ns/itemstorageservice/1.0/" xmlns:auth="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/" xmlns:fault="http://www.acme.com/schema/ns/itemstorageservice/fault/1.0/" xmlns:request="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:response="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.acme.com/service/ns/itemstorageservice/1.0/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/" schemaLocation="http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=headers/authentication-header-1.0.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" schemaLocation="http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-request-1.0.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://www.acme.com/schema/ns/itemstorageservice/response/1.0/" schemaLocation="http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-response-1.0.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://www.acme.com/schema/ns/itemstorageservice/fault/1.0/" schemaLocation="http://127.0.0.1:8080/orderplacement?wsdl&amp;resource=itemstorageservice-fault-1.0.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="RegisterItemResponse">
+    <wsdl:part element="response:RegisterItemResponse" name="RegisterItemResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterItemRequest">
+    <wsdl:part element="request:RegisterItemRequest" name="RegisterItemRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ItemAlreadyRegisteredFault">
+    <wsdl:part element="fault:ItemAlreadyRegisteredFault" name="fault"/>
+  </wsdl:message>
+  <wsdl:message name="AuthenticationContextHeader">
+    <wsdl:part element="auth:AuthenticationContext" name="AuthenticationContextHeader"/>
+  </wsdl:message>
+  <wsdl:portType name="ItemStorageServicePortType">
+    <wsdl:operation name="registerItem">
+      <wsdl:input message="tns:RegisterItemRequest" name="RegisterItemRequest"/>
+      <wsdl:output message="tns:RegisterItemResponse" name="RegisterItemResponse"/>
+      <wsdl:fault message="tns:ItemAlreadyRegisteredFault" name="ItemAlreadyRegisteredFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ItemStorageServiceSOAPBinding" type="tns:ItemStorageServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="registerItem">
+      <soap:operation soapAction="http://www.acme.com/service/ns/itemstorageservice/1.0/registerItem"/>
+      <wsdl:input name="RegisterItemRequest">
+        <soap:body use="literal"/>
+        <soap:header message="tns:AuthenticationContextHeader" part="AuthenticationContextHeader" use="literal" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output name="RegisterItemResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ItemAlreadyRegisteredFault">
+        <soap:fault name="ItemAlreadyRegisteredFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ItemStorageService">
+    <wsdl:port binding="tns:ItemStorageServiceSOAPBinding" name="ItemStorageServicePort">
+      <soap:address location="http://127.0.0.1:8080/orderplacement"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://127.0.0.1:8080/orderplacement</con:endpoint><con:endpoint>http://127.0.0.1:8080/orderplacement/ItemStorageService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://www.acme.com/service/ns/itemstorageservice/1.0/registerItem" name="registerItem" bindingOperationName="registerItem" type="Request-Response" outputName="RegisterItemResponse" inputName="RegisterItemRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="ValidRequest"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/orderplacement/ItemStorageService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.acme.com/schema/ns/itemstorageservice/headers/authentication/1.0/" xmlns:ns1="http://www.acme.com/schema/ns/itemstorageservice/request/1.0/" xmlns:ns2="http://www.acme.com/schema/ns/itemstorageservice/model/1.0/">
+   <soapenv:Header>
+      <ns:AuthenticationContext>
+         <ns:username>guest</ns:username>
+         <ns:password>guest</ns:password>
+      </ns:AuthenticationContext>
+   </soapenv:Header>
+   <soapenv:Body>
+      <ns1:RegisterItemRequest>
+         <ns1:itemToRegister>
+            <ns2:itemNumber>ITM-003-000000036</ns2:itemNumber>
+            <ns2:name>New Test Item 36</ns2:name>
+            <ns2:description>Test item description</ns2:description>
+            <ns2:itemSpecifications>
+               <ns2:itemSpecification>
+                  <ns2:itemSpecificationNumber>ITMSPEC-003-000036</ns2:itemSpecificationNumber>
+                  <ns2:name>New Test Item Spec 36</ns2:name>
+               </ns2:itemSpecification>
+            </ns2:itemSpecifications>
+         </ns1:itemToRegister>
+      </ns1:RegisterItemRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.acme.com/service/ns/itemstorageservice/1.0/ItemStorageServicePortType/RegisterItemRequest"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
