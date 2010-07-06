@@ -5,8 +5,6 @@ package com.acme.orderplacement.framework.common.auth;
 
 import java.security.Principal;
 
-import com.acme.orderplacement.framework.common.auth.PrincipalAccess;
-
 /**
  * <p>
  * TODO: Insert short summary for SamplePrincipalAccess

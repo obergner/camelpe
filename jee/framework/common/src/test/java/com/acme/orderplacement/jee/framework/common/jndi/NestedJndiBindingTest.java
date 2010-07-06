@@ -16,8 +16,6 @@ import org.apache.xbean.naming.context.WritableContext;
 import org.apache.xbean.naming.global.GlobalContextManager;
 import org.junit.Test;
 
-import com.acme.orderplacement.jee.framework.common.jndi.NestedJndiBinding;
-
 /**
  * <p>
  * Test {@link NestedJndiBinding}.

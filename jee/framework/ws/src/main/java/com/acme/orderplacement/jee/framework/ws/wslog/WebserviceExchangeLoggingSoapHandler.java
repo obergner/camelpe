@@ -20,8 +20,10 @@ import org.slf4j.LoggerFactory;
 
 import com.acme.orderplacement.framework.wslog.WebserviceLogger;
 import com.acme.orderplacement.framework.wslog.WebserviceRequestDto;
+import com.acme.orderplacement.framework.wslog.WebserviceResponseDto;
 import com.acme.orderplacement.jee.framework.ws.WebServiceContext;
 import com.acme.orderplacement.jee.framework.ws.internal.wslog.SOAPMessageContextToWebserviceRequestDtoConverter;
+import com.acme.orderplacement.jee.framework.ws.internal.wslog.SOAPMessageContextToWebserviceResponseDtoConverter;
 
 /**
  * <p>
@@ -49,6 +51,8 @@ public class WebserviceExchangeLoggingSoapHandler implements
 
 	private final SOAPMessageContextToWebserviceRequestDtoConverter requestConverter = new SOAPMessageContextToWebserviceRequestDtoConverter();
 
+	private final SOAPMessageContextToWebserviceResponseDtoConverter responseConverter = new SOAPMessageContextToWebserviceResponseDtoConverter();
+
 	// -------------------------------------------------------------------------
 	// Implementation of javax.xml.ws.handler.soap.SOAPHandler
 	// -------------------------------------------------------------------------
@@ -71,8 +75,23 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	 * @see javax.xml.ws.handler.Handler#handleFault(javax.xml.ws.handler.MessageContext)
 	 */
 	public boolean handleFault(final SOAPMessageContext context) {
-		// Let faults be handled elsewhere
-		return true;
+		WebserviceResponseDto webserviceResponseDto = null;
+		try {
+			webserviceResponseDto = this.responseConverter.convert(context,
+					new Date(), true);
+			this.webserviceLogger.logWebserviceResponse(webserviceResponseDto);
+
+			return true;
+		} catch (final Exception e) {
+			this.log
+					.error(
+							"Failed to log web service response ["
+									+ webserviceResponseDto
+									+ "] to database (error will be ignored, processing continues): "
+									+ e.getMessage(), e);
+
+			return true;
+		}
 	}
 
 	/**
@@ -121,6 +140,8 @@ public class WebserviceExchangeLoggingSoapHandler implements
 			 * Store request id in web service context for use further
 			 * downstream as well as when logging the response.
 			 */
+			context.setScope(WebServiceContext.WS_REQUEST_ID,
+					MessageContext.Scope.APPLICATION);
 			context.put(WebServiceContext.WS_REQUEST_ID, requestId);
 
 			return true;
@@ -137,8 +158,23 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	}
 
 	private boolean handleOutboundMessage(final SOAPMessageContext context) {
+		WebserviceResponseDto webserviceResponseDto = null;
+		try {
+			webserviceResponseDto = this.responseConverter.convert(context,
+					new Date(), false);
+			this.webserviceLogger.logWebserviceResponse(webserviceResponseDto);
 
-		return true;
+			return true;
+		} catch (final Exception e) {
+			this.log
+					.error(
+							"Failed to log web service response ["
+									+ webserviceResponseDto
+									+ "] to database (error will be ignored, processing continues): "
+									+ e.getMessage(), e);
+
+			return true;
+		}
 	}
 
 	private boolean isInbound(final MessageContext context) {
