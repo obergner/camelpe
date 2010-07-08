@@ -140,9 +140,9 @@ public class WebserviceExchangeLoggingSoapHandler implements
 			 * Store request id in web service context for use further
 			 * downstream as well as when logging the response.
 			 */
+			context.put(WebServiceContext.WS_REQUEST_ID, requestId);
 			context.setScope(WebServiceContext.WS_REQUEST_ID,
 					MessageContext.Scope.APPLICATION);
-			context.put(WebServiceContext.WS_REQUEST_ID, requestId);
 
 			return true;
 		} catch (final Exception e) {
