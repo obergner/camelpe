@@ -7,9 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.ejb.EJB;
 import javax.xml.namespace.QName;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
@@ -46,7 +44,7 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	 * FIXME: Why doesn't this work? Problem posted to JBoss AS user forum:
 	 * https://community.jboss.org/thread/153870?tstart=0
 	 */
-	// @EJB
+	@EJB
 	private WebserviceLogger webserviceLogger;
 
 	private final SOAPMessageContextToWebserviceRequestDtoConverter requestConverter = new SOAPMessageContextToWebserviceRequestDtoConverter();
@@ -108,21 +106,21 @@ public class WebserviceExchangeLoggingSoapHandler implements
 	// Lifecycle callbacks
 	// -------------------------------------------------------------------------
 
-	/**
-	 * HACK: To be removed as soon as @EJB above works.
-	 */
-	@PostConstruct
-	public void lookupDependencies() throws RuntimeException {
-		try {
-			final InitialContext ic = new InitialContext();
-			this.webserviceLogger = (WebserviceLogger) ic
-					.lookup("orderplacement.jee.ear-1.0-SNAPSHOT/WebserviceLoggerBean/local");
-			ic.close();
-		} catch (final NamingException e) {
-			throw new IllegalStateException("Failed to look up dependencies: "
-					+ e.getMessage(), e);
-		}
-	}
+	// /**
+	// * HACK: To be removed as soon as @EJB above works.
+	// */
+	// // @PostConstruct
+	// public void lookupDependencies() throws RuntimeException {
+	// try {
+	// final InitialContext ic = new InitialContext();
+	// this.webserviceLogger = (WebserviceLogger) ic
+	// .lookup("orderplacement.jee.ear-1.0-SNAPSHOT/WebserviceLoggerBean/local");
+	// ic.close();
+	// } catch (final NamingException e) {
+	// throw new IllegalStateException("Failed to look up dependencies: "
+	// + e.getMessage(), e);
+	// }
+	// }
 
 	// -------------------------------------------------------------------------
 	// Internal

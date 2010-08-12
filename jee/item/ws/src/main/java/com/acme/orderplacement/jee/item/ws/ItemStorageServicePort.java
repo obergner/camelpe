@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.annotation.PostConstruct;
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.naming.InitialContext;
@@ -74,6 +73,9 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 		try {
 			this.log.info("Processing request [{}] ...", registerItemRequest);
 
+			// FIXME: https://community.jboss.org/thread/153870?tstart=0
+			lookupDependencies();
+
 			this.itemStorageService.registerItem(convert(registerItemRequest));
 
 			final RegisterItemResponse response = new RegisterItemResponse();
@@ -109,9 +111,9 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * HACK: To be removed as soon as @EJB above works.
+	 * HACK: To be removed as soon as @EJB above works ->
+	 * https://community.jboss.org/thread/153870?tstart=0.
 	 */
-	@PostConstruct
 	public void lookupDependencies() throws RuntimeException {
 		try {
 			final InitialContext ic = new InitialContext();
