@@ -8,7 +8,6 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/test/resources/META-INF/spring/integration.inbound.itemimport.testEnvironment.scontext</config>
 	</configs>
 	<configSets>
 	</configSets>

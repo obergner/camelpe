@@ -17,9 +17,11 @@ import com.acme.orderplacement.framework.service.exception.IllegalServiceUsageEx
  */
 public final class ItemImportBoundaryRoutes extends RouteBuilder {
 
-	public static final String FAULT_MESSAGES_PROPAGATION = "activemq:queue:jms/queue/com/acme/ItemCreatedEventsErrorQueue";
+	public static final String ITEM_CREATED_EVENTS = "hornetq:topic:ItemCreatedEventsTopic";
 
-	public static final String ITEM_REGISTRATION_SERVICE = "bean:integration.inbound.item.ItemStorageServiceDelegate?method=registerItem";
+	public static final String ITEM_IMPORT_FAILED = "hornetq:queue:ItemImportFailuresQueue";
+
+	public static final String ITEM_REGISTRATION_SERVICE = "ejb:orderplacement.jee.ear-1.0-SNAPSHOT/ItemStorageServiceBean/local?method=registerItem";
 
 	/**
 	 * @see org.apache.camel.builder.RouteBuilder#configure()
@@ -31,10 +33,12 @@ public final class ItemImportBoundaryRoutes extends RouteBuilder {
 		onException(IllegalServiceUsageException.class).handled(true).to(
 				ItemImportCoreRoutes.FAULT_MESSAGES);
 
+		from(ITEM_CREATED_EVENTS)
+				.to(ItemImportCoreRoutes.INCOMING_XML_MESSAGES);
+
 		from(ItemImportCoreRoutes.TRANSFORMED_JAVA_OBJECT_MESSAGES).to(
 				ITEM_REGISTRATION_SERVICE);
 
-		from(ItemImportCoreRoutes.FAULT_MESSAGES)
-				.to(FAULT_MESSAGES_PROPAGATION);
+		from(ItemImportCoreRoutes.FAULT_MESSAGES).to(ITEM_IMPORT_FAILED);
 	}
 }

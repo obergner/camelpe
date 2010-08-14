@@ -1,0 +1,2 @@
+com.acme.orderplacement.jee.item.itemimport.internal.ItemImportBoundaryRoutes
+com.acme.orderplacement.jee.item.itemimport.internal.ItemImportCoreRoutes

@@ -38,11 +38,7 @@
 		<module>service</module>
 		<module>wsapi</module>
 		<module>ws</module>
-		<!--
-			Disabled for now. Will come back to it once the port to CDI is
-			completed.
-		-->
-		<!-- module>itemimport</module -->
+		<module>itemimport</module>
 	</modules>
 
 </project>

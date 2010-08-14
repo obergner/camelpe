@@ -1,0 +1,17 @@
+<configuration xmlns="urn:hornetq"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:hornetq /schema/hornetq-jms.xsd">
+
+	<!--
+		| Queues and topics used by the orderplacement application.
+	-->
+
+	<topic name="ItemCreatedEventsTopic">
+		<entry name="/topic/orderplacement/ItemCreatedEventsTopic" />
+	</topic>
+
+	<queue name="ItemImportFailuresQueue">
+		<entry name="/queue/orderplacement/ItemImportFailuresQueue" />
+	</queue>
+
+</configuration>

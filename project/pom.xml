@@ -63,7 +63,7 @@
 					JBoss settings. Note that jboss.home should be overridden in your
 					own ~/.m2/settings.xml.
 				-->
-				<jee.applicationXml.version><![CDATA[5]]></jee.applicationXml.version>
+				<jee.applicationXml.version><![CDATA[6]]></jee.applicationXml.version>
 				<datasource.domain.jndiName><![CDATA[java:jdbc/orderplacement/domainDataSource]]></datasource.domain.jndiName>
 				<ws.itemimport.wsdlLocation><![CDATA[WEB-INF/wsdl/itemstorageservice-1.0.wsdl]]></ws.itemimport.wsdlLocation>
 			</properties>
@@ -153,11 +153,13 @@
 		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
 		<deps.weld.version>1.0.1-SP1</deps.weld.version>
 		<deps.hibernate-tools.version>3.2.4.GA</deps.hibernate-tools.version>
-		<deps.camel.version>2.2.0</deps.camel.version>
+		<deps.camel.version>2.4.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
+		<deps.hornetq.version>2.1.1.Final</deps.hornetq.version>
 		<deps.google-guava.version>r05</deps.google-guava.version>
 		<deps.jboss-as.version>6.0.0.M1</deps.jboss-as.version>
+		<deps.jboss-vfs.version>3.0.0.CR5</deps.jboss-vfs.version>
 		<!-- Testing -->
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.arquillian.version>1.0.0.Alpha2</deps.arquillian.version>
@@ -392,6 +394,12 @@
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.camel</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
 				<artifactId>orderplacement.jee.framework.glassfish</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
@@ -447,12 +455,6 @@
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.item</groupId>
 				<artifactId>orderplacement.jee.item.itemimport</artifactId>
-				<version>${project.version}</version>
-				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.item</groupId>
-				<artifactId>orderplacement.jee.item.mdb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
 			</dependency>
@@ -858,6 +860,12 @@
 				<version>${deps.camel-activemq.version}</version>
 				<type>jar</type>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-ejb</artifactId>
+				<version>${deps.camel.version}</version>
+				<type>jar</type>
+			</dependency>
 			<!-- 
 				Apache Camel+ActiveMQ integration 
 			-->
@@ -980,6 +988,33 @@
 						<artifactId>commons-logging</artifactId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+			<!-- 
+				JBoss HornetQ 
+			-->
+			<dependency>
+				<groupId>org.hornetq</groupId>
+				<artifactId>hornetq-core</artifactId>
+				<version>${deps.hornetq.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.hornetq</groupId>
+				<artifactId>hornetq-core-client</artifactId>
+				<version>${deps.hornetq.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.netty</groupId>
+				<artifactId>netty</artifactId>
+				<version>3.2.0.BETA1</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.hornetq</groupId>
+				<artifactId>hornetq-jms-client</artifactId>
+				<version>${deps.hornetq.version}</version>
+				<type>jar</type>
 			</dependency>
 			<!-- Google -->
 			<dependency>
@@ -1138,6 +1173,13 @@
 			</dependency>
 			<!-- JBoss -->
 			<dependency>
+				<groupId>org.jboss.ejb3</groupId>
+				<artifactId>jboss-ejb3-ext-api</artifactId>
+				<version>1.0.0</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
 				<groupId>org.jboss.jbossas</groupId>
 				<artifactId>jboss-as-security</artifactId>
 				<version>${deps.jboss-as.version}</version>
@@ -1149,6 +1191,19 @@
 				<artifactId>jboss-as-tomcat</artifactId>
 				<version>${deps.jboss-as.version}</version>
 				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss</groupId>
+				<artifactId>jboss-vfs</artifactId>
+				<version>${deps.jboss-vfs.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.naming</groupId>
+				<artifactId>jnp-client</artifactId>
+				<version>5.0.5.Final</version>
 				<type>jar</type>
 			</dependency>
 			<!-- =========================================== -->
@@ -1728,6 +1783,7 @@
 		<module>../domain</module>
 		<module>../integration</module>
 		<module>../jee</module>
+		<module>../client</module>
 	</modules>
 
 	<!-- =================================================== -->
@@ -1881,6 +1937,14 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!--
+			The following repository is needed to obtain the camel-jboss package
+			for integrating Apache Camel into JBoss AS. <repository>
+			<id>com.googlecode.camelExtraReleasesRepository</id> <name>Camel
+			Extra Maven repository of releases</name>
+			<url>http://camel-extra.googlecode.com/svn/maven2/releases</url>
+			</repository>
+		-->
 	</repositories>
 
 	<pluginRepositories>

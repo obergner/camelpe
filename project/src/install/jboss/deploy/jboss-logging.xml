@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<logging xmlns="urn:jboss:logging:6.0" xmlns:b="urn:jboss:bean-deployer:2.0">
+
+	<logger category="com.acme.orderplacement">
+		<level name="TRACE" />
+	</logger>
+
+	<logger category="org.hornetq">
+		<level name="DEBUG" />
+	</logger>
+
+	<logger category="org.apache.camel">
+		<level name="TRACE" />
+	</logger>
+
+	<logger category="org.springframework.jms">
+		<level name="TRACE" />
+	</logger>
+
+</logging>

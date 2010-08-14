@@ -109,6 +109,12 @@
 			<type>ejb</type>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.item</groupId>
+			<artifactId>orderplacement.jee.item.itemimport</artifactId>
+			<type>ejb</type>
+			<scope>runtime</scope>
+		</dependency>
 		<!--
 			To be reenabled once the port to CDI is complete <dependency>
 			<groupId>com.acme.orderplacement.jee.item</groupId>
@@ -200,11 +206,10 @@
 							<groupId>com.acme.orderplacement.jee.item</groupId>
 							<artifactId>orderplacement.jee.item.service</artifactId>
 						</ejbModule>
-						<!--
-							<ejbModule> <groupId>com.acme.orderplacement.jee.item</groupId>
+						<ejbModule>
+							<groupId>com.acme.orderplacement.jee.item</groupId>
 							<artifactId>orderplacement.jee.item.itemimport</artifactId>
-							</ejbModule>
-						-->
+						</ejbModule>
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee.framework</groupId>
 							<artifactId>orderplacement.jee.framework.wslog</artifactId>
