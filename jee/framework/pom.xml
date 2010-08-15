@@ -55,11 +55,7 @@
 		<module>wsapi</module>
 		<module>ws</module>
 		<module>wslog</module>
-		<!--
-			Disabled for now. Will come back to it once the port to CDI is
-			completed.
-		-->
-		<!-- module>camelpe</module -->
+		<module>jmslog</module>
 	</modules>
 
 </project>
