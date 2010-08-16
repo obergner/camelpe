@@ -99,6 +99,10 @@ public class JmsMessageLoggerBean implements JmsMessageLogger {
 
 		final JmsMessage jmsMessage = this.entityManager.find(JmsMessage.class,
 				jmsMessageId);
+		if (jmsMessage == null) {
+			throw new IllegalArgumentException("No JMS message having ID = ["
+					+ jmsMessageId + "] could be found.");
+		}
 		jmsMessage
 				.setProcessingState(successful ? JmsMessage.ProcessingState.SUCCESSFUL
 						: JmsMessage.ProcessingState.FAILED);

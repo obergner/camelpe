@@ -35,7 +35,7 @@ public class JmsMessageHeader implements Serializable {
 	// Fields
 	// -------------------------------------------------------------------------
 
-	private static final long serialVersionUID = 3127568291717566770L;
+	private static final long serialVersionUID = 5024492125185424760L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_SEQ_GEN")
@@ -185,8 +185,8 @@ public class JmsMessageHeader implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "JmsMessageHeader [id=" + this.id + ", name=" + this.name + ", value="
-				+ this.value + "]";
+		return "JmsMessageHeader [id=" + this.id + ", name=" + this.name
+				+ ", value=" + this.value + "]";
 	}
 
 }

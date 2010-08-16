@@ -33,7 +33,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(schema = "LOG", name = "JMS_MESSAGE_TYPE")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "LOG.ID_SEQ_JMS_MESSAGE_TYPE")
-@NamedQueries( { @NamedQuery(name = JmsMessageType.Queries.BY_NAME, query = "from com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageType jmt where jtm.name = :name") })
+@NamedQueries( { @NamedQuery(name = JmsMessageType.Queries.BY_NAME, query = "from com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageType jmt where jmt.name = :name") })
 public class JmsMessageType implements Serializable {
 
 	// ------------------------------------------------------------------------
@@ -58,7 +58,7 @@ public class JmsMessageType implements Serializable {
 	// Fields
 	// -------------------------------------------------------------------------
 
-	private static final long serialVersionUID = -8066188933734036144L;
+	private static final long serialVersionUID = 3195727247538329650L;
 
 	public static final JmsMessageType UNKNOWN;
 

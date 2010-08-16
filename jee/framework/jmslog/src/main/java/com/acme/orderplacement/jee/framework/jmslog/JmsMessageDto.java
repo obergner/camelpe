@@ -40,16 +40,16 @@ public class JmsMessageDto implements Serializable {
 	// Constructors
 	// -------------------------------------------------------------------------
 
-	public JmsMessageDto(final String messageType, final String sourceIp,
+	public JmsMessageDto(final String messageType, final String guid,
 			final Date receivedOn, final String content,
 			final Map<String, String> headers) throws IllegalArgumentException {
 		Validate.notEmpty(messageType, "messageType");
-		Validate.notEmpty(sourceIp, "guid");
+		Validate.notEmpty(guid, "guid");
 		Validate.notNull(receivedOn, "receivedOn");
 		Validate.notEmpty(content, "content");
 		Validate.notNull(headers, "headers");
 		this.messageType = messageType;
-		this.guid = sourceIp;
+		this.guid = guid;
 		this.receivedOn = receivedOn;
 		this.content = content;
 		this.headers = Collections.unmodifiableMap(headers);

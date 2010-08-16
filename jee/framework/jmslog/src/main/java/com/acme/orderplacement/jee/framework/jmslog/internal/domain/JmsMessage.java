@@ -59,7 +59,7 @@ public class JmsMessage implements Serializable {
 	// Fields
 	// -------------------------------------------------------------------------
 
-	private static final long serialVersionUID = -2028889462301348840L;
+	private static final long serialVersionUID = 2389437473958815032L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_SEQ_GEN")
@@ -67,7 +67,7 @@ public class JmsMessage implements Serializable {
 	private Long id;
 
 	@NotNull
-	@Size(min = 7, max = 15)
+	@Size(min = 7, max = 36)
 	@Basic
 	@NaturalId(mutable = false)
 	@Column(name = "GUID", nullable = false, length = 36, unique = true, updatable = false)
@@ -75,7 +75,7 @@ public class JmsMessage implements Serializable {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "PROCESSING_STATE", nullable = false, length = 36)
+	@Column(name = "PROCESSING_STATE", nullable = false, length = 15)
 	private JmsMessage.ProcessingState processingState;
 
 	@NotNull

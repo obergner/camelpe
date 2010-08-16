@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.framework.wslog.internal;
+package com.acme.orderplacement.jee.framework.wslog.internal;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
