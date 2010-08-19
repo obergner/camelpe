@@ -11,7 +11,7 @@
 	<groupId>com.acme.orderplacement.jee.framework</groupId>
 	<artifactId>orderplacement.jee.framework.jmslog</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>ejb</packaging>
 
 	<name><![CDATA[SOA Order :: JEE :: Framework :: JMS Log]]></name>
 

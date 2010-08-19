@@ -435,6 +435,12 @@
 				<type>ejb</type>
 			</dependency>
 			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.jmslog</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+			<dependency>
 				<groupId>com.acme.orderplacement.jee.item</groupId>
 				<artifactId>orderplacement.jee.item</artifactId>
 				<version>${project.version}</version>
