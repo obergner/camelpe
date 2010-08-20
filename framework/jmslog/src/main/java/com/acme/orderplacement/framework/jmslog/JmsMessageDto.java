@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.jmslog;
+package com.acme.orderplacement.framework.jmslog;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -34,7 +34,7 @@ public class JmsMessageDto implements Serializable {
 
 	private final String content;
 
-	private final Map<String, String> headers;
+	private final Map<String, Object> headers;
 
 	// -------------------------------------------------------------------------
 	// Constructors
@@ -42,7 +42,7 @@ public class JmsMessageDto implements Serializable {
 
 	public JmsMessageDto(final String messageType, final String guid,
 			final Date receivedOn, final String content,
-			final Map<String, String> headers) throws IllegalArgumentException {
+			final Map<String, Object> headers) throws IllegalArgumentException {
 		Validate.notEmpty(messageType, "messageType");
 		Validate.notEmpty(guid, "guid");
 		Validate.notNull(receivedOn, "receivedOn");
@@ -90,7 +90,7 @@ public class JmsMessageDto implements Serializable {
 	/**
 	 * @return the headers
 	 */
-	public final Map<String, String> getHeaders() {
+	public final Map<String, Object> getHeaders() {
 		return this.headers;
 	}
 
@@ -105,8 +105,8 @@ public class JmsMessageDto implements Serializable {
 	public String toString() {
 		return "JmsMessageDto [content=" + this.content + ", headers="
 				+ this.headers + ", messageType=" + this.messageType
-				+ ", receivedOn=" + this.receivedOn + ", guid="
-				+ this.guid + "]";
+				+ ", receivedOn=" + this.receivedOn + ", guid=" + this.guid
+				+ "]";
 	}
 
 	/**
@@ -122,8 +122,7 @@ public class JmsMessageDto implements Serializable {
 				+ ((this.headers == null) ? 0 : this.headers.hashCode());
 		result = prime
 				* result
-				+ ((this.messageType == null) ? 0 : this.messageType
-						.hashCode());
+				+ ((this.messageType == null) ? 0 : this.messageType.hashCode());
 		result = prime * result
 				+ ((this.receivedOn == null) ? 0 : this.receivedOn.hashCode());
 		result = prime * result

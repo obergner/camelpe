@@ -22,6 +22,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -45,6 +47,7 @@ import org.hibernate.annotations.NaturalId;
 @Entity
 @Table(schema = "LOG", name = "JMS_MESSAGE")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "LOG.ID_SEQ_JMS_MESSAGE")
+@NamedQueries( { @NamedQuery(name = JmsMessage.Queries.BY_GUID, query = "from com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage jms where jms.guid = :guid") })
 public class JmsMessage implements Serializable {
 
 	// -------------------------------------------------------------------------
@@ -53,6 +56,24 @@ public class JmsMessage implements Serializable {
 
 	public enum ProcessingState {
 		IN_PROGRESS, SUCCESSFUL, FAILED;
+	}
+
+	// ------------------------------------------------------------------------
+	// Inner class defining query names
+	// ------------------------------------------------------------------------
+
+	/**
+	 * <p>
+	 * An inner class defining the <i>names</i> of known HQL queries for
+	 * <code>WebserviceOperation</code>.
+	 * </p>
+	 * 
+	 * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
+	 * 
+	 */
+	public final static class Queries {
+
+		public static final String BY_GUID = "log.jms.jmsMessage.byGuid";
 	}
 
 	// -------------------------------------------------------------------------

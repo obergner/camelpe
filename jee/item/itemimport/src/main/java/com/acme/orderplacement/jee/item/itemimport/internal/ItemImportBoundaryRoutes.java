@@ -6,6 +6,8 @@ package com.acme.orderplacement.jee.item.itemimport.internal;
 import org.apache.camel.builder.RouteBuilder;
 
 import com.acme.orderplacement.framework.service.exception.IllegalServiceUsageException;
+import com.acme.orderplacement.jee.framework.camel.jmslog.IncomingMessageExchangeLoggingProcessor;
+import com.acme.orderplacement.jee.framework.camel.jmslog.MessageExchangeCompletionLoggingProcessor;
 
 /**
  * <p>
@@ -33,12 +35,18 @@ public final class ItemImportBoundaryRoutes extends RouteBuilder {
 		onException(IllegalServiceUsageException.class).handled(true).to(
 				ItemImportCoreRoutes.FAULT_MESSAGES);
 
-		from(ITEM_CREATED_EVENTS)
-				.to(ItemImportCoreRoutes.INCOMING_XML_MESSAGES);
+		onCompletion().onCompleteOnly().process(
+				new MessageExchangeCompletionLoggingProcessor(true));
+
+		from(ITEM_CREATED_EVENTS).process(
+				new IncomingMessageExchangeLoggingProcessor()).to(
+				ItemImportCoreRoutes.INCOMING_XML_MESSAGES);
 
 		from(ItemImportCoreRoutes.TRANSFORMED_JAVA_OBJECT_MESSAGES).to(
 				ITEM_REGISTRATION_SERVICE);
 
-		from(ItemImportCoreRoutes.FAULT_MESSAGES).to(ITEM_IMPORT_FAILED);
+		from(ItemImportCoreRoutes.FAULT_MESSAGES).process(
+				new MessageExchangeCompletionLoggingProcessor(false)).to(
+				ITEM_IMPORT_FAILED);
 	}
 }

@@ -333,6 +333,12 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
+				<groupId>com.acme.orderplacement.framework</groupId>
+				<artifactId>orderplacement.framework.jmslog</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
 				<groupId>com.acme.orderplacement.domain</groupId>
 				<artifactId>orderplacement.domain</artifactId>
 				<version>${project.version}</version>
@@ -1490,6 +1496,11 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!-- =========================================== -->

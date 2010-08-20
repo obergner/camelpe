@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.jmslog;
+package com.acme.orderplacement.framework.jmslog;
 
 import javax.persistence.NoResultException;
 
@@ -15,9 +15,10 @@ import javax.persistence.NoResultException;
  */
 public interface JmsMessageLogger {
 
-	Long logJmsMessage(final JmsMessageDto jmsMessageDto)
+	void logJmsMessage(final JmsMessageDto jmsMessageDto)
 			throws IllegalArgumentException, NoResultException;
 
-	void completeJmsMessageExchange(final Long jmsMessageId,
-			final boolean successful) throws IllegalArgumentException;
+	void completeJmsMessageExchange(final String jmsMessageGuid,
+			final boolean successful) throws IllegalArgumentException,
+			NoResultException;
 }

@@ -3,8 +3,6 @@
  */
 package com.acme.orderplacement.jee.framework.jmslog.internal;
 
-import static junit.framework.Assert.assertNotNull;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,8 +24,8 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto;
-import com.acme.orderplacement.jee.framework.jmslog.JmsMessageLogger;
+import com.acme.orderplacement.framework.jmslog.JmsMessageDto;
+import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
 import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage;
 
 /**
@@ -50,7 +48,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 
 	private static final String NON_EXISTING_JMS_MESSAGE_TYPE_NAME = "nonExistingJmsMessageType";
 
-	private static final Long NON_EXISTING_JMS_MESSAGE_ID = Long.valueOf(666L);
+	private static final String NON_EXISTING_JMS_MESSAGE_GUID = "nonExistingJmsMessageGuid";
 
 	private JmsMessageLogger cachedJmsMessageLogger;
 
@@ -81,7 +79,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
 	 * .
 	 * 
 	 * @throws NamingException
@@ -96,7 +94,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
 	 * .
 	 * 
 	 * @throws Exception
@@ -107,7 +105,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 		try {
 			final JmsMessageDto jmsMessageDto = new JmsMessageDto(
 					NON_EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-123456789",
-					new Date(), "TEST", Collections.<String, String> emptyMap());
+					new Date(), "TEST", Collections.<String, Object> emptyMap());
 
 			lookupJmsMessageLogger().logJmsMessage(jmsMessageDto);
 		} catch (final EJBException e) {
@@ -117,7 +115,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
 	 * .
 	 * 
 	 * @throws NamingException
@@ -129,18 +127,14 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 			throws NoResultException, IllegalArgumentException, NamingException {
 		final JmsMessageDto jmsMessageDto = new JmsMessageDto(
 				EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-123456789", new Date(),
-				"TEST", Collections.<String, String> emptyMap());
+				"TEST", Collections.<String, Object> emptyMap());
 
-		final Long requestId = lookupJmsMessageLogger().logJmsMessage(
-				jmsMessageDto);
-
-		assertNotNull("logJmsMessage(" + jmsMessageDto
-				+ ") returned a NULL request id", requestId);
+		lookupJmsMessageLogger().logJmsMessage(jmsMessageDto);
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
 	 * .
 	 * 
 	 * @throws NamingException
@@ -150,18 +144,14 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 	@Test
 	public final void assertThatLogJmsMessageLogsMessageHeaders()
 			throws NoResultException, IllegalArgumentException, NamingException {
-		final Map<String, String> headers = new HashMap<String, String>();
+		final Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("header1", "value1");
 		headers.put("header2", "value2");
 		final JmsMessageDto jmsMessageDto = new JmsMessageDto(
 				EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-345678912", new Date(),
 				"TEST", headers);
 
-		final Long requestId = lookupJmsMessageLogger().logJmsMessage(
-				jmsMessageDto);
-
-		assertNotNull("logJmsMessage(" + jmsMessageDto
-				+ ") returned a NULL request id", requestId);
+		lookupJmsMessageLogger().logJmsMessage(jmsMessageDto);
 	}
 
 	/**
@@ -183,14 +173,17 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#completeJmsMessageExchange(java.lang.Long, boolean)}
 	 * .
 	 * 
-	 * @throws NamingException
-	 * @throws IllegalArgumentException
+	 * @throws Exception
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NoResultException.class)
 	public final void assertThatCompleteJmsMessageExchangeRefusesToCompleteNonExistingMessageExchange()
-			throws IllegalArgumentException, NamingException {
-		lookupJmsMessageLogger().completeJmsMessageExchange(
-				NON_EXISTING_JMS_MESSAGE_ID, true);
+			throws Exception {
+		try {
+			lookupJmsMessageLogger().completeJmsMessageExchange(
+					NON_EXISTING_JMS_MESSAGE_GUID, true);
+		} catch (final EJBException e) {
+			throw e.getCausedByException();
+		}
 	}
 
 	// ------------------------------------------------------------------------

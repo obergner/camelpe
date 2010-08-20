@@ -23,7 +23,7 @@ import org.unitils.inject.annotation.InjectIntoByType;
 import org.unitils.inject.annotation.TestedObject;
 import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
-import com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto;
+import com.acme.orderplacement.framework.jmslog.JmsMessageDto;
 import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage;
 
 /**
@@ -47,9 +47,9 @@ public class JmsMessageLoggerBeanIntegrationTest {
 
 	private static final String NON_EXISTING_JMS_MESSAGE_TYPE_NAME = "nonExistingJmsMessageType";
 
-	private static final Long NON_EXISTING_JMS_MESSAGE_ID = Long.valueOf(666L);
+	private static final String NON_EXISTING_JMS_MESSAGE_GUID = "nonExistingJmsMessageGuid";
 
-	private static final Long EXISTING_JMS_MESSAGE_ID = Long.valueOf(-1L);
+	private static final String EXISTING_JMS_MESSAGE_GUID = "UUID-123-67-8997-98";
 
 	@TestedObject
 	private JmsMessageLoggerBean classUnderTest;
@@ -64,7 +64,7 @@ public class JmsMessageLoggerBeanIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -74,36 +74,35 @@ public class JmsMessageLoggerBeanIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
 	 * .
 	 */
 	@Test(expected = NoResultException.class)
 	public final void assertThatJmsMessageRefusesToLogMessageReferencingANonExistingMessageType() {
 		final JmsMessageDto jmsMessageDto = new JmsMessageDto(
 				NON_EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-123456789",
-				new Date(), "TEST", Collections.<String, String> emptyMap());
+				new Date(), "TEST", Collections.<String, Object> emptyMap());
 
 		this.classUnderTest.logJmsMessage(jmsMessageDto);
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
 	 * .
 	 */
 	@Test
 	public final void assertThatLogJmsMessageLogsMessageReferencingAnExistingMessageType() {
+		final String jmsMessageGuid = "UUID-123456789";
 		final JmsMessageDto jmsMessageDto = new JmsMessageDto(
-				EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-123456789", new Date(),
-				"TEST", Collections.<String, String> emptyMap());
+				EXISTING_JMS_MESSAGE_TYPE_NAME, jmsMessageGuid, new Date(),
+				"TEST", Collections.<String, Object> emptyMap());
 
-		final Long requestId = this.classUnderTest.logJmsMessage(jmsMessageDto);
+		this.classUnderTest.logJmsMessage(jmsMessageDto);
 
-		assertNotNull("logJmsMessage(" + jmsMessageDto
-				+ ") returned a NULL request id", requestId);
-
-		final JmsMessage persistedJmsMessage = this.entityManager.find(
-				JmsMessage.class, requestId);
+		final JmsMessage persistedJmsMessage = this.entityManager
+				.createNamedQuery(JmsMessage.Queries.BY_GUID, JmsMessage.class)
+				.setParameter("guid", jmsMessageGuid).getSingleResult();
 		assertNotNull("logJmsMessage(" + jmsMessageDto
 				+ ") did NOT persist the passed on JMS message",
 				persistedJmsMessage);
@@ -111,25 +110,24 @@ public class JmsMessageLoggerBeanIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.jee.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
 	 * .
 	 */
 	@Test
 	public final void assertThatLogJmsMessageLogsMessageHeaders() {
-		final Map<String, String> headers = new HashMap<String, String>();
+		final Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("header1", "value1");
 		headers.put("header2", "value2");
+		final String jmsMessageGuid = "UUID-123456789";
 		final JmsMessageDto jmsMessageDto = new JmsMessageDto(
-				EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-123456789", new Date(),
+				EXISTING_JMS_MESSAGE_TYPE_NAME, jmsMessageGuid, new Date(),
 				"TEST", headers);
 
-		final Long requestId = this.classUnderTest.logJmsMessage(jmsMessageDto);
+		this.classUnderTest.logJmsMessage(jmsMessageDto);
 
-		assertNotNull("logJmsMessage(" + jmsMessageDto
-				+ ") returned a NULL request id", requestId);
-
-		final JmsMessage persistedJmsMessage = this.entityManager.find(
-				JmsMessage.class, requestId);
+		final JmsMessage persistedJmsMessage = this.entityManager
+				.createNamedQuery(JmsMessage.Queries.BY_GUID, JmsMessage.class)
+				.setParameter("guid", jmsMessageGuid).getSingleResult();
 		assertNotNull("logJmsMessage(" + jmsMessageDto
 				+ ") did NOT persist the passed on JMS message",
 				persistedJmsMessage);
@@ -155,10 +153,10 @@ public class JmsMessageLoggerBeanIntegrationTest {
 	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#completeJmsMessageExchange(java.lang.Long, boolean)}
 	 * .
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NoResultException.class)
 	public final void assertThatCompleteJmsMessageExchangeRefusesToCompleteNonExistingMessageExchange() {
 		this.classUnderTest.completeJmsMessageExchange(
-				NON_EXISTING_JMS_MESSAGE_ID, true);
+				NON_EXISTING_JMS_MESSAGE_GUID, true);
 	}
 
 	/**
@@ -168,12 +166,14 @@ public class JmsMessageLoggerBeanIntegrationTest {
 	 */
 	@Test
 	public final void assertThatCompleteJmsMessageExchangeSuccessfullySetsCorrectProcessingState() {
-		this.classUnderTest.completeJmsMessageExchange(EXISTING_JMS_MESSAGE_ID,
-				true);
+		this.classUnderTest.completeJmsMessageExchange(
+				EXISTING_JMS_MESSAGE_GUID, true);
 
-		final JmsMessage persistedJmsMessage = this.entityManager.find(
-				JmsMessage.class, EXISTING_JMS_MESSAGE_ID);
-		assertEquals("completeJmsMessageExchange(" + EXISTING_JMS_MESSAGE_ID
+		final JmsMessage persistedJmsMessage = this.entityManager
+				.createNamedQuery(JmsMessage.Queries.BY_GUID, JmsMessage.class)
+				.setParameter("guid", EXISTING_JMS_MESSAGE_GUID)
+				.getSingleResult();
+		assertEquals("completeJmsMessageExchange(" + EXISTING_JMS_MESSAGE_GUID
 				+ ", true) did not set correct processing state",
 				JmsMessage.ProcessingState.SUCCESSFUL, persistedJmsMessage
 						.getProcessingState());
@@ -186,12 +186,14 @@ public class JmsMessageLoggerBeanIntegrationTest {
 	 */
 	@Test
 	public final void assertThatCompleteJmsMessageExchangeUnsuccessfullySetsCorrectProcessingState() {
-		this.classUnderTest.completeJmsMessageExchange(EXISTING_JMS_MESSAGE_ID,
-				false);
+		this.classUnderTest.completeJmsMessageExchange(
+				EXISTING_JMS_MESSAGE_GUID, false);
 
-		final JmsMessage persistedJmsMessage = this.entityManager.find(
-				JmsMessage.class, EXISTING_JMS_MESSAGE_ID);
-		assertEquals("completeJmsMessageExchange(" + EXISTING_JMS_MESSAGE_ID
+		final JmsMessage persistedJmsMessage = this.entityManager
+				.createNamedQuery(JmsMessage.Queries.BY_GUID, JmsMessage.class)
+				.setParameter("guid", EXISTING_JMS_MESSAGE_GUID)
+				.getSingleResult();
+		assertEquals("completeJmsMessageExchange(" + EXISTING_JMS_MESSAGE_GUID
 				+ ", false) did not set correct processing state",
 				JmsMessage.ProcessingState.FAILED, persistedJmsMessage
 						.getProcessingState());
