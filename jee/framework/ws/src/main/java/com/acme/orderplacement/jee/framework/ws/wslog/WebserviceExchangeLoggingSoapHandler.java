@@ -40,10 +40,6 @@ public class WebserviceExchangeLoggingSoapHandler implements
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * FIXME: Why doesn't this work? Problem posted to JBoss AS user forum:
-	 * https://community.jboss.org/thread/153870?tstart=0
-	 */
 	@EJB
 	private WebserviceLogger webserviceLogger;
 
@@ -101,26 +97,6 @@ public class WebserviceExchangeLoggingSoapHandler implements
 		}
 		return handleOutboundMessage(context);
 	}
-
-	// -------------------------------------------------------------------------
-	// Lifecycle callbacks
-	// -------------------------------------------------------------------------
-
-	// /**
-	// * HACK: To be removed as soon as @EJB above works.
-	// */
-	// // @PostConstruct
-	// public void lookupDependencies() throws RuntimeException {
-	// try {
-	// final InitialContext ic = new InitialContext();
-	// this.webserviceLogger = (WebserviceLogger) ic
-	// .lookup("orderplacement.jee.ear-1.0-SNAPSHOT/WebserviceLoggerBean/local");
-	// ic.close();
-	// } catch (final NamingException e) {
-	// throw new IllegalStateException("Failed to look up dependencies: "
-	// + e.getMessage(), e);
-	// }
-	// }
 
 	// -------------------------------------------------------------------------
 	// Internal

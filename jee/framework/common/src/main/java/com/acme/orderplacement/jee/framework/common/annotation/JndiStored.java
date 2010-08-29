@@ -18,6 +18,7 @@ import javax.inject.Qualifier;
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
+ *         TODO: CURRENTLY NOT USED
  */
 @Qualifier
 @Target( { ElementType.TYPE })

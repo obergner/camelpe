@@ -88,10 +88,10 @@ public class JmsMessage implements Serializable {
 	private Long id;
 
 	@NotNull
-	@Size(min = 7, max = 36)
+	@Size(min = 7, max = 50)
 	@Basic
 	@NaturalId(mutable = false)
-	@Column(name = "GUID", nullable = false, length = 36, unique = true, updatable = false)
+	@Column(name = "GUID", nullable = false, length = 50, unique = true, updatable = false)
 	private String guid;
 
 	@NotNull

@@ -16,11 +16,11 @@ import org.apache.camel.converter.jaxb.JaxbDataFormat;
  */
 public final class ItemImportCoreRoutes extends RouteBuilder {
 
-	public static final String FAULT_MESSAGES = "direct:itemimport.exceptions";
+	public static final String FAULT_MESSAGES = "direct:itemimport.core.faults";
 
-	public static final String INCOMING_XML_MESSAGES = "direct:itemimport.incoming.raw";
+	public static final String INCOMING_XML_MESSAGES = "direct:itemimport.core.incoming";
 
-	public static final String TRANSFORMED_JAVA_OBJECT_MESSAGES = "direct:itemimport.transfer.jaxb";
+	public static final String TRANSFORMED_JAVA_OBJECT_MESSAGES = "direct:itemimport.core.transformed";
 
 	/**
 	 * @see org.apache.camel.builder.RouteBuilder#configure()

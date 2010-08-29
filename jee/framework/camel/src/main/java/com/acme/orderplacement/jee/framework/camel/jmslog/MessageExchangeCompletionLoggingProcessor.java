@@ -3,13 +3,7 @@
  */
 package com.acme.orderplacement.jee.framework.camel.jmslog;
 
-import org.apache.camel.EndpointInject;
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
 
 /**
  * <p>
@@ -19,12 +13,8 @@ import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class MessageExchangeCompletionLoggingProcessor implements Processor {
-
-	private final Logger log = LoggerFactory.getLogger(getClass());
-
-	@EndpointInject(uri = "ejb:orderplacement.jee.ear-1.0-SNAPSHOT/JmsMessageLoggerBean/local?method=completeJmsMessageExchange")
-	private JmsMessageLogger jmsMessageLoggerEndpoint;
+public class MessageExchangeCompletionLoggingProcessor extends
+		AbstractJmsMessageExchangeLoggingProcessor {
 
 	private final boolean successful;
 
@@ -32,6 +22,7 @@ public class MessageExchangeCompletionLoggingProcessor implements Processor {
 	 * @param successful
 	 */
 	public MessageExchangeCompletionLoggingProcessor(final boolean successful) {
+		super();
 		this.successful = successful;
 	}
 
@@ -40,15 +31,25 @@ public class MessageExchangeCompletionLoggingProcessor implements Processor {
 	 */
 	@Override
 	public void process(final Exchange exchange) throws Exception {
-		this.log.trace(
-				"About to log incoming messange exchange [{}] to database ...",
-				exchange);
+		try {
+			final String messageGuid = messageIdFrom(exchange);
+			this.log
+					.trace(
+							"About to set completion status of message exchange [Message-GUID = {}] to [successful = {}] in database ...",
+							messageGuid, Boolean.valueOf(this.successful));
 
-		this.jmsMessageLoggerEndpoint.completeJmsMessageExchange(exchange
-				.getExchangeId(), this.successful);
+			jmsMessageLogger().completeJmsMessageExchange(messageGuid,
+					this.successful);
 
-		this.log.trace("Incoming messange exchange [{}] logged to database",
-				exchange);
+			this.log
+					.trace(
+							"Completion status of message exchange [Message-GUID = {}] set to [successful = {}] in database",
+							messageGuid, Boolean.valueOf(this.successful));
+		} catch (final Exception e) {
+			this.log.error(
+					"Caught exception while attempting to complete [successful = "
+							+ this.successful + "] message exchange ["
+							+ exchange + "]: " + e.getMessage(), e);
+		}
 	}
-
 }

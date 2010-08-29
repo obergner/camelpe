@@ -44,6 +44,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.framework</groupId>
+			<artifactId>orderplacement.framework.common</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.framework</groupId>
 			<artifactId>orderplacement.framework.service</artifactId>
 			<scope>compile</scope>
 		</dependency>

@@ -31,6 +31,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
+ *         TODO: CURRENTLY NOT USED
  */
 public class NestedJndiBinding {
 

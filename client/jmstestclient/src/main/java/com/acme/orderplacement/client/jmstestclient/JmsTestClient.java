@@ -10,12 +10,12 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 
 import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.TopicConnectionFactory;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -43,14 +43,14 @@ public class JmsTestClient {
 						"org.jboss.naming:org.jnp.interfaces");
 		final Context ctx = new InitialContext(env);
 		System.out.println("JMSClient: Looking up ConnectionFactory");
-		final ConnectionFactory cf = (ConnectionFactory) ctx
+		final TopicConnectionFactory tcf = (TopicConnectionFactory) ctx
 				.lookup("ConnectionFactory");
 		System.out.println("JMSClient: Lookup Topic");
 		final Destination outDest = (Destination) ctx
 				.lookup("/topic/orderplacement/ItemCreatedEventsTopic");
 		System.out.println("destination = " + outDest.toString());
 		System.out.println("JMSClient: Establishing connection");
-		final Connection connection = cf.createConnection();
+		final Connection connection = tcf.createConnection("guest", "guest");
 		System.out.println("JMSClient: Establishing session");
 		final Session session = connection.createSession(false,
 				Session.AUTO_ACKNOWLEDGE);

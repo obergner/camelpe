@@ -5,6 +5,7 @@ package com.acme.orderplacement.jee.framework.jboss.camel;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import com.acme.orderplacement.framework.common.auth.cdi.Preferred;
 import com.acme.orderplacement.jee.framework.camel.AbstractCamelEngine;
 import com.acme.orderplacement.jee.framework.jboss.camel.integration.JBossPackageScanClassResolver;
 
@@ -16,6 +17,7 @@ import com.acme.orderplacement.jee.framework.jboss.camel.integration.JBossPackag
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@Preferred
 @ApplicationScoped
 public class JBossCamelEngine extends AbstractCamelEngine {
 

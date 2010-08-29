@@ -156,7 +156,12 @@
 		<deps.camel.version>2.4.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
-		<deps.hornetq.version>2.1.1.Final</deps.hornetq.version>
+		<!--
+			<deps.hornetq.version>2.1.1.Final</deps.hornetq.version>
+			<deps.netty.version>3.2.0.BETA1</deps.netty.version>
+		-->
+		<deps.hornetq.version>2.1.2.Final</deps.hornetq.version>
+		<deps.netty.version>3.2.1.Final</deps.netty.version>
 		<deps.google-guava.version>r05</deps.google-guava.version>
 		<deps.jboss-as.version>6.0.0.M1</deps.jboss-as.version>
 		<deps.jboss-vfs.version>3.0.0.CR5</deps.jboss-vfs.version>
@@ -1019,7 +1024,7 @@
 			<dependency>
 				<groupId>org.jboss.netty</groupId>
 				<artifactId>netty</artifactId>
-				<version>3.2.0.BETA1</version>
+				<version>${deps.netty.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>

@@ -3,6 +3,7 @@
  */
 package com.acme.orderplacement.jee.framework.jmslog.internal;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -32,6 +33,7 @@ import com.google.common.collect.Maps;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@PermitAll
 @Stateless
 @Local(JmsMessageLogger.class)
 public class JmsMessageLoggerBean implements JmsMessageLogger {
@@ -63,7 +65,8 @@ public class JmsMessageLoggerBean implements JmsMessageLogger {
 			throws IllegalArgumentException, NoResultException {
 		Validate.notNull(jmsMessageDto, "jmsMessageDto");
 
-		this.log.debug("About to log JMS message [{}] ...", jmsMessageDto);
+		this.log.debug("About to log JMS message [GUID = {}] ...",
+				jmsMessageDto.getGuid());
 
 		final TypedQuery<JmsMessageType> jmsMessageTypeByName = this.entityManager
 				.createNamedQuery(JmsMessageType.Queries.BY_NAME,
@@ -79,13 +82,13 @@ public class JmsMessageLoggerBean implements JmsMessageLogger {
 						.getHeaders(), new Function<Object, String>() {
 					@Override
 					public String apply(final Object arg0) {
-						return arg0.toString();
+						return arg0 != null ? arg0.toString() : null;
 					}
 				}));
 		this.entityManager.persist(jmsMessage);
 
-		this.log.debug("JMS message [ID = {} | {}] successfully logged",
-				jmsMessage.getId(), jmsMessageDto);
+		this.log.debug("JMS message [ID = {} |GUID = {}] successfully logged",
+				jmsMessage.getId(), jmsMessageDto.getGuid());
 	}
 
 	/**

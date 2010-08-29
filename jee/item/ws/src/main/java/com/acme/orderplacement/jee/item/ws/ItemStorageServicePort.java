@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.ejb.EJB;
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,11 +52,8 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 	 * {@link ItemStorageService <code>ItemStorageService</code>} we delegate
 	 * all calls to.
 	 * </p>
-	 * 
-	 * FIXME: Why doesn't this work? Problem posted to JBoss AS user forum:
-	 * https://community.jboss.org/thread/153870?tstart=0
 	 */
-	// @EJB
+	@EJB
 	private ItemStorageService itemStorageService;
 
 	// -------------------------------------------------------------------------
@@ -72,9 +68,6 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 			throws ItemAlreadyRegisteredFault_Exception {
 		try {
 			this.log.info("Processing request [{}] ...", registerItemRequest);
-
-			// FIXME: https://community.jboss.org/thread/153870?tstart=0
-			lookupDependencies();
 
 			this.itemStorageService.registerItem(convert(registerItemRequest));
 
@@ -103,26 +96,6 @@ public class ItemStorageServicePort implements ItemStorageServicePortType {
 							+ registerItemRequest.getItemToRegister()
 									.getItemNumber()
 							+ "] has already been registered", faultInfo, e);
-		}
-	}
-
-	// -------------------------------------------------------------------------
-	// Lifecycle callbacks
-	// -------------------------------------------------------------------------
-
-	/**
-	 * HACK: To be removed as soon as @EJB above works ->
-	 * https://community.jboss.org/thread/153870?tstart=0.
-	 */
-	public void lookupDependencies() throws RuntimeException {
-		try {
-			final InitialContext ic = new InitialContext();
-			this.itemStorageService = (ItemStorageService) ic
-					.lookup("orderplacement.jee.ear-1.0-SNAPSHOT/ItemStorageServiceBean/local");
-			ic.close();
-		} catch (final NamingException e) {
-			throw new IllegalStateException("Failed to look up dependencies: "
-					+ e.getMessage(), e);
 		}
 	}
 

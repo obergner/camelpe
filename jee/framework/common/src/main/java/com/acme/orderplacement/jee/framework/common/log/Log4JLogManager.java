@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
+ *         TODO: CURRENTLY NOT USED
  */
 public class Log4JLogManager {
 
