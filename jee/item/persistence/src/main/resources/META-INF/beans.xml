@@ -2,7 +2,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
 
 	<alternatives />
-	<decorators />
+	<decorators>
+		<class>com.acme.orderplacement.jee.item.persistence.internal.StateChangeEventPropagatingItemDaoDecorator</class>
+	</decorators>
 	<interceptors />
 
 </beans>
