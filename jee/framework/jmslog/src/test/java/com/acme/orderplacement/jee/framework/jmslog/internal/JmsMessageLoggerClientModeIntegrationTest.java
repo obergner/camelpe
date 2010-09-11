@@ -58,9 +58,8 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 
 	@Deployment
 	public static JavaArchive createTestArchive() {
-		final JavaArchive deployment = ShrinkWrap.create("test.jar",
-				JavaArchive.class).addPackages(true,
-				Validate.class.getPackage(),
+		final JavaArchive deployment = ShrinkWrap.create(JavaArchive.class,
+				"test.jar").addPackages(true, Validate.class.getPackage(),
 				JmsMessageLogger.class.getPackage(),
 				JmsMessageLoggerBean.class.getPackage(),
 				JmsMessage.class.getPackage()).addManifestResource(

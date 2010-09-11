@@ -72,9 +72,9 @@ public class JpaItemDaoClientModeIntegrationAssertions {
 
 	@Deployment
 	public static JavaArchive createTestArchive() {
-		final JavaArchive deployment = ShrinkWrap.create("test.jar",
-				JavaArchive.class).addPackages(true,
-				Validate.class.getPackage(), Item.class.getPackage(),
+		final JavaArchive deployment = ShrinkWrap.create(JavaArchive.class,
+				"test.jar").addPackages(true, Validate.class.getPackage(),
+				Item.class.getPackage(),
 				ApplicationUserRole.class.getPackage(),
 				IdentifiableDomainObject.class.getPackage(),
 				GenericJpaDao.class.getPackage(), ItemDao.class.getPackage(),

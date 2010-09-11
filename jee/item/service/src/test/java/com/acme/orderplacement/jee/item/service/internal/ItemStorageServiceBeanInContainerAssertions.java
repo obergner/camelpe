@@ -62,8 +62,8 @@ public class ItemStorageServiceBeanInContainerAssertions {
 
 	@Deployment
 	public static JavaArchive createTestArchive() {
-		final JavaArchive itemServiceEjbModule = ShrinkWrap.create("test.jar",
-				JavaArchive.class).addPackages(true,
+		final JavaArchive itemServiceEjbModule = ShrinkWrap.create(
+				JavaArchive.class, "test.jar").addPackages(true,
 				Validate.class.getPackage(), Item.class.getPackage(),
 				ApplicationUserRole.class.getPackage(),
 				IdentifiableDomainObject.class.getPackage(),

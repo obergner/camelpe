@@ -151,23 +151,23 @@
 		<deps.hibernate-validator.version>4.1.0.Beta1
 		</deps.hibernate-validator.version>
 		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
-		<deps.weld.version>1.0.1-SP1</deps.weld.version>
+		<deps.weld.version>1.1.0.Beta1</deps.weld.version>
 		<deps.hibernate-tools.version>3.2.4.GA</deps.hibernate-tools.version>
 		<deps.camel.version>2.4.0</deps.camel.version>
 		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
-		<!--
-			<deps.hornetq.version>2.1.1.Final</deps.hornetq.version>
-			<deps.netty.version>3.2.0.BETA1</deps.netty.version>
-		-->
 		<deps.hornetq.version>2.1.2.Final</deps.hornetq.version>
 		<deps.netty.version>3.2.1.Final</deps.netty.version>
-		<deps.google-guava.version>r05</deps.google-guava.version>
+		<deps.google-guava.version>r06</deps.google-guava.version>
+		<deps.glassfish-security.version>3.1-b16
+		</deps.glassfish-security.version>
 		<deps.jboss-as.version>6.0.0.M1</deps.jboss-as.version>
 		<deps.jboss-vfs.version>3.0.0.CR5</deps.jboss-vfs.version>
 		<!-- Testing -->
 		<deps.junit.version>4.8.1</deps.junit.version>
-		<deps.arquillian.version>1.0.0.Alpha2</deps.arquillian.version>
+		<deps.arquillian.version>1.0.0.Alpha4</deps.arquillian.version>
+		<deps.glassfish-embedded-all.version>3.1-b09
+		</deps.glassfish-embedded-all.version>
 		<deps.easymock.version>2.5.2</deps.easymock.version>
 		<deps.unitils.version>3.1</deps.unitils.version>
 		<deps.dbunit.version>2.2.2</deps.dbunit.version>
@@ -1184,7 +1184,7 @@
 			<dependency>
 				<groupId>org.glassfish.security</groupId>
 				<artifactId>security</artifactId>
-				<version>3.0.1-b20</version>
+				<version>${deps.glassfish-security.version}</version>
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
@@ -1251,7 +1251,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.arquillian.container</groupId>
-				<artifactId>arquillian-weld-embedded</artifactId>
+				<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
 				<version>${deps.arquillian.version}</version>
 				<scope>test</scope>
 				<type>jar</type>
@@ -1269,7 +1269,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.arquillian.container</groupId>
-				<artifactId>arquillian-glassfish-embedded-30</artifactId>
+				<artifactId>arquillian-glassfish-embedded-3</artifactId>
 				<version>${deps.arquillian.version}</version>
 				<scope>test</scope>
 				<type>jar</type>
@@ -1277,7 +1277,7 @@
 			<dependency>
 				<groupId>org.glassfish.extras</groupId>
 				<artifactId>glassfish-embedded-all</artifactId>
-				<version>3.0.1-b02</version>
+				<version>${deps.glassfish-embedded-all.version}</version>
 				<scope>test</scope>
 				<type>jar</type>
 			</dependency>
@@ -1907,7 +1907,8 @@
 		<repository>
 			<id>org.jboss.releaseRepository</id>
 			<name>JBoss Releases Repository</name>
-			<url>http://repository.jboss.com/maven2</url>
+			<url>http://repository.jboss.org/nexus/content/groups/public-jboss
+			</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>

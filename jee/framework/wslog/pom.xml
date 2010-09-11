@@ -113,7 +113,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.arquillian.container</groupId>
-			<artifactId>arquillian-glassfish-embedded-30</artifactId>
+			<artifactId>arquillian-glassfish-embedded-3</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

@@ -29,7 +29,6 @@ import org.junit.runner.RunWith;
 import com.acme.orderplacement.framework.wslog.WebserviceLogger;
 import com.acme.orderplacement.framework.wslog.WebserviceRequestDto;
 import com.acme.orderplacement.framework.wslog.WebserviceResponseDto;
-import com.acme.orderplacement.jee.framework.wslog.internal.WebserviceLoggerBean;
 import com.acme.orderplacement.jee.framework.wslog.internal.domain.WebserviceOperation;
 
 /**
@@ -68,9 +67,8 @@ public class WebserviceLoggerClientModeIntegrationTest {
 
 	@Deployment
 	public static JavaArchive createTestArchive() {
-		final JavaArchive deployment = ShrinkWrap.create("test.jar",
-				JavaArchive.class).addPackages(true,
-				Validate.class.getPackage(),
+		final JavaArchive deployment = ShrinkWrap.create(JavaArchive.class,
+				"test.jar").addPackages(true, Validate.class.getPackage(),
 				WebserviceLogger.class.getPackage(),
 				WebserviceLoggerBean.class.getPackage(),
 				WebserviceOperation.class.getPackage()).addManifestResource(
