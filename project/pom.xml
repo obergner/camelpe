@@ -120,7 +120,7 @@
 		 -->
 		<!-- Standard javax apis -->
 		<deps.javax-inject.version>1</deps.javax-inject.version>
-		<deps.cdi-api.version>1.0-SP1</deps.cdi-api.version>
+		<deps.cdi-api.version>1.0-SP2</deps.cdi-api.version>
 		<deps.ejb-api.version>3.1.0</deps.ejb-api.version>
 		<deps.interceptor-api.version>1.1</deps.interceptor-api.version>
 		<deps.jta.version>1.1</deps.jta.version>
@@ -144,11 +144,11 @@
 		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
 		<deps.el-api.version>2.2</deps.el-api.version>
 		<!--
-			We use Hibernate Validator 4.1.0.Beta1 because its pom correctly
+			We use Hibernate Validator 4.1.0.Final because its pom correctly
 			registers the dependencies on jaxb in scope 'provided' instead of
 			'runtime'.
 		-->
-		<deps.hibernate-validator.version>4.1.0.Beta1
+		<deps.hibernate-validator.version>4.1.0.Final
 		</deps.hibernate-validator.version>
 		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
 		<deps.weld.version>1.1.0.Beta1</deps.weld.version>
@@ -158,6 +158,7 @@
 		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
 		<deps.hornetq.version>2.1.2.Final</deps.hornetq.version>
 		<deps.netty.version>3.2.1.Final</deps.netty.version>
+		<deps.osgi.version>4.1.0</deps.osgi.version>
 		<deps.google-guava.version>r06</deps.google-guava.version>
 		<deps.glassfish-security.version>3.1-b16
 		</deps.glassfish-security.version>
@@ -831,6 +832,11 @@
 						<artifactId>commons-logging-api</artifactId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>${deps.osgi.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>

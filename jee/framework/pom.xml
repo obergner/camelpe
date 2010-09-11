@@ -49,7 +49,7 @@
 	</dependencies>
 
 	<modules>
-		<!-- module>camelpe</module -->
+		<module>camelpe</module>
 		<module>common</module>
 		<module>persistence</module>
 		<module>camel</module>

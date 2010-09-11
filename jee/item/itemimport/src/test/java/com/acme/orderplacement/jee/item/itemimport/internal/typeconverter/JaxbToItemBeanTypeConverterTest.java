@@ -9,7 +9,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.acme.orderplacement.jee.item.itemimport.internal.typeconverter.JaxbToItemBeanTypeConverter;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 import com.acme.orderplacement.service.item.dto.ItemSpecificationDto;
 import com.external.schema.ns.events.itemcreated._1.ItemCreatedEvent;

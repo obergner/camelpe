@@ -5,6 +5,7 @@ package com.acme.orderplacement.jee.framework.camelpe;
 
 import static junit.framework.Assert.assertFalse;
 
+import javax.enterprise.inject.spi.Extension;
 import javax.inject.Inject;
 
 import org.apache.camel.CamelContext;
@@ -50,16 +51,13 @@ public class CamelExtensionInContainerTest {
 
 	@Deployment
 	public static JavaArchive createTestArchive() {
-		final JavaArchive testModule = ShrinkWrap
-				.create(JavaArchive.class, "test.jar")
-				.addPackages(false, CamelExtension.class.getPackage(),
-						SampleRoutes.class.getPackage())
-				.addManifestResource(
-						"META-INF/services/javax.enterprise.inject.spi.Extension",
-						ArchivePaths
-								.create("services/javax.enterprise.inject.spi.Extension"))
-				.addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
-						ArchivePaths.create("beans.xml"));
+		final JavaArchive testModule = ShrinkWrap.create(JavaArchive.class,
+				"test.jar").addPackages(false,
+				CamelExtension.class.getPackage(),
+				SampleRoutes.class.getPackage()).addServiceProvider(
+				Extension.class, CamelExtension.class).addManifestResource(
+				new ByteArrayAsset("<beans/>".getBytes()),
+				ArchivePaths.create("beans.xml"));
 
 		return testModule;
 	}

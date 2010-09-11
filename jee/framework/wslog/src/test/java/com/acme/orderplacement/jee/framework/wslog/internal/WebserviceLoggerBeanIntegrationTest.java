@@ -25,7 +25,6 @@ import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
 import com.acme.orderplacement.framework.wslog.WebserviceRequestDto;
 import com.acme.orderplacement.framework.wslog.WebserviceResponseDto;
-import com.acme.orderplacement.jee.framework.wslog.internal.WebserviceLoggerBean;
 import com.acme.orderplacement.jee.framework.wslog.internal.domain.WebserviceRequest;
 import com.acme.orderplacement.jee.framework.wslog.internal.domain.WebserviceResponse;
 
