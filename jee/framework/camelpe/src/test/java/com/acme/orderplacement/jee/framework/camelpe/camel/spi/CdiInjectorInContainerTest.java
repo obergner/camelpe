@@ -20,6 +20,8 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiInjector;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector.ApplicationScopedBean;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector.BeanHavingNoInjectionPoints;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.beans.injector.BeanHavingOneInjectionPoint;

@@ -11,7 +11,7 @@
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiInjectorInContainerTest"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilderInContainerTest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="orderplacement.jee.framework.camelpe"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

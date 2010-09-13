@@ -9,6 +9,7 @@ import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AfterDeploymentValidation;
+import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.BeforeBeanDiscovery;
@@ -16,11 +17,15 @@ import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessInjectionTarget;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.Converter;
+import org.apache.camel.FallbackConverter;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.CamelInjectionTargetWrapper;
+import com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilder;
+import com.acme.orderplacement.jee.framework.camelpe.typeconverter.TypeConverterHolder;
 
 /**
  * <p>
@@ -38,6 +43,8 @@ class CamelExtension implements Extension {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
+	private CdiTypeConverterBuilder typeConverterBuilder;
+
 	private CamelContext cdiCamelContext;
 
 	// -------------------------------------------------------------------------
@@ -49,6 +56,8 @@ class CamelExtension implements Extension {
 		getLog().debug("Initializing CamelContext ...");
 
 		this.cdiCamelContext = new CdiCamelContext(beanManager);
+		this.typeConverterBuilder = new CdiTypeConverterBuilder(beanManager,
+				this.cdiCamelContext.getTypeConverterRegistry());
 
 		getLog().debug("Finished initializing CamelContext [{}].",
 				this.cdiCamelContext);
@@ -64,6 +73,41 @@ class CamelExtension implements Extension {
 				"Customized InjectionTarget [{}] for AnnotatedType [{}] in "
 						+ "order to enable Camel endpoint injection.", pit,
 				pit.getAnnotatedType());
+	}
+
+	<T> void registerDiscoveredTypeConvertersInCamelContext(
+			@Observes final ProcessInjectionTarget<T> pit) {
+		final AnnotatedType<T> annotatedType = pit.getAnnotatedType();
+		if (!annotatedType.isAnnotationPresent(Converter.class)
+				&& !annotatedType.isAnnotationPresent(FallbackConverter.class)) {
+			// We are only interested in classes annotated with @Converter or
+			// @FallbackConverter, i.e. we are only interested in Camel
+			// converters.
+			return;
+		}
+
+		final Class<T> typeConverterClass = pit.getAnnotatedType()
+				.getJavaClass();
+		final Set<TypeConverterHolder> typeConverterHolders = this.typeConverterBuilder
+				.buildTypeConvertersFrom(typeConverterClass);
+		for (final TypeConverterHolder typeConverterHolder : typeConverterHolders) {
+			if (typeConverterHolder.isFallback()) {
+				this.cdiCamelContext.getTypeConverterRegistry()
+						.addFallbackTypeConverter(
+								typeConverterHolder.getTypeConverter(),
+								typeConverterHolder.isCanPromote());
+			} else {
+				this.cdiCamelContext.getTypeConverterRegistry()
+						.addTypeConverter(typeConverterHolder.getToType(),
+								typeConverterHolder.getFromType(),
+								typeConverterHolder.getTypeConverter());
+			}
+		}
+
+		getLog()
+				.debug(
+						"Registered [{}] TypeConverters built from AnnotatedType [{}].",
+						typeConverterHolders.size(), pit.getAnnotatedType());
 	}
 
 	void registerCamelContext(@Observes final AfterBeanDiscovery abd) {
@@ -101,8 +145,8 @@ class CamelExtension implements Extension {
 		}
 	}
 
-	private <T> void registerDiscoveredRoutes(
-			final AfterDeploymentValidation adv, final BeanManager beanManager) {
+	private void registerDiscoveredRoutes(final AfterDeploymentValidation adv,
+			final BeanManager beanManager) {
 		try {
 			getLog().debug(
 					"Registering discovered Routes with CamelContext [{}] ...",

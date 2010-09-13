@@ -12,6 +12,7 @@ import org.apache.commons.lang.Validate;
 
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiInjector;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
+import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiTypeConverterRegistry;
 
 /**
  * <p>
@@ -45,6 +46,7 @@ class CdiCamelContext extends DefaultCamelContext {
 			throws IllegalArgumentException {
 		Validate.notNull(beanManager, "beanManager");
 		this.beanManager = beanManager;
+		setTypeConverterRegistry(new CdiTypeConverterRegistry(getInjector()));
 	}
 
 	// -------------------------------------------------------------------------
