@@ -67,8 +67,8 @@ public class CdiInjector implements Injector {
 									+ "the BeanManager. A new bean instance will be created using reflection. "
 									+ "This new bean instance will NOT be registered with the BeanManager.",
 							type.getName());
-			beanInstance = createBeanInstanceViaReflection(type);
-			injectDependenciesIntoBeanInstance(beanInstance, injectionTarget);
+			beanInstance = createBeanInstanceViaReflection(type,
+					injectionTarget);
 		} else {
 			getLog()
 					.debug(
@@ -76,11 +76,7 @@ public class CdiInjector implements Injector {
 									+ "The requested instance will be created from this bean.",
 							type.getName());
 			beanInstance = createBeanInstanceViaBeanManager(type, bean);
-			injectDependenciesIntoBeanInstance(beanInstance, bean,
-					injectionTarget);
 		}
-		invokePostConstrucAnnotatedMethodsOnBeanInstance(beanInstance,
-				injectionTarget);
 
 		getLog().trace("Successfully created new configured instance [{}].",
 				beanInstance);
@@ -138,12 +134,19 @@ public class CdiInjector implements Injector {
 		return (Bean<T>) beans.iterator().next();
 	}
 
-	private <T> T createBeanInstanceViaReflection(final Class<T> type) {
+	private <T> T createBeanInstanceViaReflection(final Class<T> type,
+			final InjectionTarget<T> injectionTarget) {
 		try {
 			getLog().trace(
 					"Creating bean instance of type = [{}] via reflection ...",
 					type.getName());
 			final T beanInstance = type.newInstance();
+
+			injectDependenciesIntoBeanInstance(beanInstance, injectionTarget);
+
+			invokePostConstructAnnotatedMethodsOnBeanInstance(beanInstance,
+					injectionTarget);
+
 			getLog().trace("New bean instance [{}] successfully created.",
 					beanInstance, type.getName());
 
@@ -191,7 +194,7 @@ public class CdiInjector implements Injector {
 				beanInstance, beanInstance.getClass().getName());
 	}
 
-	private <T> void invokePostConstrucAnnotatedMethodsOnBeanInstance(
+	private <T> void invokePostConstructAnnotatedMethodsOnBeanInstance(
 			final T beanInstance, final InjectionTarget<T> injectionTarget) {
 		injectionTarget.postConstruct(beanInstance);
 		getLog()

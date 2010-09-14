@@ -19,6 +19,9 @@ public class BeanHavingPostConstructAnnotatedMethod {
 
 	@PostConstruct
 	public void postConstruct() {
+		if (this.postConstructed != null) {
+			throw new IllegalStateException("Already post constructed");
+		}
 		this.postConstructed = new Object();
 	}
 }

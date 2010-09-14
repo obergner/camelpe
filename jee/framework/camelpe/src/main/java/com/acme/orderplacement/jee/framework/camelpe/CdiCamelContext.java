@@ -5,9 +5,11 @@ package com.acme.orderplacement.jee.framework.camelpe;
 
 import javax.enterprise.inject.spi.BeanManager;
 
+import org.apache.camel.TypeConverter;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.spi.Injector;
 import org.apache.camel.spi.Registry;
+import org.apache.camel.spi.TypeConverterRegistry;
 import org.apache.commons.lang.Validate;
 
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiInjector;
@@ -46,7 +48,6 @@ class CdiCamelContext extends DefaultCamelContext {
 			throws IllegalArgumentException {
 		Validate.notNull(beanManager, "beanManager");
 		this.beanManager = beanManager;
-		setTypeConverterRegistry(new CdiTypeConverterRegistry(getInjector()));
 	}
 
 	// -------------------------------------------------------------------------
@@ -67,6 +68,22 @@ class CdiCamelContext extends DefaultCamelContext {
 	@Override
 	protected Registry createRegistry() {
 		return new CdiRegistry(this.beanManager);
+	}
+
+	/**
+	 * @see org.apache.camel.impl.DefaultCamelContext#createTypeConverter()
+	 */
+	@Override
+	protected TypeConverter createTypeConverter() {
+		return new CdiTypeConverterRegistry(getInjector());
+	}
+
+	/**
+	 * @see org.apache.camel.impl.DefaultCamelContext#getTypeConverterRegistry()
+	 */
+	@Override
+	public TypeConverterRegistry getTypeConverterRegistry() {
+		return (TypeConverterRegistry) getTypeConverter();
 	}
 
 	// -------------------------------------------------------------------------

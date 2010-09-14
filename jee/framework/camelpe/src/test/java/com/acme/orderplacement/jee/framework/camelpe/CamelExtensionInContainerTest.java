@@ -3,7 +3,10 @@
  */
 package com.acme.orderplacement.jee.framework.camelpe;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+
+import java.util.Date;
 
 import javax.enterprise.inject.spi.Extension;
 import javax.inject.Inject;
@@ -22,6 +25,10 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.acme.orderplacement.jee.framework.camelpe.advanced.AdvancedConsumer;
+import com.acme.orderplacement.jee.framework.camelpe.advanced.AdvancedProcessor;
+import com.acme.orderplacement.jee.framework.camelpe.advanced.AdvancedProducer;
+import com.acme.orderplacement.jee.framework.camelpe.advanced.AdvancedRoutes;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
 
 /**
@@ -45,6 +52,15 @@ public class CamelExtensionInContainerTest {
 	@Inject
 	private SampleProducer sampleProducer;
 
+	@Inject
+	private AdvancedProducer advancedProducer;
+
+	@Inject
+	private AdvancedProcessor advancedProcessor;
+
+	@Inject
+	private AdvancedConsumer advancedConsumer;
+
 	// -------------------------------------------------------------------------
 	// Test fixture
 	// -------------------------------------------------------------------------
@@ -54,7 +70,8 @@ public class CamelExtensionInContainerTest {
 		final JavaArchive testModule = ShrinkWrap.create(JavaArchive.class,
 				"test.jar").addPackages(false,
 				CamelExtension.class.getPackage(),
-				SampleRoutes.class.getPackage()).addServiceProvider(
+				SampleRoutes.class.getPackage(),
+				AdvancedRoutes.class.getPackage()).addServiceProvider(
 				Extension.class, CamelExtension.class).addManifestResource(
 				new ByteArrayAsset("<beans/>".getBytes()),
 				ArchivePaths.create("beans.xml"));
@@ -103,5 +120,20 @@ public class CamelExtensionInContainerTest {
 		this.sampleProducer.sendBody(testMessage);
 
 		mockEndpoint.assertIsSatisfied();
+	}
+
+	@Test
+	public void assertThatAdvancedRouteDiscoveredAndRegisteredByCamelExtensionWorks() {
+		final Date testMessage = new Date();
+
+		this.advancedProducer.sendBody(testMessage);
+
+		assertEquals("Test message was not processed by test processor", 1,
+				this.advancedProcessor.getCounter().get());
+		this.advancedProcessor.getCounter().set(0);
+		assertEquals("Test message was not consumed by test consumer",
+				testMessage.getTime(), this.advancedConsumer.getTimestamp()
+						.get());
+		this.advancedConsumer.getTimestamp().set(-1L);
 	}
 }

@@ -3,12 +3,14 @@
  */
 package com.acme.orderplacement.jee.framework.camelpe;
 
+import java.lang.annotation.Annotation;
 import java.util.Set;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AfterDeploymentValidation;
+import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
@@ -35,7 +37,7 @@ import com.acme.orderplacement.jee.framework.camelpe.typeconverter.TypeConverter
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-class CamelExtension implements Extension {
+public class CamelExtension implements Extension {
 
 	// -------------------------------------------------------------------------
 	// Fields
@@ -78,8 +80,9 @@ class CamelExtension implements Extension {
 	<T> void registerDiscoveredTypeConvertersInCamelContext(
 			@Observes final ProcessInjectionTarget<T> pit) {
 		final AnnotatedType<T> annotatedType = pit.getAnnotatedType();
-		if (!annotatedType.isAnnotationPresent(Converter.class)
-				&& !annotatedType.isAnnotationPresent(FallbackConverter.class)) {
+		if (!isAnnotationPresentOnClassOrMethod(annotatedType, Converter.class)
+				&& !isAnnotationPresentOnClassOrMethod(annotatedType,
+						FallbackConverter.class)) {
 			// We are only interested in classes annotated with @Converter or
 			// @FallbackConverter, i.e. we are only interested in Camel
 			// converters.
@@ -182,6 +185,23 @@ class CamelExtension implements Extension {
 		getLog().debug(
 				"Registered discovered Route [{}] with CamelContext [{}].",
 				routeBuilderInstance, this.cdiCamelContext);
+	}
+
+	private <X> boolean isAnnotationPresentOnClassOrMethod(
+			final AnnotatedType<X> annotatedTypeToInspect,
+			final Class<? extends Annotation> annotationType) {
+		if (annotatedTypeToInspect.isAnnotationPresent(annotationType)) {
+			return true;
+		}
+		final Set<AnnotatedMethod<? super X>> annotatedMethods = annotatedTypeToInspect
+				.getMethods();
+		for (final AnnotatedMethod<? super X> annotatedMethod : annotatedMethods) {
+			if (annotatedMethod.isAnnotationPresent(annotationType)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

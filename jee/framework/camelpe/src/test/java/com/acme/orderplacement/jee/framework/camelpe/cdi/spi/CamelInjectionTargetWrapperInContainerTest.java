@@ -105,7 +105,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 	@Deployment
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap.create(JavaArchive.class,
-				"test.jar").addPackages(true,
+				"test.jar").addPackages(false,
 				BeanHavingNoEndpointInjectAnnotatedField.class.getPackage())
 				.addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
 						ArchivePaths.create("beans.xml"));
