@@ -13,6 +13,9 @@ import javax.inject.Inject;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.component.bean.BeanComponent;
+import org.apache.camel.component.direct.DirectComponent;
+import org.apache.camel.component.mock.MockComponent;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.api.Run;
@@ -71,7 +74,10 @@ public class CamelExtensionInContainerTest {
 				"test.jar").addPackages(false,
 				CamelExtension.class.getPackage(),
 				SampleRoutes.class.getPackage(),
-				AdvancedRoutes.class.getPackage()).addServiceProvider(
+				AdvancedRoutes.class.getPackage(),
+				DirectComponent.class.getPackage(),
+				BeanComponent.class.getPackage(),
+				MockComponent.class.getPackage()).addServiceProvider(
 				Extension.class, CamelExtension.class).addManifestResource(
 				new ByteArrayAsset("<beans/>".getBytes()),
 				ArchivePaths.create("beans.xml"));

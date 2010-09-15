@@ -25,9 +25,9 @@ import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder;
+import com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.TypeConverterHolder;
 import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.CamelInjectionTargetWrapper;
-import com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilder;
-import com.acme.orderplacement.jee.framework.camelpe.typeconverter.TypeConverterHolder;
 
 /**
  * <p>
@@ -37,7 +37,7 @@ import com.acme.orderplacement.jee.framework.camelpe.typeconverter.TypeConverter
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class CamelExtension implements Extension {
+class CamelExtension implements Extension {
 
 	// -------------------------------------------------------------------------
 	// Fields

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.typeconverter;
+package com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -25,6 +25,9 @@ import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder;
+import com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.TypeConverterHolder;
 
 /**
  * <p>
@@ -70,7 +73,7 @@ public class CdiTypeConverterBuilderInContainerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
+	 * {@link com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
 	 * .
 	 */
 	@Test
@@ -99,7 +102,7 @@ public class CdiTypeConverterBuilderInContainerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
+	 * {@link com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
 	 * .
 	 */
 	@Test
@@ -128,7 +131,7 @@ public class CdiTypeConverterBuilderInContainerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
+	 * {@link com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
 	 * .
 	 */
 	@Test
@@ -157,7 +160,7 @@ public class CdiTypeConverterBuilderInContainerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
+	 * {@link com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
 	 * .
 	 */
 	@Test
@@ -186,7 +189,7 @@ public class CdiTypeConverterBuilderInContainerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
+	 * {@link com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
 	 * .
 	 */
 	@Test
@@ -215,7 +218,7 @@ public class CdiTypeConverterBuilderInContainerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.camelpe.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
+	 * {@link com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder#buildTypeConvertersFrom(java.lang.Class)}
 	 * .
 	 */
 	@Test

@@ -8,10 +8,12 @@ import javax.enterprise.inject.spi.BeanManager;
 import org.apache.camel.TypeConverter;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.spi.Injector;
+import org.apache.camel.spi.PackageScanClassResolver;
 import org.apache.camel.spi.Registry;
 import org.apache.camel.spi.TypeConverterRegistry;
 import org.apache.commons.lang.Validate;
 
+import com.acme.orderplacement.jee.framework.camelpe.camel.packagescan.PackageScanClassResolverFactory;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiInjector;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiTypeConverterRegistry;
@@ -84,6 +86,15 @@ class CdiCamelContext extends DefaultCamelContext {
 	@Override
 	public TypeConverterRegistry getTypeConverterRegistry() {
 		return (TypeConverterRegistry) getTypeConverter();
+	}
+
+	/**
+	 * @see org.apache.camel.impl.DefaultCamelContext#getPackageScanClassResolver()
+	 */
+	@Override
+	public PackageScanClassResolver getPackageScanClassResolver() {
+		return PackageScanClassResolverFactory.INSTANCE
+				.getPackageScanClassResolver();
 	}
 
 	// -------------------------------------------------------------------------
