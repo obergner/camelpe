@@ -5,6 +5,8 @@ package com.acme.orderplacement.jee.framework.camel.jmslog;
 
 import java.util.Date;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.apache.camel.Exchange;
 
 import com.acme.orderplacement.framework.jmslog.JmsMessageDto;
@@ -18,6 +20,7 @@ import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@ApplicationScoped
 public class IncomingMessageExchangeLoggingProcessor extends
 		AbstractJmsMessageExchangeLoggingProcessor {
 

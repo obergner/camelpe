@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.jboss.camel.integration;
+package com.acme.orderplacement.jee.framework.jboss.camel;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -31,9 +31,9 @@ public class JBossPackageScanClassResolver extends
 	protected void find(final PackageScanFilter test, final String packageName,
 			final ClassLoader loader, final Set<Class<?>> classes) {
 		if (this.log.isTraceEnabled()) {
-			this.log.trace("Searching for: " + test + " in package: "
-					+ packageName + " using classloader: "
-					+ loader.getClass().getName());
+			this.log.trace("Searching for [" + test + "] in package ["
+					+ packageName + "] using classloader ["
+					+ loader.getClass().getName() + "]");
 		}
 
 		Enumeration<URL> urls;
@@ -43,7 +43,7 @@ public class JBossPackageScanClassResolver extends
 				this.log.trace("No URLs returned by classloader");
 			}
 		} catch (final IOException ioe) {
-			this.log.warn("Could not read package: " + packageName, ioe);
+			this.log.warn("Could not read package [" + packageName + "]", ioe);
 			return;
 		}
 
@@ -52,14 +52,17 @@ public class JBossPackageScanClassResolver extends
 			try {
 				url = urls.nextElement();
 				if (this.log.isTraceEnabled()) {
-					this.log.trace("URL from classloader: " + url);
+					this.log.trace("Searching for [" + test + "] in package ["
+							+ packageName + "] using URL [" + url
+							+ "] from classloader");
 				}
 				final VirtualFile root = VFS.getChild(url);
 				root.visit(new MatchingClassVisitor(test, classes));
 			} catch (final URISyntaxException e) {
 				// Cannot happen
 			} catch (final IOException ioe) {
-				this.log.warn("Could not read entries in url: " + url, ioe);
+				this.log.warn("Could not read entries in URL [" + url + "]",
+						ioe);
 			}
 		}
 	}

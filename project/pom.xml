@@ -178,15 +178,19 @@
 		<!--
 			Plugin versions 
 		 -->
-		<plugins.compiler.version>2.2</plugins.compiler.version>
-		<plugins.clean.version>2.4</plugins.clean.version>
+		<plugins.compiler.version>2.3.2</plugins.compiler.version>
+		<plugins.clean.version>2.4.1</plugins.clean.version>
 		<plugins.deploy.version>2.5</plugins.deploy.version>
-		<plugins.install.version>2.3</plugins.install.version>
-		<plugins.resources.version>2.4.2</plugins.resources.version>
-		<plugins.surefire.version>2.5</plugins.surefire.version>
-		<plugins.ear.version>2.4.1</plugins.ear.version>
+		<plugins.install.version>2.3.1</plugins.install.version>
+		<plugins.resources.version>2.4.3</plugins.resources.version>
+		<plugins.surefire.version>2.6</plugins.surefire.version>
+		<plugins.ear.version>2.4.2</plugins.ear.version>
 		<plugins.ejb.version>2.2.1</plugins.ejb.version>
-		<plugins.jar.version>2.3</plugins.jar.version>
+		<plugins.jar.version>2.3.1</plugins.jar.version>
+		<!--
+			We cannot upgrade to 2.1 since this version does not seem to respect
+			the packagingIncludes directive necessary for building a skinny war.
+		-->
 		<plugins.war.version>2.1-beta-1</plugins.war.version>
 		<plugins.antrun.version>1.3</plugins.antrun.version>
 		<plugins.dependency.version>2.1</plugins.dependency.version>
@@ -401,6 +405,12 @@
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework</groupId>
 				<artifactId>orderplacement.jee.framework.common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.acme.orderplacement.jee.framework</groupId>
+				<artifactId>orderplacement.jee.framework.camelpe</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>

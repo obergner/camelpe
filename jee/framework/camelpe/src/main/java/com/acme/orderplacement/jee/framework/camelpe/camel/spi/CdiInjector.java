@@ -6,12 +6,14 @@ package com.acme.orderplacement.jee.framework.camelpe.camel.spi;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.inject.spi.InjectionTarget;
 import javax.inject.Singleton;
 
 import org.apache.camel.IsSingleton;
-import org.apache.camel.NoSuchBeanException;
+import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.spi.Injector;
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
@@ -45,19 +47,36 @@ public class CdiInjector implements Injector {
 	 * @see org.apache.camel.spi.Injector#newInstance(java.lang.Class)
 	 */
 	@Override
-	public <T> T newInstance(final Class<T> type)
-			throws IllegalArgumentException, NoSuchBeanException {
+	public <T> T newInstance(final Class<T> type) {
 		Validate.notNull(type, "type");
 		getLog().trace("Creating new configured instance of type = [{}] ...",
 				type.getName());
 
+		final T beanInstance;
+		final InjectionTarget<T> injectionTarget = createInjectionTargetFor(type);
 		final Bean<T> bean = lookupBeanInBeanManager(type);
-		getLog()
-				.debug(
-						"Found bean [{}] matching type = [{}] in BeanManager. "
-								+ "The requested instance will be created from this bean.",
-						type.getName());
-		final T beanInstance = createBeanInstanceViaBeanManager(type, bean);
+		if (bean == null) {
+			/*
+			 * No matching bean found in BeanManager. Create new instance via
+			 * reflection. This instance will NOT be registered with the
+			 * BeanManager.
+			 */
+			getLog()
+					.debug(
+							"No bean matching type = [{}] is currently registered with "
+									+ "the BeanManager. A new bean instance will be created using reflection. "
+									+ "This new bean instance will NOT be registered with the BeanManager.",
+							type.getName());
+			beanInstance = createBeanInstanceViaReflection(type,
+					injectionTarget);
+		} else {
+			getLog()
+					.debug(
+							"Found bean [{}] matching type = [{}] in BeanManager. "
+									+ "The requested instance will be created from this bean.",
+							type.getName());
+			beanInstance = createBeanInstanceViaBeanManager(type, bean);
+		}
 
 		getLog().trace("Successfully created new configured instance [{}].",
 				beanInstance);
@@ -70,8 +89,7 @@ public class CdiInjector implements Injector {
 	 *      java.lang.Object)
 	 */
 	@Override
-	public <T> T newInstance(final Class<T> type, final Object instance)
-			throws IllegalArgumentException, NoSuchBeanException {
+	public <T> T newInstance(final Class<T> type, final Object instance) {
 		Validate.notNull(type, "type");
 		Validate.notNull(instance, "instance");
 		Validate.isTrue(type.isAssignableFrom(instance.getClass()),
@@ -98,10 +116,11 @@ public class CdiInjector implements Injector {
 	}
 
 	private <T> Bean<T> lookupBeanInBeanManager(final Class<T> type)
-			throws NoSuchBeanException {
+			throws IllegalArgumentException {
 		final Set<Bean<?>> beans = getBeanManager().getBeans(type);
 		if (beans.isEmpty()) {
-			throw new NoSuchBeanException(type.getName());
+
+			return null;
 		}
 		// TODO: What is the appropriate behavior if more than one matching
 		// bean is found?
@@ -115,6 +134,31 @@ public class CdiInjector implements Injector {
 		return (Bean<T>) beans.iterator().next();
 	}
 
+	private <T> T createBeanInstanceViaReflection(final Class<T> type,
+			final InjectionTarget<T> injectionTarget) {
+		try {
+			getLog().trace(
+					"Creating bean instance of type = [{}] via reflection ...",
+					type.getName());
+			final T beanInstance = type.newInstance();
+
+			injectDependenciesIntoBeanInstance(beanInstance, injectionTarget);
+
+			invokePostConstructAnnotatedMethodsOnBeanInstance(beanInstance,
+					injectionTarget);
+
+			getLog().trace("New bean instance [{}] successfully created.",
+					beanInstance, type.getName());
+
+			return beanInstance;
+		} catch (final Exception e) {
+			throw new RuntimeCamelException(
+					"Failed to create new bean instance of type ["
+							+ type.getName() + "] via reflection: "
+							+ e.getMessage(), e);
+		}
+	}
+
 	private <T> T createBeanInstanceViaBeanManager(final Class<T> type,
 			final Bean<T> bean) {
 		final T beanInstance = type.cast(getBeanManager().getReference(bean,
@@ -123,6 +167,32 @@ public class CdiInjector implements Injector {
 				beanInstance, type.getName());
 
 		return beanInstance;
+	}
+
+	private <T> InjectionTarget<T> createInjectionTargetFor(final Class<T> type) {
+		final AnnotatedType<T> annotatedType = getBeanManager()
+				.createAnnotatedType(type);
+		final InjectionTarget<T> injectionTarget = getBeanManager()
+				.createInjectionTarget(annotatedType);
+
+		return injectionTarget;
+	}
+
+	private <T> void injectDependenciesIntoBeanInstance(final T beanInstance,
+			final InjectionTarget<T> injectionTarget) {
+		injectionTarget.inject(beanInstance, getBeanManager()
+				.<T> createCreationalContext(null));
+		getLog().trace("Injected dependencies into bean instance [{}].",
+				beanInstance, beanInstance.getClass().getName());
+	}
+
+	private <T> void invokePostConstructAnnotatedMethodsOnBeanInstance(
+			final T beanInstance, final InjectionTarget<T> injectionTarget) {
+		injectionTarget.postConstruct(beanInstance);
+		getLog()
+				.trace(
+						"Invoked @PostConstruct annotated methods on bean instance [{}].",
+						beanInstance, beanInstance.getClass().getName());
 	}
 
 	private boolean isSingleton(final Object instance) {
