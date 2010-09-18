@@ -3,15 +3,15 @@
 <ic:ItemCreatedEvent
 	xmlns:ic="http://www.external.com/schema/ns/events/itemcreated/1.0/"
 	xmlns:mo="http://www.external.com/schema/ns/models/item/1.0/">
-	<ic:eventId>AB-100013</ic:eventId>
+	<ic:eventId>AB-100014</ic:eventId>
 	<ic:createdItem>
-		<mo:itemNumber>ITM-99-100013</mo:itemNumber>
-		<mo:name>Item Created Event 100013</mo:name>
+		<mo:itemNumber>ITM-99-100014</mo:itemNumber>
+		<mo:name>Item Created Event 100014</mo:name>
 		<mo:description>Description</mo:description>
 		<mo:itemSpecs>
 			<mo:ItemSpec>
-				<mo:ItemSpecId>ITSPEC-99-100013</mo:ItemSpecId>
-				<mo:name>Item Spec 100013</mo:name>
+				<mo:ItemSpecId>ITSPEC-99-100014</mo:ItemSpecId>
+				<mo:name>Item Spec 100014</mo:name>
 			</mo:ItemSpec>
 		</mo:itemSpecs>
 	</ic:createdItem>

@@ -24,9 +24,9 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.acme.orderplacement.framework.jmslog.JmsMessageDto;
-import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
-import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage;
+import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto;
+import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
+import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageExchange;
 
 /**
  * <p>
@@ -38,7 +38,7 @@ import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage;
  */
 @RunWith(Arquillian.class)
 @Run(RunModeType.AS_CLIENT)
-public class JmsMessageLoggerClientModeIntegrationTest {
+public class JmsMessageExchangeLoggerClientModeIntegrationTest {
 
 	// ------------------------------------------------------------------------
 	// Fields
@@ -50,7 +50,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 
 	private static final String NON_EXISTING_JMS_MESSAGE_GUID = "nonExistingJmsMessageGuid";
 
-	private JmsMessageLogger cachedJmsMessageLogger;
+	private JmsMessageExchangeLogger cachedJmsMessageLogger;
 
 	// -------------------------------------------------------------------------
 	// Test fixture
@@ -60,9 +60,9 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 	public static JavaArchive createTestArchive() {
 		final JavaArchive deployment = ShrinkWrap.create(JavaArchive.class,
 				"test.jar").addPackages(true, Validate.class.getPackage(),
-				JmsMessageLogger.class.getPackage(),
-				JmsMessageLoggerBean.class.getPackage(),
-				JmsMessage.class.getPackage()).addManifestResource(
+				JmsMessageExchangeLogger.class.getPackage(),
+				JmsMessageExchangeLoggerBean.class.getPackage(),
+				JmsMessageExchange.class.getPackage()).addManifestResource(
 				"META-INF/glassfish/persistence.xml",
 				ArchivePaths.create("persistence.xml")).addManifestResource(
 				"META-INF/ejb-jar.xml", ArchivePaths.create("ejb-jar.xml"))
@@ -78,7 +78,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean#logIncomingJmsMessageExchange(com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto)}
 	 * .
 	 * 
 	 * @throws NamingException
@@ -88,12 +88,12 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 	@Test(expected = IllegalArgumentException.class)
 	public final void assertThatLogJmsMessageRefusesToLogNullJmsMessage()
 			throws NoResultException, IllegalArgumentException, NamingException {
-		lookupJmsMessageLogger().logJmsMessage(null);
+		lookupJmsMessageLogger().logIncomingJmsMessageExchange(null);
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean#logIncomingJmsMessageExchange(com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto)}
 	 * .
 	 * 
 	 * @throws Exception
@@ -102,11 +102,12 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 	public final void assertThatJmsMessageRefusesToLogMessageReferencingANonExistingMessageType()
 			throws Exception {
 		try {
-			final JmsMessageDto jmsMessageDto = new JmsMessageDto(
+			final JmsMessageExchangeDto jmsMessageDto = new JmsMessageExchangeDto(
 					NON_EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-123456789",
 					new Date(), "TEST", Collections.<String, Object> emptyMap());
 
-			lookupJmsMessageLogger().logJmsMessage(jmsMessageDto);
+			lookupJmsMessageLogger().logIncomingJmsMessageExchange(
+					jmsMessageDto);
 		} catch (final EJBException e) {
 			throw e.getCausedByException();
 		}
@@ -114,7 +115,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean#logIncomingJmsMessageExchange(com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto)}
 	 * .
 	 * 
 	 * @throws NamingException
@@ -124,16 +125,16 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 	@Test
 	public final void assertThatLogJmsMessageLogsMessageReferencingAnExistingMessageType()
 			throws NoResultException, IllegalArgumentException, NamingException {
-		final JmsMessageDto jmsMessageDto = new JmsMessageDto(
+		final JmsMessageExchangeDto jmsMessageDto = new JmsMessageExchangeDto(
 				EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-123456789", new Date(),
 				"TEST", Collections.<String, Object> emptyMap());
 
-		lookupJmsMessageLogger().logJmsMessage(jmsMessageDto);
+		lookupJmsMessageLogger().logIncomingJmsMessageExchange(jmsMessageDto);
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean#logIncomingJmsMessageExchange(com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto)}
 	 * .
 	 * 
 	 * @throws NamingException
@@ -146,16 +147,16 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 		final Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("header1", "value1");
 		headers.put("header2", "value2");
-		final JmsMessageDto jmsMessageDto = new JmsMessageDto(
+		final JmsMessageExchangeDto jmsMessageDto = new JmsMessageExchangeDto(
 				EXISTING_JMS_MESSAGE_TYPE_NAME, "UUID-345678912", new Date(),
 				"TEST", headers);
 
-		lookupJmsMessageLogger().logJmsMessage(jmsMessageDto);
+		lookupJmsMessageLogger().logIncomingJmsMessageExchange(jmsMessageDto);
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#completeJmsMessageExchange(java.lang.Long, boolean)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean#completeJmsMessageExchange(java.lang.Long, boolean)}
 	 * .
 	 * 
 	 * @throws NamingException
@@ -164,12 +165,12 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 	@Test(expected = IllegalArgumentException.class)
 	public final void assertThatCompleteJmsMessageExchangeRefusesToLogNullMessageId()
 			throws IllegalArgumentException, NamingException {
-		lookupJmsMessageLogger().completeJmsMessageExchange(null, true);
+		lookupJmsMessageLogger().completeJmsMessageExchange(null, null);
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean#completeJmsMessageExchange(java.lang.Long, boolean)}
+	 * {@link com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean#completeJmsMessageExchange(java.lang.Long, boolean)}
 	 * .
 	 * 
 	 * @throws Exception
@@ -179,7 +180,7 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 			throws Exception {
 		try {
 			lookupJmsMessageLogger().completeJmsMessageExchange(
-					NON_EXISTING_JMS_MESSAGE_GUID, true);
+					NON_EXISTING_JMS_MESSAGE_GUID, null);
 		} catch (final EJBException e) {
 			throw e.getCausedByException();
 		}
@@ -189,10 +190,11 @@ public class JmsMessageLoggerClientModeIntegrationTest {
 	// Internal
 	// ------------------------------------------------------------------------
 
-	private JmsMessageLogger lookupJmsMessageLogger() throws NamingException {
+	private JmsMessageExchangeLogger lookupJmsMessageLogger()
+			throws NamingException {
 		if (this.cachedJmsMessageLogger == null) {
-			this.cachedJmsMessageLogger = (JmsMessageLogger) new InitialContext()
-					.lookup("java:global/test/JmsMessageLoggerBean");
+			this.cachedJmsMessageLogger = (JmsMessageExchangeLogger) new InitialContext()
+					.lookup("java:global/test/JmsMessageExchangeLoggerBean");
 		}
 
 		return this.cachedJmsMessageLogger;

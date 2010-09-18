@@ -11,11 +11,15 @@
 
     create table LOG.JMS_MESSAGE (
         ID bigint not null,
-        CONTENT longvarchar not null,
-        GUID varchar(15) not null,
-        PROCESSING_STATE varchar(36) not null,
-        RECEIVED_ON timestamp not null,
+        GUID varchar(50) not null,
         ID_JMSMESSAGETYPE integer not null,
+        PROCESSING_STATE varchar(15) not null,
+        RECEIVED_ON timestamp not null,
+        COMPLETED_ON timestamp,
+        CONTENT longvarchar not null,
+        ERROR_TYPE varchar(100),
+        ERROR_MESSAGE varchar(300),
+        ERROR_STACKTRACE longvarchar,
         primary key (ID),
         unique (GUID)
     );

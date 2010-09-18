@@ -9,8 +9,8 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.apache.camel.Exchange;
 
-import com.acme.orderplacement.framework.jmslog.JmsMessageDto;
-import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
+import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto;
+import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
 
 /**
  * <p>
@@ -36,7 +36,7 @@ public class IncomingMessageExchangeLoggingProcessor extends
 	 * @param cachedJmsMessageLogger
 	 */
 	IncomingMessageExchangeLoggingProcessor(
-			final JmsMessageLogger cachedJmsMessageLogger) {
+			final JmsMessageExchangeLogger cachedJmsMessageLogger) {
 		super(cachedJmsMessageLogger);
 	}
 
@@ -54,8 +54,8 @@ public class IncomingMessageExchangeLoggingProcessor extends
 
 			// FIXME: MessageType is currently hardcoded. Find a better
 			// solution.
-			jmsMessageLogger().logJmsMessage(
-					new JmsMessageDto(MESSAGE_TYPE, messageGuid, new Date(),
+			jmsMessageLogger().logIncomingJmsMessageExchange(
+					new JmsMessageExchangeDto(MESSAGE_TYPE, messageGuid, new Date(),
 							exchange.getIn().getBody(String.class), exchange
 									.getIn().getHeaders()));
 

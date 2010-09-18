@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,7 +39,7 @@ import org.hibernate.annotations.NaturalId;
 
 /**
  * <p>
- * TODO: Insert short summary for JmsMessage
+ * TODO: Insert short summary for JmsMessageExchange
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -47,8 +48,8 @@ import org.hibernate.annotations.NaturalId;
 @Entity
 @Table(schema = "LOG", name = "JMS_MESSAGE")
 @SequenceGenerator(name = "ID_SEQ_GEN", sequenceName = "LOG.ID_SEQ_JMS_MESSAGE")
-@NamedQueries( { @NamedQuery(name = JmsMessage.Queries.BY_GUID, query = "from com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage jms where jms.guid = :guid") })
-public class JmsMessage implements Serializable {
+@NamedQueries( { @NamedQuery(name = JmsMessageExchange.Queries.BY_GUID, query = "from com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageExchange jms where jms.guid = :guid") })
+public class JmsMessageExchange implements Serializable {
 
 	// -------------------------------------------------------------------------
 	// Processing state
@@ -73,7 +74,7 @@ public class JmsMessage implements Serializable {
 	 */
 	public final static class Queries {
 
-		public static final String BY_GUID = "log.jms.jmsMessage.byGuid";
+		public static final String BY_GUID = "log.jms.jmsMessageExchange.byGuid";
 	}
 
 	// -------------------------------------------------------------------------
@@ -97,7 +98,7 @@ public class JmsMessage implements Serializable {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "PROCESSING_STATE", nullable = false, length = 15)
-	private JmsMessage.ProcessingState processingState;
+	private JmsMessageExchange.ProcessingState processingState;
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
@@ -108,6 +109,13 @@ public class JmsMessage implements Serializable {
 	@Lob
 	@Column(name = "CONTENT", nullable = false)
 	private String content;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "COMPLETED_ON", nullable = true)
+	private Date completedOn;
+
+	@Embedded
+	private JmsMessageExchangeError error = JmsMessageExchangeError.NO_ERROR;
 
 	// -------------------------------------------------------------------------
 	// Relationships
@@ -130,11 +138,11 @@ public class JmsMessage implements Serializable {
 	/**
 	 * 
 	 */
-	public JmsMessage() {
+	public JmsMessageExchange() {
 		// Intentionally left blank
 	}
 
-	public JmsMessage(final String guid, final Date receivedOn,
+	public JmsMessageExchange(final String guid, final Date receivedOn,
 			final String content, final JmsMessageType messageType,
 			final Map<String, String> headers) throws IllegalArgumentException {
 		Validate.notEmpty(guid, "guid");
@@ -145,8 +153,9 @@ public class JmsMessage implements Serializable {
 		this.content = content;
 		this.messageType = messageType != null ? messageType
 				: JmsMessageType.UNKNOWN;
-		this.processingState = JmsMessage.ProcessingState.IN_PROGRESS;
+		this.processingState = JmsMessageExchange.ProcessingState.IN_PROGRESS;
 		setHeaders(headers);
+		setError(JmsMessageExchangeError.NO_ERROR);
 	}
 
 	// -------------------------------------------------------------------------
@@ -234,14 +243,14 @@ public class JmsMessage implements Serializable {
 	 *            the processingState to set
 	 */
 	public void setProcessingState(
-			final JmsMessage.ProcessingState processingState) {
+			final JmsMessageExchange.ProcessingState processingState) {
 		this.processingState = processingState;
 	}
 
 	/**
 	 * @return the processingState
 	 */
-	public JmsMessage.ProcessingState getProcessingState() {
+	public JmsMessageExchange.ProcessingState getProcessingState() {
 		return this.processingState;
 	}
 
@@ -271,6 +280,45 @@ public class JmsMessage implements Serializable {
 		}
 	}
 
+	/**
+	 * @return the completedOn
+	 */
+	public final Date getCompletedOn() {
+		return this.completedOn;
+	}
+
+	/**
+	 * @param completedOn
+	 *            the completedOn to set
+	 */
+	public final void setCompletedOn(final Date completedOn) {
+		this.completedOn = completedOn;
+	}
+
+	/**
+	 * @return the error
+	 */
+	public final JmsMessageExchangeError getError() {
+		return this.error;
+	}
+
+	/**
+	 * @param error
+	 *            the error to set
+	 */
+	public final void setError(final JmsMessageExchangeError error) {
+		this.error = error != null ? error : JmsMessageExchangeError.NO_ERROR;
+	}
+
+	/**
+	 * @param error
+	 *            the error to set
+	 */
+	public final void setError(final Exception error) {
+		this.error = error != null ? new JmsMessageExchangeError(error)
+				: JmsMessageExchangeError.NO_ERROR;
+	}
+
 	// -------------------------------------------------------------------------
 	// equals(), hashCode(), toString()
 	// -------------------------------------------------------------------------
@@ -282,8 +330,13 @@ public class JmsMessage implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime
+				* result
+				+ ((this.completedOn == null) ? 0 : this.completedOn.hashCode());
 		result = prime * result
 				+ ((this.content == null) ? 0 : this.content.hashCode());
+		result = prime * result
+				+ ((this.error == null) ? 0 : this.error.hashCode());
 		result = prime * result
 				+ ((this.guid == null) ? 0 : this.guid.hashCode());
 		result = prime * result
@@ -315,12 +368,26 @@ public class JmsMessage implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final JmsMessage other = (JmsMessage) obj;
+		final JmsMessageExchange other = (JmsMessageExchange) obj;
+		if (this.completedOn == null) {
+			if (other.completedOn != null) {
+				return false;
+			}
+		} else if (!this.completedOn.equals(other.completedOn)) {
+			return false;
+		}
 		if (this.content == null) {
 			if (other.content != null) {
 				return false;
 			}
 		} else if (!this.content.equals(other.content)) {
+			return false;
+		}
+		if (this.error == null) {
+			if (other.error != null) {
+				return false;
+			}
+		} else if (!this.error.equals(other.error)) {
 			return false;
 		}
 		if (this.guid == null) {
@@ -373,11 +440,12 @@ public class JmsMessage implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "JmsMessage [content=" + this.content + ", guid=" + this.guid
-				+ ", headers=" + this.headers + ", id=" + this.id
-				+ ", messageType=" + this.messageType + ", processingState="
-				+ this.processingState + ", receivedOn=" + this.receivedOn
-				+ "]";
+		return "JmsMessageExchange [completedOn=" + this.completedOn
+				+ ", content=" + this.content + ", error=" + this.error
+				+ ", guid=" + this.guid + ", headers=" + this.headers + ", id="
+				+ this.id + ", messageType=" + this.messageType
+				+ ", processingState=" + this.processingState + ", receivedOn="
+				+ this.receivedOn + "]";
 	}
 
 }

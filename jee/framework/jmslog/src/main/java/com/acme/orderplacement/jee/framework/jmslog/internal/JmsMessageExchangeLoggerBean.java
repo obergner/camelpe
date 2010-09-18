@@ -3,6 +3,8 @@
  */
 package com.acme.orderplacement.jee.framework.jmslog.internal;
 
+import java.util.Date;
+
 import javax.annotation.security.PermitAll;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -18,16 +20,16 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.acme.orderplacement.framework.jmslog.JmsMessageDto;
-import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
-import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage;
+import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto;
+import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
+import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageExchange;
 import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageType;
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
 /**
  * <p>
- * TODO: Insert short summary for JmsMessageLoggerBean
+ * TODO: Insert short summary for JmsMessageExchangeLoggerBean
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -35,8 +37,8 @@ import com.google.common.collect.Maps;
  */
 @PermitAll
 @Stateless
-@Local(JmsMessageLogger.class)
-public class JmsMessageLoggerBean implements JmsMessageLogger {
+@Local(JmsMessageExchangeLogger.class)
+public class JmsMessageExchangeLoggerBean implements JmsMessageExchangeLogger {
 
 	// -------------------------------------------------------------------------
 	// Fields
@@ -57,11 +59,12 @@ public class JmsMessageLoggerBean implements JmsMessageLogger {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * @see com.acme.orderplacement.framework.jmslog.JmsMessageLogger#logJmsMessage(com.acme.orderplacement.framework.jmslog.JmsMessageDto)
+	 * @see com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger#logIncomingJmsMessageExchange(com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto)
 	 */
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void logJmsMessage(final JmsMessageDto jmsMessageDto)
+	public void logIncomingJmsMessageExchange(
+			final JmsMessageExchangeDto jmsMessageDto)
 			throws IllegalArgumentException, NoResultException {
 		Validate.notNull(jmsMessageDto, "jmsMessageDto");
 
@@ -76,15 +79,17 @@ public class JmsMessageLoggerBean implements JmsMessageLogger {
 		final JmsMessageType referencedJmsMessageType = jmsMessageTypeByName
 				.getSingleResult();
 
-		final JmsMessage jmsMessage = new JmsMessage(jmsMessageDto.getGuid(),
-				jmsMessageDto.getReceivedOn(), jmsMessageDto.getContent(),
-				referencedJmsMessageType, Maps.transformValues(jmsMessageDto
-						.getHeaders(), new Function<Object, String>() {
-					@Override
-					public String apply(final Object arg0) {
-						return arg0 != null ? arg0.toString() : null;
-					}
-				}));
+		final JmsMessageExchange jmsMessage = new JmsMessageExchange(
+				jmsMessageDto.getGuid(), jmsMessageDto.getReceivedOn(),
+				jmsMessageDto.getContent(), referencedJmsMessageType, Maps
+						.transformValues(jmsMessageDto.getHeaders(),
+								new Function<Object, String>() {
+									@Override
+									public String apply(final Object arg0) {
+										return arg0 != null ? arg0.toString()
+												: null;
+									}
+								}));
 		this.entityManager.persist(jmsMessage);
 
 		this.log.debug("JMS message [ID = {} |GUID = {}] successfully logged",
@@ -92,32 +97,37 @@ public class JmsMessageLoggerBean implements JmsMessageLogger {
 	}
 
 	/**
-	 * @see com.acme.orderplacement.framework.jmslog.JmsMessageLogger#completeJmsMessageExchange(java.lang.String,boolean)
+	 * @see com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger#completeJmsMessageExchange(java.lang.String,java.lang.Exception)
 	 */
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void completeJmsMessageExchange(final String jmsMessageGuid,
-			final boolean successful) throws IllegalArgumentException,
+			final Exception error) throws IllegalArgumentException,
 			NoResultException {
 		Validate.notNull(jmsMessageGuid, "jmsMessageGuid");
+		final Date completedOn = new Date();
 
 		this.log
 				.debug(
-						"About to complete JMS message exchange [GUID = {} | successful = {}] ...",
-						jmsMessageGuid, Boolean.valueOf(successful));
+						"About to complete JMS message exchange [GUID = {} | error = {}] ...",
+						jmsMessageGuid, error == null ? null : error.getClass()
+								.getName());
 
-		final TypedQuery<JmsMessage> jmsMessageByGuid = this.entityManager
-				.createNamedQuery(JmsMessage.Queries.BY_GUID, JmsMessage.class);
-		final JmsMessage jmsMessage = jmsMessageByGuid.setParameter("guid",
-				jmsMessageGuid).getSingleResult();
+		final TypedQuery<JmsMessageExchange> jmsMessageByGuid = this.entityManager
+				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID,
+						JmsMessageExchange.class);
+		final JmsMessageExchange jmsMessage = jmsMessageByGuid.setParameter(
+				"guid", jmsMessageGuid).getSingleResult();
 
 		jmsMessage
-				.setProcessingState(successful ? JmsMessage.ProcessingState.SUCCESSFUL
-						: JmsMessage.ProcessingState.FAILED);
+				.setProcessingState(error == null ? JmsMessageExchange.ProcessingState.SUCCESSFUL
+						: JmsMessageExchange.ProcessingState.FAILED);
+		jmsMessage.setError(error);
+		jmsMessage.setCompletedOn(completedOn);
 
-		this.log
-				.debug(
-						"JMS message exchange [GUID = {} | successful = {}] completed successfully",
-						jmsMessageGuid, Boolean.valueOf(successful));
+		this.log.debug(
+				"JMS message exchange [GUID = {} | error = {}] completed",
+				jmsMessageGuid, error == null ? null : error.getClass()
+						.getName());
 	}
 }

@@ -12,7 +12,7 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
+import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
 
 /**
  * <p>
@@ -25,29 +25,29 @@ import com.acme.orderplacement.framework.jmslog.JmsMessageLogger;
 public abstract class AbstractJmsMessageExchangeLoggingProcessor implements
 		Processor {
 
-	private static final String JMS_MESSAGE_LOGGER_BEAN_JNDI_NAME = "orderplacement.jee.ear-1.0-SNAPSHOT/JmsMessageLoggerBean/local";
+	private static final String JMS_MESSAGE_LOGGER_BEAN_JNDI_NAME = "orderplacement.jee.ear-1.0-SNAPSHOT/JmsMessageExchangeLoggerBean/local";
 
 	private static final String JMS_MESSAGE_ID_HEADER = "JMSMessageID";
 
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	private JmsMessageLogger cachedJmsMessageLogger;
+	private JmsMessageExchangeLogger cachedJmsMessageLogger;
 
 	protected AbstractJmsMessageExchangeLoggingProcessor() {
 		// Intentionally left blank
 	}
 
 	AbstractJmsMessageExchangeLoggingProcessor(
-			final JmsMessageLogger jmsMessageLogger) {
+			final JmsMessageExchangeLogger jmsMessageLogger) {
 		Validate.notNull(jmsMessageLogger, "jmsMessageLogger");
 		this.cachedJmsMessageLogger = jmsMessageLogger;
 	}
 
-	protected synchronized JmsMessageLogger jmsMessageLogger()
+	protected synchronized JmsMessageExchangeLogger jmsMessageLogger()
 			throws NamingException {
 		if (this.cachedJmsMessageLogger == null) {
 			final InitialContext ic = new InitialContext();
-			this.cachedJmsMessageLogger = (JmsMessageLogger) ic
+			this.cachedJmsMessageLogger = (JmsMessageExchangeLogger) ic
 					.lookup(JMS_MESSAGE_LOGGER_BEAN_JNDI_NAME);
 		}
 

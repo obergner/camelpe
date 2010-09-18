@@ -15,7 +15,7 @@
 
 		<class>com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageType</class>
 		<class>com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageHeader</class>
-		<class>com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage</class>
+		<class>com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageExchange</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 

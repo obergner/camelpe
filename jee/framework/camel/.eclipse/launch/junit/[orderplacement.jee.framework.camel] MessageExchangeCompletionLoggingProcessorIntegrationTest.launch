@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/orderplacement.jee.framework.jmslog/src/test/java/com/acme/orderplacement/jee/framework/jmslog/internal/JmsMessageLoggerClientModeIntegrationTest.java"/>
+<listEntry value="/orderplacement.jee.framework.camel/src/test/java/com/acme/orderplacement/jee/framework/camel/jmslog/MessageExchangeCompletionLoggingProcessorIntegrationTest.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -11,7 +11,7 @@
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerClientModeIntegrationTest"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="orderplacement.jee.framework.jmslog"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.acme.orderplacement.jee.framework.camel.jmslog.MessageExchangeCompletionLoggingProcessorIntegrationTest"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="orderplacement.jee.framework.camel"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

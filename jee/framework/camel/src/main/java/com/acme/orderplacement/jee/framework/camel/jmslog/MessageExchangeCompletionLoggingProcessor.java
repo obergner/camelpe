@@ -7,6 +7,8 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.apache.camel.Exchange;
 
+import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
+
 /**
  * <p>
  * TODO: Insert short summary for MessageExchangeCompletionLoggingProcessor
@@ -18,6 +20,20 @@ import org.apache.camel.Exchange;
 @ApplicationScoped
 public class MessageExchangeCompletionLoggingProcessor extends
 		AbstractJmsMessageExchangeLoggingProcessor {
+
+	public MessageExchangeCompletionLoggingProcessor() {
+		// Intentionally left blank
+	}
+
+	/**
+	 * Used for testing.
+	 * 
+	 * @param cachedJmsMessageLogger
+	 */
+	MessageExchangeCompletionLoggingProcessor(
+			final JmsMessageExchangeLogger cachedJmsMessageLogger) {
+		super(cachedJmsMessageLogger);
+	}
 
 	/**
 	 * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
@@ -34,8 +50,7 @@ public class MessageExchangeCompletionLoggingProcessor extends
 							"About to set completion status of message exchange [Message-GUID = {}] to [successful = {}] in database ...",
 							messageGuid, Boolean.valueOf(successful));
 
-			jmsMessageLogger().completeJmsMessageExchange(messageGuid,
-					successful);
+			jmsMessageLogger().completeJmsMessageExchange(messageGuid, error);
 
 			this.log
 					.trace(

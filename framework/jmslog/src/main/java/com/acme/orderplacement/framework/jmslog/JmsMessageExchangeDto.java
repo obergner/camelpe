@@ -12,13 +12,13 @@ import org.apache.commons.lang.Validate;
 
 /**
  * <p>
- * TODO: Insert short summary for JmsMessageDto
+ * TODO: Insert short summary for JmsMessageExchangeDto
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class JmsMessageDto implements Serializable {
+public class JmsMessageExchangeDto implements Serializable {
 
 	// -------------------------------------------------------------------------
 	// Fields
@@ -40,7 +40,7 @@ public class JmsMessageDto implements Serializable {
 	// Constructors
 	// -------------------------------------------------------------------------
 
-	public JmsMessageDto(final String messageType, final String guid,
+	public JmsMessageExchangeDto(final String messageType, final String guid,
 			final Date receivedOn, final String content,
 			final Map<String, Object> headers) throws IllegalArgumentException {
 		Validate.notEmpty(messageType, "messageType");
@@ -99,17 +99,6 @@ public class JmsMessageDto implements Serializable {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "JmsMessageDto [content=" + this.content + ", headers="
-				+ this.headers + ", messageType=" + this.messageType
-				+ ", receivedOn=" + this.receivedOn + ", guid=" + this.guid
-				+ "]";
-	}
-
-	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -119,14 +108,14 @@ public class JmsMessageDto implements Serializable {
 		result = prime * result
 				+ ((this.content == null) ? 0 : this.content.hashCode());
 		result = prime * result
+				+ ((this.guid == null) ? 0 : this.guid.hashCode());
+		result = prime * result
 				+ ((this.headers == null) ? 0 : this.headers.hashCode());
 		result = prime
 				* result
 				+ ((this.messageType == null) ? 0 : this.messageType.hashCode());
 		result = prime * result
 				+ ((this.receivedOn == null) ? 0 : this.receivedOn.hashCode());
-		result = prime * result
-				+ ((this.guid == null) ? 0 : this.guid.hashCode());
 		return result;
 	}
 
@@ -144,12 +133,19 @@ public class JmsMessageDto implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final JmsMessageDto other = (JmsMessageDto) obj;
+		final JmsMessageExchangeDto other = (JmsMessageExchangeDto) obj;
 		if (this.content == null) {
 			if (other.content != null) {
 				return false;
 			}
 		} else if (!this.content.equals(other.content)) {
+			return false;
+		}
+		if (this.guid == null) {
+			if (other.guid != null) {
+				return false;
+			}
+		} else if (!this.guid.equals(other.guid)) {
 			return false;
 		}
 		if (this.headers == null) {
@@ -173,14 +169,16 @@ public class JmsMessageDto implements Serializable {
 		} else if (!this.receivedOn.equals(other.receivedOn)) {
 			return false;
 		}
-		if (this.guid == null) {
-			if (other.guid != null) {
-				return false;
-			}
-		} else if (!this.guid.equals(other.guid)) {
-			return false;
-		}
 		return true;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "JmsMessageExchangeDto [content=" + this.content + ", guid="
+				+ this.guid + ", headers=" + this.headers + ", messageType="
+				+ this.messageType + ", receivedOn=" + this.receivedOn + "]";
+	}
 }

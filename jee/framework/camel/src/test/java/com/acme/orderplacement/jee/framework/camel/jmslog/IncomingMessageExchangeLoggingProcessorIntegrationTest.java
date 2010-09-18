@@ -26,8 +26,8 @@ import org.unitils.inject.annotation.InjectIntoByType;
 import org.unitils.inject.annotation.TestedObject;
 import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
-import com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageLoggerBean;
-import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessage;
+import com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean;
+import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageExchange;
 
 /**
  * <p>
@@ -48,7 +48,7 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 	// ------------------------------------------------------------------------
 
 	@TestedObject
-	private JmsMessageLoggerBean messageLoggerBean;
+	private JmsMessageExchangeLoggerBean messageLoggerBean;
 
 	@InjectIntoByType
 	@PersistenceContext(unitName = "jee.framework.jmsLogPU")
@@ -82,10 +82,10 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 				this.messageLoggerBean);
 		classUnderTest.process(exchange);
 
-		final TypedQuery<JmsMessage> messageByGuid = this.entityManager
-				.createNamedQuery(JmsMessage.Queries.BY_GUID, JmsMessage.class);
+		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
+				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID, JmsMessageExchange.class);
 		messageByGuid.setParameter("guid", messageId);
-		final List<JmsMessage> storedMessages = messageByGuid.getResultList();
+		final List<JmsMessageExchange> storedMessages = messageByGuid.getResultList();
 		assertFalse("process(" + exchange + ") did NOT store message",
 				storedMessages.isEmpty());
 	}
@@ -119,10 +119,10 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 				this.messageLoggerBean);
 		classUnderTest.process(exchange);
 
-		final TypedQuery<JmsMessage> messageByGuid = this.entityManager
-				.createNamedQuery(JmsMessage.Queries.BY_GUID, JmsMessage.class);
+		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
+				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID, JmsMessageExchange.class);
 		messageByGuid.setParameter("guid", messageId);
-		final JmsMessage storedMessage = messageByGuid.getSingleResult();
+		final JmsMessageExchange storedMessage = messageByGuid.getSingleResult();
 		assertEquals("process(" + exchange + ") did NOT store message headers",
 				3, storedMessage.getHeaders().size());
 	}
@@ -156,10 +156,10 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 				this.messageLoggerBean);
 		classUnderTest.process(exchange);
 
-		final TypedQuery<JmsMessage> messageByGuid = this.entityManager
-				.createNamedQuery(JmsMessage.Queries.BY_GUID, JmsMessage.class);
+		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
+				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID, JmsMessageExchange.class);
 		messageByGuid.setParameter("guid", messageId);
-		final JmsMessage storedMessage = messageByGuid.getSingleResult();
+		final JmsMessageExchange storedMessage = messageByGuid.getSingleResult();
 		assertEquals("process(" + exchange
 				+ ") did NOT store null message headers", 3, storedMessage
 				.getHeaders().size());

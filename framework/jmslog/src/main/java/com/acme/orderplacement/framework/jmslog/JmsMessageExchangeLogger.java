@@ -7,18 +7,18 @@ import javax.persistence.NoResultException;
 
 /**
  * <p>
- * TODO: Insert short summary for JmsMessageLogger
+ * TODO: Insert short summary for JmsMessageExchangeLogger
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public interface JmsMessageLogger {
+public interface JmsMessageExchangeLogger {
 
-	void logJmsMessage(final JmsMessageDto jmsMessageDto)
+	void logIncomingJmsMessageExchange(final JmsMessageExchangeDto jmsMessageDto)
 			throws IllegalArgumentException, NoResultException;
 
 	void completeJmsMessageExchange(final String jmsMessageGuid,
-			final boolean successful) throws IllegalArgumentException,
+			final Exception error) throws IllegalArgumentException,
 			NoResultException;
 }
