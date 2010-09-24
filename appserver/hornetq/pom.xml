@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
+	<parent>
+		<groupId>com.acme.orderplacement.appserver</groupId>
+		<artifactId>orderplacement.appserver</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme.orderplacement.appserver</groupId>
+	<artifactId>orderplacement.appserver.hornetq</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name><![CDATA[SOA Order :: Application Server Integration :: HornetQ]]></name>
+
+	<dependencies>
+		<!--
+			| Provided dependencies 
+		-->
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			| Compile time dependencies 
+		-->
+		<!--
+			| Runtime dependencies 
+		-->
+		<!--
+			| Test dependencies 
+		-->
+	</dependencies>
+</project>

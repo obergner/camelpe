@@ -45,6 +45,11 @@
 			<locationURI>JBOSS_6_0_0_SNAPSHOT_HOME</locationURI>
 		</link>
 		<link>
+			<name>poms/appserver/pom.xml</name>
+			<type>1</type>
+			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/appserver/pom.xml</locationURI>
+		</link>
+		<link>
 			<name>poms/client/pom.xml</name>
 			<type>1</type>
 			<locationURI>ORDERPLACEMENT_PROJECT_ROOT/client/pom.xml</locationURI>
