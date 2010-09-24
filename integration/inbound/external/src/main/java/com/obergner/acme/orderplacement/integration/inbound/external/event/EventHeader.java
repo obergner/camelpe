@@ -15,13 +15,13 @@ import org.apache.commons.lang.Validate;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class EventHeader<V extends Serializable> implements Serializable {
+public class EventHeader implements Serializable {
 
 	private final EventHeaderSpec specification;
 
-	private final V value;
+	private final Serializable value;
 
-	EventHeader(final EventHeaderSpec spec, final V value)
+	EventHeader(final EventHeaderSpec spec, final Serializable value)
 			throws IllegalArgumentException {
 		Validate.notNull(spec, "spec");
 		Validate.notNull(value, "value");
@@ -39,7 +39,7 @@ public class EventHeader<V extends Serializable> implements Serializable {
 	/**
 	 * @return the value
 	 */
-	final V getValue() {
+	final Serializable getValue() {
 		return this.value;
 	}
 
@@ -73,7 +73,7 @@ public class EventHeader<V extends Serializable> implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final EventHeader<?> other = (EventHeader<?>) obj;
+		final EventHeader other = (EventHeader) obj;
 		if (this.specification == null) {
 			if (other.specification != null) {
 				return false;

@@ -214,11 +214,10 @@ public class EventProcessingContext implements Serializable {
 			int sequenceNumber = -1;
 			Date initiationTimestamp = null;
 			Date completionTimestamp = null;
-			final ProcessingState processingState = null;
 
 			final EventHeaders eventHeaders = EventHeaderSpec
 					.newEventHeadersFrom(headers);
-			for (final EventHeader<? extends Serializable> anEventHeader : eventHeaders) {
+			for (final EventHeader anEventHeader : eventHeaders) {
 				if (anEventHeader.isSpecifiedBy(EventHeaderSpec.EVENT_TYPE)) {
 					eventType = String.class.cast(anEventHeader.getValue());
 				} else if (anEventHeader

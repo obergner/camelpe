@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.external.com/schema/ns/event/event-envelope/1.0/"
+	xmlns:tns="http://www.external.com/schema/ns/event/event-envelope/1.0/"
+	elementFormDefault="qualified">
+
+	<element name="EventEnvelope" type="tns:EventEnvelope" />
+
+	<complexType name="EventEnvelope">
+		<sequence>
+			<element name="Headers" type="tns:Headers" />
+			<element name="Payload" type="tns:Payload" />
+		</sequence>
+	</complexType>
+
+	<complexType name="Headers">
+		<sequence>
+			<element name="EventType" type="tns:EventType" />
+			<element name="EventID" type="tns:EventID" />
+			<element name="CreationTimestamp" type="dateTime">
+				<annotation>
+					<documentation>
+						The timestamp the event was created.
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Payload">
+		<sequence>
+			<any namespace="##any" minOccurs="1" maxOccurs="1"
+				processContents="lax" />
+		</sequence>
+	</complexType>
+
+	<simpleType name="EventType">
+		<annotation>
+			<documentation>
+				Identifies a class of events.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern
+				value="urn:event-type:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="EventID">
+		<annotation>
+			<documentation>
+				A unique identifier for a particular event.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern
+				value="urn:event:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="EventSourceSystem">
+		<annotation>
+			<documentation>
+				Identifies the system (application, node, etc.) from
+				which a particular event originates.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern value="urn:event-source:[a-zA-Z]{1}[0-9a-zA-Z._]{5,100}" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="PropagationID">
+		<annotation>
+			<documentation>
+				Uniquely identifies the usually one-time act of
+				propagating an event from one system to the outside world.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern
+				value="urn:propagation:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="InflowID">
+		<annotation>
+			<documentation>
+				Uniquely identifies the usually one-time act of
+				receiving an event originating in an outside system in another
+				system that is interested in that event.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern
+				value="urn:event-inflow:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ProcessingID">
+		<annotation>
+			<documentation>
+				Uniquely identifies an attempt to process an incoming
+				event by a target system interested in acting upon said event. There
+				can be more that one such attempt.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern
+				value="urn:event-processing:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="SequenceNumber">
+		<annotation>
+			<documentation>
+				A counter denoting if this is the first, second and so
+				forth attempt to process a given event.
+			</documentation>
+		</annotation>
+		<restriction base="int">
+			<minInclusive value="1" />
+			<maxInclusive value="999" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ProcessingState">
+		<annotation>
+			<documentation>
+				A simple enumeration type for denoting whether a
+				particular attempt at processing an incoming event is in state 'In
+				Progress', 'Failed' or 'Successful'.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="IN_PROGRESS" />
+			<enumeration value="SUCCESSFUL" />
+			<enumeration value="FAILED" />
+		</restriction>
+	</simpleType>
+
+</schema>

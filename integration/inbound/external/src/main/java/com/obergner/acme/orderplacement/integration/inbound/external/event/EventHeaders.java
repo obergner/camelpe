@@ -18,22 +18,21 @@ import com.google.common.collect.ImmutableSet;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class EventHeaders implements Serializable,
-		Iterable<EventHeader<? extends Serializable>> {
+public class EventHeaders implements Serializable, Iterable<EventHeader> {
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
 
-	private final Set<EventHeader<? extends Serializable>> metaData;
+	private final Set<EventHeader> headers;
 
 	// -------------------------------------------------------------------------
 	// Constructors
 	// -------------------------------------------------------------------------
 
-	EventHeaders(final Set<EventHeader<? extends Serializable>> metaData) {
-		this.metaData = metaData != null ? ImmutableSet.copyOf(metaData)
-				: Collections.<EventHeader<? extends Serializable>> emptySet();
+	EventHeaders(final Set<EventHeader> headers) {
+		this.headers = headers != null ? ImmutableSet.copyOf(headers)
+				: Collections.<EventHeader> emptySet();
 	}
 
 	// -------------------------------------------------------------------------
@@ -44,8 +43,8 @@ public class EventHeaders implements Serializable,
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
-	public Iterator<EventHeader<? extends Serializable>> iterator() {
-		return this.metaData.iterator();
+	public Iterator<EventHeader> iterator() {
+		return this.headers.iterator();
 	}
 
 }

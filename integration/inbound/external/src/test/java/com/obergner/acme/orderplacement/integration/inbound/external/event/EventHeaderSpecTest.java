@@ -5,7 +5,6 @@ package com.obergner.acme.orderplacement.integration.inbound.external.event;
 
 import static junit.framework.Assert.assertEquals;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.UUID;
@@ -357,7 +356,7 @@ public class EventHeaderSpecTest {
 				.newEventHeadersFrom(unknownHeaders);
 
 		int eventHeadersSize = 0;
-		for (final EventHeader<? extends Serializable> ignore : eventHeaders) {
+		for (final EventHeader ignore : eventHeaders) {
 			eventHeadersSize++;
 		}
 		assertEquals(
@@ -402,7 +401,7 @@ public class EventHeaderSpecTest {
 				.newEventHeadersFrom(legalHeaders);
 
 		int eventHeadersSize = 0;
-		for (final EventHeader<? extends Serializable> ignore : eventHeaders) {
+		for (final EventHeader ignore : eventHeaders) {
 			eventHeadersSize++;
 		}
 		assertEquals(

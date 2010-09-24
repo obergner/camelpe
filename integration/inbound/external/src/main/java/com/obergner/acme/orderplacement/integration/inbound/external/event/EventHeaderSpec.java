@@ -118,8 +118,8 @@ public enum EventHeaderSpec {
 			final Map<String, String> headers) throws IllegalArgumentException {
 		Validate.notNull(headers, "headers");
 
-		final Set<EventHeader<? extends Serializable>> eventHeaders = new HashSet<EventHeader<? extends Serializable>>(
-				headers.size());
+		final Set<EventHeader> eventHeaders = new HashSet<EventHeader>(headers
+				.size());
 		for (final String headerName : headers.keySet()) {
 			final EventHeaderSpec eventHeaderSpec = named(headerName);
 			if (eventHeaderSpec != null) {
@@ -185,14 +185,14 @@ public enum EventHeaderSpec {
 		return this.valueType;
 	}
 
-	public <V extends Serializable> EventHeader<V> newEventHeaderFrom(
-			final String valueAsString) throws IllegalArgumentException {
+	public EventHeader newEventHeaderFrom(final String valueAsString)
+			throws IllegalArgumentException {
 		Validate.notEmpty(valueAsString, "valueAsString");
 		if (!this.legalValuePattern.matcher(valueAsString).matches()) {
 			throw new IllegalArgumentException("The provided value ["
 					+ valueAsString + "] does not match the regex ["
 					+ this.legalValuePattern
-					+ "] mandated by this MetaDatumType");
+					+ "] mandated by this EventHeaderSpec");
 		}
 
 		return newEventHeaderFromInternal(valueAsString);
@@ -200,26 +200,26 @@ public enum EventHeaderSpec {
 
 	// ~~~~~~~~
 
-	private <V extends Serializable> EventHeader<V> newEventHeaderFromInternal(
-			final String valueAsString) throws NumberFormatException,
-			AssertionError, IllegalArgumentException {
+	private EventHeader newEventHeaderFromInternal(final String valueAsString)
+			throws NumberFormatException, AssertionError,
+			IllegalArgumentException {
 		try {
-			final V value = convert(valueAsString);
+			final Serializable value = convert(valueAsString);
 
-			return new EventHeader<V>(this, value);
+			return new EventHeader(this, value);
 		} catch (final ParseException e) {
 			throw new IllegalArgumentException("Invalid date format ["
 					+ valueAsString + "]: " + e.getMessage(), e);
 		}
 	}
 
-	private <V extends Serializable> V convert(final String valueAsString)
+	private Serializable convert(final String valueAsString)
 			throws NumberFormatException, ParseException, AssertionError {
-		final V value;
+		final Serializable value;
 		if (this.valueType == String.class) {
-			value = (V) valueAsString;
+			value = valueAsString;
 		} else if (this.valueType == Integer.class) {
-			value = (V) Integer.valueOf(valueAsString);
+			value = Integer.valueOf(valueAsString);
 		} else if (this.valueType == Date.class) {
 			/*
 			 * SimpleDateFormat is not thread safe. Usually, this instances of
@@ -227,10 +227,10 @@ public enum EventHeaderSpec {
 			 * thread. Therefore, promoting the SimpleDateFormat instance below
 			 * to an instance variable should be safe. Yet you never know ...
 			 */
-			value = (V) new SimpleDateFormat(ISO_8601_DATE_FORMAT)
+			value = new SimpleDateFormat(ISO_8601_DATE_FORMAT)
 					.parse(valueAsString);
 		} else if (this.valueType == ProcessingState.class) {
-			value = (V) ProcessingState.valueOf(valueAsString);
+			value = ProcessingState.valueOf(valueAsString);
 		} else {
 			throw new AssertionError();
 		}
