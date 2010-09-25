@@ -18,28 +18,28 @@ import com.google.common.collect.ImmutableMap;
 
 /**
  * <p>
- * TODO: Insert short summary for EventProcessingContextTest
+ * TODO: Insert short summary for ImmutableEventProcessingContextTest
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class EventProcessingContextTest {
+public class ImmutableEventProcessingContextTest {
 
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * EventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public final void assertThatBuilderRejectsNullHeaders() {
-		EventProcessingContext.BUILDER.buildFrom(null);
+		ImmutableEventProcessingContext.BUILDER.buildFrom(null);
 	}
 
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * EventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
 	 * 
 	 * @throws UnsupportedEncodingException
 	 */
@@ -57,7 +57,7 @@ public class EventProcessingContextTest {
 				.put("SequenceNumber", "78").put("Header4", "Value4").put(
 						"Header5", "Value5").build();
 
-		final EventProcessingContext eventProcessingContext = EventProcessingContext.BUILDER
+		final EventProcessingContext eventProcessingContext = ImmutableEventProcessingContext.BUILDER
 				.buildFrom(legalHeaders);
 
 		assertNotNull("Builder.buildFrom(" + legalHeaders + ") returned null",
@@ -67,7 +67,7 @@ public class EventProcessingContextTest {
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * EventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
 	 * 
 	 * @throws UnsupportedEncodingException
 	 */
@@ -81,7 +81,7 @@ public class EventProcessingContextTest {
 				.<String, String> builder().put("EventID", expectedEventId)
 				.build();
 
-		final EventProcessingContext eventProcessingContext = EventProcessingContext.BUILDER
+		final EventProcessingContext eventProcessingContext = ImmutableEventProcessingContext.BUILDER
 				.buildFrom(legalHeaders);
 
 		assertEquals("Builder.buildFrom(" + legalHeaders
@@ -92,7 +92,7 @@ public class EventProcessingContextTest {
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * EventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
 	 */
 	@Test
 	public final void assertThatBuilderCorrectlySetsCreationTimestamp() {
@@ -104,7 +104,7 @@ public class EventProcessingContextTest {
 				.<String, String> builder().put("CreationTimestamp",
 						expectedCreationTimestampStr).build();
 
-		final EventProcessingContext eventProcessingContext = EventProcessingContext.BUILDER
+		final EventProcessingContext eventProcessingContext = ImmutableEventProcessingContext.BUILDER
 				.buildFrom(legalHeaders);
 
 		assertEquals("Builder.buildFrom(" + legalHeaders
@@ -116,7 +116,7 @@ public class EventProcessingContextTest {
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * EventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
 	 */
 	@Test
 	public final void assertThatBuilderCorrectlySetsProcessingState() {
@@ -125,7 +125,7 @@ public class EventProcessingContextTest {
 				.<String, String> builder().put("ProcessingState",
 						expectedProcessingState.toString()).build();
 
-		final EventProcessingContext eventProcessingContext = EventProcessingContext.BUILDER
+		final EventProcessingContext eventProcessingContext = ImmutableEventProcessingContext.BUILDER
 				.buildFrom(legalHeaders);
 
 		assertEquals("Builder.buildFrom(" + legalHeaders

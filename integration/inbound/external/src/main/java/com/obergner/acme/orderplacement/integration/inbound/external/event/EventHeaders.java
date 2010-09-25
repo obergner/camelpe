@@ -18,11 +18,13 @@ import com.google.common.collect.ImmutableSet;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class EventHeaders implements Serializable, Iterable<EventHeader> {
+class EventHeaders implements Serializable, Iterable<EventHeader> {
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
+
+	private static final long serialVersionUID = 1L;
 
 	private final Set<EventHeader> headers;
 
@@ -46,5 +48,4 @@ public class EventHeaders implements Serializable, Iterable<EventHeader> {
 	public Iterator<EventHeader> iterator() {
 		return this.headers.iterator();
 	}
-
 }

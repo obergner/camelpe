@@ -15,7 +15,9 @@ import org.apache.commons.lang.Validate;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class EventHeader implements Serializable {
+class EventHeader implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final EventHeaderSpec specification;
 

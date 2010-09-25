@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.framework.common.auth.cdi;
+package com.acme.orderplacement.framework.common.qualifier;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -16,7 +16,9 @@ import javax.inject.Qualifier;
 
 /**
  * <p>
- * TODO: Insert short summary for Preferred
+ * A {@link javax.inject.Qualifier <code>Qualifier</code>} used to distinguish
+ * beans which should be publicly accessible from those meant for internal use
+ * only.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -25,6 +27,6 @@ import javax.inject.Qualifier;
 @Qualifier
 @Target( { TYPE, FIELD, METHOD, PARAMETER })
 @Retention(RUNTIME)
-public @interface Preferred {
+public @interface Internal {
 
 }

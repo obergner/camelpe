@@ -114,8 +114,8 @@ public enum EventHeaderSpec {
 
 	static final String ISO_8601_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
-	public static EventHeaders newEventHeadersFrom(
-			final Map<String, String> headers) throws IllegalArgumentException {
+	static EventHeaders newEventHeadersFrom(final Map<String, String> headers)
+			throws IllegalArgumentException {
 		Validate.notNull(headers, "headers");
 
 		final Set<EventHeader> eventHeaders = new HashSet<EventHeader>(headers
@@ -169,23 +169,7 @@ public enum EventHeaderSpec {
 	// API
 	// -------------------------------------------------------------------------
 
-	public String headerName() {
-		return this.headerName;
-	}
-
-	public boolean isNamed(final String aName) {
-		return this.headerName.equals(aName);
-	}
-
-	public String legalValuePattern() {
-		return this.legalValuePattern.pattern();
-	}
-
-	public Class<? extends Serializable> valueType() {
-		return this.valueType;
-	}
-
-	public EventHeader newEventHeaderFrom(final String valueAsString)
+	EventHeader newEventHeaderFrom(final String valueAsString)
 			throws IllegalArgumentException {
 		Validate.notEmpty(valueAsString, "valueAsString");
 		if (!this.legalValuePattern.matcher(valueAsString).matches()) {
@@ -237,4 +221,11 @@ public enum EventHeaderSpec {
 
 		return value;
 	}
+
+	// ~~~~~
+
+	private boolean isNamed(final String aName) {
+		return this.headerName.equals(aName);
+	}
+
 }
