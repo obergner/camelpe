@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.ContextException;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Default;
@@ -137,7 +138,14 @@ public class CamelContextBean implements Bean<CamelContext> {
 	@Override
 	public void destroy(final CamelContext instance,
 			final CreationalContext<CamelContext> creationalContext) {
-		// Noop
+		try {
+			instance.stop();
+
+			creationalContext.release();
+		} catch (final Exception e) {
+			throw new ContextException("Failed to destroy CamelContext ["
+					+ instance + "]: " + e.getMessage(), e);
+		}
 	}
 
 }

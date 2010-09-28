@@ -197,6 +197,29 @@ public class ImmutableEventProcessingContext implements Serializable,
 	}
 
 	// -------------------------------------------------------------------------
+	// equals(), hashCode(), toString()
+	// -------------------------------------------------------------------------
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ImmutableEventProcessingContext [completionTimestamp="
+				+ this.completionTimestamp + ", creationTimestamp="
+				+ this.creationTimestamp + ", error=" + this.error
+				+ ", eventId=" + this.eventId + ", eventSourceSystem="
+				+ this.eventSourceSystem + ", eventType=" + this.eventType
+				+ ", inflowId=" + this.inflowId + ", inflowTimestamp="
+				+ this.inflowTimestamp + ", initiationTimestamp="
+				+ this.initiationTimestamp + ", processingId="
+				+ this.processingId + ", processingState="
+				+ this.processingState + ", propagationId="
+				+ this.propagationId + ", sequenceNumber="
+				+ this.sequenceNumber + "]";
+	}
+
+	// -------------------------------------------------------------------------
 	// Builder
 	// -------------------------------------------------------------------------
 

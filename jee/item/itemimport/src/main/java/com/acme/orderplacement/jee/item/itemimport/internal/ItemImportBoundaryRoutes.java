@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.apache.camel.builder.RouteBuilder;
 
+import com.acme.orderplacement.jee.framework.camel.event.EventProcessingContextProvider;
 import com.acme.orderplacement.jee.framework.camel.jmslog.IncomingMessageExchangeLoggingProcessor;
 import com.acme.orderplacement.jee.framework.camel.jmslog.MessageExchangeCompletionLoggingProcessor;
 
@@ -32,6 +33,9 @@ public final class ItemImportBoundaryRoutes extends RouteBuilder {
 	@Inject
 	private MessageExchangeCompletionLoggingProcessor completionLogger;
 
+	@Inject
+	private EventProcessingContextProvider eventProcessingContextProvider;
+
 	/**
 	 * @see org.apache.camel.builder.RouteBuilder#configure()
 	 */
@@ -39,8 +43,11 @@ public final class ItemImportBoundaryRoutes extends RouteBuilder {
 	public void configure() throws Exception {
 		errorHandler(deadLetterChannel(ItemImportCoreRoutes.FAULT_MESSAGES));
 
-		onException(Exception.class).process(this.completionLogger).handled(
-				true).to(ItemImportCoreRoutes.FAULT_MESSAGES);
+		onException(Exception.class).handled(true).process(
+				this.completionLogger).to(ItemImportCoreRoutes.FAULT_MESSAGES);
+
+		interceptFrom(ITEM_CREATED_EVENTS).process(
+				this.eventProcessingContextProvider);
 
 		from(ITEM_CREATED_EVENTS).process(this.incomingMessageLogger).to(
 				ItemImportCoreRoutes.INCOMING_XML_MESSAGES);

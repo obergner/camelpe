@@ -48,4 +48,18 @@ class EventHeaders implements Serializable, Iterable<EventHeader> {
 	public Iterator<EventHeader> iterator() {
 		return this.headers.iterator();
 	}
+
+	// -------------------------------------------------------------------------
+	// API
+	// -------------------------------------------------------------------------
+
+	EventHeader specifiedBy(final EventHeaderSpec specification) {
+		for (final EventHeader candidate : this) {
+			if (candidate.isSpecifiedBy(specification)) {
+				return candidate;
+			}
+		}
+
+		return null;
+	}
 }

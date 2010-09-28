@@ -45,6 +45,10 @@ class EventHeader implements Serializable {
 		return this.value;
 	}
 
+	final boolean hasDefaultValue() {
+		return this.value.equals(this.specification.defaultValue());
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */

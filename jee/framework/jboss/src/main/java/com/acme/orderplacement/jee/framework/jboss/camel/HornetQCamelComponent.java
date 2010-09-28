@@ -19,9 +19,7 @@ import org.hornetq.jms.client.HornetQConnectionFactory;
  */
 public class HornetQCamelComponent extends JmsComponent {
 
-	public HornetQCamelComponent() {
-		setConnectionFactory(createHornetQConnectionFactory());
-	}
+	public static final String URI_PREFIX = "hornetq";
 
 	public HornetQCamelComponent(final CamelContext context) {
 		super(context);

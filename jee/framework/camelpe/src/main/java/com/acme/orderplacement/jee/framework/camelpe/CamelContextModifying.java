@@ -1,11 +1,12 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.app.config;
+package com.acme.orderplacement.jee.framework.camelpe;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
@@ -15,17 +16,17 @@ import javax.inject.Qualifier;
 
 /**
  * <p>
- * A {@link Qualifier <code>Qualifier</code>} defining the
- * {@link javax.persistence.EntityManager <code>EntityManager</code>}
- * responsible for managing the application's domain objects.
+ * A {@link javax.inject.Qualifier <code>Qualifier</code>} used to distinguish
+ * beans which should be publicly accessible from those meant for internal use
+ * only.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @Qualifier
-@Target( { FIELD, METHOD, PARAMETER })
+@Target( { TYPE, FIELD, METHOD, PARAMETER })
 @Retention(RUNTIME)
-public @interface ApplicationEntities {
+public @interface CamelContextModifying {
 
 }

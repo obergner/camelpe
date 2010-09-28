@@ -28,71 +28,81 @@ public enum EventHeaderSpec {
 	 * 
 	 */
 	EVENT_TYPE("EventType", "urn:event-type:"
-			+ EventHeaderSpec.IDENTIFIER_REGEX, String.class),
+			+ EventHeaderSpec.IDENTIFIER_REGEX, String.class, "urn:event-type:"
+			+ EventHeaderSpec.UNKNOWN_IDENTIFIER),
 
 	/**
 	 * 
 	 */
-	EVENT_ID("EventID", "urn:event:" + EventHeaderSpec.UUID_REGEX, String.class),
+	EVENT_ID("EventID", "urn:event:" + EventHeaderSpec.UUID_REGEX,
+			String.class, "urn:event:" + EventHeaderSpec.UNKNOWN_UUID),
 
 	/**
 	 * 
 	 */
 	CREATION_TIMESTAMP("CreationTimestamp",
-			EventHeaderSpec.ISO_8601_DATE_FORMAT_REGEX, Date.class),
+			EventHeaderSpec.ISO_8601_DATE_FORMAT_REGEX, Date.class,
+			EventHeaderSpec.UNKNOWN_TIMESTAMP),
 
 	/**
 	 * 
 	 */
 	EVENT_SOURCE_SYSTEM("EventSourceSystem", "urn:event-source:"
-			+ EventHeaderSpec.IDENTIFIER_REGEX, String.class),
+			+ EventHeaderSpec.IDENTIFIER_REGEX, String.class,
+			"urn:event-source:" + EventHeaderSpec.UNKNOWN_IDENTIFIER),
 
 	/**
 	 * 
 	 */
 	PROPAGATION_ID("PropagationID", "urn:event-propagation:"
-			+ EventHeaderSpec.UUID_REGEX, String.class),
+			+ EventHeaderSpec.UUID_REGEX, String.class,
+			"urn:event-propagation:" + EventHeaderSpec.UNKNOWN_UUID),
 
 	/**
 	 * 
 	 */
 	INFLOW_ID("InflowID", "urn:event-inflow:" + EventHeaderSpec.UUID_REGEX,
-			String.class),
+			String.class, "urn:event-inflow:" + EventHeaderSpec.UNKNOWN_UUID),
 
 	/**
 	 * 
 	 */
 	INFLOW_TIMESTAMP("InflowTimestamp",
-			EventHeaderSpec.ISO_8601_DATE_FORMAT_REGEX, Date.class),
+			EventHeaderSpec.ISO_8601_DATE_FORMAT_REGEX, Date.class,
+			EventHeaderSpec.UNKNOWN_TIMESTAMP),
 
 	/**
 	 * 
 	 */
 	PROCESSING_ID("ProcessingID", "urn:event-processing:"
-			+ EventHeaderSpec.UUID_REGEX, String.class),
+			+ EventHeaderSpec.UUID_REGEX, String.class, "urn:event-processing:"
+			+ EventHeaderSpec.UNKNOWN_UUID),
 
 	/**
 	 * 
 	 */
-	SEQUENCE_NUMBER("SequenceNumber", "\\d{1,3}", Integer.class),
+	SEQUENCE_NUMBER("SequenceNumber", "\\d{1,3}", Integer.class,
+			EventHeaderSpec.UNKNOWN_SEQUENCE_NUMBER),
 
 	/**
 	 * 
 	 */
 	INITIATION_TIMESTAMP("InitiationTimestamp",
-			EventHeaderSpec.ISO_8601_DATE_FORMAT_REGEX, Date.class),
+			EventHeaderSpec.ISO_8601_DATE_FORMAT_REGEX, Date.class,
+			EventHeaderSpec.UNKNOWN_TIMESTAMP),
 
 	/**
 	 * 
 	 */
 	COMPLETION_TIMESTAMP("CompletionTimestamp",
-			EventHeaderSpec.ISO_8601_DATE_FORMAT_REGEX, Date.class),
+			EventHeaderSpec.ISO_8601_DATE_FORMAT_REGEX, Date.class,
+			EventHeaderSpec.UNKNOWN_TIMESTAMP),
 
 	/**
 	 * 
 	 */
 	PROCESSING_STATE("ProcessingState", "IN_PROGRESS|SUCCESSFUL|FAILED",
-			ProcessingState.class);
+			ProcessingState.class, ProcessingState.IN_PROGRESS.name());
 
 	// -------------------------------------------------------------------------
 	// Regular expressions instrumental in defining the legal format for event
@@ -109,6 +119,18 @@ public enum EventHeaderSpec {
 	public static final String IDENTIFIER_REGEX = "[a-zA-Z]{1}[0-9a-zA-Z._]{5,100}";
 
 	// -------------------------------------------------------------------------
+	// Default values
+	// -------------------------------------------------------------------------
+
+	private static final String UNKNOWN_IDENTIFIER = "<UNKNOWN>";
+
+	private static final String UNKNOWN_UUID = "<UNKNOWN>";
+
+	private static final String UNKNOWN_TIMESTAMP = "0000-01-01T00:00:00.000";
+
+	private static final String UNKNOWN_SEQUENCE_NUMBER = "-1";
+
+	// -------------------------------------------------------------------------
 	// Static
 	// -------------------------------------------------------------------------
 
@@ -120,27 +142,16 @@ public enum EventHeaderSpec {
 
 		final Set<EventHeader> eventHeaders = new HashSet<EventHeader>(headers
 				.size());
-		for (final String headerName : headers.keySet()) {
-			final EventHeaderSpec eventHeaderSpec = named(headerName);
-			if (eventHeaderSpec != null) {
-				eventHeaders.add(eventHeaderSpec.newEventHeaderFrom(headers
-						.get(headerName)));
-			}
+		for (final EventHeaderSpec specification : EventHeaderSpec.values()) {
+			final String correspondingValue = headers
+					.get(specification.headerName);
+			final EventHeader eventHeader = correspondingValue != null ? specification
+					.newEventHeaderFrom(correspondingValue)
+					: specification.newDefaultEventHeader();
+			eventHeaders.add(eventHeader);
 		}
 
 		return new EventHeaders(eventHeaders);
-	}
-
-	// ~~~~
-
-	private static EventHeaderSpec named(final String aName) {
-		for (final EventHeaderSpec candidate : values()) {
-			if (candidate.isNamed(aName)) {
-				return candidate;
-			}
-		}
-
-		return null;
 	}
 
 	// -------------------------------------------------------------------------
@@ -153,79 +164,88 @@ public enum EventHeaderSpec {
 
 	private final Class<? extends Serializable> valueType;
 
+	private final String defaultValue;
+
 	// -------------------------------------------------------------------------
 	// Constructors
 	// -------------------------------------------------------------------------
 
 	private EventHeaderSpec(final String headerName,
 			final String legalValuePattern,
-			final Class<? extends Serializable> valueType) {
+			final Class<? extends Serializable> valueType,
+			final String defaultValue) {
 		this.headerName = headerName;
 		this.legalValuePattern = Pattern.compile(legalValuePattern);
 		this.valueType = valueType;
+		this.defaultValue = defaultValue;
 	}
 
 	// -------------------------------------------------------------------------
 	// API
 	// -------------------------------------------------------------------------
 
+	public String headerName() {
+		return this.headerName;
+	}
+
+	Serializable defaultValue() {
+		return convert(this.defaultValue);
+	}
+
 	EventHeader newEventHeaderFrom(final String valueAsString)
 			throws IllegalArgumentException {
 		Validate.notEmpty(valueAsString, "valueAsString");
-		if (!this.legalValuePattern.matcher(valueAsString).matches()) {
-			throw new IllegalArgumentException("The provided value ["
-					+ valueAsString + "] does not match the regex ["
-					+ this.legalValuePattern
-					+ "] mandated by this EventHeaderSpec");
-		}
+		final String possiblyNormalizedValueAsString = this.legalValuePattern
+				.matcher(valueAsString).matches() ? valueAsString
+				: this.defaultValue;
 
-		return newEventHeaderFromInternal(valueAsString);
+		return newEventHeaderFromInternal(possiblyNormalizedValueAsString);
 	}
 
-	// ~~~~~~~~
+	EventHeader newDefaultEventHeader() {
+
+		return newEventHeaderFromInternal(this.defaultValue);
+	}
+
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
 
 	private EventHeader newEventHeaderFromInternal(final String valueAsString)
-			throws NumberFormatException, AssertionError,
-			IllegalArgumentException {
-		try {
-			final Serializable value = convert(valueAsString);
+			throws RuntimeException {
+		final Serializable value = convert(valueAsString);
 
-			return new EventHeader(this, value);
-		} catch (final ParseException e) {
-			throw new IllegalArgumentException("Invalid date format ["
-					+ valueAsString + "]: " + e.getMessage(), e);
-		}
+		return new EventHeader(this, value);
 	}
 
 	private Serializable convert(final String valueAsString)
-			throws NumberFormatException, ParseException, AssertionError {
-		final Serializable value;
-		if (this.valueType == String.class) {
-			value = valueAsString;
-		} else if (this.valueType == Integer.class) {
-			value = Integer.valueOf(valueAsString);
-		} else if (this.valueType == Date.class) {
-			/*
-			 * SimpleDateFormat is not thread safe. Usually, this instances of
-			 * this class should be thread confined, i.e. accessed from only one
-			 * thread. Therefore, promoting the SimpleDateFormat instance below
-			 * to an instance variable should be safe. Yet you never know ...
-			 */
-			value = new SimpleDateFormat(ISO_8601_DATE_FORMAT)
-					.parse(valueAsString);
-		} else if (this.valueType == ProcessingState.class) {
-			value = ProcessingState.valueOf(valueAsString);
-		} else {
-			throw new AssertionError();
+			throws RuntimeException {
+		try {
+			final Serializable value;
+			if (this.valueType == String.class) {
+				value = valueAsString;
+			} else if (this.valueType == Integer.class) {
+				value = Integer.valueOf(valueAsString);
+			} else if (this.valueType == Date.class) {
+				/*
+				 * SimpleDateFormat is not thread safe. Usually, this instances
+				 * of this class should be thread confined, i.e. accessed from
+				 * only one thread. Therefore, promoting the SimpleDateFormat
+				 * instance below to an instance variable should be safe. Yet
+				 * you never know ...
+				 */
+				value = new SimpleDateFormat(ISO_8601_DATE_FORMAT)
+						.parse(valueAsString);
+			} else if (this.valueType == ProcessingState.class) {
+				value = ProcessingState.valueOf(valueAsString);
+			} else {
+				throw new AssertionError();
+			}
+
+			return value;
+		} catch (final ParseException e) {
+			throw new RuntimeException("Failed to parse supplied date ["
+					+ valueAsString + "]: " + e.getMessage(), e);
 		}
-
-		return value;
 	}
-
-	// ~~~~~
-
-	private boolean isNamed(final String aName) {
-		return this.headerName.equals(aName);
-	}
-
 }
