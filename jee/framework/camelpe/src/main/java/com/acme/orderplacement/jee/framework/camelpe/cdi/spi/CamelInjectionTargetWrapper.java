@@ -9,12 +9,16 @@ import java.util.Set;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.ResolutionException;
 import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.InjectionTarget;
+import javax.enterprise.inject.spi.ProcessInjectionTarget;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.CamelPostProcessorHelper;
 import org.apache.commons.lang.Validate;
+
+import com.acme.orderplacement.jee.framework.camelpe.util.BeanReference;
 
 /**
  * <p>
@@ -32,28 +36,42 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 
 	/**
 	 * @param <X>
-	 * @param annotatedType
-	 * @param originalInjectionTarget
-	 * @param camelContext
-	 * @return
+	 * @param pit
+	 * @param beanManager
 	 * @throws IllegalArgumentException
 	 * @throws ResolutionException
 	 */
-	public static <X> InjectionTarget<X> injectionTargetFor(
+	public static <X> void wrap(final ProcessInjectionTarget<X> pit,
+			final BeanManager beanManager) throws IllegalArgumentException,
+			ResolutionException {
+		Validate.notNull(pit, "pit");
+		Validate.notNull(beanManager, "beanManager");
+		AnnotatedFieldProcessor.ensureNoConflictingAnnotationsPresentOn(pit
+				.getAnnotatedType().getJavaClass());
+
+		final InjectionTarget<X> wrapper = injectionTargetFor(pit
+				.getAnnotatedType(), pit.getInjectionTarget(), beanManager);
+		pit.setInjectionTarget(wrapper);
+	}
+
+	/**
+	 * For testing purposes only.
+	 */
+	static <X> InjectionTarget<X> injectionTargetFor(
 			final AnnotatedType<X> annotatedType,
 			final InjectionTarget<X> originalInjectionTarget,
-			final CamelContext camelContext) throws IllegalArgumentException,
+			final BeanManager beanManager) throws IllegalArgumentException,
 			ResolutionException {
 		Validate.notNull(annotatedType, "annotatedType");
 		Validate.notNull(originalInjectionTarget, "originalInjectionTarget");
-		Validate.notNull(camelContext, "camelContext");
+		Validate.notNull(beanManager, "beanManager");
 		AnnotatedFieldProcessor
 				.ensureNoConflictingAnnotationsPresentOn(annotatedType
 						.getJavaClass());
 
 		return AnnotatedFieldProcessor
 				.hasCamelInjectAnnotatedFields(annotatedType.getJavaClass()) ? new CamelInjectionTargetWrapper<X>(
-				originalInjectionTarget, camelContext)
+				originalInjectionTarget, beanManager)
 				: originalInjectionTarget;
 	}
 
@@ -63,7 +81,7 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 
 	private final InjectionTarget<T> wrapped;
 
-	private final CamelPostProcessorHelper camelPostProcessorHelper;
+	private final BeanReference<CamelContext> camelContextRef;
 
 	// -------------------------------------------------------------------------
 	// Constructors
@@ -74,12 +92,12 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	 * @param camelContext
 	 */
 	private CamelInjectionTargetWrapper(final InjectionTarget<T> wrapped,
-			final CamelContext camelContext) throws IllegalArgumentException {
+			final BeanManager beanManager) throws IllegalArgumentException {
 		Validate.notNull(wrapped, "wrapped");
-		Validate.notNull(camelContext, "camelContext");
+		Validate.notNull(beanManager, "beanManager");
 		this.wrapped = wrapped;
-		this.camelPostProcessorHelper = new CamelPostProcessorHelper(
-				camelContext);
+		this.camelContextRef = new BeanReference<CamelContext>(
+				CamelContext.class, beanManager);
 	}
 
 	// -------------------------------------------------------------------------
@@ -205,6 +223,6 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 	 * @return the camelPostProcessorHelper
 	 */
 	private CamelPostProcessorHelper getCamelPostProcessorHelper() {
-		return this.camelPostProcessorHelper;
+		return new CamelPostProcessorHelper(this.camelContextRef.get());
 	}
 }

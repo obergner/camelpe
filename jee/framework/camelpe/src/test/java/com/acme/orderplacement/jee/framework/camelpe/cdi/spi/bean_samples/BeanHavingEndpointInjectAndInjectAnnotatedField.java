@@ -1,9 +1,10 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans;
+package com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples;
 
-import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.BeanManager;
+import javax.inject.Inject;
 
 import org.apache.camel.EndpointInject;
 
@@ -15,9 +16,9 @@ import org.apache.camel.EndpointInject;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class BeanHavingEndpointInjectAndProducesAnnotatedField {
+public class BeanHavingEndpointInjectAndInjectAnnotatedField {
 
-	@Produces
+	@Inject
 	@EndpointInject(uri = "ignore")
-	public Object producedValue;
+	public BeanManager injectionValue;
 }

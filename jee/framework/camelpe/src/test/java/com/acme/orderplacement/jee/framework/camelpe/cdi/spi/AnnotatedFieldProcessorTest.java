@@ -14,9 +14,9 @@ import javax.enterprise.inject.ResolutionException;
 
 import org.junit.Test;
 
-import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingEndpointInjectAndInjectAnnotatedField;
-import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingEndpointInjectAnnotatedField;
-import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingNoEndpointInjectAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples.BeanHavingEndpointInjectAndInjectAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples.BeanHavingEndpointInjectAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples.BeanHavingNoEndpointInjectAnnotatedField;
 
 /**
  * <p>

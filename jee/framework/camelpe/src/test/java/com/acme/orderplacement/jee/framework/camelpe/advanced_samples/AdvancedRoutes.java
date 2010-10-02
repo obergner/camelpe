@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.advanced;
+package com.acme.orderplacement.jee.framework.camelpe.advanced_samples;
 
 import javax.inject.Inject;
 

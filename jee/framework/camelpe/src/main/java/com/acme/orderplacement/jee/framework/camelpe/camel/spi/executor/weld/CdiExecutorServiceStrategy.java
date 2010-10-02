@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.camel.spi.executor;
+package com.acme.orderplacement.jee.framework.camelpe.camel.spi.executor.weld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,12 +39,14 @@ import org.slf4j.LoggerFactory;
  * by the Spring message listener container, to be more precise. It follows that
  * we cannot use request scope beans in threads processing incoming JMS
  * messages. To remedy this situation, we introduce a special Apache Camel
- * {@link ExecutorServiceStrategy <code>ExecutorServiceStrategy</code>}. The
- * {@link WeldRequestContextInitiatingThread
- * <code>WeldRequestContextInitiatingThread</code>}s used by the
- * {@link java.util.concurrent.ExecutorService <code>ExecutorService</code>}s
- * provided by this strategy will initiate a <code>RequestScope</code> for each
- * task execution.
+ * {@link ExecutorServiceStrategy <code>ExecutorServiceStrategy</code>}. This
+ * custom strategy returns {@link java.util.concurrent.ThreadPoolExecutor
+ * <code>java.util.concurrent.ThreadPoolExecutor</code>} subclasses
+ * {@link WeldRequestContextInitiatingThreadPoolExecutor
+ * <code>WeldRequestContextInitiatingThreadPoolExecutor</code>} and
+ * {@link WeldRequestContextInitiatingScheduledThreadPoolExecutor
+ * <code>WeldRequestContextInitiatingScheduledThreadPoolExecutor</code>} that
+ * will initiate a <code>RequestScope</code> for each task execution.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>

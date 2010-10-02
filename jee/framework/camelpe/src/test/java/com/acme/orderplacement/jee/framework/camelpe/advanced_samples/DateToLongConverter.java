@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.advanced;
+package com.acme.orderplacement.jee.framework.camelpe.advanced_samples;
 
 import java.util.Date;
 
@@ -15,6 +15,7 @@ import org.apache.camel.Converter;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@Converter
 public class DateToLongConverter {
 
 	@Converter

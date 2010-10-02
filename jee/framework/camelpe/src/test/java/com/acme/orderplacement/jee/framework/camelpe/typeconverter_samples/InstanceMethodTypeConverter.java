@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter;
+package com.acme.orderplacement.jee.framework.camelpe.typeconverter_samples;
 
 import org.apache.camel.Converter;
 
@@ -14,7 +14,7 @@ import org.apache.camel.Converter;
  * 
  */
 @Converter
-public class InstanceMethodTypeConverterHavingNoInjectionPoints {
+public class InstanceMethodTypeConverter {
 
 	@Converter
 	public String convertToString(final Object objectToConvert) {

@@ -26,7 +26,7 @@ import com.acme.orderplacement.jee.framework.jboss.camel.HornetQCamelComponent;
  * 
  */
 @ApplicationScoped
-public class ComponentFactory {
+class ComponentFactory {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 

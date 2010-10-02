@@ -16,6 +16,7 @@ import org.apache.camel.Converter;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@Converter
 public class InstanceMethodTypeConverterHavingOneInjectionPoint {
 
 	@Inject

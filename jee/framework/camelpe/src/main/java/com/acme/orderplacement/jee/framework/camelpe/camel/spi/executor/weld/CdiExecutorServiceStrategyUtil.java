@@ -1,11 +1,16 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.camel.spi.executor;
+package com.acme.orderplacement.jee.framework.camelpe.camel.spi.executor.weld;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
@@ -13,6 +18,7 @@ import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.camel.model.ExecutorServiceAwareDefinition;
@@ -55,8 +61,8 @@ final class CdiExecutorServiceStrategyUtil {
 		}
 
 		public Thread newThread(final Runnable r) {
-			final Thread answer = new WeldRequestContextInitiatingThread(r,
-					getThreadName(this.pattern, this.name));
+			final Thread answer = new Thread(r, getThreadName(this.pattern,
+					this.name));
 			answer.setDaemon(this.daemon);
 			return answer;
 		}
@@ -119,8 +125,8 @@ final class CdiExecutorServiceStrategyUtil {
 	 */
 	static ScheduledExecutorService newScheduledThreadPool(final int poolSize,
 			final String pattern, final String name, final boolean daemon) {
-		return Executors.newScheduledThreadPool(poolSize, new CdiThreadFactory(
-				daemon, name, pattern));
+		return new WeldRequestContextInitiatingScheduledThreadPoolExecutor(
+				poolSize, new CdiThreadFactory(daemon, name, pattern));
 	}
 
 	/**
@@ -138,8 +144,10 @@ final class CdiExecutorServiceStrategyUtil {
 	 */
 	static ExecutorService newFixedThreadPool(final int poolSize,
 			final String pattern, final String name, final boolean daemon) {
-		return Executors.newFixedThreadPool(poolSize, new CdiThreadFactory(
-				daemon, name, pattern));
+		return new WeldRequestContextInitiatingThreadPoolExecutor(poolSize,
+				poolSize, 0L, TimeUnit.MILLISECONDS,
+				new LinkedBlockingQueue<Runnable>(), new CdiThreadFactory(
+						daemon, name, pattern));
 	}
 
 	/**
@@ -155,8 +163,11 @@ final class CdiExecutorServiceStrategyUtil {
 	 */
 	static ExecutorService newSingleThreadExecutor(final String pattern,
 			final String name, final boolean daemon) {
-		return Executors.newSingleThreadExecutor(new CdiThreadFactory(daemon,
-				name, pattern));
+		return new FinalizableDelegatedExecutorService(
+				new WeldRequestContextInitiatingThreadPoolExecutor(1, 1, 0L,
+						TimeUnit.MILLISECONDS,
+						new LinkedBlockingQueue<Runnable>(),
+						new CdiThreadFactory(daemon, name, pattern)));
 	}
 
 	/**
@@ -172,8 +183,10 @@ final class CdiExecutorServiceStrategyUtil {
 	 */
 	static ExecutorService newCachedThreadPool(final String pattern,
 			final String name, final boolean daemon) {
-		return Executors.newCachedThreadPool(new CdiThreadFactory(daemon, name,
-				pattern));
+		return new WeldRequestContextInitiatingThreadPoolExecutor(0,
+				Integer.MAX_VALUE, 60L, TimeUnit.SECONDS,
+				new SynchronousQueue<Runnable>(), new CdiThreadFactory(daemon,
+						name, pattern));
 	}
 
 	/**
@@ -252,8 +265,8 @@ final class CdiExecutorServiceStrategyUtil {
 			// bounded task queue
 			queue = new LinkedBlockingQueue<Runnable>(maxQueueSize);
 		}
-		final ThreadPoolExecutor answer = new ThreadPoolExecutor(corePoolSize,
-				maxPoolSize, keepAliveTime, timeUnit, queue);
+		final ThreadPoolExecutor answer = new WeldRequestContextInitiatingThreadPoolExecutor(
+				corePoolSize, maxPoolSize, keepAliveTime, timeUnit, queue);
 		answer.setThreadFactory(new CdiThreadFactory(daemon, name, pattern));
 		answer
 				.setRejectedExecutionHandler(rejectedExecutionHandler != null ? rejectedExecutionHandler
@@ -383,5 +396,97 @@ final class CdiExecutorServiceStrategyUtil {
 		}
 
 		return null;
+	}
+
+	// -------------------------------------------------------------------------
+	// Copied from java.util.concurrent.Executors since the original wrapper is
+	// defined as having only package visibility
+	// -------------------------------------------------------------------------
+
+	/**
+	 * A wrapper class that exposes only the ExecutorService methods of an
+	 * ExecutorService implementation.
+	 */
+	static class FinalizableDelegatedExecutorService extends
+			AbstractExecutorService {
+		private final ExecutorService delegate;
+
+		FinalizableDelegatedExecutorService(final ExecutorService executor) {
+			this.delegate = executor;
+		}
+
+		public void execute(final Runnable command) {
+			this.delegate.execute(command);
+		}
+
+		public void shutdown() {
+			this.delegate.shutdown();
+		}
+
+		public List<Runnable> shutdownNow() {
+			return this.delegate.shutdownNow();
+		}
+
+		public boolean isShutdown() {
+			return this.delegate.isShutdown();
+		}
+
+		public boolean isTerminated() {
+			return this.delegate.isTerminated();
+		}
+
+		public boolean awaitTermination(final long timeout, final TimeUnit unit)
+				throws InterruptedException {
+			return this.delegate.awaitTermination(timeout, unit);
+		}
+
+		@Override
+		public Future<?> submit(final Runnable task) {
+			return this.delegate.submit(task);
+		}
+
+		@Override
+		public <T> Future<T> submit(final Callable<T> task) {
+			return this.delegate.submit(task);
+		}
+
+		@Override
+		public <T> Future<T> submit(final Runnable task, final T result) {
+			return this.delegate.submit(task, result);
+		}
+
+		@Override
+		public <T> List<Future<T>> invokeAll(
+				final Collection<? extends Callable<T>> tasks)
+				throws InterruptedException {
+			return this.delegate.invokeAll(tasks);
+		}
+
+		@Override
+		public <T> List<Future<T>> invokeAll(
+				final Collection<? extends Callable<T>> tasks,
+				final long timeout, final TimeUnit unit)
+				throws InterruptedException {
+			return this.delegate.invokeAll(tasks, timeout, unit);
+		}
+
+		@Override
+		public <T> T invokeAny(final Collection<? extends Callable<T>> tasks)
+				throws InterruptedException, ExecutionException {
+			return this.delegate.invokeAny(tasks);
+		}
+
+		@Override
+		public <T> T invokeAny(final Collection<? extends Callable<T>> tasks,
+				final long timeout, final TimeUnit unit)
+				throws InterruptedException, ExecutionException,
+				TimeoutException {
+			return this.delegate.invokeAny(tasks, timeout, unit);
+		}
+
+		@Override
+		protected void finalize() {
+			shutdown();
+		}
 	}
 }

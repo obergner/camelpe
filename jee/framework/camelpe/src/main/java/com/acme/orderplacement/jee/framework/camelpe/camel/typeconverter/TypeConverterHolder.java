@@ -3,6 +3,7 @@
  */
 package com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.TypeConverter;
 import org.apache.commons.lang.Validate;
 
@@ -77,42 +78,30 @@ public final class TypeConverterHolder {
 	}
 
 	// -------------------------------------------------------------------------
-	// Properties
+	// API
 	// -------------------------------------------------------------------------
 
-	/**
-	 * @return the isFallback
-	 */
-	public final boolean isFallback() {
-		return this.isFallback;
+	public void registerIn(final CamelContext camelContext)
+			throws IllegalArgumentException {
+		Validate.notNull(camelContext, "camelContext");
+		if (this.isFallback) {
+			camelContext.getTypeConverterRegistry().addFallbackTypeConverter(
+					getTypeConverter(), this.canPromote);
+		} else {
+			camelContext.getTypeConverterRegistry().addTypeConverter(
+					this.toType, this.fromType, getTypeConverter());
+		}
 	}
 
-	/**
-	 * @return the fromType
-	 */
-	public final Class<?> getFromType() {
-		return this.fromType;
-	}
-
-	/**
-	 * @return the toType
-	 */
-	public final Class<?> getToType() {
-		return this.toType;
-	}
+	// -------------------------------------------------------------------------
+	// Properties
+	// -------------------------------------------------------------------------
 
 	/**
 	 * @return the typeConverter
 	 */
 	public final TypeConverter getTypeConverter() {
 		return this.typeConverter;
-	}
-
-	/**
-	 * @return the canPromote
-	 */
-	public final boolean isCanPromote() {
-		return this.canPromote;
 	}
 
 	// -------------------------------------------------------------------------

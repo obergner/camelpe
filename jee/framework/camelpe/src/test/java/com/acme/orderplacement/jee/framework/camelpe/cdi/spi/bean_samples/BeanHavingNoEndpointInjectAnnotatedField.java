@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans;
+package com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples;
 
 /**
  * <p>

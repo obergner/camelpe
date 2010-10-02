@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter;
+package com.acme.orderplacement.jee.framework.camelpe.typeconverter_samples;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.FallbackConverter;

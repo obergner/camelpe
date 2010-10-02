@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.ContextException;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Default;
@@ -23,99 +22,86 @@ import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.TypeConverter;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.converter.DefaultTypeConverter;
-import org.apache.camel.spi.Injector;
-import org.apache.camel.spi.Registry;
-
-import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiInjector;
-import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * TODO: Insert short summary for CdiCamelContext
+ * TODO: Insert short summary for CdiCamelContextLifecycleAdapter
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @ApplicationScoped
-class CdiCamelContext extends DefaultCamelContext {
+class CdiCamelContextLifecycleAdapter {
+
+	// -------------------------------------------------------------------------
+	// Injection points
+	// -------------------------------------------------------------------------
+
+	@Inject
+	private CamelContext camelContext;
+
+	@Inject
+	private CdiCamelContextConfiguration camelContextConfiguration;
+
+	@Inject
+	private TypeConverterDiscovery typeConverterRegistration;
+
+	@Inject
+	private RoutesDiscovery routesDiscovery;
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
 
-	@Inject
-	private BeanManager beanManager;
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	// -------------------------------------------------------------------------
-	// Constructors
+	// API
 	// -------------------------------------------------------------------------
 
-	CdiCamelContext() {
+	void afterDeploymentValidation() throws Exception {
+		this.log
+				.info(
+						"Received AfterDeployment event - About to configure and start CamelContext [{}] ...",
+						this.camelContext);
+		this.camelContextConfiguration.configure(this.camelContext);
+
+		this.typeConverterRegistration.registerIn(this.camelContext);
+
+		this.routesDiscovery.registerDiscoveredRoutesIn(this.camelContext);
+
+		this.camelContext.start();
+		this.log.info("Successfully configured and started CamelContext [{}]",
+				this.camelContext);
 	}
 
-	// -------------------------------------------------------------------------
-	// Implementation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * @see org.apache.camel.impl.DefaultCamelContext#createInjector()
-	 */
-	@Override
-	protected Injector createInjector() {
-		return new CdiInjector(this.beanManager);
-	}
-
-	/**
-	 * @see org.apache.camel.impl.DefaultCamelContext#createRegistry()
-	 */
-	@Override
-	protected Registry createRegistry() {
-		return new CdiRegistry(this.beanManager);
-	}
-
-	/**
-	 * @see org.apache.camel.impl.DefaultCamelContext#createTypeConverter()
-	 */
-	@Override
-	protected TypeConverter createTypeConverter() {
-		final DefaultTypeConverter answer = new DefaultTypeConverter(
-				getPackageScanClassResolver(), getInjector(),
-				getDefaultFactoryFinder());
-		setTypeConverterRegistry(answer);
-		return answer;
-	}
-
-	// -------------------------------------------------------------------------
-	// equals(), hashCode(), toString()
-	// -------------------------------------------------------------------------
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "CDI CamelContext [name = " + getName() + " | beanManager = "
-				+ this.beanManager.getClass().getName() + "]";
+	void beforeShutdown() throws Exception {
+		this.log
+				.info(
+						"Received BeforeShutdown event - About to stop CamelContext [{}] ...",
+						this.camelContext);
+		this.camelContext.stop();
+		this.log.info("Successfully stopped CamelContext [{}] ...",
+				this.camelContext);
 	}
 
 	// -------------------------------------------------------------------------
 	// This class wrapped in a CDI bean
 	// -------------------------------------------------------------------------
 
-	static class CdiBean implements Bean<CdiCamelContext> {
+	static class CdiBean implements Bean<CdiCamelContextLifecycleAdapter> {
 
-		private final InjectionTarget<CdiCamelContext> injectionTarget;
+		private final InjectionTarget<CdiCamelContextLifecycleAdapter> injectionTarget;
 
 		/**
 		 * @param beanManager
 		 */
 		CdiBean(final BeanManager beanManager) {
-			final AnnotatedType<CdiCamelContext> annotatedType = beanManager
-					.createAnnotatedType(CdiCamelContext.class);
+			final AnnotatedType<CdiCamelContextLifecycleAdapter> annotatedType = beanManager
+					.createAnnotatedType(CdiCamelContextLifecycleAdapter.class);
 			this.injectionTarget = beanManager
 					.createInjectionTarget(annotatedType);
 		}
@@ -125,7 +111,7 @@ class CdiCamelContext extends DefaultCamelContext {
 		 */
 		@Override
 		public Class<?> getBeanClass() {
-			return CdiCamelContext.class;
+			return CdiCamelContextLifecycleAdapter.class;
 		}
 
 		/**
@@ -133,7 +119,7 @@ class CdiCamelContext extends DefaultCamelContext {
 		 */
 		@Override
 		public Set<InjectionPoint> getInjectionPoints() {
-			return Collections.emptySet();
+			return this.injectionTarget.getInjectionPoints();
 		}
 
 		/**
@@ -141,7 +127,7 @@ class CdiCamelContext extends DefaultCamelContext {
 		 */
 		@Override
 		public String getName() {
-			return "cdiCamelContext";
+			return "cdiCamelContextLifecycle";
 		}
 
 		/**
@@ -181,8 +167,7 @@ class CdiCamelContext extends DefaultCamelContext {
 		@Override
 		public Set<Type> getTypes() {
 			final Set<Type> types = new HashSet<Type>();
-			types.add(CdiCamelContext.class);
-			types.add(CamelContext.class);
+			types.add(CdiCamelContextLifecycleAdapter.class);
 			types.add(Object.class);
 
 			return types;
@@ -208,9 +193,9 @@ class CdiCamelContext extends DefaultCamelContext {
 		 * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
 		 */
 		@Override
-		public CdiCamelContext create(
-				final CreationalContext<CdiCamelContext> creationalContext) {
-			final CdiCamelContext instance = this.injectionTarget
+		public CdiCamelContextLifecycleAdapter create(
+				final CreationalContext<CdiCamelContextLifecycleAdapter> creationalContext) {
+			final CdiCamelContextLifecycleAdapter instance = this.injectionTarget
 					.produce(creationalContext);
 			this.injectionTarget.inject(instance, creationalContext);
 			this.injectionTarget.postConstruct(instance);
@@ -223,17 +208,12 @@ class CdiCamelContext extends DefaultCamelContext {
 		 *      javax.enterprise.context.spi.CreationalContext)
 		 */
 		@Override
-		public void destroy(final CdiCamelContext instance,
-				final CreationalContext<CdiCamelContext> creationalContext) {
-			try {
-				this.injectionTarget.preDestroy(instance);
-				instance.stop();
-				this.injectionTarget.dispose(instance);
-				creationalContext.release();
-			} catch (final Exception e) {
-				throw new ContextException("Failed to destroy CamelContext ["
-						+ instance + "]: " + e.getMessage(), e);
-			}
+		public void destroy(
+				final CdiCamelContextLifecycleAdapter instance,
+				final CreationalContext<CdiCamelContextLifecycleAdapter> creationalContext) {
+			this.injectionTarget.preDestroy(instance);
+			this.injectionTarget.dispose(instance);
+			creationalContext.release();
 		}
 	}
 }

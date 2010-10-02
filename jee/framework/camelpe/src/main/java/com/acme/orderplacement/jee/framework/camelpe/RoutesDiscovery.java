@@ -10,10 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.ContextException;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
@@ -23,99 +23,62 @@ import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.TypeConverter;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.converter.DefaultTypeConverter;
-import org.apache.camel.spi.Injector;
-import org.apache.camel.spi.Registry;
-
-import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiInjector;
-import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
+import org.apache.camel.RoutesBuilder;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.commons.lang.Validate;
 
 /**
  * <p>
- * TODO: Insert short summary for CdiCamelContext
+ * TODO: Insert short summary for RoutesDiscovery
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
 @ApplicationScoped
-class CdiCamelContext extends DefaultCamelContext {
+class RoutesDiscovery {
 
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
 
+	private Instance<RouteBuilder> discoveredRoutes;
+
+	// -------------------------------------------------------------------------
+	// API
+	// -------------------------------------------------------------------------
+
 	@Inject
-	private BeanManager beanManager;
-
-	// -------------------------------------------------------------------------
-	// Constructors
-	// -------------------------------------------------------------------------
-
-	CdiCamelContext() {
+	void discoverRoutes(final Instance<RouteBuilder> routes) {
+		this.discoveredRoutes = routes;
 	}
 
-	// -------------------------------------------------------------------------
-	// Implementation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * @see org.apache.camel.impl.DefaultCamelContext#createInjector()
-	 */
-	@Override
-	protected Injector createInjector() {
-		return new CdiInjector(this.beanManager);
-	}
-
-	/**
-	 * @see org.apache.camel.impl.DefaultCamelContext#createRegistry()
-	 */
-	@Override
-	protected Registry createRegistry() {
-		return new CdiRegistry(this.beanManager);
-	}
-
-	/**
-	 * @see org.apache.camel.impl.DefaultCamelContext#createTypeConverter()
-	 */
-	@Override
-	protected TypeConverter createTypeConverter() {
-		final DefaultTypeConverter answer = new DefaultTypeConverter(
-				getPackageScanClassResolver(), getInjector(),
-				getDefaultFactoryFinder());
-		setTypeConverterRegistry(answer);
-		return answer;
-	}
-
-	// -------------------------------------------------------------------------
-	// equals(), hashCode(), toString()
-	// -------------------------------------------------------------------------
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "CDI CamelContext [name = " + getName() + " | beanManager = "
-				+ this.beanManager.getClass().getName() + "]";
+	void registerDiscoveredRoutesIn(final CamelContext camelContext)
+			throws Exception {
+		Validate.notNull(camelContext, "camelContext");
+		if (this.discoveredRoutes == null) {
+			throw new IllegalStateException(
+					"Routes discovery has not yet completed");
+		}
+		for (final RoutesBuilder routesBuilder : this.discoveredRoutes) {
+			camelContext.addRoutes(routesBuilder);
+		}
 	}
 
 	// -------------------------------------------------------------------------
 	// This class wrapped in a CDI bean
 	// -------------------------------------------------------------------------
 
-	static class CdiBean implements Bean<CdiCamelContext> {
+	static class CdiBean implements Bean<RoutesDiscovery> {
 
-		private final InjectionTarget<CdiCamelContext> injectionTarget;
+		private final InjectionTarget<RoutesDiscovery> injectionTarget;
 
 		/**
 		 * @param beanManager
 		 */
 		CdiBean(final BeanManager beanManager) {
-			final AnnotatedType<CdiCamelContext> annotatedType = beanManager
-					.createAnnotatedType(CdiCamelContext.class);
+			final AnnotatedType<RoutesDiscovery> annotatedType = beanManager
+					.createAnnotatedType(RoutesDiscovery.class);
 			this.injectionTarget = beanManager
 					.createInjectionTarget(annotatedType);
 		}
@@ -125,7 +88,7 @@ class CdiCamelContext extends DefaultCamelContext {
 		 */
 		@Override
 		public Class<?> getBeanClass() {
-			return CdiCamelContext.class;
+			return RoutesDiscovery.class;
 		}
 
 		/**
@@ -133,7 +96,7 @@ class CdiCamelContext extends DefaultCamelContext {
 		 */
 		@Override
 		public Set<InjectionPoint> getInjectionPoints() {
-			return Collections.emptySet();
+			return this.injectionTarget.getInjectionPoints();
 		}
 
 		/**
@@ -141,7 +104,7 @@ class CdiCamelContext extends DefaultCamelContext {
 		 */
 		@Override
 		public String getName() {
-			return "cdiCamelContext";
+			return "routesDiscovery";
 		}
 
 		/**
@@ -181,8 +144,7 @@ class CdiCamelContext extends DefaultCamelContext {
 		@Override
 		public Set<Type> getTypes() {
 			final Set<Type> types = new HashSet<Type>();
-			types.add(CdiCamelContext.class);
-			types.add(CamelContext.class);
+			types.add(RoutesDiscovery.class);
 			types.add(Object.class);
 
 			return types;
@@ -208,9 +170,9 @@ class CdiCamelContext extends DefaultCamelContext {
 		 * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
 		 */
 		@Override
-		public CdiCamelContext create(
-				final CreationalContext<CdiCamelContext> creationalContext) {
-			final CdiCamelContext instance = this.injectionTarget
+		public RoutesDiscovery create(
+				final CreationalContext<RoutesDiscovery> creationalContext) {
+			final RoutesDiscovery instance = this.injectionTarget
 					.produce(creationalContext);
 			this.injectionTarget.inject(instance, creationalContext);
 			this.injectionTarget.postConstruct(instance);
@@ -223,17 +185,11 @@ class CdiCamelContext extends DefaultCamelContext {
 		 *      javax.enterprise.context.spi.CreationalContext)
 		 */
 		@Override
-		public void destroy(final CdiCamelContext instance,
-				final CreationalContext<CdiCamelContext> creationalContext) {
-			try {
-				this.injectionTarget.preDestroy(instance);
-				instance.stop();
-				this.injectionTarget.dispose(instance);
-				creationalContext.release();
-			} catch (final Exception e) {
-				throw new ContextException("Failed to destroy CamelContext ["
-						+ instance + "]: " + e.getMessage(), e);
-			}
+		public void destroy(final RoutesDiscovery instance,
+				final CreationalContext<RoutesDiscovery> creationalContext) {
+			this.injectionTarget.preDestroy(instance);
+			this.injectionTarget.dispose(instance);
+			creationalContext.release();
 		}
 	}
 }

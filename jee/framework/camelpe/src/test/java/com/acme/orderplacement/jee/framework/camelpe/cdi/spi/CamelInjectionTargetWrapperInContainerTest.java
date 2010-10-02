@@ -11,6 +11,7 @@ import java.io.File;
 import java.net.URL;
 
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.ResolutionException;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
@@ -35,11 +36,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
-import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingEndpointInjectAndInjectAnnotatedField;
-import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingEndpointInjectAndProducesAnnotatedField;
-import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingEndpointInjectAnnotatedField;
-import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingNoEndpointInjectAnnotatedField;
-import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.beans.BeanHavingProduceAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples.BeanHavingEndpointInjectAndInjectAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples.BeanHavingEndpointInjectAndProducesAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples.BeanHavingEndpointInjectAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples.BeanHavingNoEndpointInjectAnnotatedField;
+import com.acme.orderplacement.jee.framework.camelpe.cdi.spi.bean_samples.BeanHavingProduceAnnotatedField;
 
 /**
  * <p>
@@ -96,6 +97,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 	@Inject
 	private BeanManager beanManager;
 
+	@Produces
 	private final CamelContext camelContext = new DefaultCamelContext();
 
 	// -------------------------------------------------------------------------
@@ -114,7 +116,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 	}
 
 	@AfterClass
-	public static void enableCamelPE() {
+	public static void reenableCamelPE() {
 		final URL cdiServiceFileDisabledUrl = CamelInjectionTargetWrapperInContainerTest.class
 				.getClassLoader().getResource(
 						CDIPE_SERVICE_FILE_PATH
@@ -144,7 +146,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 
 		final InjectionTarget<BeanHavingNoEndpointInjectAnnotatedField> newInjectionTarget = CamelInjectionTargetWrapper
 				.injectionTargetFor(annotatedType, originalInjectionTarget,
-						this.camelContext);
+						this.beanManager);
 
 		assertSame(
 				"injectionTargetFor("
@@ -168,7 +170,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 
 		final InjectionTarget<BeanHavingEndpointInjectAnnotatedField> newInjectionTarget = CamelInjectionTargetWrapper
 				.injectionTargetFor(annotatedType, originalInjectionTarget,
-						this.camelContext);
+						this.beanManager);
 
 		assertTrue(
 				"injectionTargetFor("
@@ -192,7 +194,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 
 		final InjectionTarget<BeanHavingProduceAnnotatedField> newInjectionTarget = CamelInjectionTargetWrapper
 				.injectionTargetFor(annotatedType, originalInjectionTarget,
-						this.camelContext);
+						this.beanManager);
 
 		assertTrue(
 				"injectionTargetFor("
@@ -215,7 +217,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 				.createInjectionTarget(annotatedType);
 
 		CamelInjectionTargetWrapper.injectionTargetFor(annotatedType,
-				originalInjectionTarget, this.camelContext);
+				originalInjectionTarget, this.beanManager);
 	}
 
 	@Test(expected = ResolutionException.class)
@@ -226,7 +228,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 				.createInjectionTarget(annotatedType);
 
 		CamelInjectionTargetWrapper.injectionTargetFor(annotatedType,
-				originalInjectionTarget, this.camelContext);
+				originalInjectionTarget, this.beanManager);
 	}
 
 	@Test
@@ -253,7 +255,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 
 		final InjectionTarget<BeanHavingEndpointInjectAnnotatedField> wrappedInjectionTarget = CamelInjectionTargetWrapper
 				.injectionTargetFor(annotatedType, originalInjectionTarget,
-						this.camelContext);
+						this.beanManager);
 		wrappedInjectionTarget.inject(instance, creationalContext);
 
 		assertNotNull(
@@ -288,7 +290,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 
 		final InjectionTarget<BeanHavingProduceAnnotatedField> wrappedInjectionTarget = CamelInjectionTargetWrapper
 				.injectionTargetFor(annotatedType, originalInjectionTarget,
-						this.camelContext);
+						this.beanManager);
 		wrappedInjectionTarget.inject(instance, creationalContext);
 
 		assertNotNull(

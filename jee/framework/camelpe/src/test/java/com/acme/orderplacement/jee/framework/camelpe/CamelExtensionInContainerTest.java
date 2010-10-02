@@ -25,11 +25,13 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.acme.orderplacement.jee.framework.camelpe.advanced.AdvancedConsumer;
-import com.acme.orderplacement.jee.framework.camelpe.advanced.AdvancedProcessor;
-import com.acme.orderplacement.jee.framework.camelpe.advanced.AdvancedProducer;
-import com.acme.orderplacement.jee.framework.camelpe.advanced.AdvancedRoutes;
+import com.acme.orderplacement.jee.framework.camelpe.advanced_samples.AdvancedConsumer;
+import com.acme.orderplacement.jee.framework.camelpe.advanced_samples.AdvancedProcessor;
+import com.acme.orderplacement.jee.framework.camelpe.advanced_samples.AdvancedProducer;
+import com.acme.orderplacement.jee.framework.camelpe.advanced_samples.AdvancedRoutes;
 import com.acme.orderplacement.jee.framework.camelpe.camel.spi.CdiRegistry;
+import com.acme.orderplacement.jee.framework.camelpe.camelpe_samples.SampleProducer;
+import com.acme.orderplacement.jee.framework.camelpe.camelpe_samples.SampleRoutes;
 
 /**
  * <p>
@@ -68,9 +70,7 @@ public class CamelExtensionInContainerTest {
 	@Deployment
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap.create(JavaArchive.class,
-				"test.jar").addPackages(false,
-				CamelExtension.class.getPackage(),
-				SampleRoutes.class.getPackage(),
+				"test.jar").addPackages(false, SampleRoutes.class.getPackage(),
 				AdvancedRoutes.class.getPackage()).addServiceProvider(
 				Extension.class, CamelExtension.class).addManifestResource(
 				new ByteArrayAsset("<beans/>".getBytes()),

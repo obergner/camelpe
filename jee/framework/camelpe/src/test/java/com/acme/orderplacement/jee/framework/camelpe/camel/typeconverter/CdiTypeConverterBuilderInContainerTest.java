@@ -26,9 +26,6 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.CdiTypeConverterBuilder;
-import com.acme.orderplacement.jee.framework.camelpe.camel.typeconverter.TypeConverterHolder;
-
 /**
  * <p>
  * TODO: Insert short summary for CdiTypeConverterBuilderInContainerTest
@@ -85,10 +82,10 @@ public class CdiTypeConverterBuilderInContainerTest {
 				.buildTypeConvertersFrom(InstanceMethodTypeConverterHavingNoInjectionPoints.class);
 
 		assertNotNull(
-				"buildTypeConvertersFrom(InstanceMethodTypeConverterHavingNoInjectionPoints.class) returned <null>",
+				"buildTypeConvertersFrom(InstanceMethodTypeConverter.class) returned <null>",
 				builtTypeConverters);
 		assertEquals(
-				"buildTypeConvertersFrom(InstanceMethodTypeConverterHavingNoInjectionPoints.class) returned wrong number of TypeConverters",
+				"buildTypeConvertersFrom(InstanceMethodTypeConverter.class) returned wrong number of TypeConverters",
 				1, builtTypeConverters.size());
 		final TypeConverter builtTypeConverter = builtTypeConverters.iterator()
 				.next().getTypeConverter();
@@ -96,7 +93,7 @@ public class CdiTypeConverterBuilderInContainerTest {
 		final String convertedObject = builtTypeConverter.convertTo(
 				String.class, objectToConvert);
 		assertEquals(
-				"buildTypeConvertersFrom(InstanceMethodTypeConverterHavingNoInjectionPoints.class) did not properly build TypeConverter",
+				"buildTypeConvertersFrom(InstanceMethodTypeConverter.class) did not properly build TypeConverter",
 				objectToConvert.toString(), convertedObject);
 	}
 

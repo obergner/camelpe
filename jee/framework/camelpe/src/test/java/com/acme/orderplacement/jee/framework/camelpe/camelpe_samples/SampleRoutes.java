@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe;
+package com.acme.orderplacement.jee.framework.camelpe.camelpe_samples;
 
 import org.apache.camel.builder.RouteBuilder;
 

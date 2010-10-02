@@ -16,6 +16,7 @@ import org.apache.camel.spi.TypeConverterRegistry;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@FallbackConverter
 public class InstanceMethodFallbackTypeConverterHavingNoInjectionPoints {
 
 	@FallbackConverter
