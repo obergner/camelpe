@@ -9,6 +9,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.acme.orderplacement.jee.framework.camelpe.weld.WeldRequestContext;
+
 /**
  * <p>
  * TODO: Insert short summary for WeldRequestContextInitiatingThreadPoolExecutor

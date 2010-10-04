@@ -3,8 +3,6 @@
  */
 package com.acme.orderplacement.jee.app.config.camel;
 
-import java.util.concurrent.Executor;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
@@ -13,8 +11,8 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.task.support.TaskExecutorAdapter;
 
+import com.acme.orderplacement.jee.framework.camelpe.weld.jms.WeldRequestContextInitiatingJmsConfiguration;
 import com.acme.orderplacement.jee.framework.jboss.camel.HornetQCamelComponent;
 
 /**
@@ -37,15 +35,16 @@ class ComponentFactory {
 				.trace(
 						"About to construct a new customized [{}] instance using CamelContext [{}] ...",
 						HornetQCamelComponent.class.getName(), camelContext);
-		final HornetQCamelComponent hornetQComponent = new HornetQCamelComponent(
-				camelContext);
 
-		final Executor camelDefaultExecutor = camelContext
-				.getExecutorServiceStrategy().lookup(this,
-						"JMSMessageListenerContainer",
-						"defaultThreadPoolProfile");
-		hornetQComponent.setTaskExecutor(new TaskExecutorAdapter(
-				camelDefaultExecutor));
+		/*
+		 * Make this JMS component use a custom JmsConfiguration which takes
+		 * care of creating a new Weld RequestContext (optionally terminating an
+		 * already active one) before each task execution.
+		 */
+		final HornetQCamelComponent hornetQComponent = new HornetQCamelComponent(
+				camelContext,
+				new WeldRequestContextInitiatingJmsConfiguration());
+
 		this.log.trace(
 				"Successfully constructed a new customized [{}] instance [{}]",
 				HornetQCamelComponent.class.getName(), hornetQComponent);

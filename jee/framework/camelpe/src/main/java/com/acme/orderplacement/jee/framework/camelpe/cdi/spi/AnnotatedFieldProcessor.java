@@ -49,8 +49,8 @@ abstract class AnnotatedFieldProcessor {
 	 * @param type
 	 * @throws ResolutionException
 	 */
-	public static <X> void ensureNoConflictingAnnotationsPresentOn(
-			final Class<X> type) throws ResolutionException {
+	static <X> void ensureNoConflictingAnnotationsPresentOn(final Class<X> type)
+			throws ResolutionException {
 		final Set<Field> fieldsHavingConflictingAnnotations = Sets.filter(
 				ImmutableSet.copyOf(allFieldsAndSuperclassFieldsIn(type)),
 				HAS_CONFLICTING_CDI_ANNOTATIONS);
@@ -66,7 +66,7 @@ abstract class AnnotatedFieldProcessor {
 	 * @param type
 	 * @return
 	 */
-	public static <X> boolean hasCamelInjectAnnotatedFields(final Class<X> type) {
+	static <X> boolean hasCamelInjectAnnotatedFields(final Class<X> type) {
 		return !camelInjectAnnotatedFieldsIn(type).isEmpty();
 	}
 
@@ -75,8 +75,7 @@ abstract class AnnotatedFieldProcessor {
 	 * @param type
 	 * @return
 	 */
-	public static <X> Set<Field> camelInjectAnnotatedFieldsIn(
-			final Class<X> type) {
+	static <X> Set<Field> camelInjectAnnotatedFieldsIn(final Class<X> type) {
 		return Sets.filter(ImmutableSet
 				.copyOf(allFieldsAndSuperclassFieldsIn(type)),
 				IS_CAMEL_INJECT_ANNOTATED);

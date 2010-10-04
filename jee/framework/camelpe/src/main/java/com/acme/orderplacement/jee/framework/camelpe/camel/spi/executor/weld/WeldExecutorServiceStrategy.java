@@ -52,8 +52,12 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class CdiExecutorServiceStrategy extends ServiceSupport implements
+public class WeldExecutorServiceStrategy extends ServiceSupport implements
 		ExecutorServiceStrategy {
+
+	// -------------------------------------------------------------------------
+	// Fields
+	// -------------------------------------------------------------------------
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -67,7 +71,11 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 
 	private final Map<String, ThreadPoolProfile> threadPoolProfiles = new HashMap<String, ThreadPoolProfile>();
 
-	public CdiExecutorServiceStrategy(final CamelContext camelContext) {
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	public WeldExecutorServiceStrategy(final CamelContext camelContext) {
 		this.camelContext = camelContext;
 
 		// create and register the default profile
@@ -85,18 +93,34 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		registerThreadPoolProfile(defaultProfile);
 	}
 
+	// -------------------------------------------------------------------------
+	// org.apache.camel.spi.ExecutorServiceStrategy
+	// -------------------------------------------------------------------------
+
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#registerThreadPoolProfile(org.apache.camel.spi.ThreadPoolProfile)
+	 */
 	public void registerThreadPoolProfile(final ThreadPoolProfile profile) {
 		this.threadPoolProfiles.put(profile.getId(), profile);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#getThreadPoolProfile(java.lang.String)
+	 */
 	public ThreadPoolProfile getThreadPoolProfile(final String id) {
 		return this.threadPoolProfiles.get(id);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#getDefaultThreadPoolProfile()
+	 */
 	public ThreadPoolProfile getDefaultThreadPoolProfile() {
 		return getThreadPoolProfile(this.defaultThreadPoolProfileId);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#setDefaultThreadPoolProfile(org.apache.camel.spi.ThreadPoolProfile)
+	 */
 	public void setDefaultThreadPoolProfile(
 			final ThreadPoolProfile defaultThreadPoolProfile) {
 		final ThreadPoolProfile oldProfile = this.threadPoolProfiles
@@ -158,19 +182,32 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		registerThreadPoolProfile(defaultThreadPoolProfile);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#getThreadName(java.lang.String)
+	 */
 	public String getThreadName(final String name) {
-		return CdiExecutorServiceStrategyUtil.getThreadName(
+		return WeldExecutorServiceStrategyUtil.getThreadName(
 				this.threadNamePattern, name);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#getThreadNamePattern()
+	 */
 	public String getThreadNamePattern() {
 		return this.threadNamePattern;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#setThreadNamePattern(java.lang.String)
+	 */
 	public void setThreadNamePattern(final String threadNamePattern) {
 		this.threadNamePattern = threadNamePattern;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#lookup(java.lang.Object,
+	 *      java.lang.String, java.lang.String)
+	 */
 	public ExecutorService lookup(final Object source, final String name,
 			final String executorServiceRef) {
 		ExecutorService answer = this.camelContext.getRegistry().lookup(
@@ -194,6 +231,10 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		return answer;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#lookupScheduled(java.lang.Object,
+	 *      java.lang.String, java.lang.String)
+	 */
 	public ScheduledExecutorService lookupScheduled(final Object source,
 			final String name, final String executorServiceRef) {
 		ScheduledExecutorService answer = this.camelContext.getRegistry()
@@ -221,6 +262,10 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		return answer;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newDefaultThreadPool(java.lang.Object,
+	 *      java.lang.String)
+	 */
 	public ExecutorService newDefaultThreadPool(final Object source,
 			final String name) {
 		final ThreadPoolProfile profile = getDefaultThreadPoolProfile();
@@ -232,6 +277,10 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 				.getRejectedExecutionHandler(), false);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newThreadPool(java.lang.Object,
+	 *      java.lang.String, java.lang.String)
+	 */
 	public ExecutorService newThreadPool(final Object source,
 			final String name, final String threadPoolProfileId) {
 		final ThreadPoolProfile defaultProfile = getDefaultThreadPoolProfile();
@@ -261,9 +310,13 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 				keepAliveTime, timeUnit, maxQueueSize, handler, false);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newCachedThreadPool(java.lang.Object,
+	 *      java.lang.String)
+	 */
 	public ExecutorService newCachedThreadPool(final Object source,
 			final String name) {
-		final ExecutorService answer = CdiExecutorServiceStrategyUtil
+		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 				.newCachedThreadPool(this.threadNamePattern, name, true);
 		onThreadPoolCreated(answer);
 
@@ -275,15 +328,23 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		return answer;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newScheduledThreadPool(java.lang.Object,
+	 *      java.lang.String)
+	 */
 	public ScheduledExecutorService newScheduledThreadPool(final Object source,
 			final String name) {
 		final int poolSize = getDefaultThreadPoolProfile().getPoolSize();
 		return newScheduledThreadPool(source, name, poolSize);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newScheduledThreadPool(java.lang.Object,
+	 *      java.lang.String, int)
+	 */
 	public ScheduledExecutorService newScheduledThreadPool(final Object source,
 			final String name, final int poolSize) {
-		final ScheduledExecutorService answer = CdiExecutorServiceStrategyUtil
+		final ScheduledExecutorService answer = WeldExecutorServiceStrategyUtil
 				.newScheduledThreadPool(poolSize, this.threadNamePattern, name,
 						true);
 		onThreadPoolCreated(answer);
@@ -296,9 +357,13 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		return answer;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newFixedThreadPool(java.lang.Object,
+	 *      java.lang.String, int)
+	 */
 	public ExecutorService newFixedThreadPool(final Object source,
 			final String name, final int poolSize) {
-		final ExecutorService answer = CdiExecutorServiceStrategyUtil
+		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 				.newFixedThreadPool(poolSize, this.threadNamePattern, name,
 						true);
 		onThreadPoolCreated(answer);
@@ -311,9 +376,13 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		return answer;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newSingleThreadExecutor(java.lang.Object,
+	 *      java.lang.String)
+	 */
 	public ExecutorService newSingleThreadExecutor(final Object source,
 			final String name) {
-		final ExecutorService answer = CdiExecutorServiceStrategyUtil
+		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 				.newSingleThreadExecutor(this.threadNamePattern, name, true);
 		onThreadPoolCreated(answer);
 
@@ -325,9 +394,13 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		return answer;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newThreadPool(java.lang.Object,
+	 *      java.lang.String, int, int)
+	 */
 	public ExecutorService newThreadPool(final Object source,
 			final String name, final int corePoolSize, final int maxPoolSize) {
-		final ExecutorService answer = CdiExecutorServiceStrategyUtil
+		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 				.newThreadPool(this.threadNamePattern, name, corePoolSize,
 						maxPoolSize);
 		onThreadPoolCreated(answer);
@@ -341,6 +414,11 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		return answer;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#newThreadPool(java.lang.Object,
+	 *      java.lang.String, int, int, long, java.util.concurrent.TimeUnit,
+	 *      int, java.util.concurrent.RejectedExecutionHandler, boolean)
+	 */
 	public ExecutorService newThreadPool(final Object source,
 			final String name, final int corePoolSize, final int maxPoolSize,
 			final long keepAliveTime, final TimeUnit timeUnit,
@@ -351,7 +429,7 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		// the thread name must not be null
 		ObjectHelper.notNull(name, "ThreadName");
 
-		final ExecutorService answer = CdiExecutorServiceStrategyUtil
+		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 				.newThreadPool(this.threadNamePattern, name, corePoolSize,
 						maxPoolSize, keepAliveTime, timeUnit, maxQueueSize,
 						rejectedExecutionHandler, daemon);
@@ -368,6 +446,9 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 		return answer;
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#shutdown(java.util.concurrent.ExecutorService)
+	 */
 	public void shutdown(final ExecutorService executorService) {
 		ObjectHelper.notNull(executorService, "executorService");
 
@@ -384,6 +465,9 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 				executorService);
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ExecutorServiceStrategy#shutdownNow(java.util.concurrent.ExecutorService)
+	 */
 	public List<Runnable> shutdownNow(final ExecutorService executorService) {
 		ObjectHelper.notNull(executorService, "executorService");
 
@@ -396,50 +480,15 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 
 		final List<Runnable> answer = executorService.shutdownNow();
 
-		this.log.debug("ShutdownNow of ExecutorService [{}] complete",
+		this.log.debug("ShutdownNow of ExecutorService [{}] completed",
 				executorService);
 
 		return answer;
 	}
 
-	private void onThreadPoolCreated(final ExecutorService executorService) {
-		// add to internal list of thread pools
-		this.executorServices.add(executorService);
-
-		// let lifecycle strategy be notified as well which can let it be
-		// managed in JMX as well
-		if (executorService instanceof ThreadPoolExecutor) {
-			final ThreadPoolExecutor threadPool = (ThreadPoolExecutor) executorService;
-			for (final LifecycleStrategy lifecycle : this.camelContext
-					.getLifecycleStrategies()) {
-				lifecycle.onThreadPoolAdd(this.camelContext, threadPool);
-			}
-		}
-
-		// now call strategy to allow custom logic
-		onNewExecutorService(executorService);
-	}
-
-	/**
-	 * Strategy callback when a new {@link java.util.concurrent.ExecutorService}
-	 * have been created.
-	 * 
-	 * @param executorService
-	 *            the created {@link java.util.concurrent.ExecutorService}
-	 */
-	protected void onNewExecutorService(final ExecutorService executorService) {
-		// noop
-	}
-
-	@Override
-	protected void doStart() throws Exception {
-		// noop
-	}
-
-	@Override
-	protected void doStop() throws Exception {
-		// noop
-	}
+	// -------------------------------------------------------------------------
+	// Overridden methods
+	// -------------------------------------------------------------------------
 
 	@Override
 	protected void doShutdown() throws Exception {
@@ -466,5 +515,58 @@ public class CdiExecutorServiceStrategy extends ServiceSupport implements
 				it.remove();
 			}
 		}
+	}
+
+	// -------------------------------------------------------------------------
+	// Lifecycle Callbacks
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Strategy callback when a new {@link java.util.concurrent.ExecutorService}
+	 * have been created.
+	 * 
+	 * @param executorService
+	 *            the created {@link java.util.concurrent.ExecutorService}
+	 */
+	protected void onNewExecutorService(final ExecutorService executorService) {
+		// noop
+	}
+
+	/**
+	 * @see org.apache.camel.impl.ServiceSupport#doStart()
+	 */
+	@Override
+	protected void doStart() throws Exception {
+		// noop
+	}
+
+	/**
+	 * @see org.apache.camel.impl.ServiceSupport#doStop()
+	 */
+	@Override
+	protected void doStop() throws Exception {
+		// noop
+	}
+
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
+
+	private void onThreadPoolCreated(final ExecutorService executorService) {
+		// add to internal list of thread pools
+		this.executorServices.add(executorService);
+
+		// let lifecycle strategy be notified as well which can let it be
+		// managed in JMX as well
+		if (executorService instanceof ThreadPoolExecutor) {
+			final ThreadPoolExecutor threadPool = (ThreadPoolExecutor) executorService;
+			for (final LifecycleStrategy lifecycle : this.camelContext
+					.getLifecycleStrategies()) {
+				lifecycle.onThreadPoolAdd(this.camelContext, threadPool);
+			}
+		}
+
+		// now call strategy to allow custom logic
+		onNewExecutorService(executorService);
 	}
 }

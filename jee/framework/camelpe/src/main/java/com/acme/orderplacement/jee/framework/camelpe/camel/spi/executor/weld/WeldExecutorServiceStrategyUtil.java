@@ -29,23 +29,24 @@ import org.apache.camel.util.ObjectHelper;
 
 /**
  * <p>
- * TODO: Insert short summary for CdiExecutorServiceStrategyUtil
+ * TODO: Insert short summary for WeldExecutorServiceStrategyUtil
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-final class CdiExecutorServiceStrategyUtil {
+final class WeldExecutorServiceStrategyUtil {
 
 	/**
 	 * <p>
-	 * TODO: Insert short summary for CdiThreadFactory
+	 * TODO: Insert short summary for NamingAwareThreadFactory
 	 * </p>
 	 * 
 	 * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
 	 * 
 	 */
-	private static final class CdiThreadFactory implements ThreadFactory {
+	private static final class NamingAwareThreadFactory implements
+			ThreadFactory {
 
 		private final boolean daemon;
 
@@ -53,7 +54,7 @@ final class CdiExecutorServiceStrategyUtil {
 
 		private final String pattern;
 
-		CdiThreadFactory(final boolean daemon, final String name,
+		NamingAwareThreadFactory(final boolean daemon, final String name,
 				final String pattern) {
 			this.daemon = daemon;
 			this.name = name;
@@ -68,15 +69,15 @@ final class CdiExecutorServiceStrategyUtil {
 		}
 	}
 
-	public static final String DEFAULT_PATTERN = "CDI Camel Thread ${counter} - ${name}";
+	private static final String DEFAULT_PATTERN = "WELD Camel Thread ${counter} - ${name}";
 
-	private static AtomicInteger threadCounter = new AtomicInteger();
+	private static final AtomicInteger THREAD_COUNTER = new AtomicInteger();
 
-	private CdiExecutorServiceStrategyUtil() {
+	private WeldExecutorServiceStrategyUtil() {
 	}
 
-	private static synchronized int nextThreadCounter() {
-		return threadCounter.getAndIncrement();
+	private static int nextThreadCounter() {
+		return THREAD_COUNTER.getAndIncrement();
 	}
 
 	/**
@@ -126,7 +127,7 @@ final class CdiExecutorServiceStrategyUtil {
 	static ScheduledExecutorService newScheduledThreadPool(final int poolSize,
 			final String pattern, final String name, final boolean daemon) {
 		return new WeldRequestContextInitiatingScheduledThreadPoolExecutor(
-				poolSize, new CdiThreadFactory(daemon, name, pattern));
+				poolSize, new NamingAwareThreadFactory(daemon, name, pattern));
 	}
 
 	/**
@@ -146,8 +147,8 @@ final class CdiExecutorServiceStrategyUtil {
 			final String pattern, final String name, final boolean daemon) {
 		return new WeldRequestContextInitiatingThreadPoolExecutor(poolSize,
 				poolSize, 0L, TimeUnit.MILLISECONDS,
-				new LinkedBlockingQueue<Runnable>(), new CdiThreadFactory(
-						daemon, name, pattern));
+				new LinkedBlockingQueue<Runnable>(),
+				new NamingAwareThreadFactory(daemon, name, pattern));
 	}
 
 	/**
@@ -167,7 +168,7 @@ final class CdiExecutorServiceStrategyUtil {
 				new WeldRequestContextInitiatingThreadPoolExecutor(1, 1, 0L,
 						TimeUnit.MILLISECONDS,
 						new LinkedBlockingQueue<Runnable>(),
-						new CdiThreadFactory(daemon, name, pattern)));
+						new NamingAwareThreadFactory(daemon, name, pattern)));
 	}
 
 	/**
@@ -185,8 +186,8 @@ final class CdiExecutorServiceStrategyUtil {
 			final String name, final boolean daemon) {
 		return new WeldRequestContextInitiatingThreadPoolExecutor(0,
 				Integer.MAX_VALUE, 60L, TimeUnit.SECONDS,
-				new SynchronousQueue<Runnable>(), new CdiThreadFactory(daemon,
-						name, pattern));
+				new SynchronousQueue<Runnable>(), new NamingAwareThreadFactory(
+						daemon, name, pattern));
 	}
 
 	/**
@@ -267,7 +268,8 @@ final class CdiExecutorServiceStrategyUtil {
 		}
 		final ThreadPoolExecutor answer = new WeldRequestContextInitiatingThreadPoolExecutor(
 				corePoolSize, maxPoolSize, keepAliveTime, timeUnit, queue);
-		answer.setThreadFactory(new CdiThreadFactory(daemon, name, pattern));
+		answer.setThreadFactory(new NamingAwareThreadFactory(daemon, name,
+				pattern));
 		answer
 				.setRejectedExecutionHandler(rejectedExecutionHandler != null ? rejectedExecutionHandler
 						: new ThreadPoolExecutor.CallerRunsPolicy());

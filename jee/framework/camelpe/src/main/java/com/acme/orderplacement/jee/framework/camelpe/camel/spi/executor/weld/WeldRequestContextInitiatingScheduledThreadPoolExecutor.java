@@ -7,6 +7,8 @@ import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 
+import com.acme.orderplacement.jee.framework.camelpe.weld.WeldRequestContext;
+
 /**
  * <p>
  * TODO: Insert short summary for
@@ -71,9 +73,9 @@ public class WeldRequestContextInitiatingScheduledThreadPoolExecutor extends
 	 */
 	@Override
 	protected void beforeExecute(final Thread t, final Runnable r) {
-		super.beforeExecute(t, r);
-
 		WeldRequestContext.begin();
+
+		super.beforeExecute(t, r);
 	}
 
 	/**
@@ -82,8 +84,8 @@ public class WeldRequestContextInitiatingScheduledThreadPoolExecutor extends
 	 */
 	@Override
 	protected void afterExecute(final Runnable r, final Throwable t) {
-		WeldRequestContext.end();
-
 		super.afterExecute(r, t);
+
+		WeldRequestContext.end();
 	}
 }

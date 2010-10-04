@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.acme.orderplacement.jee.framework.camelpe.camel.packagescan;
+package com.acme.orderplacement.jee.framework.camel.packagescan;
 
 import java.util.HashSet;
 import java.util.ServiceLoader;

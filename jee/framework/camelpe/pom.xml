@@ -47,6 +47,11 @@
 			<artifactId>camel-core</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jms</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 			| Runtime dependencies
 		-->

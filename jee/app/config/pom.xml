@@ -29,6 +29,22 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
+			<artifactId>orderplacement.jee.framework.camel</artifactId>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.acme.orderplacement.framework</groupId>
+					<artifactId>orderplacement.framework.jmslog</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.acme.orderplacement.integration</groupId>
+					<artifactId>orderplacement.integration.inbound.external
+					</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.acme.orderplacement.jee.framework</groupId>
 			<artifactId>orderplacement.jee.framework.camelpe</artifactId>
 			<scope>compile</scope>
 		</dependency>
@@ -49,7 +65,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
-			<artifactId>orderplacement.jee.framework.camel</artifactId>
+			<artifactId>orderplacement.jee.framework.common</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

@@ -1,4 +1,4 @@
-package com.acme.orderplacement.jee.framework.camelpe.camel.spi.executor.weld;
+package com.acme.orderplacement.jee.framework.camelpe.weld;
 
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-final class WeldRequestContext {
+public final class WeldRequestContext {
 
 	// -------------------------------------------------------------------------
 	// Static
@@ -41,7 +41,7 @@ final class WeldRequestContext {
 	 * NEEDS A REQUEST CONTEXT.
 	 * </p>
 	 */
-	static final void begin() {
+	public static final void begin() {
 		PER_THREAD_WELD_REQUEST_CONTEXT.get().beginInternal();
 	}
 
@@ -54,16 +54,31 @@ final class WeldRequestContext {
 	 * REQUEST CONTEXT NEEDS TO BE DESTROYED.
 	 * </p>
 	 */
-	static final void end() {
+	public static final void end() {
 		PER_THREAD_WELD_REQUEST_CONTEXT.get().endInternal();
 		PER_THREAD_WELD_REQUEST_CONTEXT.remove();
 	}
 
+	/**
+	 * <p>
+	 * Removes the current Weld RequestContext (if any) from the calling thread
+	 * and associates a new Weld Request Context with the calling thread.
+	 * </p>
+	 * <p>
+	 * <strong>IMPORTANT</strong>: MUST ONLY BE CALLED FROM THE THREAD THAT
+	 * NEEDS A REQUEST CONTEXT.
+	 * </p>
+	 */
+	public static final void endThenBegin() {
+		if (PER_THREAD_WELD_REQUEST_CONTEXT.get().isActiveInternal()) {
+			end();
+		}
+		begin();
+	}
+
 	private static WeldRequestContext newRequestContext() {
-		final String id = "ThreadRequestContext :: [ThreadID = "
-				+ Thread.currentThread().getId() + " | ThreadName = "
-				+ Thread.currentThread().getName() + " | UUID = "
-				+ UUID.randomUUID() + "]";
+		final String id = "urn:weld-request-context:tid-"
+				+ Thread.currentThread().getId() + "@" + UUID.randomUUID();
 		final BeanStore beanStore = new HashMapBeanStore();
 		final Lifecycle lifecycle = Container.instance().services().get(
 				ContextLifecycle.class);
@@ -98,21 +113,37 @@ final class WeldRequestContext {
 	// API
 	// -------------------------------------------------------------------------
 
-	private void beginInternal() {
+	private void beginInternal() throws IllegalStateException {
+		if (isActiveInternal()) {
+			throw new IllegalStateException(
+					"There is already a Weld RequestContext active on thread [ID = "
+							+ Thread.currentThread().getId() + " | Name = "
+							+ Thread.currentThread().getName() + "]");
+		}
 		this.lifecycle.beginRequest(this.id, this.beanStore);
 		this.log
 				.trace(
-						"New Weld RequestContext [ID = {}] started on Thread [ID = {} | Name = {}]",
+						">>>>> Weld RequestContext [ID = {}] started on Thread [ID = {} | Name = {}]",
 						new Object[] { this.id, Thread.currentThread().getId(),
 								Thread.currentThread().getName() });
 	}
 
-	private void endInternal() {
+	private void endInternal() throws IllegalStateException {
+		if (!isActiveInternal()) {
+			throw new IllegalStateException(
+					"There is no active Weld RequestContext on thread [ID = "
+							+ Thread.currentThread().getId() + " | Name = "
+							+ Thread.currentThread().getName() + "]");
+		}
 		this.lifecycle.endRequest(this.id, this.beanStore);
 		this.log
 				.trace(
-						"Weld RequestContext [ID = {}] terminated on Thread [ID = {} | Name = {}]",
+						"<<<<< Weld RequestContext [ID = {}] terminated on Thread [ID = {} | Name = {}]",
 						new Object[] { this.id, Thread.currentThread().getId(),
 								Thread.currentThread().getName() });
+	}
+
+	private boolean isActiveInternal() {
+		return this.lifecycle.isRequestActive();
 	}
 }

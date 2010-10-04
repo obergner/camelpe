@@ -5,7 +5,7 @@ package com.acme.orderplacement.jee.framework.camelpe.util;
 
 import java.util.Set;
 
-import javax.enterprise.inject.AmbiguousResolutionException;
+import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.ResolutionException;
 import javax.enterprise.inject.UnsatisfiedResolutionException;
 import javax.enterprise.inject.spi.Bean;
@@ -55,18 +55,13 @@ public class BeanReference<T> {
 					+ this.beanType.getName() + "] Bean in BeanManager ["
 					+ this.beanManager + "]");
 		}
-		if (matchingBeans.size() > 1) {
-			throw new AmbiguousResolutionException("Found more than one ["
-					+ matchingBeans.size() + "] [" + this.beanType.getName()
-					+ "] Beans in BeanManager [" + this.beanManager + "]: "
-					+ matchingBeans);
-		}
-		final Bean<T> uniqueMatchingBean = (Bean<T>) matchingBeans.iterator()
-				.next();
+		final Bean<T> uniqueMatchingBean = (Bean<T>) this.beanManager
+				.resolve(matchingBeans);
+		final CreationalContext<T> creationalContext = this.beanManager
+				.createCreationalContext(uniqueMatchingBean);
 
 		return this.beanType.cast(this.beanManager.getReference(
-				uniqueMatchingBean, this.beanType, this.beanManager
-						.createCreationalContext(uniqueMatchingBean)));
+				uniqueMatchingBean, this.beanType, creationalContext));
 	}
 
 	// -------------------------------------------------------------------------
