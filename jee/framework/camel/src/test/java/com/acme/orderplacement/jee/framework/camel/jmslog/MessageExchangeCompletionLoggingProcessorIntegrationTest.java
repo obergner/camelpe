@@ -5,6 +5,11 @@ package com.acme.orderplacement.jee.framework.camel.jmslog;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,6 +29,7 @@ import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
 import com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean;
 import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageExchange;
+import com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext;
 
 /**
  * <p>
@@ -66,8 +72,10 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 	@Test
 	public final void assertThatProcessWithoutErrorSetsCorrectProcessingState()
 			throws Exception {
-		final String body = "TEST";
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
 
+		final String body = "TEST";
 		final DefaultMessage inMessage = new DefaultMessage();
 		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
 		inMessage.setBody(body, String.class);
@@ -76,7 +84,7 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 		exchange.setIn(inMessage);
 
 		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
@@ -99,10 +107,14 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 	 * @throws Exception
 	 */
 	@Test
-	public final void assertThatProcessWithoutErrorSetsCompletionTime()
+	public final void assertThatProcessWithoutErrorCallsSucceedOnEventProcessingContext()
 			throws Exception {
-		final String body = "TEST";
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		eventProcessingContextMock.succeed();
+		expectLastCall();
+		replay(eventProcessingContextMock);
 
+		final String body = "TEST";
 		final DefaultMessage inMessage = new DefaultMessage();
 		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
 		inMessage.setBody(body, String.class);
@@ -111,7 +123,35 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 		exchange.setIn(inMessage);
 
 		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
+		classUnderTest.process(exchange);
+
+		verify(eventProcessingContextMock);
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.jee.framework.camel.jmslog.MessageExchangeCompletionLoggingProcessor#process(org.apache.camel.Exchange)}
+	 * .
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public final void assertThatProcessWithoutErrorSetsCompletionTime()
+			throws Exception {
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
+
+		final String body = "TEST";
+		final DefaultMessage inMessage = new DefaultMessage();
+		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
+		inMessage.setBody(body, String.class);
+
+		final Exchange exchange = new DefaultExchange(new DefaultCamelContext());
+		exchange.setIn(inMessage);
+
+		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
@@ -135,8 +175,10 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 	@Test
 	public final void assertThatProcessWithErrorSetsCorrectProcessingState()
 			throws Exception {
-		final String body = "TEST";
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
 
+		final String body = "TEST";
 		final DefaultMessage inMessage = new DefaultMessage();
 		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
 		inMessage.setBody(body, String.class);
@@ -146,7 +188,7 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 		exchange.setProperty(Exchange.EXCEPTION_CAUGHT, new Exception());
 
 		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
@@ -169,10 +211,14 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 	 * @throws Exception
 	 */
 	@Test
-	public final void assertThatProcessWithErrorSetsCompletionTime()
+	public final void assertThatProcessWithErrorCallsFailOnEventProcessingContext()
 			throws Exception {
-		final String body = "TEST";
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		eventProcessingContextMock.fail((Exception) anyObject());
+		expectLastCall();
+		replay(eventProcessingContextMock);
 
+		final String body = "TEST";
 		final DefaultMessage inMessage = new DefaultMessage();
 		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
 		inMessage.setBody(body, String.class);
@@ -182,7 +228,36 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 		exchange.setProperty(Exchange.EXCEPTION_CAUGHT, new Exception());
 
 		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
+		classUnderTest.process(exchange);
+
+		verify(eventProcessingContextMock);
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.jee.framework.camel.jmslog.MessageExchangeCompletionLoggingProcessor#process(org.apache.camel.Exchange)}
+	 * .
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public final void assertThatProcessWithErrorSetsCompletionTime()
+			throws Exception {
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
+
+		final String body = "TEST";
+		final DefaultMessage inMessage = new DefaultMessage();
+		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
+		inMessage.setBody(body, String.class);
+
+		final Exchange exchange = new DefaultExchange(new DefaultCamelContext());
+		exchange.setIn(inMessage);
+		exchange.setProperty(Exchange.EXCEPTION_CAUGHT, new Exception());
+
+		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
@@ -206,9 +281,12 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 	@Test
 	public final void assertThatProcessWithErrorSetsCorrectErrorType()
 			throws Exception {
-		final Exception error = new UnsupportedOperationException();
-		final String body = "TEST";
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
 
+		final Exception error = new UnsupportedOperationException();
+
+		final String body = "TEST";
 		final DefaultMessage inMessage = new DefaultMessage();
 		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
 		inMessage.setBody(body, String.class);
@@ -218,7 +296,7 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 		exchange.setProperty(Exchange.EXCEPTION_CAUGHT, error);
 
 		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
@@ -243,10 +321,13 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 	@Test
 	public final void assertThatProcessWithErrorSetsCorrectErrorMessage()
 			throws Exception {
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
+
 		final Exception error = new UnsupportedOperationException(
 				"TEST FOR ERROR MESSAGE");
-		final String body = "TEST";
 
+		final String body = "TEST";
 		final DefaultMessage inMessage = new DefaultMessage();
 		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
 		inMessage.setBody(body, String.class);
@@ -256,7 +337,7 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 		exchange.setProperty(Exchange.EXCEPTION_CAUGHT, error);
 
 		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
@@ -280,9 +361,12 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 	@Test
 	public final void assertThatProcessWithErrorSetsErrorStackTrace()
 			throws Exception {
-		final Exception error = new UnsupportedOperationException();
-		final String body = "TEST";
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
 
+		final Exception error = new UnsupportedOperationException();
+
+		final String body = "TEST";
 		final DefaultMessage inMessage = new DefaultMessage();
 		inMessage.setHeader("JMSMessageID", EXISTING_MESSAGE_GUID);
 		inMessage.setBody(body, String.class);
@@ -292,7 +376,7 @@ public class MessageExchangeCompletionLoggingProcessorIntegrationTest {
 		exchange.setProperty(Exchange.EXCEPTION_CAUGHT, error);
 
 		final MessageExchangeCompletionLoggingProcessor classUnderTest = new MessageExchangeCompletionLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager

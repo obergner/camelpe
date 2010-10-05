@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
+import org.slf4j.MDC;
 
 import com.acme.orderplacement.framework.common.qualifier.Internal;
 
@@ -55,11 +56,13 @@ public class ImmutableEventProcessingContext implements Serializable,
 
 	private final Date initiationTimestamp;
 
-	private final Date completionTimestamp;
+	private Date completionTimestamp;
 
 	private ProcessingState processingState;
 
 	private Exception error;
+
+	private final MessageDiagnosticContext messageDiagnosticContext;
 
 	// -------------------------------------------------------------------------
 	// Constructors
@@ -70,7 +73,7 @@ public class ImmutableEventProcessingContext implements Serializable,
 			final String eventSourceSystem, final String propagationId,
 			final String inflowId, final Date inflowTimestamp,
 			final String processingId, final int sequenceNumber,
-			final Date initiationTimestamp, final Date completionTimestamp) {
+			final Date initiationTimestamp) {
 		this.eventType = eventType;
 		this.eventId = eventId;
 		this.creationTimestamp = creationTimestamp;
@@ -81,8 +84,9 @@ public class ImmutableEventProcessingContext implements Serializable,
 		this.processingId = processingId;
 		this.sequenceNumber = sequenceNumber;
 		this.initiationTimestamp = initiationTimestamp;
-		this.completionTimestamp = completionTimestamp;
 		this.processingState = ProcessingState.IN_PROGRESS;
+		this.messageDiagnosticContext = this.new MessageDiagnosticContext()
+				.initialize();
 	}
 
 	// -------------------------------------------------------------------------
@@ -185,15 +189,21 @@ public class ImmutableEventProcessingContext implements Serializable,
 	 */
 	public final void fail(final Exception error) {
 		Validate.notNull(error, "error");
+		this.completionTimestamp = new Date();
 		this.error = error;
 		this.processingState = ProcessingState.FAILED;
+
+		this.messageDiagnosticContext.complete();
 	}
 
 	/**
 	 * @see com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext#succeed()
 	 */
 	public final void succeed() {
+		this.completionTimestamp = new Date();
 		this.processingState = ProcessingState.SUCCESSFUL;
+
+		this.messageDiagnosticContext.complete();
 	}
 
 	// -------------------------------------------------------------------------
@@ -217,6 +227,51 @@ public class ImmutableEventProcessingContext implements Serializable,
 				+ this.processingState + ", propagationId="
 				+ this.propagationId + ", sequenceNumber="
 				+ this.sequenceNumber + "]";
+	}
+
+	// -------------------------------------------------------------------------
+	// Register this EventProcessingContext in slf4j's MDC so that log messages
+	// may be enriched with context information.
+	// -------------------------------------------------------------------------
+
+	private final class MessageDiagnosticContext {
+
+		MessageDiagnosticContext() {
+			// Noop
+		}
+
+		MessageDiagnosticContext initialize() {
+			MDC.clear();
+
+			MDC.put(EventHeaderSpec.EVENT_TYPE.headerName(), getEventType());
+			MDC.put(EventHeaderSpec.EVENT_ID.headerName(), getEventId());
+			MDC.put(EventHeaderSpec.CREATION_TIMESTAMP.headerName(), String
+					.valueOf(getCreationTimestamp()));
+			MDC.put(EventHeaderSpec.EVENT_SOURCE_SYSTEM.headerName(),
+					getEventSourceSystem());
+			MDC.put(EventHeaderSpec.PROPAGATION_ID.headerName(),
+					getPropagationId());
+			MDC.put(EventHeaderSpec.INFLOW_ID.headerName(), getInflowId());
+			MDC.put(EventHeaderSpec.INFLOW_TIMESTAMP.headerName(), String
+					.valueOf(getInflowTimestamp()));
+			MDC.put(EventHeaderSpec.PROCESSING_ID.headerName(),
+					getProcessingId());
+			MDC.put(EventHeaderSpec.INITIATION_TIMESTAMP.headerName(), String
+					.valueOf(getInitiationTimestamp()));
+			MDC.put(EventHeaderSpec.SEQUENCE_NUMBER.headerName(), String
+					.valueOf(getSequenceNumber()));
+			MDC.put(EventHeaderSpec.PROCESSING_STATE.headerName(), String
+					.valueOf(getProcessingState()));
+
+			return this;
+		}
+
+		void complete() {
+			MDC.put(EventHeaderSpec.COMPLETION_TIMESTAMP.headerName(), String
+					.valueOf(getCompletionTimestamp()));
+			MDC.put(EventHeaderSpec.PROCESSING_STATE.headerName(), String
+					.valueOf(getProcessingState()));
+		}
 	}
 
 	// -------------------------------------------------------------------------
@@ -244,7 +299,6 @@ public class ImmutableEventProcessingContext implements Serializable,
 			String processingId = null;
 			int sequenceNumber = -1;
 			Date initiationTimestamp = null;
-			Date completionTimestamp = null;
 
 			final EventHeaders eventHeaders = EventHeaderSpec
 					.newEventHeadersFrom(headers);
@@ -283,17 +337,13 @@ public class ImmutableEventProcessingContext implements Serializable,
 						.isSpecifiedBy(EventHeaderSpec.INITIATION_TIMESTAMP)) {
 					initiationTimestamp = Date.class.cast(anEventHeader
 							.getValue());
-				} else if (anEventHeader
-						.isSpecifiedBy(EventHeaderSpec.COMPLETION_TIMESTAMP)) {
-					completionTimestamp = Date.class.cast(anEventHeader
-							.getValue());
 				}
 			}
 
 			return new ImmutableEventProcessingContext(eventType, eventId,
 					creationTimestamp, eventSourceSystem, propagationId,
 					inflowId, inflowTimestamp, processingId, sequenceNumber,
-					initiationTimestamp, completionTimestamp);
+					initiationTimestamp);
 		}
 	}
 }

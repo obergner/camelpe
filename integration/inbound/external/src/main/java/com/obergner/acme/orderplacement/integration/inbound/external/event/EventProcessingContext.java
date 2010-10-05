@@ -5,6 +5,8 @@ package com.obergner.acme.orderplacement.integration.inbound.external.event;
 
 import java.util.Date;
 
+import javax.enterprise.context.RequestScoped;
+
 /**
  * <p>
  * TODO: Insert short summary for EventProcessingContext
@@ -13,6 +15,7 @@ import java.util.Date;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@RequestScoped
 public interface EventProcessingContext {
 
 	/**

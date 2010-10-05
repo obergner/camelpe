@@ -25,9 +25,11 @@ import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.MDC;
 
 import com.acme.orderplacement.framework.common.qualifier.Public;
 import com.google.common.collect.ImmutableMap;
+import com.obergner.acme.orderplacement.integration.inbound.external.event.EventHeaderSpec;
 import com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext;
 import com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContextHolder;
 
@@ -103,6 +105,34 @@ public class EventProcessingContextProviderInContainerTest {
 		assertEquals("process(exchange) did not set correct SequenceNumber",
 				EXPECTED_SEQUENCE_NUMBER, this.eventProcessingContext
 						.getSequenceNumber());
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.jee.framework.camel.event.EventProcessingContextProvider#process(org.apache.camel.Exchange)}
+	 * .
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public final void assertThatProcessPopulatesMessageDiagnosticContextFromCompleteJmsMessage()
+			throws Exception {
+		final DefaultMessage inMessage = new DefaultMessage();
+		inMessage.setHeaders(completeWellFormedJmsHeaders());
+		inMessage.setBody("IGNORE", String.class);
+
+		final Exchange exchange = new DefaultExchange(new DefaultCamelContext());
+		exchange.setIn(inMessage);
+
+		this.classUnderTest.process(exchange);
+
+		assertEquals("process(exchange) did not set correct EventID in MDC",
+				EXPECTED_EVENT_ID, MDC.get(EventHeaderSpec.EVENT_ID
+						.headerName()));
+		assertEquals(
+				"process(exchange) did not set correct SequenceNumber in MDC",
+				String.valueOf(EXPECTED_SEQUENCE_NUMBER), MDC
+						.get(EventHeaderSpec.SEQUENCE_NUMBER.headerName()));
 	}
 
 	// -------------------------------------------------------------------------

@@ -2,20 +2,54 @@
 
 <logging xmlns="urn:jboss:logging:6.0" xmlns:b="urn:jboss:bean-deployer:2.0">
 
+	<!-- A time/date based rolling handler for Orderplacement -->
+
+	<periodic-rotating-file-handler
+		file-name="${jboss.server.log.dir}/orderplacement.log" name="ORDERPLACEMENT"
+		autoflush="true" append="true" suffix=".yyyy-MM-dd">
+
+		<error-manager>
+			<only-once />
+		</error-manager>
+
+		<formatter>
+			<pattern-formatter pattern="%d [%t] %-5p [%X{EventID}] [%X{ProcessingID}] [%X{ProcessingState}] [%c] %s%E%n" />
+		</formatter>
+	</periodic-rotating-file-handler>
+
 	<logger category="com.acme.orderplacement">
 		<level name="TRACE" />
+		<handlers>
+        	<handler-ref name="ORDERPLACEMENT_LOG"/>
+        </handlers>
 	</logger>
 
 	<logger category="org.hornetq">
 		<level name="DEBUG" />
+		<handlers>
+        	<handler-ref name="ORDERPLACEMENT_LOG"/>
+        </handlers>
 	</logger>
 
 	<logger category="org.apache.camel">
 		<level name="TRACE" />
+		<handlers>
+        	<handler-ref name="ORDERPLACEMENT_LOG"/>
+        </handlers>
 	</logger>
 
 	<logger category="org.springframework.jms">
-		<level name="TRACE" />
+		<level name="DEBUG" />
+		<handlers>
+        	<handler-ref name="ORDERPLACEMENT_LOG"/>
+        </handlers>
+	</logger>
+	
+	<logger category="org.jboss.weld">
+		<level name="DEBUG" />
+		<handlers>
+        	<handler-ref name="ORDERPLACEMENT_LOG"/>
+        </handlers>
 	</logger>
 
 </logging>

@@ -4,10 +4,12 @@
 package com.acme.orderplacement.jee.framework.camel.jmslog;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.apache.camel.Exchange;
 
 import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
+import com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext;
 
 /**
  * <p>
@@ -21,6 +23,9 @@ import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
 public class MessageExchangeCompletionLoggingProcessor extends
 		AbstractJmsMessageExchangeLoggingProcessor {
 
+	@Inject
+	private EventProcessingContext eventProcessingContext;
+
 	public MessageExchangeCompletionLoggingProcessor() {
 		// Intentionally left blank
 	}
@@ -31,8 +36,10 @@ public class MessageExchangeCompletionLoggingProcessor extends
 	 * @param cachedJmsMessageLogger
 	 */
 	MessageExchangeCompletionLoggingProcessor(
-			final JmsMessageExchangeLogger cachedJmsMessageLogger) {
+			final JmsMessageExchangeLogger cachedJmsMessageLogger,
+			final EventProcessingContext eventProcessingContext) {
 		super(cachedJmsMessageLogger);
+		this.eventProcessingContext = eventProcessingContext;
 	}
 
 	/**
@@ -49,6 +56,12 @@ public class MessageExchangeCompletionLoggingProcessor extends
 					.trace(
 							"About to set completion status of message exchange [Message-GUID = {}] to [successful = {}] in database ...",
 							messageGuid, Boolean.valueOf(successful));
+
+			if (successful) {
+				this.eventProcessingContext.succeed();
+			} else {
+				this.eventProcessingContext.fail(error);
+			}
 
 			jmsMessageLogger().completeJmsMessageExchange(messageGuid, error);
 
