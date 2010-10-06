@@ -55,7 +55,9 @@ public final class WeldRequestContext {
 	 * </p>
 	 */
 	public static final void end() {
-		PER_THREAD_WELD_REQUEST_CONTEXT.get().endInternal();
+		if (PER_THREAD_WELD_REQUEST_CONTEXT.get().isActiveInternal()) {
+			PER_THREAD_WELD_REQUEST_CONTEXT.get().endInternal();
+		}
 		PER_THREAD_WELD_REQUEST_CONTEXT.remove();
 	}
 
@@ -70,9 +72,7 @@ public final class WeldRequestContext {
 	 * </p>
 	 */
 	public static final void endThenBegin() {
-		if (PER_THREAD_WELD_REQUEST_CONTEXT.get().isActiveInternal()) {
-			end();
-		}
+		end();
 		begin();
 	}
 

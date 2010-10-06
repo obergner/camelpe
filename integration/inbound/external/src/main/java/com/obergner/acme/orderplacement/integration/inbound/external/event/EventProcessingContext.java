@@ -89,6 +89,13 @@ public interface EventProcessingContext {
 	 */
 	void fail(final Exception error);
 
+	/**
+	 * 
+	 */
 	void succeed();
 
+	/**
+	 * 
+	 */
+	void clear();
 }

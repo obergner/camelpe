@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
+import javax.annotation.PreDestroy;
+
 import org.apache.commons.lang.Validate;
 import org.slf4j.MDC;
 
@@ -206,6 +208,15 @@ public class ImmutableEventProcessingContext implements Serializable,
 		this.messageDiagnosticContext.complete();
 	}
 
+	/**
+	 * @see com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext#clear()
+	 */
+	@Override
+	@PreDestroy
+	public void clear() {
+		this.messageDiagnosticContext.clear();
+	}
+
 	// -------------------------------------------------------------------------
 	// equals(), hashCode(), toString()
 	// -------------------------------------------------------------------------
@@ -271,6 +282,10 @@ public class ImmutableEventProcessingContext implements Serializable,
 					.valueOf(getCompletionTimestamp()));
 			MDC.put(EventHeaderSpec.PROCESSING_STATE.headerName(), String
 					.valueOf(getProcessingState()));
+		}
+
+		void clear() {
+			MDC.clear();
 		}
 	}
 

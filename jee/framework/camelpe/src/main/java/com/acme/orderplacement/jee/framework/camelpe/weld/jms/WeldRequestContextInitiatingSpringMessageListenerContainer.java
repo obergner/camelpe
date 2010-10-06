@@ -35,4 +35,15 @@ public class WeldRequestContextInitiatingSpringMessageListenerContainer extends
 
 		WeldRequestContext.endThenBegin();
 	}
+
+	/**
+	 * @see org.springframework.jms.listener.DefaultMessageListenerContainer#noMessageReceived(java.lang.Object,
+	 *      javax.jms.Session)
+	 */
+	@Override
+	protected void noMessageReceived(final Object invoker, final Session session) {
+		WeldRequestContext.end();
+
+		super.noMessageReceived(invoker, session);
+	}
 }

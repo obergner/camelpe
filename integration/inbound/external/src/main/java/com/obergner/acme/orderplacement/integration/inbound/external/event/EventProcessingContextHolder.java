@@ -6,6 +6,7 @@ package com.obergner.acme.orderplacement.integration.inbound.external.event;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 
@@ -198,6 +199,15 @@ public class EventProcessingContextHolder implements Serializable,
 	 */
 	public void succeed() {
 		delegate().succeed();
+	}
+
+	/**
+	 * @see com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext#clear()
+	 */
+	@Override
+	@PreDestroy
+	public void clear() {
+		delegate().clear();
 	}
 
 	// -------------------------------------------------------------------------
