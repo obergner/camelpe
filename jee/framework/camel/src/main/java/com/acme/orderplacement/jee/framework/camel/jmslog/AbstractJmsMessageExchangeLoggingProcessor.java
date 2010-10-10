@@ -3,8 +3,7 @@
  */
 package com.acme.orderplacement.jee.framework.camel.jmslog;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.inject.Inject;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -13,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
+import com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext;
 
 /**
  * <p>
@@ -25,33 +25,52 @@ import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
 public abstract class AbstractJmsMessageExchangeLoggingProcessor implements
 		Processor {
 
-	private static final String JMS_MESSAGE_LOGGER_BEAN_JNDI_NAME = "orderplacement.jee.ear-1.0-SNAPSHOT/JmsMessageExchangeLoggerBean/local";
+	// -------------------------------------------------------------------------
+	// Static
+	// -------------------------------------------------------------------------
 
 	private static final String JMS_MESSAGE_ID_HEADER = "JMSMessageID";
 
+	// -------------------------------------------------------------------------
+	// Fields
+	// -------------------------------------------------------------------------
+
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	private JmsMessageExchangeLogger cachedJmsMessageLogger;
+	@Inject
+	private JmsMessageExchangeLogger jmsMessageLogger;
+
+	@Inject
+	private EventProcessingContext eventProcessingContext;
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	protected AbstractJmsMessageExchangeLoggingProcessor() {
 		// Intentionally left blank
 	}
 
 	AbstractJmsMessageExchangeLoggingProcessor(
-			final JmsMessageExchangeLogger jmsMessageLogger) {
+			final JmsMessageExchangeLogger jmsMessageLogger,
+			final EventProcessingContext eventProcessingContext) {
 		Validate.notNull(jmsMessageLogger, "jmsMessageLogger");
-		this.cachedJmsMessageLogger = jmsMessageLogger;
+		Validate.notNull(eventProcessingContext, "eventProcessingContext");
+		this.jmsMessageLogger = jmsMessageLogger;
+		this.eventProcessingContext = eventProcessingContext;
 	}
 
-	protected synchronized JmsMessageExchangeLogger jmsMessageLogger()
-			throws NamingException {
-		if (this.cachedJmsMessageLogger == null) {
-			final InitialContext ic = new InitialContext();
-			this.cachedJmsMessageLogger = (JmsMessageExchangeLogger) ic
-					.lookup(JMS_MESSAGE_LOGGER_BEAN_JNDI_NAME);
-		}
+	// -------------------------------------------------------------------------
+	// Protected
+	// -------------------------------------------------------------------------
 
-		return this.cachedJmsMessageLogger;
+	protected JmsMessageExchangeLogger jmsMessageLogger() {
+
+		return this.jmsMessageLogger;
+	}
+
+	protected EventProcessingContext eventProcessingContext() {
+		return this.eventProcessingContext;
 	}
 
 	protected String messageIdFrom(final Exchange exchange) {

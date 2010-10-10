@@ -5,6 +5,8 @@ package com.acme.orderplacement.jee.framework.camel.jmslog;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.replay;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +30,7 @@ import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
 import com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean;
 import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageExchange;
+import com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext;
 
 /**
  * <p>
@@ -78,14 +81,19 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 		final Exchange exchange = new DefaultExchange(new DefaultCamelContext());
 		exchange.setIn(inMessage);
 
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
+
 		final IncomingMessageExchangeLoggingProcessor classUnderTest = new IncomingMessageExchangeLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
-				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID, JmsMessageExchange.class);
+				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID,
+						JmsMessageExchange.class);
 		messageByGuid.setParameter("guid", messageId);
-		final List<JmsMessageExchange> storedMessages = messageByGuid.getResultList();
+		final List<JmsMessageExchange> storedMessages = messageByGuid
+				.getResultList();
 		assertFalse("process(" + exchange + ") did NOT store message",
 				storedMessages.isEmpty());
 	}
@@ -115,14 +123,19 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 		final Exchange exchange = new DefaultExchange(new DefaultCamelContext());
 		exchange.setIn(inMessage);
 
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
+
 		final IncomingMessageExchangeLoggingProcessor classUnderTest = new IncomingMessageExchangeLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
-				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID, JmsMessageExchange.class);
+				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID,
+						JmsMessageExchange.class);
 		messageByGuid.setParameter("guid", messageId);
-		final JmsMessageExchange storedMessage = messageByGuid.getSingleResult();
+		final JmsMessageExchange storedMessage = messageByGuid
+				.getSingleResult();
 		assertEquals("process(" + exchange + ") did NOT store message headers",
 				3, storedMessage.getHeaders().size());
 	}
@@ -152,14 +165,19 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 		final Exchange exchange = new DefaultExchange(new DefaultCamelContext());
 		exchange.setIn(inMessage);
 
+		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		replay(eventProcessingContextMock);
+
 		final IncomingMessageExchangeLoggingProcessor classUnderTest = new IncomingMessageExchangeLoggingProcessor(
-				this.messageLoggerBean);
+				this.messageLoggerBean, eventProcessingContextMock);
 		classUnderTest.process(exchange);
 
 		final TypedQuery<JmsMessageExchange> messageByGuid = this.entityManager
-				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID, JmsMessageExchange.class);
+				.createNamedQuery(JmsMessageExchange.Queries.BY_GUID,
+						JmsMessageExchange.class);
 		messageByGuid.setParameter("guid", messageId);
-		final JmsMessageExchange storedMessage = messageByGuid.getSingleResult();
+		final JmsMessageExchange storedMessage = messageByGuid
+				.getSingleResult();
 		assertEquals("process(" + exchange
 				+ ") did NOT store null message headers", 3, storedMessage
 				.getHeaders().size());

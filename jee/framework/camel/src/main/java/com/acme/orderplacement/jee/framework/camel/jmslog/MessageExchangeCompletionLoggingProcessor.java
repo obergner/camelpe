@@ -4,7 +4,6 @@
 package com.acme.orderplacement.jee.framework.camel.jmslog;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 import org.apache.camel.Exchange;
 
@@ -19,12 +18,14 @@ import com.obergner.acme.orderplacement.integration.inbound.external.event.Event
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@MessageExchangeCompletionLogging
 @ApplicationScoped
 public class MessageExchangeCompletionLoggingProcessor extends
 		AbstractJmsMessageExchangeLoggingProcessor {
 
-	@Inject
-	private EventProcessingContext eventProcessingContext;
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	public MessageExchangeCompletionLoggingProcessor() {
 		// Intentionally left blank
@@ -38,9 +39,12 @@ public class MessageExchangeCompletionLoggingProcessor extends
 	MessageExchangeCompletionLoggingProcessor(
 			final JmsMessageExchangeLogger cachedJmsMessageLogger,
 			final EventProcessingContext eventProcessingContext) {
-		super(cachedJmsMessageLogger);
-		this.eventProcessingContext = eventProcessingContext;
+		super(cachedJmsMessageLogger, eventProcessingContext);
 	}
+
+	// -------------------------------------------------------------------------
+	// org.apache.camel.Processor
+	// -------------------------------------------------------------------------
 
 	/**
 	 * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
@@ -58,9 +62,9 @@ public class MessageExchangeCompletionLoggingProcessor extends
 							messageGuid, Boolean.valueOf(successful));
 
 			if (successful) {
-				this.eventProcessingContext.succeed();
+				eventProcessingContext().succeed();
 			} else {
-				this.eventProcessingContext.fail(error);
+				eventProcessingContext().fail(error);
 			}
 
 			jmsMessageLogger().completeJmsMessageExchange(messageGuid, error);

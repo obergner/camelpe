@@ -164,6 +164,12 @@
 		</deps.glassfish-security.version>
 		<deps.jboss-as.version>6.0.0.M1</deps.jboss-as.version>
 		<deps.jboss-vfs.version>3.0.0.CR5</deps.jboss-vfs.version>
+		<!--
+			Contrary to our stated policy of not using snapshot versions, we do
+			use a Smooks 1.4 snapshot version since starting with Smooks 1.4 its
+			Camel integration has been greatly improved and simplified.
+		-->
+		<deps.smooks.version>1.4-SNAPSHOT</deps.smooks.version>
 		<!-- Testing -->
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.arquillian.version>1.0.0.Alpha4</deps.arquillian.version>
@@ -735,7 +741,7 @@
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
-				<version>2.3</version>
+				<version>2.4</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
@@ -1029,24 +1035,28 @@
 				<groupId>org.hornetq</groupId>
 				<artifactId>hornetq-core</artifactId>
 				<version>${deps.hornetq.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.hornetq</groupId>
 				<artifactId>hornetq-core-client</artifactId>
 				<version>${deps.hornetq.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.netty</groupId>
 				<artifactId>netty</artifactId>
 				<version>${deps.netty.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.hornetq</groupId>
 				<artifactId>hornetq-jms-client</artifactId>
 				<version>${deps.hornetq.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- Google -->
@@ -1068,6 +1078,7 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-annotations</artifactId>
 				<version>${deps.hibernate.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 				<exclusions>
 					<!--
@@ -1087,6 +1098,7 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
 				<version>${deps.hibernate.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 				<exclusions>
 					<!--
@@ -1110,6 +1122,7 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
 				<version>${deps.hibernate.version}</version>
+				<scope>provided</scope>
 				<type>jar</type>
 				<exclusions>
 					<!--
@@ -1133,17 +1146,20 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-tools</artifactId>
 				<version>${deps.hibernate-tools.version}</version>
+				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>antlr</groupId>
 				<artifactId>antlr</artifactId>
 				<version>2.7.6</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>xml-apis</groupId>
 				<artifactId>xml-apis</artifactId>
 				<version>1.0.b2</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<dependency>
@@ -1151,6 +1167,7 @@
 				<artifactId>dom4j</artifactId>
 				<version>1.6.1</version>
 				<type>jar</type>
+				<scope>provided</scope>
 				<exclusions>
 					<!--
 						We want xml-apis in provided scope since these are provided by the
@@ -1166,6 +1183,7 @@
 				<groupId>javassist</groupId>
 				<artifactId>javassist</artifactId>
 				<version>3.9.0.GA</version>
+				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- SLF4J -->
@@ -1237,6 +1255,92 @@
 				<groupId>org.jboss.naming</groupId>
 				<artifactId>jnp-client</artifactId>
 				<version>5.0.5.Final</version>
+				<type>jar</type>
+			</dependency>
+			<!--
+				Smooks (Camel) 1.4
+			-->
+			<dependency>
+				<groupId>org.milyn</groupId>
+				<artifactId>milyn-commons</artifactId>
+				<version>${deps.smooks.version}</version>
+				<scope>compile</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.milyn</groupId>
+				<artifactId>milyn-smooks-core</artifactId>
+				<version>${deps.smooks.version}</version>
+				<scope>compile</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.milyn</groupId>
+				<artifactId>milyn-smooks-camel</artifactId>
+				<version>${deps.smooks.version}</version>
+				<scope>compile</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>jaxen</groupId>
+				<artifactId>jaxen</artifactId>
+				<version>1.1.1</version>
+				<scope>runtime</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>xerces</groupId>
+						<artifactId>xercesImpl</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.mvel</groupId>
+				<artifactId>mvel2</artifactId>
+				<version>2.0.17</version>
+				<scope>runtime</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>1.2.2</version>
+				<scope>runtime</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>xpp3</groupId>
+						<artifactId>xpp3_min</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>2.3.11</version>
+				<scope>runtime</scope>
 				<type>jar</type>
 			</dependency>
 			<!-- =========================================== -->
@@ -1332,9 +1436,30 @@
 			</dependency>
 			<dependency>
 				<groupId>org.unitils</groupId>
+				<artifactId>unitils-core</artifactId>
+				<version>${deps.unitils.version}</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
 				<artifactId>unitils-test</artifactId>
 				<version>${deps.unitils.version}</version>
 				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<!--
+							We use Hibernate 3.5 which changed its packaging.
+						-->
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.unitils</groupId>
@@ -1353,6 +1478,15 @@
 				<artifactId>unitils-dbmaintainer</artifactId>
 				<version>${deps.unitils.version}</version>
 				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<!--
+							We use Hibernate 3.5 which changed its packaging.
+						-->
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.unitils</groupId>
@@ -1978,13 +2112,18 @@
 			</snapshots>
 		</repository>
 		<!--
-			The following repository is needed to obtain the camel-jboss package
-			for integrating Apache Camel into JBoss AS. <repository>
-			<id>com.googlecode.camelExtraReleasesRepository</id> <name>Camel
-			Extra Maven repository of releases</name>
-			<url>http://camel-extra.googlecode.com/svn/maven2/releases</url>
-			</repository>
+			The following repository is needed to obtain Smooks 1.4 Snapshot.
 		-->
+		<repository>
+			<id>org.codehaus.snapshotsRepository</id>
+			<url>http://snapshots.repository.codehaus.org</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>

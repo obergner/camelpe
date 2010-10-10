@@ -24,16 +24,6 @@
 			<artifactId>jta</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<!--
 			| Compile time dependencies 
 		-->
@@ -68,8 +58,8 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-jaxb</artifactId>
+			<groupId>org.milyn</groupId>
+			<artifactId>milyn-smooks-camel</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!--
@@ -89,45 +79,48 @@
 			| Test dependencies 
 		-->
 		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-core</artifactId>
+			<groupId>javax.faces</groupId>
+			<artifactId>jsf-api</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
+			<groupId>org.jboss.arquillian</groupId>
+			<artifactId>arquillian-junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.framework</groupId>
-			<artifactId>orderplacement.framework.testsupport</artifactId>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee.item</groupId>
-			<artifactId>orderplacement.jee.item.service</artifactId>
-			<type>ejb</type>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-core</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.acme.orderplacement.jee.item</groupId>
-			<artifactId>orderplacement.jee.item.persistence</artifactId>
-			<type>ejb</type>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-api</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-spi</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

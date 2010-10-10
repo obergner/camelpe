@@ -11,6 +11,7 @@ import org.apache.camel.Exchange;
 
 import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeDto;
 import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
+import com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext;
 
 /**
  * <p>
@@ -20,11 +21,20 @@ import com.acme.orderplacement.framework.jmslog.JmsMessageExchangeLogger;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
+@IncomingMessageExchangeLogging
 @ApplicationScoped
 public class IncomingMessageExchangeLoggingProcessor extends
 		AbstractJmsMessageExchangeLoggingProcessor {
 
+	// -------------------------------------------------------------------------
+	// Static
+	// -------------------------------------------------------------------------
+
 	private static final String MESSAGE_TYPE = "REGISTER_ITEM";
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	public IncomingMessageExchangeLoggingProcessor() {
 		// Intentionally left blank
@@ -36,9 +46,14 @@ public class IncomingMessageExchangeLoggingProcessor extends
 	 * @param cachedJmsMessageLogger
 	 */
 	IncomingMessageExchangeLoggingProcessor(
-			final JmsMessageExchangeLogger cachedJmsMessageLogger) {
-		super(cachedJmsMessageLogger);
+			final JmsMessageExchangeLogger cachedJmsMessageLogger,
+			final EventProcessingContext eventProcessingContext) {
+		super(cachedJmsMessageLogger, eventProcessingContext);
 	}
+
+	// -------------------------------------------------------------------------
+	// org.apache.camel.Processor
+	// -------------------------------------------------------------------------
 
 	/**
 	 * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
@@ -55,9 +70,9 @@ public class IncomingMessageExchangeLoggingProcessor extends
 			// FIXME: MessageType is currently hardcoded. Find a better
 			// solution.
 			jmsMessageLogger().logIncomingJmsMessageExchange(
-					new JmsMessageExchangeDto(MESSAGE_TYPE, messageGuid, new Date(),
-							exchange.getIn().getBody(String.class), exchange
-									.getIn().getHeaders()));
+					new JmsMessageExchangeDto(MESSAGE_TYPE, messageGuid,
+							new Date(), exchange.getIn().getBody(String.class),
+							exchange.getIn().getHeaders()));
 
 			this.log
 					.trace(
