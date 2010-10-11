@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.external.com/schema/ns/models/item/2.0/"
+	xmlns:tns="http://www.external.com/schema/ns/models/item/2.0/"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	version="2.0">
+
+	<!--
+		Item specification
+	-->
+
+	<simpleType name="ItemSpecificationNumber">
+		<annotation>
+			<documentation>
+				Uniquely identifies an Item-Specification.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern
+				value="urn:item-specification:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="ItemSpecification">
+		<sequence>
+			<element name="Name" minOccurs="1" maxOccurs="1" nillable="false"
+				type="string" />
+		</sequence>
+		<attribute name="ItemSpecificationNumber" type="tns:ItemSpecificationNumber"
+			use="required" />
+	</complexType>
+
+	<complexType name="ItemSpecifications">
+		<sequence>
+			<element name="ItemSpecification" minOccurs="1" maxOccurs="unbounded"
+				nillable="false" type="tns:ItemSpecification" />
+		</sequence>
+	</complexType>
+
+	<!--
+		Item
+	-->
+
+	<simpleType name="ItemNumber">
+		<annotation>
+			<documentation>
+				Uniquely identifies an Item.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern
+				value="urn:item:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="Item">
+		<sequence>
+			<element name="Name" minOccurs="1" maxOccurs="1" nillable="false"
+				type="string" />
+			<element name="Description" minOccurs="0" maxOccurs="1"
+				nillable="false" type="string" />
+			<element name="ItemSpecifications" minOccurs="1" maxOccurs="1"
+				nillable="false" type="tns:ItemSpecifications" />
+		</sequence>
+		<attribute name="ItemNumber" type="tns:ItemNumber" use="required" />
+	</complexType>
+
+</schema>

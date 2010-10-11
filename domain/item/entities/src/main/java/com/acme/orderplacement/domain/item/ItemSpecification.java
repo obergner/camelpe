@@ -204,9 +204,9 @@ public class ItemSpecification extends AbstractAuditableDomainObject<Long>
 	 * @uml.property name="itemSpecificationNumber"
 	 */
 	@NotNull
-	@Size(min = 5, max = 30)
+	@Size(min = 5, max = 60)
 	@Basic
-	@Column(name = "ITEM_SPECIFICATION_NUMBER", unique = true, nullable = false, length = 30)
+	@Column(name = "ITEM_SPECIFICATION_NUMBER", unique = true, nullable = false, length = 60)
 	@NaturalId(mutable = false)
 	private String itemSpecificationNumber;
 

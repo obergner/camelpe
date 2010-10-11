@@ -158,9 +158,9 @@ public class Item extends AbstractAuditableDomainObject<Long> implements
 	 * @uml.property name="itemNumber"
 	 */
 	@NotNull
-	@Size(min = 5, max = 30)
+	@Size(min = 5, max = 60)
 	@Basic
-	@Column(name = "ITEM_NUMBER", unique = true, nullable = false, length = 30)
+	@Column(name = "ITEM_NUMBER", unique = true, nullable = false, length = 60)
 	@NaturalId(mutable = false)
 	private String itemNumber;
 

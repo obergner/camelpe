@@ -124,16 +124,16 @@ This module is a temporary solution in the future to be replaced by a proper ser
 					-->
 					<extension>true</extension>
 					<!-- Changes the default schema directory -->
-					<schemaDirectory>src/main/resources/META-INF/schema
+					<schemaDirectory>src/main/resources/META-INF/schema/
 					</schemaDirectory>
 					<schemaIncludes>
-						<include>*/*.xsd</include>
+						<include>**/*.xsd</include>
 					</schemaIncludes>
 					<schemaExcludes>
-						<exclude>*/*/*.xsd</exclude>
+						<exclude>**/include/*.xsd</exclude>
 					</schemaExcludes>
 					<bindingIncludes>
-						<include>*/*.xjb</include>
+						<include>binding/*.xjb</include>
 					</bindingIncludes>
 				</configuration>
 			</plugin>
