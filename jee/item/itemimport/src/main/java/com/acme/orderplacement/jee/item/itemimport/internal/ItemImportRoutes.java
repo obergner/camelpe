@@ -37,8 +37,6 @@ public class ItemImportRoutes extends RouteBuilder {
 
 	private static final String TRANSFORMED_JAVA_OBJECT_MESSAGES = "direct:itemimport.core.transformed";
 
-	private static final String BINDING_DEFINITION_RESOURCE = "META-INF/binding/itemcreatedevent-xml-to-java.xml";
-
 	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
@@ -87,7 +85,8 @@ public class ItemImportRoutes extends RouteBuilder {
 		from(this.incomingItemCreatedEventsEndpoint).to(INCOMING_XML_MESSAGES);
 
 		from(INCOMING_XML_MESSAGES).unmarshal(
-				new SmooksDataFormat(BINDING_DEFINITION_RESOURCE))
+				new SmooksDataFormat(
+						BindingResources.ITEMCREATEDEVENT_2_X_BINDING))
 				.convertBodyTo(ItemDto.class).to(
 						TRANSFORMED_JAVA_OBJECT_MESSAGES);
 

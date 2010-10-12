@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:core="http://www.milyn.org/xsd/smooks/smooks-core-1.4.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.4.xsd">
+
+	<resource-config selector="createdItem">
+		<resource><![CDATA[com.acme.orderplacement.jee.item.itemimport.internal.binding.ItemDtoBuildingVisitor]]></resource>
+	</resource-config>
+
+	<jb:bean beanId="itemCreatedEventBuilder"
+		class="com.acme.orderplacement.jee.item.itemimport.internal.binding.ItemDtoBuilderBean"
+		createOnElement="CreatedItem">
+		<jb:value property="itemNumber" data="CreatedItem/@ItemNumber" />
+		<jb:value property="name" data="CreatedItem/Name" />
+		<jb:value property="description" data="CreatedItem/Description" />
+		<jb:wiring property="specifications" beanIdRef="itemSpecifications" />
+	</jb:bean>
+
+	<jb:bean beanId="itemSpecifications" class="java.util.HashSet"
+		createOnElement="CreatedItem">
+		<jb:wiring beanIdRef="itemSpecification" />
+	</jb:bean>
+
+	<jb:bean beanId="itemSpecification"
+		class="com.acme.orderplacement.jee.item.itemimport.internal.binding.ItemSpecificationDtoBuilderBean"
+		createOnElement="ItemSpecification">
+		<jb:value property="itemSpecificationNumber"
+			data="ItemSpecification/@ItemSpecificationNumber" />
+		<jb:value property="name" data="ItemSpecification/Name" />
+	</jb:bean>
+
+	<jb:result retainBeans="createdItem" />
+
+	<core:exports>
+		<core:result type="org.milyn.payload.JavaResult" name="createdItem" />
+	</core:exports>
+
+</smooks-resource-list>

@@ -16,17 +16,18 @@ import org.milyn.Smooks;
 import org.milyn.payload.JavaResult;
 import org.xml.sax.SAXException;
 
+import com.acme.orderplacement.jee.item.itemimport.internal.BindingResources;
 import com.acme.orderplacement.service.item.dto.ItemDto;
 
 /**
  * <p>
- * TODO: Insert short summary for ItemDtoBuilderBeanBindingTest
+ * TODO: Insert short summary for ItemDtoBuilderBeanBinding1xTest
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-public class ItemDtoBuilderBeanBindingTest {
+public class ItemDtoBuilderBeanBinding1xTest {
 
 	// -------------------------------------------------------------------------
 	// Static
@@ -53,10 +54,10 @@ public class ItemDtoBuilderBeanBindingTest {
 	@BeforeClass
 	public static void bindItem() throws IOException, SAXException {
 		final StreamSource source = new StreamSource(
-				ItemDtoBuilderBeanBindingTest.class
-						.getResourceAsStream("ValidItemCreatedEventMsg.xml"));
+				ItemDtoBuilderBeanBinding1xTest.class
+						.getResourceAsStream("ValidItemCreatedEvent-1.0.xml"));
 		final Smooks smooks = new Smooks(
-				"META-INF/binding/itemcreatedevent-xml-to-java.xml");
+				BindingResources.ITEMCREATEDEVENT_1_X_BINDING);
 		final JavaResult result = new JavaResult();
 
 		smooks.filterSource(source, result);

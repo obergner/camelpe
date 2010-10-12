@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:EventEnvelope
+	xmlns:env="http://www.external.com/schema/ns/event/event-envelope/1.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.external.com/schema/ns/event/event-envelope/1.0/ ../event-envelope-1.0.xsd"
+	version="1.0">
+	<env:Headers>
+		<env:EventType>urn:event-type:item.Created</env:EventType>
+		<env:EventID>urn:event:60bf1bd5-1b7a-4fd6-b957-99bf96a1144c
+		</env:EventID>
+		<env:CreationTimestamp>2001-12-31T12:00:00</env:CreationTimestamp>
+	</env:Headers>
+	<env:Payload>
+		<event:CreatedItem ItemNumber="urn:item:60bf1bd5-1b7a-4fd6-b957-99bf96a1144c"
+			xmlns:event="http://www.external.com/schema/ns/events/itemcreated/2.0/"
+			xmlns:model="http://www.external.com/schema/ns/models/item/2.0/"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:schemaLocation="http://www.external.com/schema/ns/events/itemcreated/2.0/ ../itemcreatedevent-2.0.xsd">
+			<model:Name>A Test Item Name</model:Name>
+			<model:Description>A Test Item Description</model:Description>
+			<model:ItemSpecifications>
+				<model:ItemSpecification
+					ItemSpecificationNumber="urn:item-specification:60bf1bd5-1b7a-4fd6-b957-99bf96a1144c">
+					<model:Name>A Test Item Specification Name 1</model:Name>
+				</model:ItemSpecification>
+				<model:ItemSpecification
+					ItemSpecificationNumber="urn:item-specification:60bf1bd5-1b7a-4fd6-b957-99bf96a1188c">
+					<model:Name>A Test Item Specification Name 2</model:Name>
+				</model:ItemSpecification>
+			</model:ItemSpecifications>
+		</event:CreatedItem>
+	</env:Payload>
+</env:EventEnvelope>

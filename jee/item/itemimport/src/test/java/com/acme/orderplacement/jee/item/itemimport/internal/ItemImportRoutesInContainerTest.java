@@ -101,7 +101,7 @@ public class ItemImportRoutesInContainerTest extends CamelTestSupport {
 			throws Exception {
 		this.context.addRoutes(this.itemImportRoutes);
 
-		final String validItemCreatedEventMsg = readFile("ValidItemCreatedEventMsg.xml");
+		final String validItemCreatedEventMsg = readFile("ValidItemCreatedEvent-2.0.xml");
 
 		this.resultEndpoint.expectedMessageCount(1);
 
@@ -122,7 +122,7 @@ public class ItemImportRoutesInContainerTest extends CamelTestSupport {
 			throws Exception {
 		this.context.addRoutes(this.itemImportRoutes);
 
-		final String invalidItemCreatedEventMsg = readFile("InvalidItemCreatedEventMsg.xml");
+		final String invalidItemCreatedEventMsg = readFile("InvalidItemCreatedEvent-2.0.xml");
 
 		this.exceptionEndpoint.expectedMessageCount(1);
 
@@ -137,7 +137,7 @@ public class ItemImportRoutesInContainerTest extends CamelTestSupport {
 			throws Exception {
 		this.context.addRoutes(this.itemImportRoutes);
 
-		final String validItemCreatedEventMsg = readFile("ValidItemCreatedEventMsg.xml");
+		final String validItemCreatedEventMsg = readFile("ValidItemCreatedEvent-2.0.xml");
 
 		this.resultEndpoint.expectedBodyReceived().body(ItemDto.class);
 		this.resultEndpoint.message(0).body().isNotNull();
@@ -158,9 +158,9 @@ public class ItemImportRoutesInContainerTest extends CamelTestSupport {
 	 */
 	final class ContainsExpectedItemDto implements Predicate {
 
-		private static final String EXPECTED_ITEM_NUMBER = "ITM-23-567884";
+		private static final String EXPECTED_ITEM_NUMBER = "urn:item:60bf1bd5-1b7a-4fd6-b957-99bf96a1144c";
 
-		private static final String EXPECTED_ITEM_NAME = "Item Created Event";
+		private static final String EXPECTED_ITEM_NAME = "A Test Item Name";
 
 		@Override
 		public boolean matches(final Exchange exchange) {
