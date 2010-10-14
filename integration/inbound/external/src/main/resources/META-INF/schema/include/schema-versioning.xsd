@@ -2,7 +2,9 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.external.com/schema/ns/schema-versioning/"
 	xmlns:tns="http://www.external.com/schema/ns/schema-versioning/"
-	elementFormDefault="qualified">
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<attribute name="version" type="tns:SchemaVersion" />
 
 	<simpleType name="SchemaVersion">
 		<annotation>

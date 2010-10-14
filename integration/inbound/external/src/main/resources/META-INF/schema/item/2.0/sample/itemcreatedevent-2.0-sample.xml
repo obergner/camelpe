@@ -3,8 +3,11 @@
 <tns:CreatedItem ItemNumber="urn:item:60bf1bd5-1b7a-4fd6-b957-99bf96a1144c"
 	xmlns:tns="http://www.external.com/schema/ns/events/itemcreated/2.0/"
 	xmlns:tns1="http://www.external.com/schema/ns/models/item/2.0/"
+	xmlns:v="http://www.external.com/schema/ns/schema-versioning/"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.external.com/schema/ns/events/itemcreated/2.0/ ../itemcreatedevent-2.0.xsd ">
+	xsi:schemaLocation="http://www.external.com/schema/ns/events/itemcreated/2.0/ ../itemcreatedevent-2.0.xsd
+						http://www.external.com/schema/ns/schema-versioning/ ./../../../include/schema-versioning.xsd"
+	v:version="2.0">
 	<tns1:Name>tns1:Name</tns1:Name>
 	<tns1:Description>tns1:Description</tns1:Description>
 	<tns1:ItemSpecifications>

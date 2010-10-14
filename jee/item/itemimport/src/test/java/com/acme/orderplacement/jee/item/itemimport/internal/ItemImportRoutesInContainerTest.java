@@ -97,11 +97,32 @@ public class ItemImportRoutesInContainerTest extends CamelTestSupport {
 	 * @throws Exception
 	 */
 	@Test
-	public final void assertThatItemImportRoutesSuccessfullyRouteValidMessage()
+	public final void assertThatItemImportRoutesSuccessfullyRouteValidVersion2xMessage()
 			throws Exception {
 		this.context.addRoutes(this.itemImportRoutes);
 
 		final String validItemCreatedEventMsg = readFile("ValidItemCreatedEvent-2.0.xml");
+
+		this.resultEndpoint.expectedMessageCount(1);
+
+		this.template.sendBodyAndHeader(validItemCreatedEventMsg, "foo", "bar");
+
+		this.resultEndpoint.assertIsSatisfied();
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.acme.orderplacement.jee.item.itemimport.internal.ItemImportRoutes#configure()}
+	 * .
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public final void assertThatItemImportRoutesSuccessfullyRouteValidVersion1xMessage()
+			throws Exception {
+		this.context.addRoutes(this.itemImportRoutes);
+
+		final String validItemCreatedEventMsg = readFile("ValidItemCreatedEvent-1.0.xml");
 
 		this.resultEndpoint.expectedMessageCount(1);
 
@@ -133,7 +154,7 @@ public class ItemImportRoutesInContainerTest extends CamelTestSupport {
 	}
 
 	@Test
-	public void assertThatItemImportRoutesConvertXmlMessageToItemDto()
+	public void assertThatItemImportRoutesConvertVersion2xXmlMessageToItemDto()
 			throws Exception {
 		this.context.addRoutes(this.itemImportRoutes);
 
@@ -141,7 +162,8 @@ public class ItemImportRoutesInContainerTest extends CamelTestSupport {
 
 		this.resultEndpoint.expectedBodyReceived().body(ItemDto.class);
 		this.resultEndpoint.message(0).body().isNotNull();
-		this.resultEndpoint.message(0).body().in(new ContainsExpectedItemDto());
+		this.resultEndpoint.message(0).body().in(
+				new ContainsExpectedItemDtoForVersion2x());
 
 		this.template.sendBodyAndHeader(validItemCreatedEventMsg, "foo", "bar");
 
@@ -150,17 +172,57 @@ public class ItemImportRoutesInContainerTest extends CamelTestSupport {
 
 	/**
 	 * <p>
-	 * TODO: Insert short summary for ContainsExpectedItemDto
+	 * TODO: Insert short summary for ContainsExpectedItemDtoForVersion2x
 	 * </p>
 	 * 
 	 * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
 	 * 
 	 */
-	final class ContainsExpectedItemDto implements Predicate {
+	final class ContainsExpectedItemDtoForVersion2x implements Predicate {
 
 		private static final String EXPECTED_ITEM_NUMBER = "urn:item:60bf1bd5-1b7a-4fd6-b957-99bf96a1144c";
 
 		private static final String EXPECTED_ITEM_NAME = "A Test Item Name";
+
+		@Override
+		public boolean matches(final Exchange exchange) {
+			final ItemDto itemDto = exchange.getIn().getBody(ItemDto.class);
+
+			return itemDto.getItemNumber().equals(EXPECTED_ITEM_NUMBER)
+					&& itemDto.getName().equals(EXPECTED_ITEM_NAME);
+		}
+	}
+
+	@Test
+	public void assertThatItemImportRoutesConvertVersion1xXmlMessageToItemDto()
+			throws Exception {
+		this.context.addRoutes(this.itemImportRoutes);
+
+		final String validItemCreatedEventMsg = readFile("ValidItemCreatedEvent-1.0.xml");
+
+		this.resultEndpoint.expectedBodyReceived().body(ItemDto.class);
+		this.resultEndpoint.message(0).body().isNotNull();
+		this.resultEndpoint.message(0).body().in(
+				new ContainsExpectedItemDtoForVersion1x());
+
+		this.template.sendBodyAndHeader(validItemCreatedEventMsg, "foo", "bar");
+
+		this.resultEndpoint.assertIsSatisfied();
+	}
+
+	/**
+	 * <p>
+	 * TODO: Insert short summary for ContainsExpectedItemDtoForVersion2x
+	 * </p>
+	 * 
+	 * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
+	 * 
+	 */
+	final class ContainsExpectedItemDtoForVersion1x implements Predicate {
+
+		private static final String EXPECTED_ITEM_NUMBER = "ITM-23-567884";
+
+		private static final String EXPECTED_ITEM_NAME = "Item Created Event";
 
 		@Override
 		public boolean matches(final Exchange exchange) {

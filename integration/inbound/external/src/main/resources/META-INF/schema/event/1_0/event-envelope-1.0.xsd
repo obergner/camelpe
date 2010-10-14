@@ -2,7 +2,11 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.external.com/schema/ns/event/event-envelope/1.0/"
 	xmlns:tns="http://www.external.com/schema/ns/event/event-envelope/1.0/"
+	xmlns:v="http://www.external.com/schema/ns/schema-versioning/"
 	elementFormDefault="qualified">
+
+	<import namespace="http://www.external.com/schema/ns/schema-versioning/"
+		schemaLocation="./../../include/schema-versioning.xsd" />
 
 	<element name="EventEnvelope" type="tns:EventEnvelope" />
 
@@ -11,8 +15,7 @@
 			<element name="Headers" type="tns:Headers" />
 			<element name="Payload" type="tns:Payload" />
 		</sequence>
-		<attribute name="version" use="required" form="unqualified"
-			type="tns:SchemaVersion" />
+		<attribute ref="v:version" use="required" />
 	</complexType>
 
 	<complexType name="Headers">
@@ -35,17 +38,6 @@
 				processContents="lax" />
 		</sequence>
 	</complexType>
-
-	<simpleType name="SchemaVersion">
-		<annotation>
-			<documentation>
-				Identifies an XML schema's version.
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<pattern value="[0-9]+\.[0-9]+" />
-		</restriction>
-	</simpleType>
 
 	<simpleType name="EventType">
 		<annotation>

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.external.com/schema/ns/models/item/2.0/"
-	xmlns:tns="http://www.external.com/schema/ns/models/item/2.0/"
+	xmlns:tns="http://www.external.com/schema/ns/models/item/2.0/" xmlns:v="http://www.external.com/schema/ns/schema-versioning/"
 	elementFormDefault="qualified" attributeFormDefault="unqualified"
 	version="2.0">
+
+	<import namespace="http://www.external.com/schema/ns/schema-versioning/"
+		schemaLocation="./../../../include/schema-versioning.xsd" />
 
 	<!--
 		Item specification
@@ -63,6 +66,7 @@
 				nillable="false" type="tns:ItemSpecifications" />
 		</sequence>
 		<attribute name="ItemNumber" type="tns:ItemNumber" use="required" />
+		<attribute ref="v:version" use="required" />
 	</complexType>
 
 </schema>

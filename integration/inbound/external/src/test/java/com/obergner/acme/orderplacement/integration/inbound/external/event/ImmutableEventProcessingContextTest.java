@@ -29,7 +29,8 @@ public class ImmutableEventProcessingContextTest {
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext
+	 * .Builder.buildFrom(java.util.Map<String,String>)} .
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public final void assertThatBuilderRejectsNullHeaders() {
@@ -39,7 +40,8 @@ public class ImmutableEventProcessingContextTest {
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext
+	 * .Builder.buildFrom(java.util.Map<String,String>)} .
 	 * 
 	 * @throws UnsupportedEncodingException
 	 */
@@ -67,7 +69,8 @@ public class ImmutableEventProcessingContextTest {
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext
+	 * .Builder.buildFrom(java.util.Map<String,String>)} .
 	 * 
 	 * @throws UnsupportedEncodingException
 	 */
@@ -92,7 +95,8 @@ public class ImmutableEventProcessingContextTest {
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext
+	 * .Builder.buildFrom(java.util.Map<String,String>)} .
 	 */
 	@Test
 	public final void assertThatBuilderCorrectlySetsCreationTimestamp() {
@@ -116,7 +120,8 @@ public class ImmutableEventProcessingContextTest {
 	/**
 	 * Test method for {@link
 	 * com.obergner.acme.orderplacement.integration.inbound.external.event.
-	 * ImmutableEventProcessingContext.Builder.buildFrom(java.util.Map<String,String>)} .
+	 * ImmutableEventProcessingContext
+	 * .Builder.buildFrom(java.util.Map<String,String>)} .
 	 */
 	@Test
 	public final void assertThatBuilderCorrectlySetsProcessingState() {
