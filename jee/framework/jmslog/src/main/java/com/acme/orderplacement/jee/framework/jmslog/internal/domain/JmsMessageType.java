@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.obergner.acme.orderplacement.integration.inbound.external.event.EventHeaderSpec;
+
 /**
  * <p>
  * TODO: Insert short summary for JmsMessageType
@@ -65,7 +67,8 @@ public class JmsMessageType implements Serializable {
 	static {
 		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(0);
-		UNKNOWN = new JmsMessageType(Integer.valueOf(1), "UNKNOWN", true,
+		UNKNOWN = new JmsMessageType(Integer.valueOf(1),
+				(String) EventHeaderSpec.EVENT_TYPE.defaultValue(), true,
 				false, cal.getTime());
 	}
 

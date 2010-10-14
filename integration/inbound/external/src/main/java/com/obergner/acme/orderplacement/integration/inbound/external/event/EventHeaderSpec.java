@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.Validate;
 
+import com.obergner.acme.orderplacement.integration.inbound.external.ExternalEventTypes;
+
 /**
  * <p>
  * TODO: Insert short summary for EventHeaderSpec
@@ -28,8 +30,8 @@ public enum EventHeaderSpec {
 	 * 
 	 */
 	EVENT_TYPE("EventType", "urn:event-type:"
-			+ EventHeaderSpec.IDENTIFIER_REGEX, String.class, "urn:event-type:"
-			+ EventHeaderSpec.UNKNOWN_IDENTIFIER),
+			+ EventHeaderSpec.IDENTIFIER_REGEX, String.class,
+			ExternalEventTypes.UNKNOWN),
 
 	/**
 	 * 
@@ -188,7 +190,7 @@ public enum EventHeaderSpec {
 		return this.headerName;
 	}
 
-	Serializable defaultValue() {
+	public Serializable defaultValue() {
 		return convert(this.defaultValue);
 	}
 

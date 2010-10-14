@@ -6,6 +6,7 @@ package com.acme.orderplacement.jee.framework.camel.jmslog;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 
 import java.util.HashMap;
@@ -30,6 +31,7 @@ import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 
 import com.acme.orderplacement.jee.framework.jmslog.internal.JmsMessageExchangeLoggerBean;
 import com.acme.orderplacement.jee.framework.jmslog.internal.domain.JmsMessageExchange;
+import com.obergner.acme.orderplacement.integration.inbound.external.event.EventHeaderSpec;
 import com.obergner.acme.orderplacement.integration.inbound.external.event.EventProcessingContext;
 
 /**
@@ -82,6 +84,8 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 		exchange.setIn(inMessage);
 
 		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		expect(eventProcessingContextMock.getEventType()).andReturn(
+				(String) EventHeaderSpec.EVENT_TYPE.defaultValue());
 		replay(eventProcessingContextMock);
 
 		final IncomingMessageExchangeLoggingProcessor classUnderTest = new IncomingMessageExchangeLoggingProcessor(
@@ -124,6 +128,8 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 		exchange.setIn(inMessage);
 
 		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		expect(eventProcessingContextMock.getEventType()).andReturn(
+				(String) EventHeaderSpec.EVENT_TYPE.defaultValue());
 		replay(eventProcessingContextMock);
 
 		final IncomingMessageExchangeLoggingProcessor classUnderTest = new IncomingMessageExchangeLoggingProcessor(
@@ -166,6 +172,8 @@ public class IncomingMessageExchangeLoggingProcessorIntegrationTest {
 		exchange.setIn(inMessage);
 
 		final EventProcessingContext eventProcessingContextMock = createNiceMock(EventProcessingContext.class);
+		expect(eventProcessingContextMock.getEventType()).andReturn(
+				(String) EventHeaderSpec.EVENT_TYPE.defaultValue());
 		replay(eventProcessingContextMock);
 
 		final IncomingMessageExchangeLoggingProcessor classUnderTest = new IncomingMessageExchangeLoggingProcessor(

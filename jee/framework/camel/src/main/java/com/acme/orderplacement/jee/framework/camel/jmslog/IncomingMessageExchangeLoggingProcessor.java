@@ -27,12 +27,6 @@ public class IncomingMessageExchangeLoggingProcessor extends
 		AbstractJmsMessageExchangeLoggingProcessor {
 
 	// -------------------------------------------------------------------------
-	// Static
-	// -------------------------------------------------------------------------
-
-	private static final String MESSAGE_TYPE = "REGISTER_ITEM";
-
-	// -------------------------------------------------------------------------
 	// Constructors
 	// -------------------------------------------------------------------------
 
@@ -43,12 +37,12 @@ public class IncomingMessageExchangeLoggingProcessor extends
 	/**
 	 * Used for testing.
 	 * 
-	 * @param cachedJmsMessageLogger
+	 * @param jmsMessageLogger
 	 */
 	IncomingMessageExchangeLoggingProcessor(
-			final JmsMessageExchangeLogger cachedJmsMessageLogger,
+			final JmsMessageExchangeLogger jmsMessageLogger,
 			final EventProcessingContext eventProcessingContext) {
-		super(cachedJmsMessageLogger, eventProcessingContext);
+		super(jmsMessageLogger, eventProcessingContext);
 	}
 
 	// -------------------------------------------------------------------------
@@ -62,22 +56,21 @@ public class IncomingMessageExchangeLoggingProcessor extends
 	public void process(final Exchange exchange) throws Exception {
 		try {
 			final String messageGuid = messageIdFrom(exchange);
+			final String eventType = eventProcessingContext().getEventType();
 			this.log
 					.trace(
 							"About to log incoming message [type = {}|GUID = {}] to database ...",
-							MESSAGE_TYPE, messageGuid);
+							eventType, messageGuid);
 
-			// FIXME: MessageType is currently hardcoded. Find a better
-			// solution.
 			jmsMessageLogger().logIncomingJmsMessageExchange(
-					new JmsMessageExchangeDto(MESSAGE_TYPE, messageGuid,
+					new JmsMessageExchangeDto(eventType, messageGuid,
 							new Date(), exchange.getIn().getBody(String.class),
 							exchange.getIn().getHeaders()));
 
 			this.log
 					.trace(
 							"Incoming message [type = {}|GUID = {}] logged to database",
-							MESSAGE_TYPE, messageGuid);
+							eventType, messageGuid);
 		} catch (final Exception e) {
 			this.log.error(
 					"Caught exception while attempting to log message exchange ["
