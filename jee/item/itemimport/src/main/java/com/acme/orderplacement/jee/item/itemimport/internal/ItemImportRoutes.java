@@ -87,17 +87,11 @@ public class ItemImportRoutes extends RouteBuilder {
 				this.completionLogger).to(FAULT_MESSAGES_URI);
 
 		interceptFrom(this.incomingItemCreatedEventsEndpoint).process(
-				this.incomingMessageLogger).process(
-				this.eventProcessingContextProvider);
+				this.eventProcessingContextProvider).process(
+				this.incomingMessageLogger);
 
 		from(this.incomingItemCreatedEventsEndpoint).to(
 				INCOMING_XML_MESSAGES_URI);
-
-		// from(INCOMING_XML_MESSAGES_URI).unmarshal(
-		// new SmooksDataFormat(
-		// BindingResources.ITEMCREATEDEVENT_2_X_BINDING))
-		// .convertBodyTo(ItemDto.class).to(
-		// TRANSFORMED_JAVA_OBJECT_MESSAGES_URI);
 
 		from(INCOMING_XML_MESSAGES_URI).choice().when().xpath(
 				SCHEMA_VERSION_2_X_XPATH_TEST, String.class, ns).unmarshal(
