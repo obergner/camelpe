@@ -6,6 +6,7 @@ package com.obergner.acme.orderplacement.integration.inbound.external.event;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.PreDestroy;
 
@@ -74,8 +75,7 @@ public class ImmutableEventProcessingContext implements Serializable,
 			final String eventId, final Date creationTimestamp,
 			final String eventSourceSystem, final String propagationId,
 			final String inflowId, final Date inflowTimestamp,
-			final String processingId, final int sequenceNumber,
-			final Date initiationTimestamp) {
+			final int sequenceNumber, final Date initiationTimestamp) {
 		this.eventType = eventType;
 		this.eventId = eventId;
 		this.creationTimestamp = creationTimestamp;
@@ -83,7 +83,8 @@ public class ImmutableEventProcessingContext implements Serializable,
 		this.propagationId = propagationId;
 		this.inflowId = inflowId;
 		this.inflowTimestamp = inflowTimestamp;
-		this.processingId = processingId;
+		this.processingId = "urn:event-processing:"
+				+ UUID.randomUUID().toString();
 		this.sequenceNumber = sequenceNumber;
 		this.initiationTimestamp = initiationTimestamp;
 		this.processingState = ProcessingState.IN_PROGRESS;
@@ -311,7 +312,6 @@ public class ImmutableEventProcessingContext implements Serializable,
 			String propagationId = null;
 			String inflowId = null;
 			Date inflowTimestamp = null;
-			String processingId = null;
 			int sequenceNumber = -1;
 			Date initiationTimestamp = null;
 
@@ -341,9 +341,6 @@ public class ImmutableEventProcessingContext implements Serializable,
 						.isSpecifiedBy(EventHeaderSpec.INFLOW_TIMESTAMP)) {
 					inflowTimestamp = Date.class.cast(anEventHeader.getValue());
 				} else if (anEventHeader
-						.isSpecifiedBy(EventHeaderSpec.PROCESSING_ID)) {
-					processingId = String.class.cast(anEventHeader.getValue());
-				} else if (anEventHeader
 						.isSpecifiedBy(EventHeaderSpec.SEQUENCE_NUMBER)) {
 					sequenceNumber = anEventHeader.getValue() != null ? Integer.class
 							.cast(anEventHeader.getValue()).intValue()
@@ -357,7 +354,7 @@ public class ImmutableEventProcessingContext implements Serializable,
 
 			return new ImmutableEventProcessingContext(eventType, eventId,
 					creationTimestamp, eventSourceSystem, propagationId,
-					inflowId, inflowTimestamp, processingId, sequenceNumber,
+					inflowId, inflowTimestamp, sequenceNumber,
 					initiationTimestamp);
 		}
 	}
