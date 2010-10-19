@@ -1288,6 +1288,32 @@
 			</dependency>
 			<dependency>
 				<groupId>org.milyn</groupId>
+				<artifactId>milyn-smooks-javabean</artifactId>
+				<version>${deps.smooks.version}</version>
+				<scope>compile</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.milyn</groupId>
+				<artifactId>milyn-smooks-templating</artifactId>
+				<version>${deps.smooks.version}</version>
+				<scope>compile</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.milyn</groupId>
 				<artifactId>milyn-smooks-camel</artifactId>
 				<version>${deps.smooks.version}</version>
 				<scope>compile</scope>
