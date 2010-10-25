@@ -18,7 +18,6 @@
 		<project>orderplacement.framework.domain</project>
 		<project>orderplacement.jee.item.persistence</project>
 		<project>orderplacement.jee.app.config</project>
-		<project>orderplacement.jee.item.ws</project>
 		<project>orderplacement.framework.service</project>
 	</projects>
 	<buildSpec>

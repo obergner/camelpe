@@ -344,12 +344,6 @@
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.wslog</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
 				<artifactId>orderplacement.framework.jmslog</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
@@ -446,24 +440,6 @@
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.wsapi</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.ws</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.wslog</artifactId>
-				<version>${project.version}</version>
-				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
 				<artifactId>orderplacement.jee.framework.jmslog</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
@@ -491,18 +467,6 @@
 				<artifactId>orderplacement.jee.item.itemimport</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.item</groupId>
-				<artifactId>orderplacement.jee.item.wsapi</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.item</groupId>
-				<artifactId>orderplacement.jee.item.ws</artifactId>
-				<version>${project.version}</version>
-				<type>war</type>
 			</dependency>
 			<dependency>
 				<groupId>com.acme.orderplacement.jee.app</groupId>

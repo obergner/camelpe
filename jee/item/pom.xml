@@ -36,8 +36,6 @@
 	<modules>
 		<module>persistence</module>
 		<module>service</module>
-		<module>wsapi</module>
-		<module>ws</module>
 		<module>itemimport</module>
 	</modules>
 

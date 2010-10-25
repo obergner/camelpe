@@ -319,10 +319,6 @@
         <dependent-module archiveName="/lib/hibernate-core-3.5.0-Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-core/3.5.0-Final/hibernate-core-3.5.0-Final.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="orderplacement.jee.item.ws-1.0-SNAPSHOT.war" deploy-path="/" handle="module:/resource/orderplacement.jee.item.ws/orderplacement.jee.item.ws">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="/lib/log4j-1.2.15.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.15/log4j-1.2.15.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>

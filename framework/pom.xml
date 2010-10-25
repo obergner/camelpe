@@ -39,7 +39,6 @@
 		<module>aspect</module>
 		<module>domain</module>
 		<module>service</module>
-		<module>wslog</module>
 		<module>jmslog</module>
 	</modules>
 

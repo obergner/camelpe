@@ -3,10 +3,4 @@
 <!DOCTYPE jboss-app PUBLIC "-//JBoss//DTD Java EE Application 5.0//EN" "http://www.jboss.org/j2ee/dtd/jboss-app_5_0.dtd">
 <jboss-app>
 	<security-domain>java:/jaas/orderplacement</security-domain>
-	<module>
-		<web>
-			<web-uri>orderplacement.jee.item.ws-${project.version}.war</web-uri>
-			<context-root>/orderplacement</context-root>
-		</web>
-	</module>
 </jboss-app>

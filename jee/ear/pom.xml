@@ -117,20 +117,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
-			<artifactId>orderplacement.jee.framework.wslog</artifactId>
-			<type>ejb</type>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.jee.framework</groupId>
 			<artifactId>orderplacement.jee.framework.jmslog</artifactId>
 			<type>ejb</type>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.jee.item</groupId>
-			<artifactId>orderplacement.jee.item.ws</artifactId>
-			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
 		<!--
@@ -141,16 +129,6 @@
 		<dependency>
 			<groupId>com.acme.orderplacement.jee.framework</groupId>
 			<artifactId>orderplacement.jee.framework.common</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.jee.framework</groupId>
-			<artifactId>orderplacement.jee.framework.wsapi</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.acme.orderplacement.jee.framework</groupId>
-			<artifactId>orderplacement.jee.framework.ws</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -214,10 +192,6 @@
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee.item</groupId>
 							<artifactId>orderplacement.jee.item.itemimport</artifactId>
-						</ejbModule>
-						<ejbModule>
-							<groupId>com.acme.orderplacement.jee.framework</groupId>
-							<artifactId>orderplacement.jee.framework.wslog</artifactId>
 						</ejbModule>
 						<ejbModule>
 							<groupId>com.acme.orderplacement.jee.framework</groupId>
