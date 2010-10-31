@@ -42,7 +42,7 @@ public class JmsTestClient {
 	// Static
 	// -------------------------------------------------------------------------
 
-	private static final String ITEM_CREATED_EVENT_TOPIC_JNDI = "/topic/orderplacement/ItemCreatedEventsTopic";
+	private static final String ITEM_CREATED_EVENT_TOPIC_JNDI = "/topic/orderplacement/ExternalEvents";
 
 	// -------------------------------------------------------------------------
 	// MAIN

@@ -6,12 +6,16 @@
 		| Queues and topics used by the orderplacement application.
 	-->
 
-	<topic name="ItemCreatedEventsTopic">
-		<entry name="/topic/orderplacement/ItemCreatedEventsTopic" />
+	<topic name="ExternalEvents">
+		<entry name="/topic/orderplacement/ExternalEvents" />
 	</topic>
 
-	<queue name="ItemImportFailuresQueue">
-		<entry name="/queue/orderplacement/ItemImportFailuresQueue" />
+	<queue name="ItemCreatedEvents">
+		<entry name="/queue/orderplacement/ItemCreatedEvents" />
+	</queue>
+
+	<queue name="ItemImportFailures">
+		<entry name="/queue/orderplacement/ItemImportFailures" />
 	</queue>
 
 </configuration>

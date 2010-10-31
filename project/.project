@@ -35,11 +35,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>appservers/jboss-6.0.0-M4</name>
-			<type>2</type>
-			<locationURI>JBOSS_6_0_0_M4_HOME</locationURI>
-		</link>
-		<link>
 			<name>appservers/jboss-6.0.0-SNAPSHOT</name>
 			<type>2</type>
 			<locationURI>JBOSS_6_0_0_SNAPSHOT_HOME</locationURI>

@@ -17,9 +17,9 @@ import javax.enterprise.inject.Produces;
 @ApplicationScoped
 class ItemImportRoutesConfiguration {
 
-	private static final String ITEM_CREATED_EVENTS_EP = "hornetq:topic:ItemCreatedEventsTopic";
+	private static final String ITEM_CREATED_EVENTS_EP = "hornetq:queue:ItemCreatedEvents";
 
-	private static final String ITEM_IMPORT_FAILED_EP = "hornetq:queue:ItemImportFailuresQueue";
+	private static final String ITEM_IMPORT_FAILED_EP = "hornetq:queue:ItemImportFailures";
 
 	private static final String ITEM_REGISTRATION_SERVICE_EP = "ejb:orderplacement.jee.ear-1.0-SNAPSHOT/ItemStorageServiceBean/local?method=registerItem";
 
