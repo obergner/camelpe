@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.camelpe</groupId>
 	<artifactId>project</artifactId>
@@ -8,10 +8,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<name><![CDATA[Camel PE]]></name>
 	<url></url>
-	<description><![CDATA[Camel PE - A CDI portable extension for Apache Camel]]>
-	</description>
-
-
+	<description><![CDATA[Camel PE - A CDI portable extension for Apache Camel]]></description>
 
 	<properties>
 		<order.artifact.version>0.1-SNAPSHOT</order.artifact.version>
