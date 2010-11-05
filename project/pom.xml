@@ -2,122 +2,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.acme.orderplacement</groupId>
-	<artifactId>orderplacement.project</artifactId>
+	<groupId>net.camelpe</groupId>
+	<artifactId>project</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name><![CDATA[SOA Order]]></name>
+	<version>0.1-SNAPSHOT</version>
+	<name><![CDATA[Camel PE]]></name>
 	<url></url>
-	<description><![CDATA[]]>
+	<description><![CDATA[Camel PE - A CDI portable extension for Apache Camel]]>
 	</description>
 
-	<profiles>
-		<profile>
-			<id>profile.appsrv.Glassfish</id>
-			<properties>
-				<!--
-					Glassfish settings. Note that glassfish.home should be overridden
-					in your own ~/.m2/settings.xml.
-				-->
-				<glassfishVersion>3.0.1-b22</glassfishVersion>
-				<glassfish.home>D:/Apps/GlassfishHome/Glassfish-v3.0.1-b22
-				</glassfish.home>
-				<jee.applicationXml.version><![CDATA[6]]></jee.applicationXml.version>
-				<datasource.domain.jndiName><![CDATA[jdbc/orderplacement/domainDataSource]]></datasource.domain.jndiName>
-				<ws.itemimport.wsdlLocation><![CDATA[itemstorageservice-1.0.wsdl]]></ws.itemimport.wsdlLocation>
-			</properties>
-			<dependencies>
-				<!-- =========================================== -->
-				<!-- Provided                                    -->
-				<!-- =========================================== -->
-				<!-- =========================================== -->
-				<!-- Compile                                     -->
-				<!-- =========================================== -->
-				<dependency>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<!-- =========================================== -->
-				<!-- Runtime                                     -->
-				<!-- =========================================== -->
-				<dependency>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-					<scope>runtime</scope>
-				</dependency>
-				<dependency>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-					<scope>runtime</scope>
-				</dependency>
-				<!-- =========================================== -->
-				<!-- Test                                        -->
-				<!-- =========================================== -->
-			</dependencies>
-		</profile>
-		<profile>
-			<id>profile.appsrv.JBoss</id>
-			<properties>
-				<!--
-					JBoss settings. Note that jboss.home should be overridden in your
-					own ~/.m2/settings.xml.
-				-->
-				<jee.applicationXml.version><![CDATA[6]]></jee.applicationXml.version>
-				<datasource.domain.jndiName><![CDATA[java:jdbc/orderplacement/domainDataSource]]></datasource.domain.jndiName>
-				<ws.itemimport.wsdlLocation><![CDATA[WEB-INF/wsdl/itemstorageservice-1.0.wsdl]]></ws.itemimport.wsdlLocation>
-			</properties>
-			<dependencies>
-				<!-- =========================================== -->
-				<!-- Provided                                    -->
-				<!-- =========================================== -->
-				<dependency>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-					<scope>provided</scope>
-				</dependency>
-				<!-- =========================================== -->
-				<!-- Compile                                     -->
-				<!-- =========================================== -->
-				<!-- =========================================== -->
-				<!-- Runtime                                     -->
-				<!-- =========================================== -->
-				<!-- =========================================== -->
-				<!-- Test                                        -->
-				<!-- =========================================== -->
-			</dependencies>
-		</profile>
-	</profiles>
+
 
 	<properties>
-		<order.artifact.version>1.0-SNAPSHOT</order.artifact.version>
-		<!--
-			Make the build platform independent:
-			http://maven.apache.org/general.html#encoding-warning
-		-->
+		<order.artifact.version>0.1-SNAPSHOT</order.artifact.version>
+		<!-- Make the build platform independent: http://maven.apache.org/general.html#encoding-warning -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- 
-			javac settings 
-		-->
+		<!-- javac settings -->
 		<compiler.source>1.6</compiler.source>
 		<compiler.target>1.6</compiler.target>
 		<compiler.verbose>true</compiler.verbose>
 		<compiler.debug>true</compiler.debug>
 		<compiler.showWarnings>true</compiler.showWarnings>
 		<compiler.showDeprecation>true</compiler.showDeprecation>
-		<!--
-			Dependency versions 
-		 -->
+		<!-- Dependency versions -->
 		<!-- Standard javax apis -->
 		<deps.javax-inject.version>1</deps.javax-inject.version>
 		<deps.cdi-api.version>1.0-SP2</deps.cdi-api.version>
@@ -126,93 +33,45 @@
 		<deps.jta.version>1.1</deps.jta.version>
 		<deps.jms.version>1.1</deps.jms.version>
 		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
-		<deps.jaxb-api.version>2.1</deps.jaxb-api.version>
-		<deps.jaxb-impl.version>2.1.9</deps.jaxb-impl.version>
 		<deps.servlet-api.version>2.5</deps.servlet-api.version>
-		<deps.jsr181-api.version>1.0-MR1</deps.jsr181-api.version>
-		<deps.jaxws-api.version>2.1-1</deps.jaxws-api.version>
-		<deps.hibernate-jpa-2.0-api.version>1.0.0.Final
-		</deps.hibernate-jpa-2.0-api.version>
-		<deps.javaee-api.version>6.0</deps.javaee-api.version>
 		<!-- Proprietary -->
 		<deps.slf4j.version>1.5.11</deps.slf4j.version>
 		<deps.log4j.version>1.2.16</deps.log4j.version>
-		<deps.aspectj.version>1.6.8</deps.aspectj.version>
 		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
-		<deps.hibernate.version>3.5.0-Final</deps.hibernate.version>
 		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
 		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
 		<deps.el-api.version>2.2</deps.el-api.version>
-		<!--
-			We use Hibernate Validator 4.1.0.Final because its pom correctly
-			registers the dependencies on jaxb in scope 'provided' instead of
-			'runtime'.
-		-->
+		<!-- We use Hibernate Validator 4.1.0.Final because its pom correctly registers 
+			the dependencies on jaxb in scope 'provided' instead of 'runtime'. -->
 		<deps.hibernate-validator.version>4.1.0.Final
 		</deps.hibernate-validator.version>
 		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
 		<deps.weld.version>1.1.0.Beta1</deps.weld.version>
-		<deps.hibernate-tools.version>3.2.4.GA</deps.hibernate-tools.version>
 		<deps.camel.version>2.4.0</deps.camel.version>
-		<deps.camel-activemq.version>1.1.0</deps.camel-activemq.version>
-		<deps.activemq-camel.version>5.3.1</deps.activemq-camel.version>
 		<deps.hornetq.version>2.1.2.Final</deps.hornetq.version>
 		<deps.netty.version>3.2.1.Final</deps.netty.version>
 		<deps.osgi.version>4.1.0</deps.osgi.version>
 		<deps.google-guava.version>r06</deps.google-guava.version>
-		<deps.glassfish-security.version>3.1-b16
-		</deps.glassfish-security.version>
 		<deps.jboss-as.version>6.0.0.M1</deps.jboss-as.version>
 		<deps.jboss-vfs.version>3.0.0.CR5</deps.jboss-vfs.version>
-		<!--
-			Contrary to our stated policy of not using snapshot versions, we do
-			use a Smooks 1.4 snapshot version since starting with Smooks 1.4 its
-			Camel integration has been greatly improved and simplified.
-		-->
-		<deps.smooks.version>1.4-SNAPSHOT</deps.smooks.version>
 		<!-- Testing -->
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.arquillian.version>1.0.0.Alpha4</deps.arquillian.version>
-		<deps.glassfish-embedded-all.version>3.1-b09
-		</deps.glassfish-embedded-all.version>
 		<deps.easymock.version>2.5.2</deps.easymock.version>
-		<deps.unitils.version>3.1</deps.unitils.version>
-		<deps.dbunit.version>2.2.2</deps.dbunit.version>
-		<deps.hsqldb.version>1.8.0.10</deps.hsqldb.version>
-		<deps.xbean-naming.version>3.6</deps.xbean-naming.version>
-		<deps.commons-dbutils.version>1.3</deps.commons-dbutils.version>
-		<!--
-			Plugin versions 
-		 -->
+		<!-- Plugin versions -->
 		<plugins.compiler.version>2.3.2</plugins.compiler.version>
 		<plugins.clean.version>2.4.1</plugins.clean.version>
 		<plugins.deploy.version>2.5</plugins.deploy.version>
 		<plugins.install.version>2.3.1</plugins.install.version>
 		<plugins.resources.version>2.4.3</plugins.resources.version>
 		<plugins.surefire.version>2.6</plugins.surefire.version>
-		<plugins.ear.version>2.4.2</plugins.ear.version>
-		<plugins.ejb.version>2.2.1</plugins.ejb.version>
 		<plugins.jar.version>2.3.1</plugins.jar.version>
-		<!--
-			We cannot upgrade to 2.1 since this version does not seem to respect
-			the packagingIncludes directive necessary for building a skinny war.
-		-->
-		<plugins.war.version>2.1-beta-1</plugins.war.version>
-		<plugins.antrun.version>1.3</plugins.antrun.version>
 		<plugins.dependency.version>2.1</plugins.dependency.version>
 		<plugins.plugin.version>2.5.1</plugins.plugin.version>
-		<plugins.site.version>2.1</plugins.site.version>
 		<plugins.source.version>2.1.1</plugins.source.version>
 		<plugins.cobertura.version>2.3</plugins.cobertura.version>
-		<plugins.jaxb2.version>0.7.3</plugins.jaxb2.version>
-		<plugins.jaxws.version>1.12</plugins.jaxws.version>
 		<plugins.build-helper.version>1.5</plugins.build-helper.version>
 	</properties>
-
-	<organization>
-		<name>Saxonia Systems AG</name>
-		<url>http://www.saxsys.de</url>
-	</organization>
 
 	<developers>
 		<developer>
@@ -262,7 +121,7 @@
 	</licenses>
 
 	<!-- =================================================== -->
-	<!-- SCM section                                         -->
+	<!-- SCM section -->
 	<!-- =================================================== -->
 
 	<scm>
@@ -278,15 +137,13 @@
 	</scm>
 
 	<!-- =================================================== -->
-	<!-- Distribution management                             -->
+	<!-- Distribution management -->
 	<!-- =================================================== -->
 
 	<distributionManagement>
 		<site>
-			<id>com.acme.orderplacement.website
-			</id>
-			<url>https://dav.sample.com/sites/sample-project
-			</url>
+			<id>net.camelpe.website</id>
+			<url>https://dav.sample.com/sites/sample-project</url>
 		</site>
 		<repository>
 			<id>com.obergner.localDistributionRepository
@@ -298,196 +155,40 @@
 	</distributionManagement>
 
 	<!-- =================================================== -->
-	<!-- Project Dependencies                                -->
+	<!-- Project Dependencies -->
 	<!-- =================================================== -->
 
 	<dependencyManagement>
 		<dependencies>
 			<!-- =========================================== -->
-			<!-- Application modules                         -->
+			<!-- Application modules -->
 			<!-- =========================================== -->
 			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework</artifactId>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-api</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-extension</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.common</artifactId>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-jboss</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.testsupport</artifactId>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-weld</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.aspect</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.domain</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.service</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.framework</groupId>
-				<artifactId>orderplacement.framework.jmslog</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.domain</groupId>
-				<artifactId>orderplacement.domain</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.domain.item</groupId>
-				<artifactId>orderplacement.domain.item</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.domain.item</groupId>
-				<artifactId>orderplacement.domain.item.entities</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.domain.item</groupId>
-				<artifactId>orderplacement.domain.item.service</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.integration</groupId>
-				<artifactId>orderplacement.integration</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.integration</groupId>
-				<artifactId>orderplacement.integration.inbound</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.integration</groupId>
-				<artifactId>orderplacement.integration.inbound.external</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee</groupId>
-				<artifactId>orderplacement.jee</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.common</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.camelpe</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.camel</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.glassfish</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.jboss</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.persistence</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.framework</groupId>
-				<artifactId>orderplacement.jee.framework.jmslog</artifactId>
-				<version>${project.version}</version>
-				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.item</groupId>
-				<artifactId>orderplacement.jee.item</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.item</groupId>
-				<artifactId>orderplacement.jee.item.persistence</artifactId>
-				<version>${project.version}</version>
-				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.item</groupId>
-				<artifactId>orderplacement.jee.item.service</artifactId>
-				<version>${project.version}</version>
-				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.item</groupId>
-				<artifactId>orderplacement.jee.item.itemimport</artifactId>
-				<version>${project.version}</version>
-				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.app</groupId>
-				<artifactId>orderplacement.jee.app</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee.app</groupId>
-				<artifactId>orderplacement.jee.app.config</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.acme.orderplacement.jee</groupId>
-				<artifactId>orderplacement.jee.ear</artifactId>
-				<version>${project.version}</version>
-				<type>ear</type>
 			</dependency>
 			<!-- =========================================== -->
-			<!-- Standard Javax APIs                         -->
+			<!-- Standard Javax APIs -->
 			<!-- =========================================== -->
 			<!-- JSR 330: @Inject etc -->
 			<dependency>
@@ -513,32 +214,7 @@
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
-			<!-- EJB 3.1 API - TODO: Replace with standard javax.ejb -->
-			<dependency>
-				<groupId>org.jboss.ejb3</groupId>
-				<artifactId>jboss-ejb3-api</artifactId>
-				<version>${deps.ejb-api.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>jbossws</groupId>
-						<artifactId>jboss-jaxrpc</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.jboss.javaee</groupId>
-						<artifactId>jboss-transaction-api</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>jboss.jbossws</groupId>
-						<artifactId>jboss-jaxrpc</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<!--
-				Javax Interceptor API - TODO: Replace with standard
-				javax.interceptor
-			-->
+			<!-- Javax Interceptor API - TODO: Replace with standard javax.interceptor -->
 			<dependency>
 				<groupId>org.jboss.interceptor</groupId>
 				<artifactId>jboss-interceptor-api</artifactId>
@@ -562,47 +238,6 @@
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
-			<!-- Javax Persistence API 2.0 - TODO: Replace with standard -->
-			<dependency>
-				<groupId>org.hibernate.javax.persistence</groupId>
-				<artifactId>hibernate-jpa-2.0-api</artifactId>
-				<version>${deps.hibernate-jpa-2.0-api.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
-			<!-- JAXB API -->
-			<dependency>
-				<groupId>javax.xml.bind</groupId>
-				<artifactId>jaxb-api</artifactId>
-				<version>${deps.jaxb-api.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
-			<!-- JSR 181 API: Annotations for Webservices -->
-			<dependency>
-				<groupId>javax.jws</groupId>
-				<artifactId>jsr181-api</artifactId>
-				<version>${deps.jsr181-api.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
-			<!-- JAX-WS API -->
-			<dependency>
-				<groupId>javax.xml.ws</groupId>
-				<artifactId>jaxws-api</artifactId>
-				<version>${deps.jaxws-api.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-				<exclusions>
-					<!--
-						We want to use the jsr181-api version from above.
-					-->
-					<exclusion>
-						<groupId>javax.jws</groupId>
-						<artifactId>jsr181</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
 			<!-- Servlet API -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
@@ -610,6 +245,28 @@
 				<version>${deps.servlet-api.version}</version>
 				<scope>provided</scope>
 				<type>jar</type>
+			</dependency>
+			<!-- EJB 3.1 API - TODO: Replace with standard javax.ejb -->
+			<dependency>
+				<groupId>org.jboss.ejb3</groupId>
+				<artifactId>jboss-ejb3-api</artifactId>
+				<version>${deps.ejb-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>jbossws</groupId>
+						<artifactId>jboss-jaxrpc</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jboss.javaee</groupId>
+						<artifactId>jboss-transaction-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>jboss.jbossws</groupId>
+						<artifactId>jboss-jaxrpc</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<!-- Bean Validation API -->
 			<dependency>
@@ -643,25 +300,9 @@
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
-			<!-- JEE 6 API -->
-			<dependency>
-				<groupId>javax</groupId>
-				<artifactId>javaee-api</artifactId>
-				<version>${deps.javaee-api.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
 			<!-- =========================================== -->
-			<!-- Implementations of standard javax APIs      -->
+			<!-- Implementations of standard javax APIs -->
 			<!-- =========================================== -->
-			<!-- JAXB2 RI Implementation (SUN) -->
-			<dependency>
-				<groupId>com.sun.xml.bind</groupId>
-				<artifactId>jaxb-impl</artifactId>
-				<version>${deps.jaxb-impl.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
 			<!-- Hibernate Bean Validation Implementation -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -670,13 +311,10 @@
 				<scope>provided</scope>
 				<type>jar</type>
 				<exclusions>
-					<!--
-						We want slf4j in 'provided' scope since it is one of the libraries
-						that are shared between different JEE modules in our final war. If
-						we wouldn't exclude it here, it would end up in scope 'runtime'
-						and thus would be automatically included in every JEE module we
-						build, not only in the final ear.
-					-->
+					<!-- We want slf4j in 'provided' scope since it is one of the libraries 
+						that are shared between different JEE modules in our final war. If we wouldn't 
+						exclude it here, it would end up in scope 'runtime' and thus would be automatically 
+						included in every JEE module we build, not only in the final ear. -->
 					<exclusion>
 						<groupId>org.slf4j</groupId>
 						<artifactId>slf4j-api</artifactId>
@@ -690,70 +328,14 @@
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
-			<!-- CDI extensions -->
-			<dependency>
-				<groupId>org.jboss.weld</groupId>
-				<artifactId>weld-logger</artifactId>
-				<version>1.0.0-CR2</version>
-				<type>jar</type>
-			</dependency>
-			<!-- Hibernate Bean Validation Implementation -->
 			<!-- =========================================== -->
-			<!-- Proprietary                                 -->
+			<!-- Proprietary -->
 			<!-- =========================================== -->
 			<!-- Apache -->
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
 				<version>2.4</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>commons-codec</groupId>
-				<artifactId>commons-codec</artifactId>
-				<version>1.3</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>commons-logging</groupId>
-				<artifactId>commons-logging</artifactId>
-				<version>1.1</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>javax.servlet</groupId>
-						<artifactId>servlet-api</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>log4j</groupId>
-						<artifactId>log4j</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>logkit</groupId>
-						<artifactId>logkit</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>avalon-framework</groupId>
-						<artifactId>avalon-framework</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>commons-pool</groupId>
-				<artifactId>commons-pool</artifactId>
-				<version>1.4</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>commons-net</groupId>
-				<artifactId>commons-net</artifactId>
-				<version>2.0</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
@@ -798,9 +380,7 @@
 				<version>1.0</version>
 				<type>jar</type>
 			</dependency>
-			<!-- 
-				Apache Camel 
-			-->
+			<!-- Apache Camel -->
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-core</artifactId>
@@ -820,25 +400,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-jaxb</artifactId>
-				<version>${deps.camel.version}</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging-api</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-jms</artifactId>
 				<version>${deps.camel.version}</version>
 				<type>jar</type>
 				<exclusions>
-					<!--
-						We use the standard javax.jms-1.1 
-					 -->
+					<!-- We use the standard javax.jms-1.1 -->
 					<exclusion>
 						<groupId>org.apache.geronimo.specs</groupId>
 						<artifactId>geronimo-jms_1.1_spec</artifactId>
@@ -857,144 +423,7 @@
 				<version>${deps.camel.version}</version>
 				<type>jar</type>
 			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-activemq</artifactId>
-				<version>${deps.camel-activemq.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-ejb</artifactId>
-				<version>${deps.camel.version}</version>
-				<type>jar</type>
-			</dependency>
-			<!-- 
-				Apache Camel+ActiveMQ integration 
-			-->
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>activemq-camel</artifactId>
-				<version>${deps.activemq-camel.version}</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging-api</artifactId>
-					</exclusion>
-					<!--
-						We use the standard javax.jms-1.1 
-					 -->
-					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-jms_1.1_spec</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<!--
-				Explicitily list these dependencies in order to be able to exclude
-				commons-logging
-			-->
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>activemq-core</artifactId>
-				<version>${deps.activemq-camel.version}</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging-api</artifactId>
-					</exclusion>
-					<!--
-						activeio-core uses geronimo-j2ee-management_1.1_spec
-					-->
-					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-j2ee-management_1.0_spec</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.osgi</groupId>
-						<artifactId>org.osgi.core</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.springframework.osgi</groupId>
-						<artifactId>spring-osgi-core</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>activemq-pool</artifactId>
-				<version>${deps.activemq-camel.version}</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging-api</artifactId>
-					</exclusion>
-					<!--
-						We use the standard javax.jta-1.1 
-					 -->
-					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-jta_1.0.1B_spec</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.activemq.protobuf</groupId>
-				<artifactId>activemq-protobuf</artifactId>
-				<version>1.0</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging-api</artifactId>
-					</exclusion>
-					<!--
-						We use the standard javax.jta-1.1 
-					 -->
-					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-jta_1.0.1B_spec</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>activeio-core</artifactId>
-				<version>3.1.2</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-					<!--
-						Will be provided by the JEE container and is not needed during
-						tests
-					-->
-					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>kahadb</artifactId>
-				<version>5.3.1</version>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<!-- 
-				JBoss HornetQ 
-			-->
+			<!-- JBoss HornetQ -->
 			<dependency>
 				<groupId>org.hornetq</groupId>
 				<artifactId>hornetq-core</artifactId>
@@ -1030,126 +459,6 @@
 				<version>${deps.google-guava.version}</version>
 				<type>jar</type>
 			</dependency>
-			<!-- CGLIB -->
-			<dependency>
-				<groupId>cglib</groupId>
-				<artifactId>cglib-nodep</artifactId>
-				<version>2.2</version>
-				<type>jar</type>
-			</dependency>
-			<!-- Hibernate -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-annotations</artifactId>
-				<version>${deps.hibernate.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-				<exclusions>
-					<!--
-						We want slf4j in 'provided' scope since it is one of the libraries
-						that are shared between different JEE modules in our final war. If
-						we wouldn't exclude it here, it would end up in scope 'runtime'
-						and thus would be automatically included in every JEE module we
-						build, not only in the final ear.
-					-->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-api</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${deps.hibernate.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-				<exclusions>
-					<!--
-						We want slf4j in 'provided' scope since it is one of the libraries
-						that are shared between different JEE modules in our final war. If
-						we wouldn't exclude it here, it would end up in scope 'runtime'
-						and thus would be automatically included in every JEE module we
-						build, not only in the final ear.
-					-->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-api</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>cglib</groupId>
-						<artifactId>cglib</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${deps.hibernate.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-				<exclusions>
-					<!--
-						We want these dependencies in 'provided' scope since they count
-						among those libraries that are shared between different JEE
-						modules in our final ear. If we wouldn't exclude them here, they
-						would end up in scope 'runtime' and thus would be automatically
-						included in every JEE module we build, not only in the final ear.
-					-->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-api</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>javax.transaction</groupId>
-						<artifactId>jta</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-tools</artifactId>
-				<version>${deps.hibernate-tools.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>antlr</groupId>
-				<artifactId>antlr</artifactId>
-				<version>2.7.6</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>xml-apis</groupId>
-				<artifactId>xml-apis</artifactId>
-				<version>1.0.b2</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>dom4j</groupId>
-				<artifactId>dom4j</artifactId>
-				<version>1.6.1</version>
-				<type>jar</type>
-				<scope>provided</scope>
-				<exclusions>
-					<!--
-						We want xml-apis in provided scope since these are provided by the
-						JEE container.
-					-->
-					<exclusion>
-						<groupId>xml-apis</groupId>
-						<artifactId>xml-apis</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>javassist</groupId>
-				<artifactId>javassist</artifactId>
-				<version>3.9.0.GA</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
 			<!-- SLF4J -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -1169,45 +478,7 @@
 				<version>${deps.slf4j.version}</version>
 				<type>jar</type>
 			</dependency>
-			<!-- Tranql: PostgreSQL XA Connector -->
-			<dependency>
-				<groupId>org.tranql</groupId>
-				<artifactId>tranql-connector-postgresql-xa</artifactId>
-				<version>1.2</version>
-				<type>rar</type>
-			</dependency>
-			<!--
-				Glassfish 
-			-->
-			<dependency>
-				<groupId>org.glassfish.security</groupId>
-				<artifactId>security</artifactId>
-				<version>${deps.glassfish-security.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
 			<!-- JBoss -->
-			<dependency>
-				<groupId>org.jboss.ejb3</groupId>
-				<artifactId>jboss-ejb3-ext-api</artifactId>
-				<version>1.0.0</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.jbossas</groupId>
-				<artifactId>jboss-as-security</artifactId>
-				<version>${deps.jboss-as.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.jbossas</groupId>
-				<artifactId>jboss-as-tomcat</artifactId>
-				<version>${deps.jboss-as.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
-			</dependency>
 			<dependency>
 				<groupId>org.jboss</groupId>
 				<artifactId>jboss-vfs</artifactId>
@@ -1215,292 +486,7 @@
 				<scope>provided</scope>
 				<type>jar</type>
 			</dependency>
-			<dependency>
-				<groupId>org.jboss.naming</groupId>
-				<artifactId>jnp-client</artifactId>
-				<version>5.0.5.Final</version>
-				<type>jar</type>
-			</dependency>
-			<!--
-				Smooks (Camel) 1.4
-			-->
-			<dependency>
-				<groupId>org.milyn</groupId>
-				<artifactId>milyn-commons</artifactId>
-				<version>${deps.smooks.version}</version>
-				<scope>compile</scope>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.milyn</groupId>
-				<artifactId>milyn-smooks-core</artifactId>
-				<version>${deps.smooks.version}</version>
-				<scope>compile</scope>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.milyn</groupId>
-				<artifactId>milyn-smooks-javabean</artifactId>
-				<version>${deps.smooks.version}</version>
-				<scope>compile</scope>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.milyn</groupId>
-				<artifactId>milyn-smooks-templating</artifactId>
-				<version>${deps.smooks.version}</version>
-				<scope>compile</scope>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.milyn</groupId>
-				<artifactId>milyn-smooks-camel</artifactId>
-				<version>${deps.smooks.version}</version>
-				<scope>compile</scope>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>jaxen</groupId>
-				<artifactId>jaxen</artifactId>
-				<version>1.1.1</version>
-				<scope>runtime</scope>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>xml-apis</groupId>
-						<artifactId>xml-apis</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>xerces</groupId>
-						<artifactId>xercesImpl</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.mvel</groupId>
-				<artifactId>mvel2</artifactId>
-				<version>2.0.17</version>
-				<scope>runtime</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>xstream</artifactId>
-				<version>1.2.2</version>
-				<scope>runtime</scope>
-				<type>jar</type>
-				<exclusions>
-					<exclusion>
-						<groupId>xpp3</groupId>
-						<artifactId>xpp3_min</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.freemarker</groupId>
-				<artifactId>freemarker</artifactId>
-				<version>2.3.11</version>
-				<scope>runtime</scope>
-				<type>jar</type>
-			</dependency>
-			<!-- =========================================== -->
-			<!-- Test dependencies                           -->
-			<!-- =========================================== -->
-			<!-- JUnit -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${deps.junit.version}</version>
-				<scope>test</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.weld</groupId>
-				<artifactId>weld-core-bom</artifactId>
-				<version>${deps.weld.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- Arquillian: Test framework for CDI, Glassfish, JBoss -->
-			<dependency>
-				<groupId>org.jboss.arquillian</groupId>
-				<artifactId>arquillian-junit</artifactId>
-				<version>${deps.arquillian.version}</version>
-				<scope>test</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.arquillian.container</groupId>
-				<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-				<version>${deps.arquillian.version}</version>
-				<scope>test</scope>
-				<type>jar</type>
-				<exclusions>
-					<!--
-						We don't use jdk14 logging. If we wouldn't exclude it here SLF4J
-						would keep complaining about finding two bindings - one for log4j
-						and one for jdk14 - when running test cases.
-					-->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-jdk14</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.arquillian.container</groupId>
-				<artifactId>arquillian-glassfish-embedded-3</artifactId>
-				<version>${deps.arquillian.version}</version>
-				<scope>test</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.glassfish.extras</groupId>
-				<artifactId>glassfish-embedded-all</artifactId>
-				<version>${deps.glassfish-embedded-all.version}</version>
-				<scope>test</scope>
-				<type>jar</type>
-			</dependency>
-			<!-- Easymock -->
-			<dependency>
-				<groupId>org.easymock</groupId>
-				<artifactId>easymock</artifactId>
-				<version>${deps.easymock.version}</version>
-				<scope>test</scope>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.easymock</groupId>
-				<artifactId>easymockclassextension</artifactId>
-				<version>${deps.easymock.version}</version>
-				<scope>test</scope>
-				<type>jar</type>
-			</dependency>
-			<!-- Unitils for JPA integration testing -->
-			<dependency>
-				<groupId>org.dbunit</groupId>
-				<artifactId>dbunit</artifactId>
-				<version>${deps.dbunit.version}</version>
-				<scope>test</scope>
-				<exclusions>
-					<!--
-						We use log4j. If we wouldn't exclude it here SLF4J would keep
-						complaining about finding two bindings - one for log4j and one for
-						jdk14 - when running test cases.
-					-->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-nop</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.unitils</groupId>
-				<artifactId>unitils-core</artifactId>
-				<version>${deps.unitils.version}</version>
-				<scope>test</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.unitils</groupId>
-				<artifactId>unitils-test</artifactId>
-				<version>${deps.unitils.version}</version>
-				<scope>test</scope>
-				<exclusions>
-					<exclusion>
-						<!--
-							We use Hibernate 3.5 which changed its packaging.
-						-->
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.unitils</groupId>
-				<artifactId>unitils-dbunit</artifactId>
-				<version>${deps.unitils.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.unitils</groupId>
-				<artifactId>unitils-orm</artifactId>
-				<version>${deps.unitils.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.unitils</groupId>
-				<artifactId>unitils-dbmaintainer</artifactId>
-				<version>${deps.unitils.version}</version>
-				<scope>test</scope>
-				<exclusions>
-					<exclusion>
-						<!--
-							We use Hibernate 3.5 which changed its packaging.
-						-->
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.unitils</groupId>
-				<artifactId>unitils-easymock</artifactId>
-				<version>${deps.unitils.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<!-- AspectJ -->
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjrt</artifactId>
-				<version>${deps.aspectj.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
-				<version>${deps.aspectj.version}</version>
-				<type>jar</type>
-			</dependency>
-			<!--
-				Spring: We need to upgrade Spring to 3.0 in order to make Unitils
-				work with JPA 2.0
-			-->
+			<!-- Spring -->
 			<dependency>
 				<groupId>aopalliance</groupId>
 				<artifactId>aopalliance</artifactId>
@@ -1539,31 +525,13 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
 				<artifactId>spring-tx</artifactId>
 				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
 				<artifactId>spring-jms</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-oxm</artifactId>
 				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -1579,37 +547,68 @@
 				<version>${deps.spring.version}</version>
 				<type>jar</type>
 			</dependency>
+			<!-- =========================================== -->
+			<!-- Test dependencies -->
+			<!-- =========================================== -->
+			<!-- JUnit -->
 			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<!-- Spring-Test -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${deps.spring.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>hsqldb</groupId>
-				<artifactId>hsqldb</artifactId>
-				<version>${deps.hsqldb.version}</version>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${deps.junit.version}</version>
 				<scope>test</scope>
-			</dependency>
-			<!-- We need a JNDI implementation for testing purposes -->
-			<dependency>
-				<groupId>org.apache.xbean</groupId>
-				<artifactId>xbean-naming</artifactId>
-				<version>${deps.xbean-naming.version}</version>
 				<type>jar</type>
 			</dependency>
-			<!-- Let's make testing the database layer easier -->
 			<dependency>
-				<groupId>commons-dbutils</groupId>
-				<artifactId>commons-dbutils</artifactId>
-				<version>${deps.commons-dbutils.version}</version>
+				<groupId>org.jboss.weld</groupId>
+				<artifactId>weld-core-bom</artifactId>
+				<version>${deps.weld.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- Arquillian: Test framework for CDI, Glassfish, JBoss -->
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-junit</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.container</groupId>
+				<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+				<exclusions>
+					<!-- We don't use jdk14 logging. If we wouldn't exclude it here SLF4J 
+						would keep complaining about finding two bindings - one for log4j and one 
+						for jdk14 - when running test cases. -->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.container</groupId>
+				<artifactId>arquillian-glassfish-embedded-3</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.extras</groupId>
+				<artifactId>glassfish-embedded-all</artifactId>
+				<version>${deps.glassfish-embedded-all.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Easymock -->
+			<dependency>
+				<groupId>org.easymock</groupId>
+				<artifactId>easymock</artifactId>
+				<version>${deps.easymock.version}</version>
+				<scope>test</scope>
 				<type>jar</type>
 			</dependency>
 		</dependencies>
@@ -1618,7 +617,7 @@
 	<!-- shared dependencies across modules -->
 	<dependencies>
 		<!-- =========================================== -->
-		<!-- Provided                                    -->
+		<!-- Provided -->
 		<!-- =========================================== -->
 		<dependency>
 			<groupId>javax.inject</groupId>
@@ -1636,7 +635,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- =========================================== -->
-		<!-- Compile                                     -->
+		<!-- Compile -->
 		<!-- =========================================== -->
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -1648,11 +647,16 @@
 			<artifactId>guava</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!-- =========================================== -->
-		<!-- Runtime                                     -->
+		<!-- Runtime -->
 		<!-- =========================================== -->
 		<!-- =========================================== -->
-		<!-- Test                                        -->
+		<!-- Test -->
 		<!-- =========================================== -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -1664,15 +668,10 @@
 			<artifactId>easymock</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymockclassextension</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<!-- =================================================== -->
-	<!-- Project Plugins                                     -->
+	<!-- Project Plugins -->
 	<!-- =================================================== -->
 
 	<build>
@@ -1712,11 +711,8 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					<!--
-						| Because of a bug that sometimes causes wrong classpath ordering,
-						| we have to use a maven-surefire-plugin version >= 2.3.1. | See |
-						SUREFIRE-61
-					-->
+					<!-- | Because of a bug that sometimes causes wrong classpath ordering, 
+						| we have to use a maven-surefire-plugin version >= 2.3.1. | See | SUREFIRE-61 -->
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${plugins.surefire.version}</version>
@@ -1725,11 +721,6 @@
 						<!-- forkMode>never</forkMode -->
 						<forkMode>perTest</forkMode>
 					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<version>${plugins.antrun.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -1796,64 +787,6 @@
 					<version>${plugins.deploy.version}</version>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>${plugins.site.version}</version>
-					<executions>
-						<execution>
-							<id>jar</id>
-							<phase>site</phase>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-							<configuration>
-								<jarOutputDirectory>
-									${project.reporting.outputDirectory}
-								</jarOutputDirectory>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-ear-plugin</artifactId>
-					<version>${plugins.ear.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>${plugins.war.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-ejb-plugin</artifactId>
-					<version>${plugins.ejb.version}</version>
-					<configuration>
-						<ejbVersion>3.1</ejbVersion>
-						<archive>
-							<index>true</index>
-							<manifest>
-								<addClasspath>true</addClasspath>
-								<classpathPrefix>lib/</classpathPrefix>
-								<addDefaultSpecificationEntries>true
-								</addDefaultSpecificationEntries>
-								<addDefaultImplementationEntries>true
-								</addDefaultImplementationEntries>
-							</manifest>
-						</archive>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>jaxws-maven-plugin</artifactId>
-					<version>${plugins.jaxws.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.jvnet.jaxb2.maven2</groupId>
-					<artifactId>maven-jaxb2-plugin</artifactId>
-					<version>${plugins.jaxb2.version}</version>
-				</plugin>
-				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>${plugins.build-helper.version}</version>
@@ -1906,30 +839,6 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-ear-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-ejb-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxws-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 			</plugin>
@@ -1937,36 +846,25 @@
 	</build>
 
 	<!-- =================================================== -->
-	<!-- Project modules                                     -->
+	<!-- Project modules -->
 	<!-- =================================================== -->
 
 	<modules>
-		<module>../framework</module>
-		<module>../domain</module>
-		<module>../integration</module>
-		<module>../jee</module>
-		<module>../appserver</module>
-		<module>../client</module>
+		<module>../camelpe-api</module>
+		<module>../camelpe-extension</module>
+		<module>../camelpe-jboss</module>
+		<module>../camelpe-weld</module>
 	</modules>
 
 	<!-- =================================================== -->
-	<!-- Project Reporting                                   -->
+	<!-- Project Reporting -->
 	<!-- =================================================== -->
 
 	<reporting>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.1</version>
-				<configuration>
-					<aggregate>true</aggregate>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin
-				</artifactId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>2.4.3</version>
 				<configuration>
 					<aggregate>true</aggregate>
@@ -1974,8 +872,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin
-				</artifactId>
+				<artifactId>cobertura-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
 					<aggregate>true</aggregate>
@@ -2004,9 +901,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>
-					maven-project-info-reports-plugin
-				</artifactId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.0.1</version>
 				<reportSets>
 					<reportSet>
@@ -2015,36 +910,22 @@
 							<report>project-team</report>
 							<report>mailing-list</report>
 							<report>cim</report>
-							<!--
-								Issue tracking report will be omitted
-								<report>issue-tracking</report>
-							-->
+							<!-- Issue tracking report will be omitted <report>issue-tracking</report> -->
 							<report>license</report>
 							<report>scm</report>
 						</reports>
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<!--
-				| The dashboard plugin has to be the LAST in this list
-			-->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>dashboard-maven-plugin
-				</artifactId>
-				<version>1.0-SNAPSHOT</version>
-			</plugin>
 		</plugins>
 	</reporting>
 
 	<!-- =================================================== -->
-	<!-- Project Repositories                                -->
+	<!-- Project Repositories -->
 	<!-- =================================================== -->
 
 	<repositories>
-		<!--
-			The JBoss repository provides the EJB 3.0 API jar. 
-		-->
+		<!-- The JBoss repository provides the EJB 3.0 API jar. -->
 		<repository>
 			<id>org.jboss.releaseRepository</id>
 			<name>JBoss Releases Repository</name>
@@ -2057,9 +938,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<!--
-			This JBoss repository provides the latest Arquillian jars.
-		-->
+		<!-- This JBoss repository provides the latest Arquillian jars. -->
 		<repository>
 			<id>org.jboss.arquillianRepository</id>
 			<name>JBoss Arquillian Repository</name>
@@ -2071,44 +950,14 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<!--
-			The following two repositories are needed for the JAXB2 Maven2
-			Pluging: https://maven-jaxb2-plugin.dev.java.net/docs/guide.html
-		-->
-		<repository>
-			<id>dev.java.net.maven2Repository</id>
-			<name>Java.net Maven 2 Repository</name>
-			<url>http://download.java.net/maven/2</url>
-		</repository>
-		<repository>
-			<id>dev.java.net.maven1Repository</id>
-			<name>Java.net Maven 1 Repository (legacy)</name>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
-		</repository>
-		<!--
-			The following repository is needed to obtain the glassfish-embedded
-			container used in integration tests.
-		-->
+		<!-- The following repository is needed to obtain the glassfish-embedded 
+			container used in integration tests. -->
 		<repository>
 			<id>dev.java.net.glassfishRepository</id>
 			<name>Java.net Glassfish Repository</name>
 			<url>http://download.java.net/maven/glassfish</url>
 			<releases>
 				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<!--
-			The following repository is needed to obtain Smooks 1.4 Snapshot.
-		-->
-		<repository>
-			<id>org.codehaus.snapshotsRepository</id>
-			<url>http://snapshots.repository.codehaus.org</url>
-			<releases>
-				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
@@ -2124,51 +973,6 @@
 			</url>
 			<snapshots>
 				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<!--
-			| Needed for the Codehaus dashboard plugin 
-		-->
-		<pluginRepository>
-			<id>org.codehaus.snapshotsRepository
-			</id>
-			<name>Codehaus Snapshots Repository</name>
-			<url>http://snapshots.repository.codehaus.org/
-			</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<!--
-			The following two repositories are needed for the JAXB2 Maven2
-			Pluging: https://maven-jaxb2-plugin.dev.java.net/docs/guide.html
-		-->
-		<pluginRepository>
-			<id>dev.java.net.maven2Repository</id>
-			<name>Java.net Maven 2 Repository</name>
-			<url>http://download.java.net/maven/2
-			</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>dev.java.net.maven1Repository</id>
-			<name>Java.net Maven 1 Repository (legacy)</name>
-			<url>http://download.java.net/maven/1
-			</url>
-			<layout>legacy</layout>
-		</pluginRepository>
-		<!--
-			Needed for hibernate-tools
-		-->
-		<pluginRepository>
-			<id>org.jboss.releaseRepository</id>
-			<name>JBoss Releases Repository</name>
-			<url>http://repository.jboss.com/maven2
-			</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
