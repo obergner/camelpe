@@ -1,5 +1,0 @@
-insert into log.webservice_operation (id, idempotent, logged, name, since)
-values (1, true, true, '/orderplacement/ItemStorageService#registerItem', DATE '1970-01-01');
-
-commit
-;
