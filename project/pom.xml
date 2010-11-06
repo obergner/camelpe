@@ -162,6 +162,18 @@
 			<!-- =========================================== -->
 			<dependency>
 				<groupId>net.camelpe</groupId>
+				<artifactId>core</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>addons</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
 				<artifactId>camelpe-api</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
@@ -850,10 +862,8 @@
 	<!-- =================================================== -->
 
 	<modules>
-		<module>../camelpe-api</module>
-		<module>../camelpe-extension</module>
-		<module>../camelpe-jboss</module>
-		<module>../camelpe-weld</module>
+		<module>../core</module>
+		<module>../addons</module>
 	</modules>
 
 	<!-- =================================================== -->

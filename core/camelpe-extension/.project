@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>net.camelpe.project</name>
+	<name>net.camelpe.camelpe-extension</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -33,22 +33,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>poms/addons/pom.xml</name>
-			<type>1</type>
-			<locationURI>CAMELPE_HOME/addons/pom.xml</locationURI>
-		</link>
-		<link>
-			<name>poms/core/pom.xml</name>
-			<type>1</type>
-			<locationURI>CAMELPE_HOME/core/pom.xml</locationURI>
-		</link>
-	</linkedResources>
-	<variableList>
-		<variable>
-			<name>CAMELPE_HOME</name>
-			<value>file:/E:/Projects/CamelPE/Src/net.camelpe</value>
-		</variable>
-	</variableList>
 </projectDescription>

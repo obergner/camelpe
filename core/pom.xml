@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>net.camelpe</groupId>
+		<artifactId>project</artifactId>
+		<version>0.1-SNAPSHOT</version>
+		<relativePath>../project</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.camelpe</groupId>
+	<artifactId>core</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name><![CDATA[Camel Portable Extension :: Core Components]]></name>
+
+	<dependencies>
+		<!-- Provided dependencies -->
+		<!-- Compile time dependencies -->
+		<!-- Runtime dependencies -->
+		<!-- Test dependencies -->
+	</dependencies>
+
+	<modules>
+		<module>camelpe-api</module>
+		<module>camelpe-extension</module>
+	</modules>
+
+</project>
