@@ -9,11 +9,11 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.camelpe</groupId>
-	<artifactId>addons</artifactId>
+	<artifactId>sandbox</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name><![CDATA[Camel Portable Extension :: Additional Components]]></name>
+	<name><![CDATA[Camel Portable Extension :: Experimental Components]]></name>
 
 	<dependencies>
 		<!-- Provided dependencies -->
@@ -23,7 +23,7 @@
 	</dependencies>
 
 	<modules>
-		<module>camelpe-weld</module>
+		<module>camelpe-weld-sandbox</module>
 	</modules>
 
 </project>

@@ -31,13 +31,13 @@
 		<deps.jms.version>1.1</deps.jms.version>
 		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
 		<deps.servlet-api.version>2.5</deps.servlet-api.version>
+		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
+		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
+		<deps.el-api.version>2.2</deps.el-api.version>
 		<!-- Proprietary -->
 		<deps.slf4j.version>1.5.11</deps.slf4j.version>
 		<deps.log4j.version>1.2.16</deps.log4j.version>
 		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
-		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
-		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
-		<deps.el-api.version>2.2</deps.el-api.version>
 		<!-- We use Hibernate Validator 4.1.0.Final because its pom correctly registers 
 			the dependencies on jaxb in scope 'provided' instead of 'runtime'. -->
 		<deps.hibernate-validator.version>4.1.0.Final
@@ -49,8 +49,6 @@
 		<deps.netty.version>3.2.1.Final</deps.netty.version>
 		<deps.osgi.version>4.1.0</deps.osgi.version>
 		<deps.google-guava.version>r06</deps.google-guava.version>
-		<deps.jboss-as.version>6.0.0.M1</deps.jboss-as.version>
-		<deps.jboss-vfs.version>3.0.0.CR5</deps.jboss-vfs.version>
 		<!-- Testing -->
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.arquillian.version>1.0.0.Alpha4</deps.arquillian.version>
@@ -174,6 +172,12 @@
 			</dependency>
 			<dependency>
 				<groupId>net.camelpe</groupId>
+				<artifactId>sandbox</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
 				<artifactId>camelpe-api</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
@@ -186,13 +190,13 @@
 			</dependency>
 			<dependency>
 				<groupId>net.camelpe</groupId>
-				<artifactId>camelpe-jboss</artifactId>
+				<artifactId>camelpe-weld</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>net.camelpe</groupId>
-				<artifactId>camelpe-weld</artifactId>
+				<artifactId>camelpe-weld-sandbox</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -496,14 +500,6 @@
 				<version>${deps.slf4j.version}</version>
 				<type>jar</type>
 				<optional>true</optional>
-			</dependency>
-			<!-- JBoss -->
-			<dependency>
-				<groupId>org.jboss</groupId>
-				<artifactId>jboss-vfs</artifactId>
-				<version>${deps.jboss-vfs.version}</version>
-				<scope>provided</scope>
-				<type>jar</type>
 			</dependency>
 			<!-- Spring -->
 			<dependency>
@@ -864,6 +860,7 @@
 	<modules>
 		<module>../core</module>
 		<module>../addons</module>
+		<module>../sandbox</module>
 	</modules>
 
 	<!-- =================================================== -->

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.camelpe.weld.jms;
+package net.camelpe.weld.requestcontext.jms;
 
 import java.util.concurrent.Executor;
 

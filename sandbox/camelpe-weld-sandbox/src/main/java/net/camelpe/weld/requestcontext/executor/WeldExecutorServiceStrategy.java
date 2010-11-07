@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.camelpe.weld.camelspi.executor;
+package net.camelpe.weld.requestcontext.executor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
