@@ -736,6 +736,11 @@
 					<artifactId>cobertura-maven-plugin</artifactId>
 					<version>${plugins.cobertura.version}</version>
 					<configuration>
+						<aggregate>true</aggregate>
+						<formats>
+							<format>html</format>
+							<format>xml</format>
+						</formats>
 						<instrumentation>
 							<includes>
 								<include>**/*.class</include>
