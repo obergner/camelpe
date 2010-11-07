@@ -64,8 +64,9 @@
 		<plugins.dependency.version>2.1</plugins.dependency.version>
 		<plugins.plugin.version>2.5.1</plugins.plugin.version>
 		<plugins.source.version>2.1.1</plugins.source.version>
-		<plugins.cobertura.version>2.3</plugins.cobertura.version>
+		<plugins.cobertura.version>2.4</plugins.cobertura.version>
 		<plugins.build-helper.version>1.5</plugins.build-helper.version>
+		<plugins.site.version>3.0-beta-3</plugins.site.version>
 	</properties>
 
 	<developers>
@@ -734,6 +735,32 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>cobertura-maven-plugin</artifactId>
 					<version>${plugins.cobertura.version}</version>
+					<configuration>
+						<instrumentation>
+							<includes>
+								<include>**/*.class</include>
+							</includes>
+							<excludes>
+								<exclude>**/*Test.class</exclude>
+							</excludes>
+						</instrumentation>
+					</configuration>
+					<executions>
+						<execution>
+							<id>cobertura-clean</id>
+							<phase>pre-clean</phase>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>cobertura-cobertura</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>cobertura</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -819,10 +846,6 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
 			</plugin>
@@ -849,6 +872,10 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
@@ -880,7 +907,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.2</version>
+				<version>${plugins.cobertura.version}</version>
 				<configuration>
 					<aggregate>true</aggregate>
 					<formats>
