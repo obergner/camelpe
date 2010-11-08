@@ -66,6 +66,7 @@
 		<plugins.source.version>2.1.1</plugins.source.version>
 		<plugins.cobertura.version>2.4</plugins.cobertura.version>
 		<plugins.build-helper.version>1.5</plugins.build-helper.version>
+		<plugins.javadoc.version>2.7</plugins.javadoc.version>
 		<plugins.site.version>3.0-beta-3</plugins.site.version>
 	</properties>
 
@@ -924,10 +925,21 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<aggregate>true</aggregate>
-				</configuration>
+				<version>${plugins.javadoc.version}</version>
+				<reportSets>
+					<reportSet>
+						<id>per-module</id>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+					<reportSet>
+						<id>aggregate</id>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
