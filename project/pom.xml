@@ -753,14 +753,14 @@
 					<executions>
 						<execution>
 							<id>cobertura-clean</id>
-							<phase>pre-clean</phase>
+							<phase>pre-site</phase>
 							<goals>
 								<goal>clean</goal>
 							</goals>
 						</execution>
 						<execution>
 							<id>cobertura-cobertura</id>
-							<phase>verify</phase>
+							<phase>site</phase>
 							<goals>
 								<goal>cobertura</goal>
 							</goals>
@@ -964,24 +964,12 @@
 	<!-- =================================================== -->
 
 	<repositories>
-		<!-- The JBoss repository provides the EJB 3.0 API jar. -->
+		<!-- The JBoss repository provides the EJB 3.0 API jar and Arquillian -->
 		<repository>
 			<id>org.jboss.releaseRepository</id>
 			<name>JBoss Releases Repository</name>
 			<url>http://repository.jboss.org/nexus/content/groups/public-jboss
 			</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<!-- This JBoss repository provides the latest Arquillian jars. -->
-		<repository>
-			<id>org.jboss.arquillianRepository</id>
-			<name>JBoss Arquillian Repository</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -1002,14 +990,26 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!-- The following repository is needed to maven-default-skin 1.1-SNAPSHOT 
+			needed to maven-site-plugin 3.0-beta-3. -->
+		<repository>
+			<id>org.apache.snapshotsRepository</id>
+			<name>Apache Snapshots Repository</name>
+			<url>http://repository.apache.org/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>org.apache.snapshotsRepository</id>
-			<name>Apache Snapshots Repository</name>
-			<url>http://cvs.apache.org/maven-snapshot-repository
-			</url>
+			<id>org.apache.snapshotsPluginRepository</id>
+			<name>Apache Snapshots Plugin Repository</name>
+			<url>http://cvs.apache.org/maven-snapshot-repository</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
