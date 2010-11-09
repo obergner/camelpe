@@ -41,7 +41,7 @@ public final class WeldRequestContext {
      * NEEDS A REQUEST CONTEXT.
      * </p>
      */
-    public static final void begin() {
+    public static void begin() {
         PER_THREAD_WELD_REQUEST_CONTEXT.get().beginInternal();
     }
 
@@ -54,7 +54,7 @@ public final class WeldRequestContext {
      * REQUEST CONTEXT NEEDS TO BE DESTROYED.
      * </p>
      */
-    public static final void end() {
+    public static void end() {
         if (PER_THREAD_WELD_REQUEST_CONTEXT.get().isActiveInternal()) {
             PER_THREAD_WELD_REQUEST_CONTEXT.get().endInternal();
         }
@@ -71,7 +71,7 @@ public final class WeldRequestContext {
      * NEEDS A REQUEST CONTEXT.
      * </p>
      */
-    public static final void endThenBegin() {
+    public static void endThenBegin() {
         end();
         begin();
     }

@@ -3,7 +3,7 @@
  */
 package net.camelpe.extension.configuration_samples;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
@@ -17,7 +17,7 @@ import org.apache.camel.spi.InflightRepository;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@CamelContextModifying
+@CamelContextInjectable
 public class SampleInflightRepository implements InflightRepository {
 
     /**

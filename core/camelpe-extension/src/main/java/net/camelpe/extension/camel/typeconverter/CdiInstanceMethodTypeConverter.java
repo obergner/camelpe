@@ -55,12 +55,11 @@ public class CdiInstanceMethodTypeConverter implements TypeConverter {
                             + type.getCanonicalName());
         }
         // inject parent type converter
-        if (instance instanceof TypeConverterAware) {
-            if (this.registry instanceof TypeConverter) {
-                final TypeConverter parentTypeConverter = (TypeConverter) this.registry;
-                ((TypeConverterAware) instance)
-                        .setTypeConverter(parentTypeConverter);
-            }
+        if ((instance instanceof TypeConverterAware)
+                && (this.registry instanceof TypeConverter)) {
+            final TypeConverter parentTypeConverter = (TypeConverter) this.registry;
+            ((TypeConverterAware) instance)
+                    .setTypeConverter(parentTypeConverter);
         }
         return this.useExchange ? (T) ObjectHelper.invokeMethod(this.method,
                 instance, value, exchange) : (T) ObjectHelper.invokeMethod(

@@ -3,7 +3,7 @@
  */
 package net.camelpe.extension.configuration_samples;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.model.DataFormatDefinition;
@@ -18,7 +18,7 @@ import org.apache.camel.spi.DataFormatResolver;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@CamelContextModifying
+@CamelContextInjectable
 public class SampleDataFormatResolver implements DataFormatResolver {
 
     /**

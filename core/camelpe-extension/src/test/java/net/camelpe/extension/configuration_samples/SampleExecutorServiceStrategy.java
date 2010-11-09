@@ -9,7 +9,7 @@ import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.spi.ExecutorServiceStrategy;
 import org.apache.camel.spi.ThreadPoolProfile;
@@ -22,7 +22,7 @@ import org.apache.camel.spi.ThreadPoolProfile;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@CamelContextModifying
+@CamelContextInjectable
 public class SampleExecutorServiceStrategy implements ExecutorServiceStrategy {
 
     /**

@@ -6,7 +6,7 @@ package net.camelpe.extension.configuration_samples;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.spi.PackageScanClassResolver;
 import org.apache.camel.spi.PackageScanFilter;
@@ -19,7 +19,7 @@ import org.apache.camel.spi.PackageScanFilter;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@CamelContextModifying
+@CamelContextInjectable
 public class SamplePackageScanClassResolver implements PackageScanClassResolver {
 
     /**

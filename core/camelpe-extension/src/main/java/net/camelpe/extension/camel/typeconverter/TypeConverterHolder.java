@@ -100,7 +100,7 @@ public final class TypeConverterHolder {
     /**
      * @return the typeConverter
      */
-    public final TypeConverter getTypeConverter() {
+    public TypeConverter getTypeConverter() {
         return this.typeConverter;
     }
 

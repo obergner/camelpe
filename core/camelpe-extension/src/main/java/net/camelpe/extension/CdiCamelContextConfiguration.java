@@ -23,7 +23,7 @@ import javax.enterprise.inject.spi.InjectionTarget;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.spi.ClassResolver;
@@ -79,7 +79,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerClassResolver(
-            final @CamelContextModifying Instance<ClassResolver> classResolvers)
+            final @CamelContextInjectable Instance<ClassResolver> classResolvers)
             throws AmbiguousResolutionException {
         for (final ClassResolver match : classResolvers) {
             if (this.classResolver != null) {
@@ -94,7 +94,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerPackageScanClassResolver(
-            final @CamelContextModifying Instance<PackageScanClassResolver> packageScanClassResolvers)
+            final @CamelContextInjectable Instance<PackageScanClassResolver> packageScanClassResolvers)
             throws AmbiguousResolutionException {
         for (final PackageScanClassResolver match : packageScanClassResolvers) {
             if (this.packageScanClassResolver != null) {
@@ -110,7 +110,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerDataFormatResolver(
-            final @CamelContextModifying Instance<DataFormatResolver> dataFormatResolvers)
+            final @CamelContextInjectable Instance<DataFormatResolver> dataFormatResolvers)
             throws AmbiguousResolutionException {
         for (final DataFormatResolver match : dataFormatResolvers) {
             if (this.dataFormatResolver != null) {
@@ -126,7 +126,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerExecutorServiceStrategy(
-            final @CamelContextModifying Instance<ExecutorServiceStrategy> executorServiceStrategies)
+            final @CamelContextInjectable Instance<ExecutorServiceStrategy> executorServiceStrategies)
             throws AmbiguousResolutionException {
         for (final ExecutorServiceStrategy match : executorServiceStrategies) {
             if (this.executorServiceStrategy != null) {
@@ -142,7 +142,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerFactoryFinderResolver(
-            final @CamelContextModifying Instance<FactoryFinderResolver> factoryFinderResolvers)
+            final @CamelContextInjectable Instance<FactoryFinderResolver> factoryFinderResolvers)
             throws AmbiguousResolutionException {
         for (final FactoryFinderResolver match : factoryFinderResolvers) {
             if (this.factoryFinderResolver != null) {
@@ -158,7 +158,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerInflightRepository(
-            final @CamelContextModifying Instance<InflightRepository> inflightRepositories)
+            final @CamelContextInjectable Instance<InflightRepository> inflightRepositories)
             throws AmbiguousResolutionException {
         for (final InflightRepository match : inflightRepositories) {
             if (this.inflightRepository != null) {
@@ -174,7 +174,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerManagementStrategy(
-            final @CamelContextModifying Instance<ManagementStrategy> managementStrategies)
+            final @CamelContextInjectable Instance<ManagementStrategy> managementStrategies)
             throws AmbiguousResolutionException {
         for (final ManagementStrategy match : managementStrategies) {
             if (this.managementStrategy != null) {
@@ -190,7 +190,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerProcessorFactory(
-            final @CamelContextModifying Instance<ProcessorFactory> processorFactories)
+            final @CamelContextInjectable Instance<ProcessorFactory> processorFactories)
             throws AmbiguousResolutionException {
         for (final ProcessorFactory match : processorFactories) {
             if (this.processorFactory != null) {
@@ -206,7 +206,7 @@ class CdiCamelContextConfiguration {
 
     @Inject
     public void registerShutdownStrategy(
-            final @CamelContextModifying Instance<ShutdownStrategy> shutdownStrategies)
+            final @CamelContextInjectable Instance<ShutdownStrategy> shutdownStrategies)
             throws AmbiguousResolutionException {
         for (final ShutdownStrategy match : shutdownStrategies) {
             if (this.shutdownStrategy != null) {

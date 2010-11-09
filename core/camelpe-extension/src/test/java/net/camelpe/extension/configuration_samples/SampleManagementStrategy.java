@@ -6,7 +6,7 @@ package net.camelpe.extension.configuration_samples;
 import java.util.EventObject;
 import java.util.List;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.ManagementStatisticsLevel;
 import org.apache.camel.model.ProcessorDefinition;
@@ -26,7 +26,7 @@ import org.fusesource.commons.management.Statistic.UpdateMode;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@CamelContextModifying
+@CamelContextInjectable
 public class SampleManagementStrategy implements ManagementStrategy {
 
     /**

@@ -3,7 +3,7 @@
  */
 package net.camelpe.extension.configuration_samples;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.spi.ClassResolver;
 import org.apache.camel.spi.FactoryFinder;
@@ -17,7 +17,7 @@ import org.apache.camel.spi.FactoryFinderResolver;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@CamelContextModifying
+@CamelContextInjectable
 public class SampleFactoryFinderResolver implements FactoryFinderResolver {
 
     /**

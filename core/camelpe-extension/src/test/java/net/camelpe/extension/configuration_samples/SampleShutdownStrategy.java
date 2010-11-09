@@ -6,7 +6,7 @@ package net.camelpe.extension.configuration_samples;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.spi.RouteStartupOrder;
@@ -20,7 +20,7 @@ import org.apache.camel.spi.ShutdownStrategy;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@CamelContextModifying
+@CamelContextInjectable
 public class SampleShutdownStrategy implements ShutdownStrategy {
 
     /**

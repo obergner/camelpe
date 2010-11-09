@@ -6,7 +6,7 @@ package net.camelpe.extension.configuration_samples;
 import java.io.InputStream;
 import java.net.URL;
 
-import net.camelpe.api.CamelContextModifying;
+import net.camelpe.api.CamelContextInjectable;
 
 import org.apache.camel.spi.ClassResolver;
 
@@ -18,7 +18,7 @@ import org.apache.camel.spi.ClassResolver;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  * 
  */
-@CamelContextModifying
+@CamelContextInjectable
 public class SampleClassResolver implements ClassResolver {
 
     /**
