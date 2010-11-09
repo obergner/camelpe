@@ -21,7 +21,9 @@
 		<compiler.debug>true</compiler.debug>
 		<compiler.showWarnings>true</compiler.showWarnings>
 		<compiler.showDeprecation>true</compiler.showDeprecation>
+		<!-- ######################################################### -->
 		<!-- Dependency versions -->
+		<!-- ######################################################### -->
 		<!-- Standard javax apis -->
 		<deps.javax-inject.version>1</deps.javax-inject.version>
 		<deps.cdi-api.version>1.0-SP2</deps.cdi-api.version>
@@ -53,7 +55,9 @@
 		<deps.junit.version>4.8.1</deps.junit.version>
 		<deps.arquillian.version>1.0.0.Alpha4</deps.arquillian.version>
 		<deps.easymock.version>2.5.2</deps.easymock.version>
-		<!-- Plugin versions -->
+		<!-- ######################################################### -->
+		<!-- Build plugin versions -->
+		<!-- ######################################################### -->
 		<plugins.compiler.version>2.3.2</plugins.compiler.version>
 		<plugins.clean.version>2.4.1</plugins.clean.version>
 		<plugins.deploy.version>2.5</plugins.deploy.version>
@@ -65,19 +69,24 @@
 		<plugins.plugin.version>2.5.1</plugins.plugin.version>
 		<plugins.source.version>2.1.1</plugins.source.version>
 		<plugins.cobertura.version>2.4</plugins.cobertura.version>
-		<plugins.build-helper.version>1.5</plugins.build-helper.version>
+		<!-- ######################################################### -->
+		<!-- Reporting plugin versions -->
+		<!-- ######################################################### -->
+		<!-- This version works only under Maven 2.x, NOT under Maven 3.x. See 
+			Ticket #33. -->
+		<plugins.site.version>2.1.1</plugins.site.version>
 		<plugins.javadoc.version>2.7</plugins.javadoc.version>
-		<plugins.site.version>3.0-beta-3</plugins.site.version>
+		<plugins.surefire-reports.version>2.6</plugins.surefire-reports.version>
+		<plugins.pmd.version>2.5</plugins.pmd.version>
+		<!-- We cannot upgrade to 2.2 because of http://jira.codehaus.org/browse/MPIR-150 -->
+		<plugins.project-info-reports.version>2.0.1</plugins.project-info-reports.version>
 	</properties>
 
 	<developers>
 		<developer>
 			<id>obergner</id>
 			<name>Olaf Bergner</name>
-			<email>olaf.bergner at saxsys.de</email>
-			<organization>Saxonia Systems AG</organization>
-			<organizationUrl>http://www.saxsys.de
-			</organizationUrl>
+			<email>olaf.bergner AT gmx.de</email>
 			<roles>
 				<role>Project Admin</role>
 				<role>Developer</role>
@@ -89,8 +98,7 @@
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0
-			</url>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
 			<comments>
 				Copyright 2006-2007 the original author or authors.
 
@@ -122,15 +130,10 @@
 	<!-- =================================================== -->
 
 	<scm>
-		<connection>
-			scm:svn:svn://localhost/osgira/trunk/project
-		</connection>
-		<developerConnection>
-			scm:svn:svn://localhost/osgiara/trunk/project
-		</developerConnection>
+		<connection>scm:git:git://github.com/obergner/camelpe.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:obergner/camelpe.git</developerConnection>
 		<tag>HEAD</tag>
-		<url>http://localhost:8001/osgira/browser/trunk
-		</url>
+		<url>https://github.com/obergner/camelpe</url>
 	</scm>
 
 	<!-- =================================================== -->
@@ -140,16 +143,24 @@
 	<distributionManagement>
 		<site>
 			<id>net.camelpe.website</id>
-			<url>https://dav.sample.com/sites/sample-project</url>
+			<url>https://github.com/obergner/camelpe</url>
 		</site>
 		<repository>
 			<id>com.obergner.localDistributionRepository
 			</id>
-			<name>My Very Own Local Distribution Repository</name>
-			<url>file:/E:/Var/Data/Maven2/Repository/
-			</url>
+			<name>CamelPE's' Local Distribution Repository</name>
+			<url>file:/E:/Var/Data/Maven2/Repository/</url>
 		</repository>
 	</distributionManagement>
+
+	<!-- =================================================== -->
+	<!-- Continuous integration management -->
+	<!-- =================================================== -->
+
+	<ciManagement>
+		<system>hudson</system>
+		<url>http://localhost:7777/hudson/job/CamelPE/</url>
+	</ciManagement>
 
 	<!-- =================================================== -->
 	<!-- Project Dependencies -->
@@ -828,9 +839,9 @@
 					<version>${plugins.deploy.version}</version>
 				</plugin>
 				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>${plugins.build-helper.version}</version>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>${plugins.site.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -876,25 +887,11 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-
-	<!-- =================================================== -->
-	<!-- Project modules -->
-	<!-- =================================================== -->
-
-	<modules>
-		<module>../core</module>
-		<module>../addons</module>
-		<module>../sandbox</module>
-	</modules>
 
 	<!-- =================================================== -->
 	<!-- Project Reporting -->
@@ -905,7 +902,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.4.3</version>
+				<version>${plugins.surefire-reports.version}</version>
 				<configuration>
 					<aggregate>true</aggregate>
 				</configuration>
@@ -947,7 +944,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
-				<version>2.4</version>
+				<version>${plugins.pmd.version}</version>
 				<configuration>
 					<aggregate>true</aggregate>
 					<targetJdk>${compiler.source}</targetJdk>
@@ -956,17 +953,19 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.0.1</version>
+				<version>${plugins.project-info-reports.version}</version>
 				<reportSets>
 					<reportSet>
 						<reports>
+							<report>index</report>
 							<report>dependencies</report>
 							<report>project-team</report>
-							<report>mailing-list</report>
 							<report>cim</report>
-							<!-- Issue tracking report will be omitted <report>issue-tracking</report> -->
 							<report>license</report>
 							<report>scm</report>
+							<report>plugin-management</report>
+							<report>plugins</report>
+							<report>summary</report>
 						</reports>
 					</reportSet>
 				</reportSets>
@@ -1030,5 +1029,15 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<!-- =================================================== -->
+	<!-- Project modules -->
+	<!-- =================================================== -->
+
+	<modules>
+		<module>../core</module>
+		<module>../addons</module>
+		<module>../sandbox</module>
+	</modules>
 
 </project>
