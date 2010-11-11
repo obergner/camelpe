@@ -133,7 +133,8 @@ public class CdiInjector implements Injector {
     }
 
     private <T> T createBeanInstanceViaReflection(final Class<T> type,
-            final InjectionTarget<T> injectionTarget) {
+            final InjectionTarget<T> injectionTarget)
+            throws RuntimeCamelException {
         try {
             getLog().trace(
                     "Creating bean instance of type = [{}] via reflection ...",

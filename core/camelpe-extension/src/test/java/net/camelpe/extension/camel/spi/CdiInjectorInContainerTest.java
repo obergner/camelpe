@@ -3,6 +3,7 @@
  */
 package net.camelpe.extension.camel.spi;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertSame;
 
@@ -13,8 +14,12 @@ import net.camelpe.extension.camel.spi.beans.injector.ApplicationScopedBean;
 import net.camelpe.extension.camel.spi.beans.injector.BeanHavingNoInjectionPoints;
 import net.camelpe.extension.camel.spi.beans.injector.BeanHavingOneInjectionPoint;
 import net.camelpe.extension.camel.spi.beans.injector.BeanHavingPostConstructAnnotatedMethod;
+import net.camelpe.extension.camel.spi.beans.injector.BeanNotConstructableViaReflection;
+import net.camelpe.extension.camel.spi.beans.injector.BeanNotInBeanManager;
+import net.camelpe.extension.camel.spi.beans.injector.BeanTypeHavingTwoConcreteSubtypes;
 import net.camelpe.extension.camel.spi.beans.injector.SingletonScopedBean;
 
+import org.apache.camel.RuntimeCamelException;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.api.Run;
 import org.jboss.arquillian.api.RunModeType;
@@ -52,8 +57,12 @@ public class CdiInjectorInContainerTest {
     public static JavaArchive createTestArchive() {
         final JavaArchive testModule = ShrinkWrap
                 .create(JavaArchive.class, "test.jar")
-                .addPackages(false,
-                        BeanHavingNoInjectionPoints.class.getPackage())
+                .addClasses(BeanHavingNoInjectionPoints.class,
+                        ApplicationScopedBean.class,
+                        BeanHavingOneInjectionPoint.class,
+                        BeanHavingPostConstructAnnotatedMethod.class,
+                        SingletonScopedBean.class,
+                        BeanTypeHavingTwoConcreteSubtypes.class)
                 .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
                         ArchivePaths.create("beans.xml"));
 
@@ -148,6 +157,58 @@ public class CdiInjectorInContainerTest {
                         + singleton
                         + ") should have returned the same instance as had been passed in, yet it didn't",
                 singleton, beanInstance);
+    }
+
+    @Test
+    public void assertThatCdiInjectorCreatesNewInstanceViaReflectionIfNotFoundInBeanManager() {
+        final BeanNotInBeanManager beanInstance = classUnderTest().newInstance(
+                BeanNotInBeanManager.class);
+
+        assertNotNull("newInstance(" + BeanNotInBeanManager.class.getName()
+                + ") should have created an instance of ["
+                + BeanNotInBeanManager.class.getName()
+                + "] via reflection, yet it returned null", beanInstance);
+    }
+
+    @Test
+    public void assertThatCdiInjectorReturnsNewInstanceOfNonSingletonScopedBean() {
+        final BeanHavingNoInjectionPoints nonSingleton = new BeanHavingNoInjectionPoints();
+
+        final BeanHavingNoInjectionPoints newBeanInstance = classUnderTest()
+                .newInstance(BeanHavingNoInjectionPoints.class, nonSingleton);
+
+        assertNotNull(
+                "newInstance(" + BeanHavingNoInjectionPoints.class.getName()
+                        + ", " + nonSingleton
+                        + ") should have returned an instance of ["
+                        + BeanHavingNoInjectionPoints.class.getName()
+                        + "] yet it returned null", newBeanInstance);
+        assertFalse(
+                "newInstance("
+                        + BeanHavingNoInjectionPoints.class.getName()
+                        + ", "
+                        + nonSingleton
+                        + ") should have returned a new instance, yet it returned the instance passed in",
+                nonSingleton == newBeanInstance);
+    }
+
+    @Test
+    public void assertThatCdiInjectorCreatesAnArbitraryInstanceIfTwoMatchingBeansAreFound() {
+        final BeanTypeHavingTwoConcreteSubtypes beanInstance = classUnderTest()
+                .newInstance(BeanTypeHavingTwoConcreteSubtypes.class);
+
+        assertNotNull(
+                "newInstance("
+                        + BeanTypeHavingTwoConcreteSubtypes.class.getName()
+                        + ") should have created an arbitrary instance of ["
+                        + BeanNotInBeanManager.class.getName()
+                        + "] since two concrete subtypes are present in the bean manager, yet it returned null",
+                beanInstance);
+    }
+
+    @Test(expected = RuntimeCamelException.class)
+    public void assertThatCdiInjectorThrowsRuntimeCamelExceptionIfBeanCannotBeConstructedViaReflection() {
+        classUnderTest().newInstance(BeanNotConstructableViaReflection.class);
     }
 
     // -------------------------------------------------------------------------
