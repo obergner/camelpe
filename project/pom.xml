@@ -68,6 +68,7 @@
 		<plugins.plugin.version>2.5.1</plugins.plugin.version>
 		<plugins.source.version>2.1.1</plugins.source.version>
 		<plugins.cobertura.version>2.4</plugins.cobertura.version>
+		<plugins.license.version>1.8.0</plugins.license.version>
 		<!-- ######################################################### -->
 		<!-- Reporting plugin versions -->
 		<!-- ######################################################### -->
@@ -826,6 +827,44 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>${plugins.dependency.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>${plugins.license.version}</version>
+					<configuration>
+						<header>src/main/build/apache-license-2.0.txt</header>
+						<quiet>false</quiet>
+						<strictCheck>true</strictCheck>
+						<failIfMissing>true</failIfMissing>
+						<aggregate>true</aggregate>
+						<includes>
+							<include>src/main/**</include>
+							<include>src/test/**</include>
+						</includes>
+						<excludes>
+							<exclude>target/**</exclude>
+						</excludes>
+						<useDefaultExcludes>true</useDefaultExcludes>
+						<useDefaultMapping>true</useDefaultMapping>
+						<encoding>UTF-8</encoding>
+					</configuration>
+					<executions>
+						<execution>
+							<id>format-license-headers</id>
+							<phase>process-sources</phase>
+							<goals>
+								<goal>format</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>check-license-headers</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
