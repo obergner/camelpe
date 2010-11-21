@@ -11,7 +11,6 @@
 	<description><![CDATA[Camel PE - A CDI portable extension for Apache Camel]]></description>
 
 	<properties>
-		<order.artifact.version>0.1-SNAPSHOT</order.artifact.version>
 		<!-- Make the build platform independent: http://maven.apache.org/general.html#encoding-warning -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- javac settings -->
