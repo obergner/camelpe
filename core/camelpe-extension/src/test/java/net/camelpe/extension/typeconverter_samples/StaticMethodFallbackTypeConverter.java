@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2010.
  * Olaf Bergner.
- * Hamburg, Germany.
+ * Hamburg, Germany. olaf.bergner@gmx.de
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
