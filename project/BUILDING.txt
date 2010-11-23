@@ -1,0 +1,40 @@
+
+								Building CamelPE
+								================
+
+Modify your user-level settings.xml
+===================================
+
+Copy the
+
+	<profiles>
+	...
+	</profiles>
+
+section from
+
+	settings-sample.xml
+
+into your user-level settings.xml, usually found in
+
+	~/.m2/settings.xml.
+	
+This section declares the repositories and plugin repositories needed to
+successfully build CamelPE. For an explanation for why it is usually (though
+not always) a bad idea to put repository declarations into the pom.xml itself
+see
+
+	http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/
+	
+Building
+========
+
+Add
+
+	-Pnet.camelpe.profile
+	
+to every maven invocation, e.g.
+
+	mvn -Pnet.camelpe.profile clean install
+	
+and you are done.

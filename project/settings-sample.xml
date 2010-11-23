@@ -1,0 +1,86 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+                      
+    <!-- ================================================================== -->
+    <!--  These are the repositories needed by CamelPE to build success-    -->
+    <!--  fully.                                                            -->
+    <!--                                                                    -->
+    <!--  Usage:                                                            -->
+    <!--  Copy these settings into the "profiles" section in your user      -->
+    <!--  settings.xml, usually to be found in ~/.m2/settings.xml.          -->
+    <!--  Then, add -Pnet.camelpe.profile to your maven command line when   -->
+    <!--  building CamelPE, e.g.                                            -->
+    <!--                                                                    -->
+    <!--       mvn -Pnet.camelpe.profile clean install                      -->
+    <!--                                                                    -->
+    <!-- ================================================================== -->
+
+	<profiles>
+		<profile>
+			<id>net.camelpe.profile</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<!-- 
+					The JBoss repository provides the EJB 3.0 API jar and Arquillian 
+				-->
+				<repository>
+					<id>org.jboss.releaseRepository</id>
+					<name>JBoss Releases Repository</name>
+					<url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<!-- 
+					The following repository is needed to obtain the glassfish-embedded 
+					container used in integration tests. 
+				-->
+				<repository>
+					<id>dev.java.net.glassfishRepository</id>
+					<name>Java.net Glassfish Repository</name>
+					<url>http://download.java.net/maven/glassfish</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+				<!-- 
+					The following repository is needed for maven-default-skin 1.1-SNAPSHOT 
+					required by maven-site-plugin 3.0-beta-3. 
+				-->
+				<repository>
+					<id>org.apache.snapshotsRepository</id>
+					<name>Apache Snapshots Repository</name>
+					<url>http://repository.apache.org/snapshots/</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+
+			<pluginRepositories>
+				<pluginRepository>
+					<id>org.apache.snapshotsPluginRepository</id>
+					<name>Apache Snapshots Plugin Repository</name>
+					<url>http://cvs.apache.org/maven-snapshot-repository</url>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+
+</settings>

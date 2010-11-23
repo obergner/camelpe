@@ -10,78 +10,6 @@
 	<url></url>
 	<description><![CDATA[Camel PE - A CDI portable extension for Apache Camel]]></description>
 
-	<properties>
-		<!-- Make the build platform independent: http://maven.apache.org/general.html#encoding-warning -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- javac settings -->
-		<compiler.source>1.6</compiler.source>
-		<compiler.target>1.6</compiler.target>
-		<compiler.verbose>true</compiler.verbose>
-		<compiler.debug>true</compiler.debug>
-		<compiler.showWarnings>true</compiler.showWarnings>
-		<compiler.showDeprecation>true</compiler.showDeprecation>
-		<!-- ######################################################### -->
-		<!-- Dependency versions -->
-		<!-- ######################################################### -->
-		<!-- Standard javax apis -->
-		<deps.javax-inject.version>1</deps.javax-inject.version>
-		<deps.cdi-api.version>1.0-SP2</deps.cdi-api.version>
-		<deps.ejb-api.version>3.1.0</deps.ejb-api.version>
-		<deps.interceptor-api.version>1.1</deps.interceptor-api.version>
-		<deps.jta.version>1.1</deps.jta.version>
-		<deps.jms.version>1.1</deps.jms.version>
-		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
-		<deps.servlet-api.version>2.5</deps.servlet-api.version>
-		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
-		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
-		<deps.el-api.version>2.2</deps.el-api.version>
-		<!-- Proprietary -->
-		<deps.slf4j.version>1.5.11</deps.slf4j.version>
-		<deps.log4j.version>1.2.16</deps.log4j.version>
-		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
-		<!-- We use Hibernate Validator 4.1.0.Final because its pom correctly registers 
-			the dependencies on jaxb in scope 'provided' instead of 'runtime'. -->
-		<deps.hibernate-validator.version>4.1.0.Final
-		</deps.hibernate-validator.version>
-		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
-		<deps.weld.version>1.1.0.Beta1</deps.weld.version>
-		<deps.camel.version>2.4.0</deps.camel.version>
-		<deps.hornetq.version>2.1.2.Final</deps.hornetq.version>
-		<deps.netty.version>3.2.1.Final</deps.netty.version>
-		<deps.osgi.version>4.1.0</deps.osgi.version>
-		<deps.google-guava.version>r06</deps.google-guava.version>
-		<!-- Testing -->
-		<deps.junit.version>4.8.1</deps.junit.version>
-		<deps.arquillian.version>1.0.0.Alpha4</deps.arquillian.version>
-		<deps.easymock.version>2.5.2</deps.easymock.version>
-		<!-- ######################################################### -->
-		<!-- Build plugin versions -->
-		<!-- ######################################################### -->
-		<plugins.compiler.version>2.3.2</plugins.compiler.version>
-		<plugins.clean.version>2.4.1</plugins.clean.version>
-		<plugins.deploy.version>2.5</plugins.deploy.version>
-		<plugins.install.version>2.3.1</plugins.install.version>
-		<plugins.resources.version>2.4.3</plugins.resources.version>
-		<plugins.surefire.version>2.6</plugins.surefire.version>
-		<plugins.jar.version>2.3.1</plugins.jar.version>
-		<plugins.dependency.version>2.1</plugins.dependency.version>
-		<plugins.plugin.version>2.5.1</plugins.plugin.version>
-		<plugins.source.version>2.1.1</plugins.source.version>
-		<plugins.cobertura.version>2.4</plugins.cobertura.version>
-		<plugins.license.version>1.8.0</plugins.license.version>
-		<!-- ######################################################### -->
-		<!-- Reporting plugin versions -->
-		<!-- ######################################################### -->
-		<!-- This version works only under Maven 2.x, NOT under Maven 3.x. See 
-			Ticket #33. -->
-		<plugins.site.version>2.1.1</plugins.site.version>
-		<plugins.javadoc.version>2.7</plugins.javadoc.version>
-		<plugins.surefire-reports.version>2.6</plugins.surefire-reports.version>
-		<plugins.pmd.version>2.5</plugins.pmd.version>
-		<!-- We cannot upgrade to 2.2 because of http://jira.codehaus.org/browse/MPIR-150 -->
-		<plugins.project-info-reports.version>2.0.1</plugins.project-info-reports.version>
-	</properties>
-
 	<developers>
 		<developer>
 			<id>obergner</id>
@@ -161,6 +89,82 @@
 		<system>hudson</system>
 		<url>http://localhost:7777/hudson/job/CamelPE/</url>
 	</ciManagement>
+
+	<!-- =================================================== -->
+	<!-- Global properties -->
+	<!-- =================================================== -->
+
+	<properties>
+		<!-- Make the build platform independent: http://maven.apache.org/general.html#encoding-warning -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- javac settings -->
+		<compiler.source>1.6</compiler.source>
+		<compiler.target>1.6</compiler.target>
+		<compiler.verbose>true</compiler.verbose>
+		<compiler.debug>true</compiler.debug>
+		<compiler.showWarnings>true</compiler.showWarnings>
+		<compiler.showDeprecation>true</compiler.showDeprecation>
+		<!-- ######################################################### -->
+		<!-- Dependency versions -->
+		<!-- ######################################################### -->
+		<!-- Standard javax apis -->
+		<deps.javax-inject.version>1</deps.javax-inject.version>
+		<deps.cdi-api.version>1.0-SP2</deps.cdi-api.version>
+		<deps.ejb-api.version>3.1.0</deps.ejb-api.version>
+		<deps.interceptor-api.version>1.1</deps.interceptor-api.version>
+		<deps.jta.version>1.1</deps.jta.version>
+		<deps.jms.version>1.1</deps.jms.version>
+		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
+		<deps.servlet-api.version>2.5</deps.servlet-api.version>
+		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
+		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
+		<deps.el-api.version>2.2</deps.el-api.version>
+		<!-- Proprietary -->
+		<deps.slf4j.version>1.5.11</deps.slf4j.version>
+		<deps.log4j.version>1.2.16</deps.log4j.version>
+		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
+		<!-- We use Hibernate Validator 4.1.0.Final because its pom correctly registers 
+			the dependencies on jaxb in scope 'provided' instead of 'runtime'. -->
+		<deps.hibernate-validator.version>4.1.0.Final
+		</deps.hibernate-validator.version>
+		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
+		<deps.weld.version>1.1.0.Beta1</deps.weld.version>
+		<deps.camel.version>2.4.0</deps.camel.version>
+		<deps.hornetq.version>2.1.2.Final</deps.hornetq.version>
+		<deps.netty.version>3.2.1.Final</deps.netty.version>
+		<deps.osgi.version>4.1.0</deps.osgi.version>
+		<deps.google-guava.version>r06</deps.google-guava.version>
+		<!-- Testing -->
+		<deps.junit.version>4.8.1</deps.junit.version>
+		<deps.arquillian.version>1.0.0.Alpha4</deps.arquillian.version>
+		<deps.easymock.version>2.5.2</deps.easymock.version>
+		<!-- ######################################################### -->
+		<!-- Build plugin versions -->
+		<!-- ######################################################### -->
+		<plugins.compiler.version>2.3.2</plugins.compiler.version>
+		<plugins.clean.version>2.4.1</plugins.clean.version>
+		<plugins.deploy.version>2.5</plugins.deploy.version>
+		<plugins.install.version>2.3.1</plugins.install.version>
+		<plugins.resources.version>2.4.3</plugins.resources.version>
+		<plugins.surefire.version>2.6</plugins.surefire.version>
+		<plugins.jar.version>2.3.1</plugins.jar.version>
+		<plugins.dependency.version>2.1</plugins.dependency.version>
+		<plugins.plugin.version>2.5.1</plugins.plugin.version>
+		<plugins.source.version>2.1.1</plugins.source.version>
+		<plugins.cobertura.version>2.4</plugins.cobertura.version>
+		<plugins.license.version>1.8.0</plugins.license.version>
+		<!-- ######################################################### -->
+		<!-- Reporting plugin versions -->
+		<!-- ######################################################### -->
+		<!-- This version works only under Maven 2.x, NOT under Maven 3.x. See 
+			Ticket #33. -->
+		<plugins.site.version>2.1.1</plugins.site.version>
+		<plugins.javadoc.version>2.7</plugins.javadoc.version>
+		<plugins.surefire-reports.version>2.6</plugins.surefire-reports.version>
+		<plugins.pmd.version>2.5</plugins.pmd.version>
+		<!-- We cannot upgrade to 2.2 because of http://jira.codehaus.org/browse/MPIR-150 -->
+		<plugins.project-info-reports.version>2.0.1</plugins.project-info-reports.version>
+	</properties>
 
 	<!-- =================================================== -->
 	<!-- Project Dependencies -->
@@ -1011,63 +1015,6 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-	<!-- =================================================== -->
-	<!-- Project Repositories -->
-	<!-- =================================================== -->
-
-	<repositories>
-		<!-- The JBoss repository provides the EJB 3.0 API jar and Arquillian -->
-		<repository>
-			<id>org.jboss.releaseRepository</id>
-			<name>JBoss Releases Repository</name>
-			<url>http://repository.jboss.org/nexus/content/groups/public-jboss
-			</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<!-- The following repository is needed to obtain the glassfish-embedded 
-			container used in integration tests. -->
-		<repository>
-			<id>dev.java.net.glassfishRepository</id>
-			<name>Java.net Glassfish Repository</name>
-			<url>http://download.java.net/maven/glassfish</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<!-- The following repository is needed to maven-default-skin 1.1-SNAPSHOT 
-			needed to maven-site-plugin 3.0-beta-3. -->
-		<repository>
-			<id>org.apache.snapshotsRepository</id>
-			<name>Apache Snapshots Repository</name>
-			<url>http://repository.apache.org/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>org.apache.snapshotsPluginRepository</id>
-			<name>Apache Snapshots Plugin Repository</name>
-			<url>http://cvs.apache.org/maven-snapshot-repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<!-- =================================================== -->
 	<!-- Project modules -->
