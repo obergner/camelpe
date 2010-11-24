@@ -36,7 +36,7 @@ Currently, the list of supported SPIs comprises:
 
 h5. As a developer working on a project that uses CDI as its DI container, I want to be able to have my "routes":http://camel.apache.org/routes.html discovered, instantiated, configured and registered via our CDI container.
 
-This is almost a no-brainer since CamelPE will scan each CDI-enabled module - those sporting a @META-INF/beans.xml@ file - for subclasses of Apache Camel's "RouteBuilder":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/builder/RouteBuilder.html, instantiate and configure those like any other CDI bean, and will registered the set of discovered @RouteBuilders@ with the @CamelContext@ immediately prior to starting it.
+This is almost a no-brainer since CamelPE will scan each CDI-enabled module - those sporting a @META-INF/beans.xml@ file - for subclasses of Apache Camel's "RouteBuilder":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/builder/RouteBuilder.html, instantiate and configure those like any other CDI bean, and will register the set of discovered @RouteBuilders@ with the @CamelContext@ immediately prior to starting it.
 
 Maybe the only caveat you should be aware of is that you cannot make a @RouteBuilder@ @@ApplicationScoped@ since it does not declare a public no-args constructor and thus "cannot be proxied":http://docs.jboss.org/weld/reference/1.1.0.Beta1/en-US/html/injection.html#d0e1439. While this may seem conceptually dissatisfying - it certainly seemed so to me - in practice this should rarely if ever be a problem. Routes discovery and registration is a one-time process executed at system startup. So while not @@ApplicationScoped@ in the strict CDI sense, @RouteBuilder@ instances will nonetheless exist for the lifetime of the application. 
 
@@ -52,11 +52,11 @@ h3. What can I expect from CamelPE's first release?
 
 CamelPE's first release, CamelPE 0.1, will probably not offer any features beyond what is already available. Instead, I will focus on
 
-# adding more documentation, i.e. a user guide will probably prove helpful, and more and better javadocs are always an issue;
-# creating a distribution for those users that don't buy into Maven;
-# enabling the community to give feedback on bugs, feature requests and design considerations, as well as to send patches;
-# improving the test coverage; and
-# cleaning up the code base.
+# adding more documentation, i.e. a user guide will probably prove helpful, and more and better javadocs are always an issue
+# creating a distribution for those users that don't buy into Maven
+# enabling the community to give feedback on bugs, feature requests and design considerations, as well as to send patches
+# improving the test coverage and
+# cleaning up the code base
 
 h3. Where is CamelPE headed in the future?
 
@@ -69,4 +69,18 @@ That being said, I *do* have some ideas I would like to explore, namely:
 # Eventually I would like to support the whole range of Apache Camel's "SPI":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/spi/package-frame.html, at least where it makes sense to provide integration with CDI.
 # One of CDI's strong points is, in my view, its extensive support for event-based designs. Apache Camel defines a comprehensive set of lifecycle events listeners may be informed about. It would be nice to have these automatically converted into CDI events.
 
-h3. Releases are for douche bags. Just gimme the raw source!
+h3. How do I build CamelPE?
+
+Check out the source with
+
+@git clone git://github.com/obergner/camelpe.git@
+
+In @camelpe/project@ you will find @settings-fragment.xml@. Copy the profile @net.camelpe.profile@ into Maven's user-level @settings.xml@, usually found in @~/.m2/settings.xml@.
+
+You need to do this because CamelPE does consciously *not* declare any repositories in its master pom. For an explanation for why this is usually (though not always) a bad idea look "here":http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/.
+
+Now, changing into the @camelpe/project@ directory, you may build CamelPE with e.g.
+
+@mvn -Pnet.camelpe.profile clean install@
+
+and you're done. 
