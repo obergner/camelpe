@@ -21,7 +21,7 @@ Currently, CamelPE supports three use cases:
 
 h5. As a developer working on a project that uses CDI as its DI container, I want to be able to adapt the Camel runtime - the Camel Context - to my chosen platform's requirements.
 
-To this end, CamelPE partially exposes Camel's "SPI":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/index.html - <strong>S</strong>ervice <strong>P</strong>rovider <strong>I</strong>nterface - to the CDI container. It achieves this by introducing a custom "Qualifier":http://docs.jboss.org/weld/reference/1.1.0.Beta1/en-US/html/injection.html#d0e1225, @net.camelpe.api.CamelContextInjectable@. A developer may annotate a custom implementation of one of Camel's SPI's as e.g. "@PackageScanClassResolver@":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/spi/PackageScanClassResolver.html and thus have it injected into CamelContext.
+To this end, CamelPE partially exposes Camel's "SPI":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/index.html - <strong>S</strong>ervice <strong>P</strong>rovider <strong>I</strong>nterface - to the CDI container. It achieves this by introducing a custom "Qualifier":http://docs.jboss.org/weld/reference/1.1.0.Beta1/en-US/html/injection.html#d0e1225, @net.camelpe.api.CamelContextInjectable@. A developer may annotate a custom implementation of one of Camel's SPI's as e.g. PackageScanClassResolver and thus have it injected into the CamelContext.
 
 Currently, the list of supported SPIs comprises:
 # "@org.apache.camel.spi.ClassResolver@":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/spi/ClassResolver.html
@@ -36,21 +36,21 @@ Currently, the list of supported SPIs comprises:
 
 h5. As a developer working on a project that uses CDI as its DI container, I want to be able to have my "routes":http://camel.apache.org/routes.html discovered, instantiated, configured and registered via our CDI container.
 
-This is almost a no-brainer since CamelPE will scan each CDI-enabled module - those sporting a @META-INF/beans.xml@ file - for subclasses of Apache Camel's "RouteBuilder":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/builder/RouteBuilder.html, instantiate and configure those like any other CDI bean, and will register the set of discovered @RouteBuilders@ with the @CamelContext@ immediately prior to starting it.
+This is almost a no-brainer since CamelPE will scan each CDI-enabled module - those sporting a @META-INF/beans.xml@ file - for subclasses of Apache Camel's "RouteBuilder":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/builder/RouteBuilder.html, instantiate and configure those like any other CDI bean, and will register the set of discovered RouteBuilders in the CamelContext immediately prior to starting it.
 
-Maybe the only caveat you should be aware of is that you cannot make a @RouteBuilder@ @@ApplicationScoped@ since it does not declare a public no-args constructor and thus "cannot be proxied":http://docs.jboss.org/weld/reference/1.1.0.Beta1/en-US/html/injection.html#d0e1439. While this may seem conceptually dissatisfying - it certainly seemed so to me - in practice this should rarely if ever be a problem. Routes discovery and registration is a one-time process executed at system startup. So while not @@ApplicationScoped@ in the strict CDI sense, @RouteBuilder@ instances will nonetheless exist for the lifetime of the application. 
+Maybe the only caveat you should be aware of is that you cannot make a RouteBuilder @@ApplicationScoped@ since it does not declare a public no-args constructor and thus "cannot be proxied":http://docs.jboss.org/weld/reference/1.1.0.Beta1/en-US/html/injection.html#d0e1439. While this may seem conceptually dissatisfying - it certainly seemed so to me - in practice this should rarely if ever be a problem. Routes discovery and registration is a one-time process executed at system startup. So while not ApplicationScoped in the strict CDI sense, RouteBuilder instances will nonetheless exist for the lifetime of the application. 
 
 h5. As a developer working on a project that uses CDI as its DI container, I want to be able to have my "Type Converters":http://camel.apache.org/type-converter.html discovered, instantiated, configured and registered via our CDI container.
 
-Easy. Just annotate your @TypeConverters@ with "@org.apache.camel.Converter@":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/Converter or "@org.apache.camel.FallbackConverter@":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/FallbackConverter and you are good to go. CamelPE will discover, instantiate and configure those just like any other CDI bean, and will take care of registering them with the @CamelContext@.
+Easy. Just annotate your TypeConverters with "@org.apache.camel.Converter@":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/Converter or "@org.apache.camel.FallbackConverter@":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/FallbackConverter and you are good to go. CamelPE will discover, instantiate and configure those just like any other CDI bean, and will take care of registering them in the CamelContext.
 
-You should, however, take care *not* to use Apache Camel's standard mechanism of registering packages containing @TypeConverters@ in @META-INF/services/org/apache/camel/TypeConverter@. Otherwise, they will be registered _twice_ with the @CamelContext@, once by CamelPE and then again by Apache Camel's "@AnnotationTypeConverterLoader@":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/impl/converter/AnnotationTypeConverterLoader.html. CamelPE does *not* disable the latter since it is required to load the set of built-in @TypeConverters@ which are essential to Apache Camel's working properly.
+You should, however, take care *not* to use Apache Camel's standard mechanism of registering packages containing TypeConverters in @META-INF/services/org/apache/camel/TypeConverter@. Otherwise, they will be registered _twice_ in the CamelContext, once by CamelPE and then again by Apache Camel's "@AnnotationTypeConverterLoader@":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/impl/converter/AnnotationTypeConverterLoader.html. CamelPE does *not* disable the latter since it is required to load the set of built-in TypeConverters which are essential to Apache Camel's working properly.
 
-What may seem counterintuitive is that you have to apply @org.apache.camel.Converter@ _twice_, once on the class level and then again on the method level. While this is strictly speaking not necessary, it is in keeping with the restrictions imposed by Apache Camel itself, and I consciously chose not to relax this requirement.
+What may seem counterintuitive is that you have to apply org.apache.camel.Converter _twice_, once on the class level and then again on the method level. While this is strictly speaking not necessary, it is in keeping with the restrictions imposed by Apache Camel itself, and I consciously chose not to relax this requirement.
 
 h3. What can I expect from CamelPE's first release?
 
-CamelPE's first release, CamelPE 0.1, will probably not offer any features beyond what is already available. Instead, I will focus on
+CamelPE's first release, CamelPE 0.1, will probably not offer any features beyond those already available. Instead, I will focus on
 
 # adding more documentation, i.e. a user guide will probably prove helpful, and more and better javadocs are always an issue
 # creating a distribution for those users that don't buy into Maven
@@ -65,7 +65,7 @@ Well, it largely depends on what the community deems desirable, to wit it depend
 That being said, I *do* have some ideas I would like to explore, namely:
 
 # Support more and eventually all of Apache Camel's custom annotations as e.g. @@Consume@, @@RecipientList@. Again, I would appreciate feedback on what _you_ think would be the most useful additions in this area.
-# Support discovery, instantiation and configuration of "@org.apache.camel.spi.DataFormat@":http://camel.apache.org/data-format.html.
+# Support discovery, instantiation and configuration of "@org.apache.camel.spi.DataFormats@":http://camel.apache.org/data-format.html.
 # Eventually I would like to support the whole range of Apache Camel's "SPI":http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/spi/package-frame.html, at least where it makes sense to provide integration with CDI.
 # One of CDI's strong points is, in my view, its extensive support for event-based designs. Apache Camel defines a comprehensive set of lifecycle events listeners may be informed about. It would be nice to have these automatically converted into CDI events.
 
