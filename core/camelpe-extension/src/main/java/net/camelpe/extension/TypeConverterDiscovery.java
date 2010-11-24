@@ -47,8 +47,6 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
-
 /**
  * <p>
  * TODO: Insert short summary for TypeConverterDiscovery
@@ -118,7 +116,7 @@ class TypeConverterDiscovery {
     // -------------------------------------------------------------------------
 
     private Set<Class<?>> annotatedTypeConverterClasses() {
-        final Set<Class<?>> answer = Sets.newHashSet();
+        final Set<Class<?>> answer = new HashSet<Class<?>>();
         final Set<Bean<?>> converterBeans = this.beanManager.getBeans(
                 Object.class, CONVERTER_QUALIFIER);
         for (final Bean<?> converterBean : converterBeans) {
@@ -136,7 +134,7 @@ class TypeConverterDiscovery {
                 "Discovered [{}] FallbackTypeConverter Bean(s) in BeanManager",
                 fallbackConverterBeans.size());
 
-        return answer;
+        return Collections.unmodifiableSet(answer);
     }
 
     // -------------------------------------------------------------------------

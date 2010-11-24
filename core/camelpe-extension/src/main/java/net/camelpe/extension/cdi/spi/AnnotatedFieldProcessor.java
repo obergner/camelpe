@@ -23,6 +23,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,11 +34,6 @@ import javax.inject.Inject;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 
 /**
  * <p>
@@ -48,17 +45,23 @@ import com.google.common.collect.Sets;
  */
 abstract class AnnotatedFieldProcessor {
 
-    static final Set<Class<? extends Annotation>> CAMEL = ImmutableSet.of(
-            EndpointInject.class, Produce.class);
+    static final Set<Class<? extends Annotation>> CAMEL;
 
-    static final Set<Class<? extends Annotation>> CDI_CONFLICTS = ImmutableSet
-            .of(Inject.class, Produces.class);
+    static final Set<Class<? extends Annotation>> CDI_CONFLICTS;
 
-    private static final Predicate<Field> IS_CAMEL_INJECT_ANNOTATED = new IsCamelInjectAnnotated();
+    static {
+        final Set<Class<? extends Annotation>> camelTmp = new HashSet<Class<? extends Annotation>>(
+                2);
+        camelTmp.add(EndpointInject.class);
+        camelTmp.add(Produce.class);
+        CAMEL = Collections.unmodifiableSet(camelTmp);
 
-    private static final Predicate<Field> HAS_CONFLICTING_CDI_ANNOTATIONS = Predicates
-            .and(IS_CAMEL_INJECT_ANNOTATED,
-                    new HasPotentiallyConflictingCdiAnnotations());
+        final Set<Class<? extends Annotation>> cdiConflictsTmp = new HashSet<Class<? extends Annotation>>(
+                2);
+        cdiConflictsTmp.add(Inject.class);
+        cdiConflictsTmp.add(Produces.class);
+        CDI_CONFLICTS = Collections.unmodifiableSet(cdiConflictsTmp);
+    }
 
     /**
      * @param <X>
@@ -67,14 +70,29 @@ abstract class AnnotatedFieldProcessor {
      */
     static <X> void ensureNoConflictingAnnotationsPresentOn(final Class<X> type)
             throws ResolutionException {
-        final Set<Field> fieldsHavingConflictingAnnotations = Sets.filter(
-                ImmutableSet.copyOf(allFieldsAndSuperclassFieldsIn(type)),
-                HAS_CONFLICTING_CDI_ANNOTATIONS);
+        final Set<Field> fieldsHavingConflictingAnnotations = new HashSet<Field>();
+        for (final Field fieldToInspect : allFieldsAndSuperclassFieldsIn(type)) {
+            if (isAnnotatedWithOneOf(fieldToInspect, CAMEL)
+                    && isAnnotatedWithOneOf(fieldToInspect, CDI_CONFLICTS)) {
+                fieldsHavingConflictingAnnotations.add(fieldToInspect);
+            }
+        }
         if (!fieldsHavingConflictingAnnotations.isEmpty()) {
             final String error = buildErrorMessageFrom(fieldsHavingConflictingAnnotations);
 
             throw new ResolutionException(error);
         }
+    }
+
+    private static boolean isAnnotatedWithOneOf(final Field fieldToInspect,
+            final Set<Class<? extends Annotation>> annotations) {
+        for (final Class<? extends Annotation> annotationType : annotations) {
+            if (fieldToInspect.isAnnotationPresent(annotationType)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -92,9 +110,14 @@ abstract class AnnotatedFieldProcessor {
      * @return
      */
     static <X> Set<Field> camelInjectAnnotatedFieldsIn(final Class<X> type) {
-        return Sets.filter(
-                ImmutableSet.copyOf(allFieldsAndSuperclassFieldsIn(type)),
-                IS_CAMEL_INJECT_ANNOTATED);
+        final Set<Field> camelInjectAnnotatedFields = new HashSet<Field>();
+        for (final Field fieldToInspect : allFieldsAndSuperclassFieldsIn(type)) {
+            if (isAnnotatedWithOneOf(fieldToInspect, CAMEL)) {
+                camelInjectAnnotatedFields.add(fieldToInspect);
+            }
+        }
+
+        return Collections.unmodifiableSet(camelInjectAnnotatedFields);
     }
 
     private static <X> Field[] allFieldsAndSuperclassFieldsIn(
@@ -135,76 +158,5 @@ abstract class AnnotatedFieldProcessor {
         error.append(" This, however, is illegal. No more than one of these two annotations must be present on any given field.");
 
         return error.toString();
-    }
-
-    /**
-     * <p>
-     * A {@link Predicate <code>Predicate</code>} that tests for the presence of
-     * one of the annotations
-     * <ul>
-     * <li>
-     * {@link EndpointInject <code>EndpointInject</code>},</li>
-     * <li>
-     * {@link Produce <code>Produce</code>}</li>
-     * </ul>
-     * on a field.
-     * </p>
-     * 
-     * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
-     * 
-     */
-    private static class IsCamelInjectAnnotated implements Predicate<Field> {
-
-        IsCamelInjectAnnotated() {
-        }
-
-        /**
-         * @see com.google.common.base.Predicate#apply(java.lang.Object)
-         */
-        @Override
-        public boolean apply(final Field input) {
-            for (final Class<? extends Annotation> anno : CAMEL) {
-                if (input.isAnnotationPresent(anno)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    /**
-     * <p>
-     * A {@link Predicate <code>Predicate</code>} that tests for the presence of
-     * one of the <tt>CDI</tt> annotations
-     * <ul>
-     * <li>
-     * {@link Inject <code>Inject</code>},</li>
-     * <li>
-     * {@link Produces <code>Produces</code>}</li>
-     * </ul>
-     * on a field.
-     * </p>
-     * 
-     * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
-     * 
-     */
-    private static class HasPotentiallyConflictingCdiAnnotations implements
-            Predicate<Field> {
-
-        HasPotentiallyConflictingCdiAnnotations() {
-        }
-
-        /**
-         * @see com.google.common.base.Predicate#apply(java.lang.Object)
-         */
-        @Override
-        public boolean apply(final Field input) {
-            for (final Class<? extends Annotation> anno : CDI_CONFLICTS) {
-                if (input.isAnnotationPresent(anno)) {
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }
