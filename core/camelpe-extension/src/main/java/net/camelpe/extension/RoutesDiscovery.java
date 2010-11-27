@@ -54,158 +54,158 @@ import org.apache.commons.lang.Validate;
 @ApplicationScoped
 class RoutesDiscovery {
 
-    // -------------------------------------------------------------------------
-    // Fields
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Fields
+	// -------------------------------------------------------------------------
 
-    private Instance<RouteBuilder> discoveredRoutes;
+	private Instance<RouteBuilder> discoveredRoutes;
 
-    // -------------------------------------------------------------------------
-    // API
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// API
+	// -------------------------------------------------------------------------
 
-    @Inject
-    void discoverRoutes(final Instance<RouteBuilder> routes) {
-        this.discoveredRoutes = routes;
-    }
+	@Inject
+	void discoverRoutes(final Instance<RouteBuilder> routes) {
+		this.discoveredRoutes = routes;
+	}
 
-    void registerDiscoveredRoutesIn(final CamelContext camelContext)
-            throws Exception {
-        Validate.notNull(camelContext, "camelContext");
-        if (this.discoveredRoutes == null) {
-            throw new IllegalStateException(
-                    "Routes discovery has not yet completed");
-        }
-        for (final RoutesBuilder routesBuilder : this.discoveredRoutes) {
-            camelContext.addRoutes(routesBuilder);
-        }
-    }
+	void registerDiscoveredRoutesIn(final CamelContext camelContext)
+	        throws Exception {
+		Validate.notNull(camelContext, "camelContext");
+		if (this.discoveredRoutes == null) {
+			throw new IllegalStateException(
+			        "Routes discovery has not yet completed");
+		}
+		for (final RoutesBuilder routesBuilder : this.discoveredRoutes) {
+			camelContext.addRoutes(routesBuilder);
+		}
+	}
 
-    // -------------------------------------------------------------------------
-    // This class wrapped in a CDI bean
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// This class wrapped in a CDI bean
+	// -------------------------------------------------------------------------
 
-    static class CdiBean implements Bean<RoutesDiscovery> {
+	static class CdiBean implements Bean<RoutesDiscovery> {
 
-        private final InjectionTarget<RoutesDiscovery> injectionTarget;
+		private final InjectionTarget<RoutesDiscovery> injectionTarget;
 
-        /**
-         * @param beanManager
-         */
-        CdiBean(final BeanManager beanManager) {
-            final AnnotatedType<RoutesDiscovery> annotatedType = beanManager
-                    .createAnnotatedType(RoutesDiscovery.class);
-            this.injectionTarget = beanManager
-                    .createInjectionTarget(annotatedType);
-        }
+		/**
+		 * @param beanManager
+		 */
+		CdiBean(final BeanManager beanManager) {
+			final AnnotatedType<RoutesDiscovery> annotatedType = beanManager
+			        .createAnnotatedType(RoutesDiscovery.class);
+			this.injectionTarget = beanManager
+			        .createInjectionTarget(annotatedType);
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getBeanClass()
-         */
-        @Override
-        public Class<?> getBeanClass() {
-            return RoutesDiscovery.class;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getBeanClass()
+		 */
+		@Override
+		public Class<?> getBeanClass() {
+			return RoutesDiscovery.class;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getInjectionPoints()
-         */
-        @Override
-        public Set<InjectionPoint> getInjectionPoints() {
-            return this.injectionTarget.getInjectionPoints();
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getInjectionPoints()
+		 */
+		@Override
+		public Set<InjectionPoint> getInjectionPoints() {
+			return this.injectionTarget.getInjectionPoints();
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getName()
-         */
-        @Override
-        public String getName() {
-            return "routesDiscovery";
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getName()
+		 */
+		@Override
+		public String getName() {
+			return "routesDiscovery";
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getQualifiers()
-         */
-        @SuppressWarnings("serial")
-        @Override
-        public Set<Annotation> getQualifiers() {
-            final Set<Annotation> qualifiers = new HashSet<Annotation>();
-            qualifiers.add(new AnnotationLiteral<Default>() {
-            });
-            qualifiers.add(new AnnotationLiteral<Any>() {
-            });
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getQualifiers()
+		 */
+		@SuppressWarnings("serial")
+		@Override
+		public Set<Annotation> getQualifiers() {
+			final Set<Annotation> qualifiers = new HashSet<Annotation>();
+			qualifiers.add(new AnnotationLiteral<Default>() {
+			});
+			qualifiers.add(new AnnotationLiteral<Any>() {
+			});
 
-            return qualifiers;
-        }
+			return qualifiers;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getScope()
-         */
-        @Override
-        public Class<? extends Annotation> getScope() {
-            return ApplicationScoped.class;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getScope()
+		 */
+		@Override
+		public Class<? extends Annotation> getScope() {
+			return ApplicationScoped.class;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getStereotypes()
-         */
-        @Override
-        public Set<Class<? extends Annotation>> getStereotypes() {
-            return Collections.emptySet();
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getStereotypes()
+		 */
+		@Override
+		public Set<Class<? extends Annotation>> getStereotypes() {
+			return Collections.emptySet();
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getTypes()
-         */
-        @Override
-        public Set<Type> getTypes() {
-            final Set<Type> types = new HashSet<Type>();
-            types.add(RoutesDiscovery.class);
-            types.add(Object.class);
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getTypes()
+		 */
+		@Override
+		public Set<Type> getTypes() {
+			final Set<Type> types = new HashSet<Type>();
+			types.add(RoutesDiscovery.class);
+			types.add(Object.class);
 
-            return types;
-        }
+			return types;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#isAlternative()
-         */
-        @Override
-        public boolean isAlternative() {
-            return false;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#isAlternative()
+		 */
+		@Override
+		public boolean isAlternative() {
+			return false;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#isNullable()
-         */
-        @Override
-        public boolean isNullable() {
-            return false;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#isNullable()
+		 */
+		@Override
+		public boolean isNullable() {
+			return false;
+		}
 
-        /**
-         * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
-         */
-        @Override
-        public RoutesDiscovery create(
-                final CreationalContext<RoutesDiscovery> creationalContext) {
-            final RoutesDiscovery instance = this.injectionTarget
-                    .produce(creationalContext);
-            this.injectionTarget.inject(instance, creationalContext);
-            this.injectionTarget.postConstruct(instance);
+		/**
+		 * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
+		 */
+		@Override
+		public RoutesDiscovery create(
+		        final CreationalContext<RoutesDiscovery> creationalContext) {
+			final RoutesDiscovery instance = this.injectionTarget
+			        .produce(creationalContext);
+			this.injectionTarget.inject(instance, creationalContext);
+			this.injectionTarget.postConstruct(instance);
 
-            return instance;
-        }
+			return instance;
+		}
 
-        /**
-         * @see javax.enterprise.context.spi.Contextual#destroy(java.lang.Object,
-         *      javax.enterprise.context.spi.CreationalContext)
-         */
-        @Override
-        public void destroy(final RoutesDiscovery instance,
-                final CreationalContext<RoutesDiscovery> creationalContext) {
-            this.injectionTarget.preDestroy(instance);
-            this.injectionTarget.dispose(instance);
-            creationalContext.release();
-        }
-    }
+		/**
+		 * @see javax.enterprise.context.spi.Contextual#destroy(java.lang.Object,
+		 *      javax.enterprise.context.spi.CreationalContext)
+		 */
+		@Override
+		public void destroy(final RoutesDiscovery instance,
+		        final CreationalContext<RoutesDiscovery> creationalContext) {
+			this.injectionTarget.preDestroy(instance);
+			this.injectionTarget.dispose(instance);
+			creationalContext.release();
+		}
+	}
 }

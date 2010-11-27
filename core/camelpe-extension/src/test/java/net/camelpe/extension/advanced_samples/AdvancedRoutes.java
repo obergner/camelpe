@@ -33,19 +33,19 @@ import org.apache.camel.builder.RouteBuilder;
  */
 public class AdvancedRoutes extends RouteBuilder {
 
-    public static final String ADVANCED_SOURCE_EP = "direct:fullFunctionalitySource";
+	public static final String ADVANCED_SOURCE_EP = "direct:fullFunctionalitySource";
 
-    public static final String ADVANCED_TARGET_EP = "bean:"
-            + AdvancedConsumer.NAME + "?method=consume";
+	public static final String ADVANCED_TARGET_EP = "bean:"
+	        + AdvancedConsumer.NAME + "?method=consume";
 
-    @Inject
-    private AdvancedProcessor processor;
+	@Inject
+	private AdvancedProcessor processor;
 
-    /**
-     * @see org.apache.camel.builder.RouteBuilder#configure()
-     */
-    @Override
-    public void configure() throws Exception {
-        from(ADVANCED_SOURCE_EP).process(this.processor).to(ADVANCED_TARGET_EP);
-    }
+	/**
+	 * @see org.apache.camel.builder.RouteBuilder#configure()
+	 */
+	@Override
+	public void configure() throws Exception {
+		from(ADVANCED_SOURCE_EP).process(this.processor).to(ADVANCED_TARGET_EP);
+	}
 }

@@ -33,7 +33,7 @@ import org.apache.camel.EndpointInject;
  */
 public class BeanHavingEndpointInjectAndProducesAnnotatedField {
 
-    @Produces
-    @EndpointInject(uri = "ignore")
-    public Object producedValue;
+	@Produces
+	@EndpointInject(uri = "ignore")
+	public Object producedValue;
 }

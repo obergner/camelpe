@@ -67,274 +67,274 @@ import org.junit.runner.RunWith;
 @Run(RunModeType.IN_CONTAINER)
 public class CdiCamelContextConfigurationInContainerTest {
 
-    // -------------------------------------------------------------------------
-    // Static
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Static
+	// -------------------------------------------------------------------------
 
-    private static final String CDIPE_SERVICE_FILE_PATH = "META-INF/services/javax.enterprise.inject.spi.Extension";
+	private static final String CDIPE_SERVICE_FILE_PATH = "META-INF/services/javax.enterprise.inject.spi.Extension";
 
-    private static final String CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX = ".DISABLED";
+	private static final String CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX = ".DISABLED";
 
-    static {
-        /*
-         * HACK: As soon as the embedded Weld container sees the file
-         * "META-INF/services/javax.enterprise.inject.spi.Extension" on the
-         * classpath - it need not be deployed into the container - it will look
-         * for the fqn of a CDI extension in that file. In our case, it will
-         * find the fqn of our Camel Portable Extension and will happily deploy
-         * it. This, however, will cause this test to fail since our Camel PE
-         * deploys the class to be tested by this test,
-         * CdiCamelContextConfiguration, twice: first by explicitly adding it to
-         * the BeanManager as a CDI bean, and then by discovering it on the
-         * classpath. Now, Weld will recognize that something is wrong with one
-         * of the deployed beans and consequently fail at startup.
-         * 
-         * I would like to move this piece of code to some @BeforeClass
-         * annotated method. However, Arquillian starts Weld even before
-         * 
-         * @BeforeClass methods are executed. Thus, a static initializer block.
-         */
-        final URL cdiServiceFileUrl = CdiCamelContextConfigurationInContainerTest.class
-                .getClassLoader().getResource(CDIPE_SERVICE_FILE_PATH);
-        if (cdiServiceFileUrl != null) {
+	static {
+		/*
+		 * HACK: As soon as the embedded Weld container sees the file
+		 * "META-INF/services/javax.enterprise.inject.spi.Extension" on the
+		 * classpath - it need not be deployed into the container - it will look
+		 * for the fqn of a CDI extension in that file. In our case, it will
+		 * find the fqn of our Camel Portable Extension and will happily deploy
+		 * it. This, however, will cause this test to fail since our Camel PE
+		 * deploys the class to be tested by this test,
+		 * CdiCamelContextConfiguration, twice: first by explicitly adding it to
+		 * the BeanManager as a CDI bean, and then by discovering it on the
+		 * classpath. Now, Weld will recognize that something is wrong with one
+		 * of the deployed beans and consequently fail at startup.
+		 * 
+		 * I would like to move this piece of code to some @BeforeClass
+		 * annotated method. However, Arquillian starts Weld even before
+		 * 
+		 * @BeforeClass methods are executed. Thus, a static initializer block.
+		 */
+		final URL cdiServiceFileUrl = CdiCamelContextConfigurationInContainerTest.class
+		        .getClassLoader().getResource(CDIPE_SERVICE_FILE_PATH);
+		if (cdiServiceFileUrl != null) {
 
-            final File cdiServiceFile = new File(cdiServiceFileUrl.getFile());
-            final File cdiServiceFileDisabled = new File(
-                    cdiServiceFileUrl.getFile()
-                            + CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
+			final File cdiServiceFile = new File(cdiServiceFileUrl.getFile());
+			final File cdiServiceFileDisabled = new File(
+			        cdiServiceFileUrl.getFile()
+			                + CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
 
-            cdiServiceFile.renameTo(cdiServiceFileDisabled);
-        }
-    }
+			cdiServiceFile.renameTo(cdiServiceFileDisabled);
+		}
+	}
 
-    // ------------------------------------------------------------------------
-    // Fields
-    // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	// Fields
+	// ------------------------------------------------------------------------
 
-    @Inject
-    private CdiCamelContextConfiguration classUnderTest;
+	@Inject
+	private CdiCamelContextConfiguration classUnderTest;
 
-    // -------------------------------------------------------------------------
-    // Test fixture
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Test fixture
+	// -------------------------------------------------------------------------
 
-    @Deployment
-    public static JavaArchive createTestArchive() {
-        final JavaArchive testModule = ShrinkWrap
-                .create(JavaArchive.class, "test.jar")
-                .addClass(CdiCamelContextConfiguration.class)
-                .addPackages(false, SampleClassResolver.class.getPackage())
-                .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
-                        ArchivePaths.create("beans.xml"));
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		final JavaArchive testModule = ShrinkWrap
+		        .create(JavaArchive.class, "test.jar")
+		        .addClass(CdiCamelContextConfiguration.class)
+		        .addPackages(false, SampleClassResolver.class.getPackage())
+		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		                ArchivePaths.create("beans.xml"));
 
-        return testModule;
-    }
+		return testModule;
+	}
 
-    @AfterClass
-    public static void reenableCamelPE() {
-        final URL cdiServiceFileDisabledUrl = CdiCamelContextConfigurationInContainerTest.class
-                .getClassLoader().getResource(
-                        CDIPE_SERVICE_FILE_PATH
-                                + CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
-        if (cdiServiceFileDisabledUrl == null) {
-            return;
-        }
+	@AfterClass
+	public static void reenableCamelPE() {
+		final URL cdiServiceFileDisabledUrl = CdiCamelContextConfigurationInContainerTest.class
+		        .getClassLoader().getResource(
+		                CDIPE_SERVICE_FILE_PATH
+		                        + CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
+		if (cdiServiceFileDisabledUrl == null) {
+			return;
+		}
 
-        final File cdiServiceFileDisabled = new File(
-                cdiServiceFileDisabledUrl.getFile());
-        final File cdiServiceFile = new File(cdiServiceFileDisabledUrl
-                .getFile().replace(CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX, ""));
+		final File cdiServiceFileDisabled = new File(
+		        cdiServiceFileDisabledUrl.getFile());
+		final File cdiServiceFile = new File(cdiServiceFileDisabledUrl
+		        .getFile().replace(CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX, ""));
 
-        cdiServiceFileDisabled.renameTo(cdiServiceFile);
-    }
+		cdiServiceFileDisabled.renameTo(cdiServiceFile);
+	}
 
-    // -------------------------------------------------------------------------
-    // Tests
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Tests
+	// -------------------------------------------------------------------------
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredClassResolverOnCamelContext() {
-        final Capture<ClassResolver> capturedClassResolver = new Capture<ClassResolver>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock.setClassResolver(capture(capturedClassResolver));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredClassResolverOnCamelContext() {
+		final Capture<ClassResolver> capturedClassResolver = new Capture<ClassResolver>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock.setClassResolver(capture(capturedClassResolver));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set ClassResolver as it should have",
-                capturedClassResolver.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set ClassResolver as it should have",
+		        capturedClassResolver.hasCaptured());
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredPackageScanClassResolverOnCamelContext() {
-        final Capture<PackageScanClassResolver> capturedPackageScanClassResolver = new Capture<PackageScanClassResolver>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock
-                .setPackageScanClassResolver(capture(capturedPackageScanClassResolver));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredPackageScanClassResolverOnCamelContext() {
+		final Capture<PackageScanClassResolver> capturedPackageScanClassResolver = new Capture<PackageScanClassResolver>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock
+		        .setPackageScanClassResolver(capture(capturedPackageScanClassResolver));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set PackageScanClassResolver as it should have",
-                capturedPackageScanClassResolver.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set PackageScanClassResolver as it should have",
+		        capturedPackageScanClassResolver.hasCaptured());
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredDataFormatResolverOnCamelContext() {
-        final Capture<DataFormatResolver> capturedDataFormatResolver = new Capture<DataFormatResolver>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock
-                .setDataFormatResolver(capture(capturedDataFormatResolver));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredDataFormatResolverOnCamelContext() {
+		final Capture<DataFormatResolver> capturedDataFormatResolver = new Capture<DataFormatResolver>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock
+		        .setDataFormatResolver(capture(capturedDataFormatResolver));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set DataFormatResolver as it should have",
-                capturedDataFormatResolver.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set DataFormatResolver as it should have",
+		        capturedDataFormatResolver.hasCaptured());
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredExecutorServiceStrategyOnCamelContext() {
-        final Capture<ExecutorServiceStrategy> capturedExecutorServiceStrategy = new Capture<ExecutorServiceStrategy>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock
-                .setExecutorServiceStrategy(capture(capturedExecutorServiceStrategy));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredExecutorServiceStrategyOnCamelContext() {
+		final Capture<ExecutorServiceStrategy> capturedExecutorServiceStrategy = new Capture<ExecutorServiceStrategy>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock
+		        .setExecutorServiceStrategy(capture(capturedExecutorServiceStrategy));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set ExecutorServiceStrategy as it should have",
-                capturedExecutorServiceStrategy.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set ExecutorServiceStrategy as it should have",
+		        capturedExecutorServiceStrategy.hasCaptured());
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredFactoryFinderResolverOnCamelContext() {
-        final Capture<FactoryFinderResolver> capturedFactoryFinderResolver = new Capture<FactoryFinderResolver>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock
-                .setFactoryFinderResolver(capture(capturedFactoryFinderResolver));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredFactoryFinderResolverOnCamelContext() {
+		final Capture<FactoryFinderResolver> capturedFactoryFinderResolver = new Capture<FactoryFinderResolver>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock
+		        .setFactoryFinderResolver(capture(capturedFactoryFinderResolver));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set FactoryFinderResolver as it should have",
-                capturedFactoryFinderResolver.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set FactoryFinderResolver as it should have",
+		        capturedFactoryFinderResolver.hasCaptured());
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredInflightRepositoryOnCamelContext() {
-        final Capture<InflightRepository> capturedInflightRepository = new Capture<InflightRepository>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock
-                .setInflightRepository(capture(capturedInflightRepository));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredInflightRepositoryOnCamelContext() {
+		final Capture<InflightRepository> capturedInflightRepository = new Capture<InflightRepository>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock
+		        .setInflightRepository(capture(capturedInflightRepository));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set InflightRepository as it should have",
-                capturedInflightRepository.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set InflightRepository as it should have",
+		        capturedInflightRepository.hasCaptured());
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredManagementStrategyOnCamelContext() {
-        final Capture<ManagementStrategy> capturedManagementStrategy = new Capture<ManagementStrategy>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock
-                .setManagementStrategy(capture(capturedManagementStrategy));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredManagementStrategyOnCamelContext() {
+		final Capture<ManagementStrategy> capturedManagementStrategy = new Capture<ManagementStrategy>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock
+		        .setManagementStrategy(capture(capturedManagementStrategy));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set ManagementStrategy as it should have",
-                capturedManagementStrategy.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set ManagementStrategy as it should have",
+		        capturedManagementStrategy.hasCaptured());
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredProcessorFactoryOnCamelContext() {
-        final Capture<ProcessorFactory> capturedProcessorFactory = new Capture<ProcessorFactory>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock.setProcessorFactory(capture(capturedProcessorFactory));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredProcessorFactoryOnCamelContext() {
+		final Capture<ProcessorFactory> capturedProcessorFactory = new Capture<ProcessorFactory>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock.setProcessorFactory(capture(capturedProcessorFactory));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set ProcessorFactory as it should have",
-                capturedProcessorFactory.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set ProcessorFactory as it should have",
+		        capturedProcessorFactory.hasCaptured());
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatConfigureSetsDiscoveredShutdownStrategyOnCamelContext() {
-        final Capture<ShutdownStrategy> capturedShutdownStrategy = new Capture<ShutdownStrategy>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock.setShutdownStrategy(capture(capturedShutdownStrategy));
-        expectLastCall();
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.CdiCamelContextConfiguration#configure(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatConfigureSetsDiscoveredShutdownStrategyOnCamelContext() {
+		final Capture<ShutdownStrategy> capturedShutdownStrategy = new Capture<ShutdownStrategy>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock.setShutdownStrategy(capture(capturedShutdownStrategy));
+		expectLastCall();
+		replay(camelContextMock);
 
-        this.classUnderTest.configure(camelContextMock);
+		this.classUnderTest.configure(camelContextMock);
 
-        assertTrue(
-                "configure(camelContextMock) did not set ShutdownStrategy as it should have",
-                capturedShutdownStrategy.hasCaptured());
-    }
+		assertTrue(
+		        "configure(camelContextMock) did not set ShutdownStrategy as it should have",
+		        capturedShutdownStrategy.hasCaptured());
+	}
 }

@@ -39,37 +39,37 @@ import org.springframework.jms.listener.AbstractMessageListenerContainer;
 public class WeldRequestContextInitiatingJmsConfiguration extends
         JmsConfiguration {
 
-    // -------------------------------------------------------------------------
-    // Constructors
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
-    public WeldRequestContextInitiatingJmsConfiguration() {
-    }
+	public WeldRequestContextInitiatingJmsConfiguration() {
+	}
 
-    public WeldRequestContextInitiatingJmsConfiguration(
-            final ConnectionFactory connectionFactory) {
-        super(connectionFactory);
-    }
+	public WeldRequestContextInitiatingJmsConfiguration(
+	        final ConnectionFactory connectionFactory) {
+		super(connectionFactory);
+	}
 
-    // -------------------------------------------------------------------------
-    // Additional properties
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Additional properties
+	// -------------------------------------------------------------------------
 
-    public void setExecutor(final Executor executor)
-            throws IllegalArgumentException {
-        Validate.notNull(executor, "executor");
-        setTaskExecutor(new TaskExecutorAdapter(executor));
-    }
+	public void setExecutor(final Executor executor)
+	        throws IllegalArgumentException {
+		Validate.notNull(executor, "executor");
+		setTaskExecutor(new TaskExecutorAdapter(executor));
+	}
 
-    // -------------------------------------------------------------------------
-    // Make Spring use our custom MessageListenerContainer
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Make Spring use our custom MessageListenerContainer
+	// -------------------------------------------------------------------------
 
-    /**
-     * @see org.apache.camel.component.jms.JmsConfiguration#chooseMessageListenerContainerImplementation()
-     */
-    @Override
-    public AbstractMessageListenerContainer chooseMessageListenerContainerImplementation() {
-        return new WeldRequestContextInitiatingSpringMessageListenerContainer();
-    }
+	/**
+	 * @see org.apache.camel.component.jms.JmsConfiguration#chooseMessageListenerContainerImplementation()
+	 */
+	@Override
+	public AbstractMessageListenerContainer chooseMessageListenerContainerImplementation() {
+		return new WeldRequestContextInitiatingSpringMessageListenerContainer();
+	}
 }

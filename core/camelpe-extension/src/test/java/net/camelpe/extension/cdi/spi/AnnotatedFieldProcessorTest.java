@@ -44,77 +44,77 @@ import org.junit.Test;
  */
 public class AnnotatedFieldProcessorTest {
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#ensureNoConflictingAnnotationsPresentOn(java.lang.Class)}
-     * .
-     */
-    @Test
-    public final void assertThatEnsureNoConflictingAnnotationsPresentOnCorrectlyRecognizesNoConflict() {
-        AnnotatedFieldProcessor
-                .ensureNoConflictingAnnotationsPresentOn(BeanHavingEndpointInjectAnnotatedField.class);
-    }
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#ensureNoConflictingAnnotationsPresentOn(java.lang.Class)}
+	 * .
+	 */
+	@Test
+	public final void assertThatEnsureNoConflictingAnnotationsPresentOnCorrectlyRecognizesNoConflict() {
+		AnnotatedFieldProcessor
+		        .ensureNoConflictingAnnotationsPresentOn(BeanHavingEndpointInjectAnnotatedField.class);
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#ensureNoConflictingAnnotationsPresentOn(java.lang.Class)}
-     * .
-     */
-    @Test(expected = ResolutionException.class)
-    public final void assertThatEnsureNoConflictingAnnotationsPresentOnCorrectlyRecognizesAConflict() {
-        AnnotatedFieldProcessor
-                .ensureNoConflictingAnnotationsPresentOn(BeanHavingEndpointInjectAndInjectAnnotatedField.class);
-    }
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#ensureNoConflictingAnnotationsPresentOn(java.lang.Class)}
+	 * .
+	 */
+	@Test(expected = ResolutionException.class)
+	public final void assertThatEnsureNoConflictingAnnotationsPresentOnCorrectlyRecognizesAConflict() {
+		AnnotatedFieldProcessor
+		        .ensureNoConflictingAnnotationsPresentOn(BeanHavingEndpointInjectAndInjectAnnotatedField.class);
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#hasCamelInjectAnnotatedFields(java.lang.Class)}
-     * .
-     */
-    @Test
-    public final void assertThatHasCamelInjectAnnotatedFieldsRecognizesThatNoCamelInjectAnnotationIsPresentOnAnyField() {
-        final boolean answer = AnnotatedFieldProcessor
-                .hasCamelInjectAnnotatedFields(BeanHavingNoEndpointInjectAnnotatedField.class);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#hasCamelInjectAnnotatedFields(java.lang.Class)}
+	 * .
+	 */
+	@Test
+	public final void assertThatHasCamelInjectAnnotatedFieldsRecognizesThatNoCamelInjectAnnotationIsPresentOnAnyField() {
+		final boolean answer = AnnotatedFieldProcessor
+		        .hasCamelInjectAnnotatedFields(BeanHavingNoEndpointInjectAnnotatedField.class);
 
-        assertFalse("AnnotatedFieldProcessor.hasCamelInjectAnnotatedFields("
-                + BeanHavingNoEndpointInjectAnnotatedField.class.getName()
-                + ") should have recognized that no field is annotated with "
-                + "@EndpointInject on the supplied class, yet it didn't",
-                answer);
-    }
+		assertFalse("AnnotatedFieldProcessor.hasCamelInjectAnnotatedFields("
+		        + BeanHavingNoEndpointInjectAnnotatedField.class.getName()
+		        + ") should have recognized that no field is annotated with "
+		        + "@EndpointInject on the supplied class, yet it didn't",
+		        answer);
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#hasCamelInjectAnnotatedFields(java.lang.Class)}
-     * .
-     */
-    @Test
-    public final void assertThatHasCamelInjectAnnotatedFieldsRecognizesEndpointInjectAnnotationOnField() {
-        final boolean answer = AnnotatedFieldProcessor
-                .hasCamelInjectAnnotatedFields(BeanHavingEndpointInjectAnnotatedField.class);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#hasCamelInjectAnnotatedFields(java.lang.Class)}
+	 * .
+	 */
+	@Test
+	public final void assertThatHasCamelInjectAnnotatedFieldsRecognizesEndpointInjectAnnotationOnField() {
+		final boolean answer = AnnotatedFieldProcessor
+		        .hasCamelInjectAnnotatedFields(BeanHavingEndpointInjectAnnotatedField.class);
 
-        assertTrue("AnnotatedFieldProcessor.hasCamelInjectAnnotatedFields("
-                + BeanHavingEndpointInjectAnnotatedField.class.getName()
-                + ") should have recognized a field annotated with "
-                + "@EndpointInject on the supplied class, yet it didn't",
-                answer);
-    }
+		assertTrue("AnnotatedFieldProcessor.hasCamelInjectAnnotatedFields("
+		        + BeanHavingEndpointInjectAnnotatedField.class.getName()
+		        + ") should have recognized a field annotated with "
+		        + "@EndpointInject on the supplied class, yet it didn't",
+		        answer);
+	}
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#camelInjectAnnotatedFieldsIn(java.lang.Class)}
-     * .
-     */
-    @Test
-    public final void assertThatCamelInjectAnnotatedFieldsInReturnsEnpointInjectAnnotatedField() {
-        final Set<Field> camelInjectAnnotatedFields = AnnotatedFieldProcessor
-                .camelInjectAnnotatedFieldsIn(BeanHavingEndpointInjectAnnotatedField.class);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.cdi.spi.AnnotatedFieldProcessor#camelInjectAnnotatedFieldsIn(java.lang.Class)}
+	 * .
+	 */
+	@Test
+	public final void assertThatCamelInjectAnnotatedFieldsInReturnsEnpointInjectAnnotatedField() {
+		final Set<Field> camelInjectAnnotatedFields = AnnotatedFieldProcessor
+		        .camelInjectAnnotatedFieldsIn(BeanHavingEndpointInjectAnnotatedField.class);
 
-        assertEquals("AnnotatedFieldProcessor.hasCamelInjectAnnotatedFields("
-                + BeanHavingEndpointInjectAnnotatedField.class.getName()
-                + ") should have returned exactly one field annotated with "
-                + "@EndpointInject on the supplied class, yet it didn't", 1,
-                camelInjectAnnotatedFields.size());
-    }
+		assertEquals("AnnotatedFieldProcessor.hasCamelInjectAnnotatedFields("
+		        + BeanHavingEndpointInjectAnnotatedField.class.getName()
+		        + ") should have returned exactly one field annotated with "
+		        + "@EndpointInject on the supplied class, yet it didn't", 1,
+		        camelInjectAnnotatedFields.size());
+	}
 
 }

@@ -37,10 +37,10 @@ import org.apache.camel.ProducerTemplate;
 @ApplicationScoped
 public class AdvancedProducer {
 
-    @Produce(uri = AdvancedRoutes.ADVANCED_SOURCE_EP)
-    private ProducerTemplate template;
+	@Produce(uri = AdvancedRoutes.ADVANCED_SOURCE_EP)
+	private ProducerTemplate template;
 
-    public void sendBody(final Date date) {
-        this.template.sendBody(date);
-    }
+	public void sendBody(final Date date) {
+		this.template.sendBody(date);
+	}
 }

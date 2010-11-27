@@ -37,29 +37,29 @@ import org.springframework.jms.listener.DefaultMessageListenerContainer;
 public class WeldRequestContextInitiatingSpringMessageListenerContainer extends
         DefaultMessageListenerContainer {
 
-    // -------------------------------------------------------------------------
-    // Initiate new Weld RequestContext
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Initiate new Weld RequestContext
+	// -------------------------------------------------------------------------
 
-    /**
-     * @see org.springframework.jms.listener.DefaultMessageListenerContainer#messageReceived(java.lang.Object,
-     *      javax.jms.Session)
-     */
-    @Override
-    protected void messageReceived(final Object invoker, final Session session) {
-        super.messageReceived(invoker, session);
+	/**
+	 * @see org.springframework.jms.listener.DefaultMessageListenerContainer#messageReceived(java.lang.Object,
+	 *      javax.jms.Session)
+	 */
+	@Override
+	protected void messageReceived(final Object invoker, final Session session) {
+		super.messageReceived(invoker, session);
 
-        WeldRequestContext.endThenBegin();
-    }
+		WeldRequestContext.endThenBegin();
+	}
 
-    /**
-     * @see org.springframework.jms.listener.DefaultMessageListenerContainer#noMessageReceived(java.lang.Object,
-     *      javax.jms.Session)
-     */
-    @Override
-    protected void noMessageReceived(final Object invoker, final Session session) {
-        WeldRequestContext.end();
+	/**
+	 * @see org.springframework.jms.listener.DefaultMessageListenerContainer#noMessageReceived(java.lang.Object,
+	 *      javax.jms.Session)
+	 */
+	@Override
+	protected void noMessageReceived(final Object invoker, final Session session) {
+		WeldRequestContext.end();
 
-        super.noMessageReceived(invoker, session);
-    }
+		super.noMessageReceived(invoker, session);
+	}
 }

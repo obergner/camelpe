@@ -54,106 +54,106 @@ import org.junit.runner.RunWith;
 @Run(RunModeType.IN_CONTAINER)
 public class CdiRegistryInContainerTest {
 
-    // ------------------------------------------------------------------------
-    // Fields
-    // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	// Fields
+	// ------------------------------------------------------------------------
 
-    @Inject
-    private BeanManager beanManager;
+	@Inject
+	private BeanManager beanManager;
 
-    // Test fixture
-    // -------------------------------------------------------------------------
+	// Test fixture
+	// -------------------------------------------------------------------------
 
-    @Deployment
-    public static JavaArchive createTestArchive() {
-        final JavaArchive testModule = ShrinkWrap
-                .create(JavaArchive.class, "test.jar")
-                .addPackages(false,
-                        ExplicitlyNamedApplicationScopedBean.class.getPackage())
-                .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
-                        ArchivePaths.create("beans.xml"));
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		final JavaArchive testModule = ShrinkWrap
+		        .create(JavaArchive.class, "test.jar")
+		        .addPackages(false,
+		                ExplicitlyNamedApplicationScopedBean.class.getPackage())
+		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		                ArchivePaths.create("beans.xml"));
 
-        return testModule;
-    }
+		return testModule;
+	}
 
-    // -------------------------------------------------------------------------
-    // Tests
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Tests
+	// -------------------------------------------------------------------------
 
-    @Test
-    public void assertThatCdiRegistryCanLookupApplicationScopedCdiBean() {
-        final Object applicationScopedCdiBean = classUnderTest().lookup(
-                ExplicitlyNamedApplicationScopedBean.NAME);
+	@Test
+	public void assertThatCdiRegistryCanLookupApplicationScopedCdiBean() {
+		final Object applicationScopedCdiBean = classUnderTest().lookup(
+		        ExplicitlyNamedApplicationScopedBean.NAME);
 
-        assertNotNull("lookup(" + ExplicitlyNamedApplicationScopedBean.NAME
-                + ") should have returned an instance of ["
-                + ExplicitlyNamedApplicationScopedBean.class.getName()
-                + "] yet it didn't", applicationScopedCdiBean);
-    }
+		assertNotNull("lookup(" + ExplicitlyNamedApplicationScopedBean.NAME
+		        + ") should have returned an instance of ["
+		        + ExplicitlyNamedApplicationScopedBean.class.getName()
+		        + "] yet it didn't", applicationScopedCdiBean);
+	}
 
-    @Test
-    public void assertThatCdiRegistryCanLookupApplicationScopedCdiBeanRestrictedByType() {
-        final ExplicitlyNamedApplicationScopedBean applicationScopedCdiBean = classUnderTest()
-                .lookup(ExplicitlyNamedApplicationScopedBean.NAME,
-                        ExplicitlyNamedApplicationScopedBean.class);
+	@Test
+	public void assertThatCdiRegistryCanLookupApplicationScopedCdiBeanRestrictedByType() {
+		final ExplicitlyNamedApplicationScopedBean applicationScopedCdiBean = classUnderTest()
+		        .lookup(ExplicitlyNamedApplicationScopedBean.NAME,
+		                ExplicitlyNamedApplicationScopedBean.class);
 
-        assertNotNull("lookup(" + ExplicitlyNamedApplicationScopedBean.NAME
-                + ", " + ExplicitlyNamedApplicationScopedBean.class.getName()
-                + ") should have returned an instance of ["
-                + ExplicitlyNamedApplicationScopedBean.class.getName()
-                + "] yet it didn't", applicationScopedCdiBean);
-    }
+		assertNotNull("lookup(" + ExplicitlyNamedApplicationScopedBean.NAME
+		        + ", " + ExplicitlyNamedApplicationScopedBean.class.getName()
+		        + ") should have returned an instance of ["
+		        + ExplicitlyNamedApplicationScopedBean.class.getName()
+		        + "] yet it didn't", applicationScopedCdiBean);
+	}
 
-    @Test
-    public void assertThatLookingUpAnApplicationScopedCdiBeanAlwaysReturnsTheSameInstance() {
-        final Object applicationScopedCdiBean1 = classUnderTest().lookup(
-                ExplicitlyNamedApplicationScopedBean.NAME);
-        final Object applicationScopedCdiBean2 = classUnderTest().lookup(
-                ExplicitlyNamedApplicationScopedBean.NAME);
+	@Test
+	public void assertThatLookingUpAnApplicationScopedCdiBeanAlwaysReturnsTheSameInstance() {
+		final Object applicationScopedCdiBean1 = classUnderTest().lookup(
+		        ExplicitlyNamedApplicationScopedBean.NAME);
+		final Object applicationScopedCdiBean2 = classUnderTest().lookup(
+		        ExplicitlyNamedApplicationScopedBean.NAME);
 
-        assertSame("lookup(" + ExplicitlyNamedApplicationScopedBean.NAME
-                + ") should always return the same instance of ["
-                + ExplicitlyNamedApplicationScopedBean.class.getName()
-                + "] yet it didn't", applicationScopedCdiBean1,
-                applicationScopedCdiBean2);
-    }
+		assertSame("lookup(" + ExplicitlyNamedApplicationScopedBean.NAME
+		        + ") should always return the same instance of ["
+		        + ExplicitlyNamedApplicationScopedBean.class.getName()
+		        + "] yet it didn't", applicationScopedCdiBean1,
+		        applicationScopedCdiBean2);
+	}
 
-    @Test
-    public void assertThatLookingUpARequestScopedCdiBeanAlwaysReturnsTheSameInstance() {
-        final Object requestScopedCdiBean1 = classUnderTest().lookup(
-                ExplicitlyNamedRequestScopedBean.NAME);
-        final Object requestScopedCdiBean2 = classUnderTest().lookup(
-                ExplicitlyNamedRequestScopedBean.NAME);
+	@Test
+	public void assertThatLookingUpARequestScopedCdiBeanAlwaysReturnsTheSameInstance() {
+		final Object requestScopedCdiBean1 = classUnderTest().lookup(
+		        ExplicitlyNamedRequestScopedBean.NAME);
+		final Object requestScopedCdiBean2 = classUnderTest().lookup(
+		        ExplicitlyNamedRequestScopedBean.NAME);
 
-        assertSame("lookup(" + ExplicitlyNamedRequestScopedBean.NAME
-                + ") should always return the same instance of ["
-                + ExplicitlyNamedRequestScopedBean.class.getName()
-                + "] yet it didn't", requestScopedCdiBean1,
-                requestScopedCdiBean2);
-    }
+		assertSame("lookup(" + ExplicitlyNamedRequestScopedBean.NAME
+		        + ") should always return the same instance of ["
+		        + ExplicitlyNamedRequestScopedBean.class.getName()
+		        + "] yet it didn't", requestScopedCdiBean1,
+		        requestScopedCdiBean2);
+	}
 
-    @Test
-    public void assertThatCdiRegistryLooksUpAllMatchingCdiBeansByType() {
-        final Map<String, CdiBeansSharingTheSameSuperclass> matchingBeansByName = classUnderTest()
-                .lookupByType(CdiBeansSharingTheSameSuperclass.class);
+	@Test
+	public void assertThatCdiRegistryLooksUpAllMatchingCdiBeansByType() {
+		final Map<String, CdiBeansSharingTheSameSuperclass> matchingBeansByName = classUnderTest()
+		        .lookupByType(CdiBeansSharingTheSameSuperclass.class);
 
-        assertNotNull(
-                "lookupByType("
-                        + CdiBeansSharingTheSameSuperclass.class.getName()
-                        + ") should not return null yet it did",
-                matchingBeansByName);
-        assertEquals(
-                "lookupByType("
-                        + CdiBeansSharingTheSameSuperclass.class.getName()
-                        + ") should return all beans having the specified superclass, yet it didn't",
-                2, matchingBeansByName.size());
-    }
+		assertNotNull(
+		        "lookupByType("
+		                + CdiBeansSharingTheSameSuperclass.class.getName()
+		                + ") should not return null yet it did",
+		        matchingBeansByName);
+		assertEquals(
+		        "lookupByType("
+		                + CdiBeansSharingTheSameSuperclass.class.getName()
+		                + ") should return all beans having the specified superclass, yet it didn't",
+		        2, matchingBeansByName.size());
+	}
 
-    // -------------------------------------------------------------------------
-    // Internal
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
 
-    private CdiRegistry classUnderTest() {
-        return new CdiRegistry(this.beanManager);
-    }
+	private CdiRegistry classUnderTest() {
+		return new CdiRegistry(this.beanManager);
+	}
 }

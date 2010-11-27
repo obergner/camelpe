@@ -34,14 +34,14 @@ import org.apache.camel.Produce;
 @Named(BeanHavingProduceAnnotatedField.NAME)
 public class BeanHavingProduceAnnotatedField {
 
-    public interface Listener {
-        String sendMessage(final String message);
-    }
+	public interface Listener {
+		String sendMessage(final String message);
+	}
 
-    public static final String NAME = "beanHavingProduceAnnotatedField";
+	public static final String NAME = "beanHavingProduceAnnotatedField";
 
-    public static final String ENDPOINT_URI = "mock://produceEndpoint";
+	public static final String ENDPOINT_URI = "mock://produceEndpoint";
 
-    @Produce(uri = BeanHavingProduceAnnotatedField.ENDPOINT_URI)
-    public Listener producer;
+	@Produce(uri = BeanHavingProduceAnnotatedField.ENDPOINT_URI)
+	public Listener producer;
 }

@@ -45,190 +45,190 @@ import org.fusesource.commons.management.Statistic.UpdateMode;
 @CamelContextInjectable
 public class SampleManagementStrategy implements ManagementStrategy {
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#addEventNotifier(org.apache.camel.spi.EventNotifier)
-     */
-    @Override
-    public void addEventNotifier(final EventNotifier eventNotifier) {
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#addEventNotifier(org.apache.camel.spi.EventNotifier)
+	 */
+	@Override
+	public void addEventNotifier(final EventNotifier eventNotifier) {
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#getEventFactory()
-     */
-    @Override
-    public EventFactory getEventFactory() {
-        return null;
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#getEventFactory()
+	 */
+	@Override
+	public EventFactory getEventFactory() {
+		return null;
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#getEventNotifiers()
-     */
-    @Override
-    public List<EventNotifier> getEventNotifiers() {
-        return null;
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#getEventNotifiers()
+	 */
+	@Override
+	public List<EventNotifier> getEventNotifiers() {
+		return null;
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#getManagementAgent()
-     */
-    @Override
-    public ManagementAgent getManagementAgent() {
-        return null;
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#getManagementAgent()
+	 */
+	@Override
+	public ManagementAgent getManagementAgent() {
+		return null;
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#getManagementNamingStrategy()
-     */
-    @Override
-    public ManagementNamingStrategy getManagementNamingStrategy() {
-        return null;
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#getManagementNamingStrategy()
+	 */
+	@Override
+	public ManagementNamingStrategy getManagementNamingStrategy() {
+		return null;
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#getStatisticsLevel()
-     */
-    @Override
-    public ManagementStatisticsLevel getStatisticsLevel() {
-        return null;
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#getStatisticsLevel()
+	 */
+	@Override
+	public ManagementStatisticsLevel getStatisticsLevel() {
+		return null;
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#isOnlyManageProcessorWithCustomId()
-     */
-    @Override
-    public boolean isOnlyManageProcessorWithCustomId() {
-        return false;
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#isOnlyManageProcessorWithCustomId()
+	 */
+	@Override
+	public boolean isOnlyManageProcessorWithCustomId() {
+		return false;
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#manageProcessor(org.apache.camel.model.ProcessorDefinition)
-     */
-    @Override
-    public boolean manageProcessor(final ProcessorDefinition<?> definition) {
-        return false;
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#manageProcessor(org.apache.camel.model.ProcessorDefinition)
+	 */
+	@Override
+	public boolean manageProcessor(final ProcessorDefinition<?> definition) {
+		return false;
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#onlyManageProcessorWithCustomId(boolean)
-     */
-    @Override
-    public void onlyManageProcessorWithCustomId(final boolean flag) {
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#onlyManageProcessorWithCustomId(boolean)
+	 */
+	@Override
+	public void onlyManageProcessorWithCustomId(final boolean flag) {
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#setEventFactory(org.apache.camel.spi.EventFactory)
-     */
-    @Override
-    public void setEventFactory(final EventFactory eventFactory) {
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#setEventFactory(org.apache.camel.spi.EventFactory)
+	 */
+	@Override
+	public void setEventFactory(final EventFactory eventFactory) {
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#setEventNotifiers(java.util.List)
-     */
-    @Override
-    public void setEventNotifiers(final List<EventNotifier> eventNotifier) {
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#setEventNotifiers(java.util.List)
+	 */
+	@Override
+	public void setEventNotifiers(final List<EventNotifier> eventNotifier) {
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#setManagementAgent(org.apache.camel.spi.ManagementAgent)
-     */
-    @Override
-    public void setManagementAgent(final ManagementAgent managementAgent) {
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#setManagementAgent(org.apache.camel.spi.ManagementAgent)
+	 */
+	@Override
+	public void setManagementAgent(final ManagementAgent managementAgent) {
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#setManagementNamingStrategy(org.apache.camel.spi.ManagementNamingStrategy)
-     */
-    @Override
-    public void setManagementNamingStrategy(
-            final ManagementNamingStrategy strategy) {
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#setManagementNamingStrategy(org.apache.camel.spi.ManagementNamingStrategy)
+	 */
+	@Override
+	public void setManagementNamingStrategy(
+	        final ManagementNamingStrategy strategy) {
+	}
 
-    /**
-     * @see org.apache.camel.spi.ManagementStrategy#setStatisticsLevel(org.apache.camel.ManagementStatisticsLevel)
-     */
-    @Override
-    public void setStatisticsLevel(final ManagementStatisticsLevel level) {
-    }
+	/**
+	 * @see org.apache.camel.spi.ManagementStrategy#setStatisticsLevel(org.apache.camel.ManagementStatisticsLevel)
+	 */
+	@Override
+	public void setStatisticsLevel(final ManagementStatisticsLevel level) {
+	}
 
-    /**
-     * @see org.fusesource.commons.management.ManagementStrategy#createStatistic(java.lang.String,
-     *      java.lang.Object,
-     *      org.fusesource.commons.management.Statistic.UpdateMode)
-     */
-    @Override
-    public Statistic createStatistic(final String name, final Object owner,
-            final UpdateMode updateMode) {
-        return null;
-    }
+	/**
+	 * @see org.fusesource.commons.management.ManagementStrategy#createStatistic(java.lang.String,
+	 *      java.lang.Object,
+	 *      org.fusesource.commons.management.Statistic.UpdateMode)
+	 */
+	@Override
+	public Statistic createStatistic(final String name, final Object owner,
+	        final UpdateMode updateMode) {
+		return null;
+	}
 
-    /**
-     * @see org.fusesource.commons.management.ManagementStrategy#getManagedObjectName(java.lang.Object,
-     *      java.lang.String, java.lang.Class)
-     */
-    @Override
-    public <T> T getManagedObjectName(final Object managableObject,
-            final String customName, final Class<T> nameType) throws Exception {
-        return null;
-    }
+	/**
+	 * @see org.fusesource.commons.management.ManagementStrategy#getManagedObjectName(java.lang.Object,
+	 *      java.lang.String, java.lang.Class)
+	 */
+	@Override
+	public <T> T getManagedObjectName(final Object managableObject,
+	        final String customName, final Class<T> nameType) throws Exception {
+		return null;
+	}
 
-    /**
-     * @see org.fusesource.commons.management.ManagementStrategy#isManaged(java.lang.Object,
-     *      java.lang.Object)
-     */
-    @Override
-    public boolean isManaged(final Object managableObject, final Object name) {
-        return false;
-    }
+	/**
+	 * @see org.fusesource.commons.management.ManagementStrategy#isManaged(java.lang.Object,
+	 *      java.lang.Object)
+	 */
+	@Override
+	public boolean isManaged(final Object managableObject, final Object name) {
+		return false;
+	}
 
-    /**
-     * @see org.fusesource.commons.management.ManagementStrategy#manageNamedObject(java.lang.Object,
-     *      java.lang.Object)
-     */
-    @Override
-    public void manageNamedObject(final Object managedObject,
-            final Object preferedName) throws Exception {
-    }
+	/**
+	 * @see org.fusesource.commons.management.ManagementStrategy#manageNamedObject(java.lang.Object,
+	 *      java.lang.Object)
+	 */
+	@Override
+	public void manageNamedObject(final Object managedObject,
+	        final Object preferedName) throws Exception {
+	}
 
-    /**
-     * @see org.fusesource.commons.management.ManagementStrategy#manageObject(java.lang.Object)
-     */
-    @Override
-    public void manageObject(final Object managedObject) throws Exception {
-    }
+	/**
+	 * @see org.fusesource.commons.management.ManagementStrategy#manageObject(java.lang.Object)
+	 */
+	@Override
+	public void manageObject(final Object managedObject) throws Exception {
+	}
 
-    /**
-     * @see org.fusesource.commons.management.ManagementStrategy#notify(java.util.EventObject)
-     */
-    @Override
-    public void notify(final EventObject event) throws Exception {
-    }
+	/**
+	 * @see org.fusesource.commons.management.ManagementStrategy#notify(java.util.EventObject)
+	 */
+	@Override
+	public void notify(final EventObject event) throws Exception {
+	}
 
-    /**
-     * @see org.fusesource.commons.management.ManagementStrategy#unmanageNamedObject(java.lang.Object)
-     */
-    @Override
-    public void unmanageNamedObject(final Object name) throws Exception {
-    }
+	/**
+	 * @see org.fusesource.commons.management.ManagementStrategy#unmanageNamedObject(java.lang.Object)
+	 */
+	@Override
+	public void unmanageNamedObject(final Object name) throws Exception {
+	}
 
-    /**
-     * @see org.fusesource.commons.management.ManagementStrategy#unmanageObject(java.lang.Object)
-     */
-    @Override
-    public void unmanageObject(final Object managedObject) throws Exception {
-    }
+	/**
+	 * @see org.fusesource.commons.management.ManagementStrategy#unmanageObject(java.lang.Object)
+	 */
+	@Override
+	public void unmanageObject(final Object managedObject) throws Exception {
+	}
 
-    /**
-     * @see org.apache.camel.Service#start()
-     */
-    @Override
-    public void start() throws Exception {
-    }
+	/**
+	 * @see org.apache.camel.Service#start()
+	 */
+	@Override
+	public void start() throws Exception {
+	}
 
-    /**
-     * @see org.apache.camel.Service#stop()
-     */
-    @Override
-    public void stop() throws Exception {
-    }
+	/**
+	 * @see org.apache.camel.Service#stop()
+	 */
+	@Override
+	public void stop() throws Exception {
+	}
 }

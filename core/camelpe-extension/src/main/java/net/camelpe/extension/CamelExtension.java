@@ -47,76 +47,76 @@ import org.slf4j.LoggerFactory;
  */
 class CamelExtension implements Extension {
 
-    // -------------------------------------------------------------------------
-    // Fields
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Fields
+	// -------------------------------------------------------------------------
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private BeanReference<CdiCamelContextLifecycleAdapter> cdiCamelContextLifecycleAdapterRef;
+	private BeanReference<CdiCamelContextLifecycleAdapter> cdiCamelContextLifecycleAdapterRef;
 
-    // -------------------------------------------------------------------------
-    // Lifecycle callbacks
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Lifecycle callbacks
+	// -------------------------------------------------------------------------
 
-    void initializeCamelExtension(@Observes final BeforeBeanDiscovery bbd,
-            final BeanManager beanManager) {
-        this.cdiCamelContextLifecycleAdapterRef = new BeanReference<CdiCamelContextLifecycleAdapter>(
-                CdiCamelContextLifecycleAdapter.class, beanManager);
-    }
+	void initializeCamelExtension(@Observes final BeforeBeanDiscovery bbd,
+	        final BeanManager beanManager) {
+		this.cdiCamelContextLifecycleAdapterRef = new BeanReference<CdiCamelContextLifecycleAdapter>(
+		        CdiCamelContextLifecycleAdapter.class, beanManager);
+	}
 
-    void registerCamelConverterAnnotationsAsQualifiers(
-            @Observes final BeforeBeanDiscovery bbd) {
-        bbd.addQualifier(Converter.class);
-        bbd.addQualifier(FallbackConverter.class);
+	void registerCamelConverterAnnotationsAsQualifiers(
+	        @Observes final BeforeBeanDiscovery bbd) {
+		bbd.addQualifier(Converter.class);
+		bbd.addQualifier(FallbackConverter.class);
 
-        getLog().debug(
-                "Registered Camel Converter annotations [{}, {}] as CDI qualifiers",
-                Converter.class.getName(), FallbackConverter.class.getName());
-    }
+		getLog().debug(
+		        "Registered Camel Converter annotations [{}, {}] as CDI qualifiers",
+		        Converter.class.getName(), FallbackConverter.class.getName());
+	}
 
-    <T> void customizeInjectionTargetForEndpointInjection(
-            @Observes final ProcessInjectionTarget<T> pit,
-            final BeanManager beanManager) {
-        CamelInjectionTargetWrapper.wrap(pit, beanManager);
+	<T> void customizeInjectionTargetForEndpointInjection(
+	        @Observes final ProcessInjectionTarget<T> pit,
+	        final BeanManager beanManager) {
+		CamelInjectionTargetWrapper.wrap(pit, beanManager);
 
-        getLog().debug(
-                "Customized InjectionTarget [{}] for AnnotatedType [{}] in "
-                        + "order to enable Camel endpoint injection.", pit,
-                pit.getAnnotatedType());
-    }
+		getLog().debug(
+		        "Customized InjectionTarget [{}] for AnnotatedType [{}] in "
+		                + "order to enable Camel endpoint injection.", pit,
+		        pit.getAnnotatedType());
+	}
 
-    void registerCamelExtensionBeans(@Observes final AfterBeanDiscovery abd,
-            final BeanManager beanManager) {
-        abd.addBean(new CdiCamelContextConfiguration.CdiBean(beanManager));
-        abd.addBean(new TypeConverterDiscovery.CdiBean(beanManager));
-        abd.addBean(new RoutesDiscovery.CdiBean(beanManager));
-        abd.addBean(new CdiCamelContext.CdiBean(beanManager));
-        abd.addBean(new CdiCamelContextLifecycleAdapter.CdiBean(beanManager));
+	void registerCamelExtensionBeans(@Observes final AfterBeanDiscovery abd,
+	        final BeanManager beanManager) {
+		abd.addBean(new CdiCamelContextConfiguration.CdiBean(beanManager));
+		abd.addBean(new TypeConverterDiscovery.CdiBean(beanManager));
+		abd.addBean(new RoutesDiscovery.CdiBean(beanManager));
+		abd.addBean(new CdiCamelContext.CdiBean(beanManager));
+		abd.addBean(new CdiCamelContextLifecycleAdapter.CdiBean(beanManager));
 
-        getLog().debug(
-                "CamelExtension Beans have been registered in the BeanManager.");
-    }
+		getLog().debug(
+		        "CamelExtension Beans have been registered in the BeanManager.");
+	}
 
-    void afterDeploymentValidation(@Observes final AfterDeploymentValidation adv)
-            throws ResolutionException, Exception {
-        this.cdiCamelContextLifecycleAdapterRef.get()
-                .afterDeploymentValidation();
-    }
+	void afterDeploymentValidation(@Observes final AfterDeploymentValidation adv)
+	        throws ResolutionException, Exception {
+		this.cdiCamelContextLifecycleAdapterRef.get()
+		        .afterDeploymentValidation();
+	}
 
-    void beforeShutdown(@Observes final BeforeShutdown event)
-            throws ResolutionException, Exception {
-        this.cdiCamelContextLifecycleAdapterRef.get().beforeShutdown();
-    }
+	void beforeShutdown(@Observes final BeforeShutdown event)
+	        throws ResolutionException, Exception {
+		this.cdiCamelContextLifecycleAdapterRef.get().beforeShutdown();
+	}
 
-    // -------------------------------------------------------------------------
-    // Internal
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
 
-    /**
-     * @return the log
-     */
-    private Logger getLog() {
-        return this.log;
-    }
+	/**
+	 * @return the log
+	 */
+	private Logger getLog() {
+		return this.log;
+	}
 }

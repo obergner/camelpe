@@ -37,97 +37,97 @@ import net.camelpe.weld.requestcontext.WeldRequestContext;
  */
 class WeldRequestContextInitiatingThreadPoolExecutor extends ThreadPoolExecutor {
 
-    // -------------------------------------------------------------------------
-    // Constructors
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
-    /**
-     * @param corePoolSize
-     * @param maximumPoolSize
-     * @param keepAliveTime
-     * @param unit
-     * @param workQueue
-     * @param handler
-     */
-    WeldRequestContextInitiatingThreadPoolExecutor(final int corePoolSize,
-            final int maximumPoolSize, final long keepAliveTime,
-            final TimeUnit unit, final BlockingQueue<Runnable> workQueue,
-            final RejectedExecutionHandler handler) {
-        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
-                handler);
-    }
+	/**
+	 * @param corePoolSize
+	 * @param maximumPoolSize
+	 * @param keepAliveTime
+	 * @param unit
+	 * @param workQueue
+	 * @param handler
+	 */
+	WeldRequestContextInitiatingThreadPoolExecutor(final int corePoolSize,
+	        final int maximumPoolSize, final long keepAliveTime,
+	        final TimeUnit unit, final BlockingQueue<Runnable> workQueue,
+	        final RejectedExecutionHandler handler) {
+		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
+		        handler);
+	}
 
-    /**
-     * @param corePoolSize
-     * @param maximumPoolSize
-     * @param keepAliveTime
-     * @param unit
-     * @param workQueue
-     * @param threadFactory
-     * @param handler
-     */
-    WeldRequestContextInitiatingThreadPoolExecutor(final int corePoolSize,
-            final int maximumPoolSize, final long keepAliveTime,
-            final TimeUnit unit, final BlockingQueue<Runnable> workQueue,
-            final ThreadFactory threadFactory,
-            final RejectedExecutionHandler handler) {
-        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
-                threadFactory, handler);
-    }
+	/**
+	 * @param corePoolSize
+	 * @param maximumPoolSize
+	 * @param keepAliveTime
+	 * @param unit
+	 * @param workQueue
+	 * @param threadFactory
+	 * @param handler
+	 */
+	WeldRequestContextInitiatingThreadPoolExecutor(final int corePoolSize,
+	        final int maximumPoolSize, final long keepAliveTime,
+	        final TimeUnit unit, final BlockingQueue<Runnable> workQueue,
+	        final ThreadFactory threadFactory,
+	        final RejectedExecutionHandler handler) {
+		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
+		        threadFactory, handler);
+	}
 
-    /**
-     * @param corePoolSize
-     * @param maximumPoolSize
-     * @param keepAliveTime
-     * @param unit
-     * @param workQueue
-     * @param threadFactory
-     */
-    WeldRequestContextInitiatingThreadPoolExecutor(final int corePoolSize,
-            final int maximumPoolSize, final long keepAliveTime,
-            final TimeUnit unit, final BlockingQueue<Runnable> workQueue,
-            final ThreadFactory threadFactory) {
-        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
-                threadFactory);
-    }
+	/**
+	 * @param corePoolSize
+	 * @param maximumPoolSize
+	 * @param keepAliveTime
+	 * @param unit
+	 * @param workQueue
+	 * @param threadFactory
+	 */
+	WeldRequestContextInitiatingThreadPoolExecutor(final int corePoolSize,
+	        final int maximumPoolSize, final long keepAliveTime,
+	        final TimeUnit unit, final BlockingQueue<Runnable> workQueue,
+	        final ThreadFactory threadFactory) {
+		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
+		        threadFactory);
+	}
 
-    /**
-     * @param corePoolSize
-     * @param maximumPoolSize
-     * @param keepAliveTime
-     * @param unit
-     * @param workQueue
-     */
-    WeldRequestContextInitiatingThreadPoolExecutor(final int corePoolSize,
-            final int maximumPoolSize, final long keepAliveTime,
-            final TimeUnit unit, final BlockingQueue<Runnable> workQueue) {
-        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
-    }
+	/**
+	 * @param corePoolSize
+	 * @param maximumPoolSize
+	 * @param keepAliveTime
+	 * @param unit
+	 * @param workQueue
+	 */
+	WeldRequestContextInitiatingThreadPoolExecutor(final int corePoolSize,
+	        final int maximumPoolSize, final long keepAliveTime,
+	        final TimeUnit unit, final BlockingQueue<Runnable> workQueue) {
+		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
+	}
 
-    // -------------------------------------------------------------------------
-    // Implement callbacks for setting up and tearing down a Weld Request
-    // Context
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Implement callbacks for setting up and tearing down a Weld Request
+	// Context
+	// -------------------------------------------------------------------------
 
-    /**
-     * @see java.util.concurrent.ThreadPoolExecutor#beforeExecute(java.lang.Thread,
-     *      java.lang.Runnable)
-     */
-    @Override
-    protected void beforeExecute(final Thread t, final Runnable r) {
-        super.beforeExecute(t, r);
+	/**
+	 * @see java.util.concurrent.ThreadPoolExecutor#beforeExecute(java.lang.Thread,
+	 *      java.lang.Runnable)
+	 */
+	@Override
+	protected void beforeExecute(final Thread t, final Runnable r) {
+		super.beforeExecute(t, r);
 
-        WeldRequestContext.begin();
-    }
+		WeldRequestContext.begin();
+	}
 
-    /**
-     * @see java.util.concurrent.ThreadPoolExecutor#afterExecute(java.lang.Runnable,
-     *      java.lang.Throwable)
-     */
-    @Override
-    protected void afterExecute(final Runnable r, final Throwable t) {
-        WeldRequestContext.end();
+	/**
+	 * @see java.util.concurrent.ThreadPoolExecutor#afterExecute(java.lang.Runnable,
+	 *      java.lang.Throwable)
+	 */
+	@Override
+	protected void afterExecute(final Runnable r, final Throwable t) {
+		WeldRequestContext.end();
 
-        super.afterExecute(r, t);
-    }
+		super.afterExecute(r, t);
+	}
 }

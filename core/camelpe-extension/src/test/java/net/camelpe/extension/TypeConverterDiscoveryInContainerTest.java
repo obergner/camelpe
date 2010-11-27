@@ -58,56 +58,56 @@ import org.junit.runner.RunWith;
 @Run(RunModeType.IN_CONTAINER)
 public class TypeConverterDiscoveryInContainerTest {
 
-    // ------------------------------------------------------------------------
-    // Fields
-    // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	// Fields
+	// ------------------------------------------------------------------------
 
-    @Inject
-    private TypeConverterDiscovery classUnderTest;
+	@Inject
+	private TypeConverterDiscovery classUnderTest;
 
-    // -------------------------------------------------------------------------
-    // Test fixture
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Test fixture
+	// -------------------------------------------------------------------------
 
-    @Deployment
-    public static JavaArchive createTestArchive() {
-        final JavaArchive testModule = ShrinkWrap
-                .create(JavaArchive.class, "test.jar")
-                .addPackages(false,
-                        InstanceMethodTypeConverter.class.getPackage())
-                .addServiceProvider(Extension.class, CamelExtension.class)
-                .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
-                        ArchivePaths.create("beans.xml"));
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		final JavaArchive testModule = ShrinkWrap
+		        .create(JavaArchive.class, "test.jar")
+		        .addPackages(false,
+		                InstanceMethodTypeConverter.class.getPackage())
+		        .addServiceProvider(Extension.class, CamelExtension.class)
+		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		                ArchivePaths.create("beans.xml"));
 
-        return testModule;
-    }
+		return testModule;
+	}
 
-    // -------------------------------------------------------------------------
-    // Tests
-    // -------------------------------------------------------------------------
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.TypeConverterDiscovery#registerIn(org.apache.camel.CamelContext)}
-     * .
-     */
-    @Test
-    public final void assertThatRegisterInDoesRegisterAllDiscoveredTypeConverters() {
-        final TypeConverterRegistry typeConverterRegistryMock = createNiceMock(TypeConverterRegistry.class);
-        typeConverterRegistryMock.addFallbackTypeConverter(
-                (TypeConverter) anyObject(), eq(false));
-        expectLastCall().once();
-        typeConverterRegistryMock.addTypeConverter(eq(String.class),
-                eq(Object.class), (TypeConverter) anyObject());
-        expectLastCall().once();
+	// -------------------------------------------------------------------------
+	// Tests
+	// -------------------------------------------------------------------------
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.TypeConverterDiscovery#registerIn(org.apache.camel.CamelContext)}
+	 * .
+	 */
+	@Test
+	public final void assertThatRegisterInDoesRegisterAllDiscoveredTypeConverters() {
+		final TypeConverterRegistry typeConverterRegistryMock = createNiceMock(TypeConverterRegistry.class);
+		typeConverterRegistryMock.addFallbackTypeConverter(
+		        (TypeConverter) anyObject(), eq(false));
+		expectLastCall().once();
+		typeConverterRegistryMock.addTypeConverter(eq(String.class),
+		        eq(Object.class), (TypeConverter) anyObject());
+		expectLastCall().once();
 
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        expect(camelContextMock.getTypeConverterRegistry()).andReturn(
-                typeConverterRegistryMock).anyTimes();
-        replay(typeConverterRegistryMock, camelContextMock);
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		expect(camelContextMock.getTypeConverterRegistry()).andReturn(
+		        typeConverterRegistryMock).anyTimes();
+		replay(typeConverterRegistryMock, camelContextMock);
 
-        this.classUnderTest.registerIn(camelContextMock);
+		this.classUnderTest.registerIn(camelContextMock);
 
-        verify(typeConverterRegistryMock, camelContextMock);
-    }
+		verify(typeConverterRegistryMock, camelContextMock);
+	}
 
 }

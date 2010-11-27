@@ -32,8 +32,8 @@ import org.apache.camel.Converter;
 @Converter
 public class StaticMethodTypeConverter {
 
-    @Converter
-    public static String convertToString(final Object objectToConvert) {
-        return objectToConvert.toString();
-    }
+	@Converter
+	public static String convertToString(final Object objectToConvert) {
+		return objectToConvert.toString();
+	}
 }

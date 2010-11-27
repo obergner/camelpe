@@ -36,15 +36,15 @@ import javax.inject.Named;
 @Named(AdvancedConsumer.NAME)
 public class AdvancedConsumer {
 
-    public static final String NAME = "fullConsumer";
+	public static final String NAME = "fullConsumer";
 
-    private final AtomicLong timestamp = new AtomicLong(-1L);
+	private final AtomicLong timestamp = new AtomicLong(-1L);
 
-    public void consume(final Long timestamp) {
-        this.timestamp.set(timestamp.longValue());
-    }
+	public void consume(final Long timestamp) {
+		this.timestamp.set(timestamp.longValue());
+	}
 
-    public AtomicLong getTimestamp() {
-        return this.timestamp;
-    }
+	public AtomicLong getTimestamp() {
+		return this.timestamp;
+	}
 }

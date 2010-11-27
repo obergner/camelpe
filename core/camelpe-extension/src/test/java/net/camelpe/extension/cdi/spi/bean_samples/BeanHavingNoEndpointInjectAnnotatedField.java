@@ -29,5 +29,5 @@ package net.camelpe.extension.cdi.spi.bean_samples;
  */
 public class BeanHavingNoEndpointInjectAnnotatedField {
 
-    public String field;
+	public String field;
 }

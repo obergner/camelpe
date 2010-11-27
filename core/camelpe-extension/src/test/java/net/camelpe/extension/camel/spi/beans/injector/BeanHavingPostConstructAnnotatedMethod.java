@@ -31,13 +31,13 @@ import javax.annotation.PostConstruct;
  */
 public class BeanHavingPostConstructAnnotatedMethod {
 
-    public Object postConstructed;
+	public Object postConstructed;
 
-    @PostConstruct
-    public void postConstruct() {
-        if (this.postConstructed != null) {
-            throw new IllegalStateException("Already post constructed");
-        }
-        this.postConstructed = new Object();
-    }
+	@PostConstruct
+	public void postConstruct() {
+		if (this.postConstructed != null) {
+			throw new IllegalStateException("Already post constructed");
+		}
+		this.postConstructed = new Object();
+	}
 }

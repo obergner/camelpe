@@ -60,97 +60,97 @@ import org.junit.runner.RunWith;
 @Run(RunModeType.IN_CONTAINER)
 public class CamelExtensionInContainerTest {
 
-    // ------------------------------------------------------------------------
-    // Fields
-    // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	// Fields
+	// ------------------------------------------------------------------------
 
-    @Inject
-    private CamelContext camelContext;
+	@Inject
+	private CamelContext camelContext;
 
-    @Inject
-    private SampleProducer sampleProducer;
+	@Inject
+	private SampleProducer sampleProducer;
 
-    @Inject
-    private AdvancedProducer advancedProducer;
+	@Inject
+	private AdvancedProducer advancedProducer;
 
-    @Inject
-    private AdvancedProcessor advancedProcessor;
+	@Inject
+	private AdvancedProcessor advancedProcessor;
 
-    @Inject
-    private AdvancedConsumer advancedConsumer;
+	@Inject
+	private AdvancedConsumer advancedConsumer;
 
-    // -------------------------------------------------------------------------
-    // Test fixture
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Test fixture
+	// -------------------------------------------------------------------------
 
-    @Deployment
-    public static JavaArchive createTestArchive() {
-        final JavaArchive testModule = ShrinkWrap
-                .create(JavaArchive.class, "test.jar")
-                .addPackages(false, SampleRoutes.class.getPackage(),
-                        AdvancedRoutes.class.getPackage())
-                .addServiceProvider(Extension.class, CamelExtension.class)
-                .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
-                        ArchivePaths.create("beans.xml"));
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		final JavaArchive testModule = ShrinkWrap
+		        .create(JavaArchive.class, "test.jar")
+		        .addPackages(false, SampleRoutes.class.getPackage(),
+		                AdvancedRoutes.class.getPackage())
+		        .addServiceProvider(Extension.class, CamelExtension.class)
+		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		                ArchivePaths.create("beans.xml"));
 
-        return testModule;
-    }
+		return testModule;
+	}
 
-    // -------------------------------------------------------------------------
-    // Tests
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Tests
+	// -------------------------------------------------------------------------
 
-    @Test
-    public void assertThatCamelExtensionDiscoversAndRegistersRoute() {
-        assertFalse(
-                "Camel CDI extension should have registered at least one Route "
-                        + "with CamelContext. This, however, is not the case.",
-                this.camelContext.getRouteDefinitions().isEmpty());
-    }
+	@Test
+	public void assertThatCamelExtensionDiscoversAndRegistersRoute() {
+		assertFalse(
+		        "Camel CDI extension should have registered at least one Route "
+		                + "with CamelContext. This, however, is not the case.",
+		        this.camelContext.getRouteDefinitions().isEmpty());
+	}
 
-    @Test
-    public void assertThatRouteDiscoveredAndRegisteredByCamelExtensionBasicallyWorks()
-            throws Exception {
-        final String testMessage = "Test message";
+	@Test
+	public void assertThatRouteDiscoveredAndRegisteredByCamelExtensionBasicallyWorks()
+	        throws Exception {
+		final String testMessage = "Test message";
 
-        final MockEndpoint mockEndpoint = this.camelContext.getEndpoint(
-                SampleRoutes.SAMPLE_TARGET_EP, MockEndpoint.class);
-        mockEndpoint.expectedMinimumMessageCount(1);
+		final MockEndpoint mockEndpoint = this.camelContext.getEndpoint(
+		        SampleRoutes.SAMPLE_TARGET_EP, MockEndpoint.class);
+		mockEndpoint.expectedMinimumMessageCount(1);
 
-        final ProducerTemplate producerTemplate = this.camelContext
-                .createProducerTemplate();
-        producerTemplate.sendBodyAndHeader(SampleRoutes.SAMPLE_SOURCE_EP,
-                testMessage, "foo", "bar");
+		final ProducerTemplate producerTemplate = this.camelContext
+		        .createProducerTemplate();
+		producerTemplate.sendBodyAndHeader(SampleRoutes.SAMPLE_SOURCE_EP,
+		        testMessage, "foo", "bar");
 
-        mockEndpoint.assertIsSatisfied();
-    }
+		mockEndpoint.assertIsSatisfied();
+	}
 
-    @Test
-    public void assertThatCdiConfiguredProducerBasicallyWorks()
-            throws Exception {
-        final String testMessage = "Test message";
+	@Test
+	public void assertThatCdiConfiguredProducerBasicallyWorks()
+	        throws Exception {
+		final String testMessage = "Test message";
 
-        final MockEndpoint mockEndpoint = this.camelContext.getEndpoint(
-                SampleRoutes.SAMPLE_TARGET_EP, MockEndpoint.class);
-        mockEndpoint.expectedMinimumMessageCount(1);
+		final MockEndpoint mockEndpoint = this.camelContext.getEndpoint(
+		        SampleRoutes.SAMPLE_TARGET_EP, MockEndpoint.class);
+		mockEndpoint.expectedMinimumMessageCount(1);
 
-        this.sampleProducer.sendBody(testMessage);
+		this.sampleProducer.sendBody(testMessage);
 
-        mockEndpoint.assertIsSatisfied();
-    }
+		mockEndpoint.assertIsSatisfied();
+	}
 
-    @Test
-    public void assertThatAdvancedRouteDiscoveredAndRegisteredByCamelExtensionWorks() {
-        final Date testMessage = new Date();
+	@Test
+	public void assertThatAdvancedRouteDiscoveredAndRegisteredByCamelExtensionWorks() {
+		final Date testMessage = new Date();
 
-        this.advancedProducer.sendBody(testMessage);
+		this.advancedProducer.sendBody(testMessage);
 
-        assertEquals("Test message was not processed by test processor", 1,
-                this.advancedProcessor.getCounter().get());
-        this.advancedProcessor.getCounter().set(0);
-        assertEquals("Test message was not consumed by test consumer",
-                testMessage.getTime(), this.advancedConsumer.getTimestamp()
-                        .get());
-        this.advancedConsumer.getTimestamp().set(-1L);
-    }
+		assertEquals("Test message was not processed by test processor", 1,
+		        this.advancedProcessor.getCounter().get());
+		this.advancedProcessor.getCounter().set(0);
+		assertEquals("Test message was not consumed by test consumer",
+		        testMessage.getTime(), this.advancedConsumer.getTimestamp()
+		                .get());
+		this.advancedConsumer.getTimestamp().set(-1L);
+	}
 }

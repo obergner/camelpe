@@ -34,8 +34,8 @@ import org.apache.camel.Converter;
 @Converter
 public class DateToLongConverter {
 
-    @Converter
-    public Long convert(final Date date) {
-        return Long.valueOf(date.getTime());
-    }
+	@Converter
+	public Long convert(final Date date) {
+		return Long.valueOf(date.getTime());
+	}
 }

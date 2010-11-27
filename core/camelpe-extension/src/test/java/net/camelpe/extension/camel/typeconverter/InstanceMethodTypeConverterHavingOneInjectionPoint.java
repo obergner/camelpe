@@ -35,11 +35,11 @@ import org.apache.camel.Converter;
 @Converter
 public class InstanceMethodTypeConverterHavingOneInjectionPoint {
 
-    @Inject
-    private StringToByteArray stringToByteArray;
+	@Inject
+	private StringToByteArray stringToByteArray;
 
-    @Converter
-    public byte[] convertToByteArray(final String stringToConvert) {
-        return this.stringToByteArray.toByteArray(stringToConvert);
-    }
+	@Converter
+	public byte[] convertToByteArray(final String stringToConvert) {
+		return this.stringToByteArray.toByteArray(stringToConvert);
+	}
 }

@@ -32,15 +32,15 @@ import javax.inject.Named;
  */
 public abstract class CdiBeansSharingTheSameSuperclass {
 
-    @Named
-    @ApplicationScoped
-    public static class Subclass1 extends CdiBeansSharingTheSameSuperclass {
+	@Named
+	@ApplicationScoped
+	public static class Subclass1 extends CdiBeansSharingTheSameSuperclass {
 
-    }
+	}
 
-    @Named
-    @ApplicationScoped
-    public static class Subclass2 extends CdiBeansSharingTheSameSuperclass {
+	@Named
+	@ApplicationScoped
+	public static class Subclass2 extends CdiBeansSharingTheSameSuperclass {
 
-    }
+	}
 }

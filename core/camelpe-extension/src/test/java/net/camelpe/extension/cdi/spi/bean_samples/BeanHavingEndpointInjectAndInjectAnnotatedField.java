@@ -34,7 +34,7 @@ import org.apache.camel.EndpointInject;
  */
 public class BeanHavingEndpointInjectAndInjectAnnotatedField {
 
-    @Inject
-    @EndpointInject(uri = "ignore")
-    public BeanManager injectionValue;
+	@Inject
+	@EndpointInject(uri = "ignore")
+	public BeanManager injectionValue;
 }

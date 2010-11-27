@@ -37,17 +37,17 @@ import org.apache.camel.spi.TypeConverterRegistry;
 @FallbackConverter
 public class InstanceMethodFallbackTypeConverterHavingOneInjectionPoint {
 
-    @Inject
-    private StringToByteArray stringToByteArray;
+	@Inject
+	private StringToByteArray stringToByteArray;
 
-    @FallbackConverter
-    public <T> T convertTo(final Class<T> typeToConvertTo,
-            final Exchange exchange, final Object value,
-            final TypeConverterRegistry registry) {
-        if (typeToConvertTo == byte[].class) {
-            return (T) this.stringToByteArray.toByteArray(value.toString());
-        }
+	@FallbackConverter
+	public <T> T convertTo(final Class<T> typeToConvertTo,
+	        final Exchange exchange, final Object value,
+	        final TypeConverterRegistry registry) {
+		if (typeToConvertTo == byte[].class) {
+			return (T) this.stringToByteArray.toByteArray(value.toString());
+		}
 
-        return null;
-    }
+		return null;
+	}
 }

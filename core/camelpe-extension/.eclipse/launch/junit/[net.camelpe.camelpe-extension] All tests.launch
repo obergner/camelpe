@@ -2,7 +2,6 @@
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <booleanAttribute key="com.mountainminds.eclemma.core.INPLACE_INSTRUMENTATION" value="false"/>
 <listAttribute key="com.mountainminds.eclemma.core.INSTRUMENTATION_PATHS">
-<listEntry value="/net.camelpe.camelpe-api/target/classes"/>
 <listEntry value="/net.camelpe.camelpe-extension/target/classes"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">

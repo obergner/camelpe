@@ -34,14 +34,14 @@ import org.apache.camel.spi.TypeConverterRegistry;
 @FallbackConverter
 public class StaticMethodFallbackTypeConverter {
 
-    @FallbackConverter
-    public static <T> T convertTo(final Class<T> typeToConvertTo,
-            final Exchange exchange, final Object value,
-            final TypeConverterRegistry registry) {
-        if (typeToConvertTo == String.class) {
-            return (T) value.toString();
-        }
+	@FallbackConverter
+	public static <T> T convertTo(final Class<T> typeToConvertTo,
+	        final Exchange exchange, final Object value,
+	        final TypeConverterRegistry registry) {
+		if (typeToConvertTo == String.class) {
+			return (T) value.toString();
+		}
 
-        return null;
-    }
+		return null;
+	}
 }

@@ -59,109 +59,109 @@ import org.junit.runner.RunWith;
 @Run(RunModeType.IN_CONTAINER)
 public class RoutesDiscoveryInContainerTest {
 
-    // -------------------------------------------------------------------------
-    // Static
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Static
+	// -------------------------------------------------------------------------
 
-    private static final String CDIPE_SERVICE_FILE_PATH = "META-INF/services/javax.enterprise.inject.spi.Extension";
+	private static final String CDIPE_SERVICE_FILE_PATH = "META-INF/services/javax.enterprise.inject.spi.Extension";
 
-    private static final String CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX = ".DISABLED";
+	private static final String CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX = ".DISABLED";
 
-    static {
-        /*
-         * HACK: As soon as the embedded Weld container sees the file
-         * "META-INF/services/javax.enterprise.inject.spi.Extension" on the
-         * classpath - it need not be deployed into the container - it will look
-         * for the fqn of a CDI extension in that file. In our case, it will
-         * find the fqn of our Camel Portable Extension and will happily deploy
-         * it. This, however, will cause this test to fail since our Camel PE
-         * deploys the class to be tested by this test, RoutesDiscovery, twice:
-         * first by explicitly adding it to the BeanManager as a CDI bean, and
-         * then by discovering it on the classpath. Now, Weld will conclude that
-         * this test's dependency on RoutesDiscovery is ambiguous and bail out.
-         * 
-         * I would like to move this piece of code to some @BeforeClass
-         * annotated method. However, Arquillian starts Weld even before
-         * 
-         * @BeforeClass methods are executed. Thus, a static initializer block.
-         */
-        final URL cdiServiceFileUrl = RoutesDiscoveryInContainerTest.class
-                .getClassLoader().getResource(CDIPE_SERVICE_FILE_PATH);
-        if (cdiServiceFileUrl != null) {
+	static {
+		/*
+		 * HACK: As soon as the embedded Weld container sees the file
+		 * "META-INF/services/javax.enterprise.inject.spi.Extension" on the
+		 * classpath - it need not be deployed into the container - it will look
+		 * for the fqn of a CDI extension in that file. In our case, it will
+		 * find the fqn of our Camel Portable Extension and will happily deploy
+		 * it. This, however, will cause this test to fail since our Camel PE
+		 * deploys the class to be tested by this test, RoutesDiscovery, twice:
+		 * first by explicitly adding it to the BeanManager as a CDI bean, and
+		 * then by discovering it on the classpath. Now, Weld will conclude that
+		 * this test's dependency on RoutesDiscovery is ambiguous and bail out.
+		 * 
+		 * I would like to move this piece of code to some @BeforeClass
+		 * annotated method. However, Arquillian starts Weld even before
+		 * 
+		 * @BeforeClass methods are executed. Thus, a static initializer block.
+		 */
+		final URL cdiServiceFileUrl = RoutesDiscoveryInContainerTest.class
+		        .getClassLoader().getResource(CDIPE_SERVICE_FILE_PATH);
+		if (cdiServiceFileUrl != null) {
 
-            final File cdiServiceFile = new File(cdiServiceFileUrl.getFile());
-            final File cdiServiceFileDisabled = new File(
-                    cdiServiceFileUrl.getFile()
-                            + CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
+			final File cdiServiceFile = new File(cdiServiceFileUrl.getFile());
+			final File cdiServiceFileDisabled = new File(
+			        cdiServiceFileUrl.getFile()
+			                + CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
 
-            cdiServiceFile.renameTo(cdiServiceFileDisabled);
-        }
-    }
+			cdiServiceFile.renameTo(cdiServiceFileDisabled);
+		}
+	}
 
-    // ------------------------------------------------------------------------
-    // Fields
-    // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	// Fields
+	// ------------------------------------------------------------------------
 
-    @Inject
-    private RoutesDiscovery classUnderTest;
+	@Inject
+	private RoutesDiscovery classUnderTest;
 
-    // -------------------------------------------------------------------------
-    // Test fixture
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Test fixture
+	// -------------------------------------------------------------------------
 
-    @Deployment
-    public static JavaArchive createTestArchive() {
-        final JavaArchive testModule = ShrinkWrap
-                .create(JavaArchive.class, "test.jar")
-                .addClass(RoutesDiscovery.class)
-                .addPackages(false, FirstRouteBuilder.class.getPackage())
-                .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
-                        ArchivePaths.create("beans.xml"));
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		final JavaArchive testModule = ShrinkWrap
+		        .create(JavaArchive.class, "test.jar")
+		        .addClass(RoutesDiscovery.class)
+		        .addPackages(false, FirstRouteBuilder.class.getPackage())
+		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		                ArchivePaths.create("beans.xml"));
 
-        return testModule;
-    }
+		return testModule;
+	}
 
-    @AfterClass
-    public static void reenableCamelPE() {
-        final URL cdiServiceFileDisabledUrl = RoutesDiscoveryInContainerTest.class
-                .getClassLoader().getResource(
-                        CDIPE_SERVICE_FILE_PATH
-                                + CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
-        if (cdiServiceFileDisabledUrl == null) {
-            return;
-        }
+	@AfterClass
+	public static void reenableCamelPE() {
+		final URL cdiServiceFileDisabledUrl = RoutesDiscoveryInContainerTest.class
+		        .getClassLoader().getResource(
+		                CDIPE_SERVICE_FILE_PATH
+		                        + CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX);
+		if (cdiServiceFileDisabledUrl == null) {
+			return;
+		}
 
-        final File cdiServiceFileDisabled = new File(
-                cdiServiceFileDisabledUrl.getFile());
-        final File cdiServiceFile = new File(cdiServiceFileDisabledUrl
-                .getFile().replace(CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX, ""));
+		final File cdiServiceFileDisabled = new File(
+		        cdiServiceFileDisabledUrl.getFile());
+		final File cdiServiceFile = new File(cdiServiceFileDisabledUrl
+		        .getFile().replace(CDIPE_SERVICE_FILE_PATH_DISABLED_SUFFIX, ""));
 
-        cdiServiceFileDisabled.renameTo(cdiServiceFile);
-    }
+		cdiServiceFileDisabled.renameTo(cdiServiceFile);
+	}
 
-    // -------------------------------------------------------------------------
-    // Tests
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Tests
+	// -------------------------------------------------------------------------
 
-    /**
-     * Test method for
-     * {@link net.camelpe.extension.RoutesDiscovery#registerDiscoveredRoutesIn(org.apache.camel.CamelContext)}
-     * .
-     * 
-     * @throws Exception
-     */
-    @Test
-    public final void assertThatRegisterDiscoveredRoutesInDoesRegisterAllDiscoveredRoutes()
-            throws Exception {
-        final Capture<RouteBuilder> capturedRouteBuilders = new Capture<RouteBuilder>();
-        final CamelContext camelContextMock = createNiceMock(CamelContext.class);
-        camelContextMock.addRoutes(capture(capturedRouteBuilders));
-        expectLastCall().times(2);
-        replay(camelContextMock);
+	/**
+	 * Test method for
+	 * {@link net.camelpe.extension.RoutesDiscovery#registerDiscoveredRoutesIn(org.apache.camel.CamelContext)}
+	 * .
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public final void assertThatRegisterDiscoveredRoutesInDoesRegisterAllDiscoveredRoutes()
+	        throws Exception {
+		final Capture<RouteBuilder> capturedRouteBuilders = new Capture<RouteBuilder>();
+		final CamelContext camelContextMock = createNiceMock(CamelContext.class);
+		camelContextMock.addRoutes(capture(capturedRouteBuilders));
+		expectLastCall().times(2);
+		replay(camelContextMock);
 
-        this.classUnderTest.registerDiscoveredRoutesIn(camelContextMock);
+		this.classUnderTest.registerDiscoveredRoutesIn(camelContextMock);
 
-        verify(camelContextMock);
-    }
+		verify(camelContextMock);
+	}
 
 }

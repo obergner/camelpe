@@ -35,10 +35,10 @@ import org.apache.camel.ProducerTemplate;
 @ApplicationScoped
 public class SampleProducer {
 
-    @Produce(uri = SampleRoutes.SAMPLE_SOURCE_EP)
-    private ProducerTemplate template;
+	@Produce(uri = SampleRoutes.SAMPLE_SOURCE_EP)
+	private ProducerTemplate template;
 
-    public void sendBody(final String body) {
-        this.template.sendBody(body);
-    }
+	public void sendBody(final String body) {
+		this.template.sendBody(body);
+	}
 }

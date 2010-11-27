@@ -31,10 +31,10 @@ import org.apache.camel.builder.RouteBuilder;
  */
 public class FirstRouteBuilder extends RouteBuilder {
 
-    /**
-     * @see org.apache.camel.builder.RouteBuilder#configure()
-     */
-    @Override
-    public void configure() throws Exception {
-    }
+	/**
+	 * @see org.apache.camel.builder.RouteBuilder#configure()
+	 */
+	@Override
+	public void configure() throws Exception {
+	}
 }

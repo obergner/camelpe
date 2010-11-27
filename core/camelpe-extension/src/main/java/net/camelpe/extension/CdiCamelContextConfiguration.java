@@ -65,370 +65,370 @@ import org.slf4j.LoggerFactory;
 @ApplicationScoped
 class CdiCamelContextConfiguration {
 
-    // -------------------------------------------------------------------------
-    // Fields
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Fields
+	// -------------------------------------------------------------------------
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private ClassResolver classResolver;
+	private ClassResolver classResolver;
 
-    private PackageScanClassResolver packageScanClassResolver;
+	private PackageScanClassResolver packageScanClassResolver;
 
-    private DataFormatResolver dataFormatResolver;
+	private DataFormatResolver dataFormatResolver;
 
-    private ExecutorServiceStrategy executorServiceStrategy;
+	private ExecutorServiceStrategy executorServiceStrategy;
 
-    private FactoryFinderResolver factoryFinderResolver;
+	private FactoryFinderResolver factoryFinderResolver;
 
-    private InflightRepository inflightRepository;
+	private InflightRepository inflightRepository;
 
-    private ManagementStrategy managementStrategy;
+	private ManagementStrategy managementStrategy;
 
-    private ProcessorFactory processorFactory;
+	private ProcessorFactory processorFactory;
 
-    private ShutdownStrategy shutdownStrategy;
+	private ShutdownStrategy shutdownStrategy;
 
-    // -------------------------------------------------------------------------
-    // CDI injection points allowing for customization of CdiCamelContext
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// CDI injection points allowing for customization of CdiCamelContext
+	// -------------------------------------------------------------------------
 
-    @Inject
-    public void registerClassResolver(
-            final @CamelContextInjectable Instance<ClassResolver> classResolvers)
-            throws AmbiguousResolutionException {
-        for (final ClassResolver match : classResolvers) {
-            if (this.classResolver != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + ClassResolver.class.getName() + "] found: ["
-                                + this.classResolver + "] and [" + match + "]");
-            }
-            this.classResolver = match;
-        }
-    }
+	@Inject
+	public void registerClassResolver(
+	        final @CamelContextInjectable Instance<ClassResolver> classResolvers)
+	        throws AmbiguousResolutionException {
+		for (final ClassResolver match : classResolvers) {
+			if (this.classResolver != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + ClassResolver.class.getName() + "] found: ["
+				                + this.classResolver + "] and [" + match + "]");
+			}
+			this.classResolver = match;
+		}
+	}
 
-    @Inject
-    public void registerPackageScanClassResolver(
-            final @CamelContextInjectable Instance<PackageScanClassResolver> packageScanClassResolvers)
-            throws AmbiguousResolutionException {
-        for (final PackageScanClassResolver match : packageScanClassResolvers) {
-            if (this.packageScanClassResolver != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + PackageScanClassResolver.class.getName()
-                                + "] found: [" + this.packageScanClassResolver
-                                + "] and [" + match + "]");
-            }
-            this.packageScanClassResolver = match;
-        }
-    }
+	@Inject
+	public void registerPackageScanClassResolver(
+	        final @CamelContextInjectable Instance<PackageScanClassResolver> packageScanClassResolvers)
+	        throws AmbiguousResolutionException {
+		for (final PackageScanClassResolver match : packageScanClassResolvers) {
+			if (this.packageScanClassResolver != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + PackageScanClassResolver.class.getName()
+				                + "] found: [" + this.packageScanClassResolver
+				                + "] and [" + match + "]");
+			}
+			this.packageScanClassResolver = match;
+		}
+	}
 
-    @Inject
-    public void registerDataFormatResolver(
-            final @CamelContextInjectable Instance<DataFormatResolver> dataFormatResolvers)
-            throws AmbiguousResolutionException {
-        for (final DataFormatResolver match : dataFormatResolvers) {
-            if (this.dataFormatResolver != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + DataFormatResolver.class.getName()
-                                + "] found: [" + this.dataFormatResolver
-                                + "] and [" + match + "]");
-            }
-            this.dataFormatResolver = match;
-        }
-    }
+	@Inject
+	public void registerDataFormatResolver(
+	        final @CamelContextInjectable Instance<DataFormatResolver> dataFormatResolvers)
+	        throws AmbiguousResolutionException {
+		for (final DataFormatResolver match : dataFormatResolvers) {
+			if (this.dataFormatResolver != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + DataFormatResolver.class.getName()
+				                + "] found: [" + this.dataFormatResolver
+				                + "] and [" + match + "]");
+			}
+			this.dataFormatResolver = match;
+		}
+	}
 
-    @Inject
-    public void registerExecutorServiceStrategy(
-            final @CamelContextInjectable Instance<ExecutorServiceStrategy> executorServiceStrategies)
-            throws AmbiguousResolutionException {
-        for (final ExecutorServiceStrategy match : executorServiceStrategies) {
-            if (this.executorServiceStrategy != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + ExecutorServiceStrategy.class.getName()
-                                + "] found: [" + this.executorServiceStrategy
-                                + "] and [" + match + "]");
-            }
-            this.executorServiceStrategy = match;
-        }
-    }
+	@Inject
+	public void registerExecutorServiceStrategy(
+	        final @CamelContextInjectable Instance<ExecutorServiceStrategy> executorServiceStrategies)
+	        throws AmbiguousResolutionException {
+		for (final ExecutorServiceStrategy match : executorServiceStrategies) {
+			if (this.executorServiceStrategy != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + ExecutorServiceStrategy.class.getName()
+				                + "] found: [" + this.executorServiceStrategy
+				                + "] and [" + match + "]");
+			}
+			this.executorServiceStrategy = match;
+		}
+	}
 
-    @Inject
-    public void registerFactoryFinderResolver(
-            final @CamelContextInjectable Instance<FactoryFinderResolver> factoryFinderResolvers)
-            throws AmbiguousResolutionException {
-        for (final FactoryFinderResolver match : factoryFinderResolvers) {
-            if (this.factoryFinderResolver != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + FactoryFinderResolver.class.getName()
-                                + "] found: [" + this.factoryFinderResolver
-                                + "] and [" + match + "]");
-            }
-            this.factoryFinderResolver = match;
-        }
-    }
+	@Inject
+	public void registerFactoryFinderResolver(
+	        final @CamelContextInjectable Instance<FactoryFinderResolver> factoryFinderResolvers)
+	        throws AmbiguousResolutionException {
+		for (final FactoryFinderResolver match : factoryFinderResolvers) {
+			if (this.factoryFinderResolver != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + FactoryFinderResolver.class.getName()
+				                + "] found: [" + this.factoryFinderResolver
+				                + "] and [" + match + "]");
+			}
+			this.factoryFinderResolver = match;
+		}
+	}
 
-    @Inject
-    public void registerInflightRepository(
-            final @CamelContextInjectable Instance<InflightRepository> inflightRepositories)
-            throws AmbiguousResolutionException {
-        for (final InflightRepository match : inflightRepositories) {
-            if (this.inflightRepository != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + InflightRepository.class.getName()
-                                + "] found: [" + this.inflightRepository
-                                + "] and [" + match + "]");
-            }
-            this.inflightRepository = match;
-        }
-    }
+	@Inject
+	public void registerInflightRepository(
+	        final @CamelContextInjectable Instance<InflightRepository> inflightRepositories)
+	        throws AmbiguousResolutionException {
+		for (final InflightRepository match : inflightRepositories) {
+			if (this.inflightRepository != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + InflightRepository.class.getName()
+				                + "] found: [" + this.inflightRepository
+				                + "] and [" + match + "]");
+			}
+			this.inflightRepository = match;
+		}
+	}
 
-    @Inject
-    public void registerManagementStrategy(
-            final @CamelContextInjectable Instance<ManagementStrategy> managementStrategies)
-            throws AmbiguousResolutionException {
-        for (final ManagementStrategy match : managementStrategies) {
-            if (this.managementStrategy != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + ManagementStrategy.class.getName()
-                                + "] found: [" + this.managementStrategy
-                                + "] and [" + match + "]");
-            }
-            this.managementStrategy = match;
-        }
-    }
+	@Inject
+	public void registerManagementStrategy(
+	        final @CamelContextInjectable Instance<ManagementStrategy> managementStrategies)
+	        throws AmbiguousResolutionException {
+		for (final ManagementStrategy match : managementStrategies) {
+			if (this.managementStrategy != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + ManagementStrategy.class.getName()
+				                + "] found: [" + this.managementStrategy
+				                + "] and [" + match + "]");
+			}
+			this.managementStrategy = match;
+		}
+	}
 
-    @Inject
-    public void registerProcessorFactory(
-            final @CamelContextInjectable Instance<ProcessorFactory> processorFactories)
-            throws AmbiguousResolutionException {
-        for (final ProcessorFactory match : processorFactories) {
-            if (this.processorFactory != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + ProcessorFactory.class.getName()
-                                + "] found: [" + this.processorFactory
-                                + "] and [" + match + "]");
-            }
-            this.processorFactory = match;
-        }
-    }
+	@Inject
+	public void registerProcessorFactory(
+	        final @CamelContextInjectable Instance<ProcessorFactory> processorFactories)
+	        throws AmbiguousResolutionException {
+		for (final ProcessorFactory match : processorFactories) {
+			if (this.processorFactory != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + ProcessorFactory.class.getName()
+				                + "] found: [" + this.processorFactory
+				                + "] and [" + match + "]");
+			}
+			this.processorFactory = match;
+		}
+	}
 
-    @Inject
-    public void registerShutdownStrategy(
-            final @CamelContextInjectable Instance<ShutdownStrategy> shutdownStrategies)
-            throws AmbiguousResolutionException {
-        for (final ShutdownStrategy match : shutdownStrategies) {
-            if (this.shutdownStrategy != null) {
-                throw new AmbiguousResolutionException(
-                        "More than one implementation of ["
-                                + ShutdownStrategy.class.getName()
-                                + "] found: [" + this.shutdownStrategy
-                                + "] and [" + match + "]");
-            }
-            this.shutdownStrategy = match;
-        }
-    }
+	@Inject
+	public void registerShutdownStrategy(
+	        final @CamelContextInjectable Instance<ShutdownStrategy> shutdownStrategies)
+	        throws AmbiguousResolutionException {
+		for (final ShutdownStrategy match : shutdownStrategies) {
+			if (this.shutdownStrategy != null) {
+				throw new AmbiguousResolutionException(
+				        "More than one implementation of ["
+				                + ShutdownStrategy.class.getName()
+				                + "] found: [" + this.shutdownStrategy
+				                + "] and [" + match + "]");
+			}
+			this.shutdownStrategy = match;
+		}
+	}
 
-    // -------------------------------------------------------------------------
-    // Configuring a new CdiCamelContext
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Configuring a new CdiCamelContext
+	// -------------------------------------------------------------------------
 
-    void configure(final CamelContext camelContext) {
-        if (this.classResolver != null) {
-            camelContext.setClassResolver(this.classResolver);
-            this.log.trace(
-                    "Set custom ClassResolver [{}] on CamelContext [{}]",
-                    this.classResolver, camelContext);
-        }
-        if (this.packageScanClassResolver != null) {
-            camelContext
-                    .setPackageScanClassResolver(this.packageScanClassResolver);
-            this.log.trace(
-                    "Set custom PackageScanClassResolver [{}] on CamelContext [{}]",
-                    this.packageScanClassResolver, camelContext);
-        }
-        if (this.dataFormatResolver != null) {
-            camelContext.setDataFormatResolver(this.dataFormatResolver);
-            this.log.trace(
-                    "Set custom DataFormatResolver [{}] on CamelContext [{}]",
-                    this.dataFormatResolver, camelContext);
-        }
-        if (this.executorServiceStrategy != null) {
-            camelContext
-                    .setExecutorServiceStrategy(this.executorServiceStrategy);
-            this.log.trace(
-                    "Set custom ExecutorServiceStrategy [{}] on CamelContext [{}]",
-                    this.executorServiceStrategy, camelContext);
-        }
-        if (this.factoryFinderResolver != null) {
-            camelContext.setFactoryFinderResolver(this.factoryFinderResolver);
-            this.log.trace(
-                    "Set custom FactoryFinderResolver [{}] on CamelContext [{}]",
-                    this.factoryFinderResolver, camelContext);
-        }
-        if (this.inflightRepository != null) {
-            camelContext.setInflightRepository(this.inflightRepository);
-            this.log.trace(
-                    "Set custom InflightRepository [{}] on CamelContext [{}]",
-                    this.inflightRepository, camelContext);
-        }
-        if (this.managementStrategy != null) {
-            camelContext.setManagementStrategy(this.managementStrategy);
-            this.log.trace(
-                    "Set custom ManagementStrategy [{}] on CamelContext [{}]",
-                    this.managementStrategy, camelContext);
-        }
-        if (this.processorFactory != null) {
-            camelContext.setProcessorFactory(this.processorFactory);
-            this.log.trace(
-                    "Set custom ProcessorFactory [{}] on CamelContext [{}]",
-                    this.processorFactory, camelContext);
-        }
-        if (this.shutdownStrategy != null) {
-            camelContext.setShutdownStrategy(this.shutdownStrategy);
-            this.log.trace(
-                    "Set custom ShutdownStrategy [{}] on CamelContext [{}]",
-                    this.shutdownStrategy, camelContext);
-        }
-        this.log.debug("Configured CamelContext [{}]", camelContext);
-    }
+	void configure(final CamelContext camelContext) {
+		if (this.classResolver != null) {
+			camelContext.setClassResolver(this.classResolver);
+			this.log.trace(
+			        "Set custom ClassResolver [{}] on CamelContext [{}]",
+			        this.classResolver, camelContext);
+		}
+		if (this.packageScanClassResolver != null) {
+			camelContext
+			        .setPackageScanClassResolver(this.packageScanClassResolver);
+			this.log.trace(
+			        "Set custom PackageScanClassResolver [{}] on CamelContext [{}]",
+			        this.packageScanClassResolver, camelContext);
+		}
+		if (this.dataFormatResolver != null) {
+			camelContext.setDataFormatResolver(this.dataFormatResolver);
+			this.log.trace(
+			        "Set custom DataFormatResolver [{}] on CamelContext [{}]",
+			        this.dataFormatResolver, camelContext);
+		}
+		if (this.executorServiceStrategy != null) {
+			camelContext
+			        .setExecutorServiceStrategy(this.executorServiceStrategy);
+			this.log.trace(
+			        "Set custom ExecutorServiceStrategy [{}] on CamelContext [{}]",
+			        this.executorServiceStrategy, camelContext);
+		}
+		if (this.factoryFinderResolver != null) {
+			camelContext.setFactoryFinderResolver(this.factoryFinderResolver);
+			this.log.trace(
+			        "Set custom FactoryFinderResolver [{}] on CamelContext [{}]",
+			        this.factoryFinderResolver, camelContext);
+		}
+		if (this.inflightRepository != null) {
+			camelContext.setInflightRepository(this.inflightRepository);
+			this.log.trace(
+			        "Set custom InflightRepository [{}] on CamelContext [{}]",
+			        this.inflightRepository, camelContext);
+		}
+		if (this.managementStrategy != null) {
+			camelContext.setManagementStrategy(this.managementStrategy);
+			this.log.trace(
+			        "Set custom ManagementStrategy [{}] on CamelContext [{}]",
+			        this.managementStrategy, camelContext);
+		}
+		if (this.processorFactory != null) {
+			camelContext.setProcessorFactory(this.processorFactory);
+			this.log.trace(
+			        "Set custom ProcessorFactory [{}] on CamelContext [{}]",
+			        this.processorFactory, camelContext);
+		}
+		if (this.shutdownStrategy != null) {
+			camelContext.setShutdownStrategy(this.shutdownStrategy);
+			this.log.trace(
+			        "Set custom ShutdownStrategy [{}] on CamelContext [{}]",
+			        this.shutdownStrategy, camelContext);
+		}
+		this.log.debug("Configured CamelContext [{}]", camelContext);
+	}
 
-    // -------------------------------------------------------------------------
-    // This class wrapped in a CDI bean
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// This class wrapped in a CDI bean
+	// -------------------------------------------------------------------------
 
-    static class CdiBean implements Bean<CdiCamelContextConfiguration> {
+	static class CdiBean implements Bean<CdiCamelContextConfiguration> {
 
-        private final AnnotatedType<CdiCamelContextConfiguration> configurationAnnotatedType;
+		private final AnnotatedType<CdiCamelContextConfiguration> configurationAnnotatedType;
 
-        private final InjectionTarget<CdiCamelContextConfiguration> configurationInjectionTarget;
+		private final InjectionTarget<CdiCamelContextConfiguration> configurationInjectionTarget;
 
-        /**
-         * @param beanManager
-         */
-        CdiBean(final BeanManager beanManager) {
-            this.configurationAnnotatedType = beanManager
-                    .createAnnotatedType(CdiCamelContextConfiguration.class);
-            this.configurationInjectionTarget = beanManager
-                    .createInjectionTarget(this.configurationAnnotatedType);
-        }
+		/**
+		 * @param beanManager
+		 */
+		CdiBean(final BeanManager beanManager) {
+			this.configurationAnnotatedType = beanManager
+			        .createAnnotatedType(CdiCamelContextConfiguration.class);
+			this.configurationInjectionTarget = beanManager
+			        .createInjectionTarget(this.configurationAnnotatedType);
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getBeanClass()
-         */
-        @Override
-        public Class<?> getBeanClass() {
-            return CdiCamelContextConfiguration.class;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getBeanClass()
+		 */
+		@Override
+		public Class<?> getBeanClass() {
+			return CdiCamelContextConfiguration.class;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getInjectionPoints()
-         */
-        @Override
-        public Set<InjectionPoint> getInjectionPoints() {
-            return this.configurationInjectionTarget.getInjectionPoints();
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getInjectionPoints()
+		 */
+		@Override
+		public Set<InjectionPoint> getInjectionPoints() {
+			return this.configurationInjectionTarget.getInjectionPoints();
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getName()
-         */
-        @Override
-        public String getName() {
-            return "cdiCamelContextConfiguration";
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getName()
+		 */
+		@Override
+		public String getName() {
+			return "cdiCamelContextConfiguration";
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getQualifiers()
-         */
-        @SuppressWarnings("serial")
-        @Override
-        public Set<Annotation> getQualifiers() {
-            final Set<Annotation> qualifiers = new HashSet<Annotation>();
-            qualifiers.add(new AnnotationLiteral<Default>() {
-            });
-            qualifiers.add(new AnnotationLiteral<Any>() {
-            });
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getQualifiers()
+		 */
+		@SuppressWarnings("serial")
+		@Override
+		public Set<Annotation> getQualifiers() {
+			final Set<Annotation> qualifiers = new HashSet<Annotation>();
+			qualifiers.add(new AnnotationLiteral<Default>() {
+			});
+			qualifiers.add(new AnnotationLiteral<Any>() {
+			});
 
-            return qualifiers;
-        }
+			return qualifiers;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getScope()
-         */
-        @Override
-        public Class<? extends Annotation> getScope() {
-            return ApplicationScoped.class;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getScope()
+		 */
+		@Override
+		public Class<? extends Annotation> getScope() {
+			return ApplicationScoped.class;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getStereotypes()
-         */
-        @Override
-        public Set<Class<? extends Annotation>> getStereotypes() {
-            return Collections.emptySet();
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getStereotypes()
+		 */
+		@Override
+		public Set<Class<? extends Annotation>> getStereotypes() {
+			return Collections.emptySet();
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getTypes()
-         */
-        @Override
-        public Set<Type> getTypes() {
-            final Set<Type> types = new HashSet<Type>();
-            types.add(CdiCamelContextConfiguration.class);
-            types.add(Object.class);
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getTypes()
+		 */
+		@Override
+		public Set<Type> getTypes() {
+			final Set<Type> types = new HashSet<Type>();
+			types.add(CdiCamelContextConfiguration.class);
+			types.add(Object.class);
 
-            return types;
-        }
+			return types;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#isAlternative()
-         */
-        @Override
-        public boolean isAlternative() {
-            return false;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#isAlternative()
+		 */
+		@Override
+		public boolean isAlternative() {
+			return false;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#isNullable()
-         */
-        @Override
-        public boolean isNullable() {
-            return false;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#isNullable()
+		 */
+		@Override
+		public boolean isNullable() {
+			return false;
+		}
 
-        /**
-         * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
-         */
-        @Override
-        public CdiCamelContextConfiguration create(
-                final CreationalContext<CdiCamelContextConfiguration> creationalContext) {
-            final CdiCamelContextConfiguration instance = this.configurationInjectionTarget
-                    .produce(creationalContext);
-            this.configurationInjectionTarget.inject(instance,
-                    creationalContext);
-            this.configurationInjectionTarget.postConstruct(instance);
+		/**
+		 * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
+		 */
+		@Override
+		public CdiCamelContextConfiguration create(
+		        final CreationalContext<CdiCamelContextConfiguration> creationalContext) {
+			final CdiCamelContextConfiguration instance = this.configurationInjectionTarget
+			        .produce(creationalContext);
+			this.configurationInjectionTarget.inject(instance,
+			        creationalContext);
+			this.configurationInjectionTarget.postConstruct(instance);
 
-            return instance;
-        }
+			return instance;
+		}
 
-        /**
-         * @see javax.enterprise.context.spi.Contextual#destroy(java.lang.Object,
-         *      javax.enterprise.context.spi.CreationalContext)
-         */
-        @Override
-        public void destroy(
-                final CdiCamelContextConfiguration instance,
-                final CreationalContext<CdiCamelContextConfiguration> creationalContext) {
-            this.configurationInjectionTarget.preDestroy(instance);
-            this.configurationInjectionTarget.dispose(instance);
-            creationalContext.release();
-        }
-    }
+		/**
+		 * @see javax.enterprise.context.spi.Contextual#destroy(java.lang.Object,
+		 *      javax.enterprise.context.spi.CreationalContext)
+		 */
+		@Override
+		public void destroy(
+		        final CdiCamelContextConfiguration instance,
+		        final CreationalContext<CdiCamelContextConfiguration> creationalContext) {
+			this.configurationInjectionTarget.preDestroy(instance);
+			this.configurationInjectionTarget.dispose(instance);
+			creationalContext.release();
+		}
+	}
 }

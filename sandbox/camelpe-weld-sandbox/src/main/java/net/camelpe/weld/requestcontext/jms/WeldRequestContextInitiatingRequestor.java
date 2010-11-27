@@ -51,35 +51,35 @@ import org.apache.camel.component.jms.requestor.Requestor;
  */
 public class WeldRequestContextInitiatingRequestor extends Requestor {
 
-    // -------------------------------------------------------------------------
-    // Constructors
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
-    /**
-     * @param delegate
-     */
-    public WeldRequestContextInitiatingRequestor(
-            final JmsConfiguration configuration,
-            final ScheduledExecutorService executorService)
-            throws IllegalArgumentException {
-        super(configuration, executorService);
-    }
+	/**
+	 * @param delegate
+	 */
+	public WeldRequestContextInitiatingRequestor(
+	        final JmsConfiguration configuration,
+	        final ScheduledExecutorService executorService)
+	        throws IllegalArgumentException {
+		super(configuration, executorService);
+	}
 
-    // -------------------------------------------------------------------------
-    // org.apache.camel.component.jms.requestor.Requestor
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// org.apache.camel.component.jms.requestor.Requestor
+	// -------------------------------------------------------------------------
 
-    /**
-     * @param message
-     * @see org.apache.camel.component.jms.requestor.Requestor#onMessage(javax.jms.Message)
-     */
-    @Override
-    public void onMessage(final Message message) {
-        try {
-            WeldRequestContext.begin();
-            super.onMessage(message);
-        } finally {
-            WeldRequestContext.end();
-        }
-    }
+	/**
+	 * @param message
+	 * @see org.apache.camel.component.jms.requestor.Requestor#onMessage(javax.jms.Message)
+	 */
+	@Override
+	public void onMessage(final Message message) {
+		try {
+			WeldRequestContext.begin();
+			super.onMessage(message);
+		} finally {
+			WeldRequestContext.end();
+		}
+	}
 }

@@ -31,6 +31,6 @@ import javax.inject.Inject;
  */
 public class BeanHavingOneInjectionPoint {
 
-    @Inject
-    public BeanHavingNoInjectionPoints injectionPoint;
+	@Inject
+	public BeanHavingNoInjectionPoints injectionPoint;
 }

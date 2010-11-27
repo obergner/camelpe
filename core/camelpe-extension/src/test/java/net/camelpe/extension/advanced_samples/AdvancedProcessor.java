@@ -37,17 +37,17 @@ import org.apache.camel.Processor;
 @ApplicationScoped
 public class AdvancedProcessor implements Processor {
 
-    private final AtomicInteger counter = new AtomicInteger(0);
+	private final AtomicInteger counter = new AtomicInteger(0);
 
-    /**
-     * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
-     */
-    @Override
-    public void process(final Exchange exchange) throws Exception {
-        this.counter.incrementAndGet();
-    }
+	/**
+	 * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
+	 */
+	@Override
+	public void process(final Exchange exchange) throws Exception {
+		this.counter.incrementAndGet();
+	}
 
-    public AtomicInteger getCounter() {
-        return this.counter;
-    }
+	public AtomicInteger getCounter() {
+		return this.counter;
+	}
 }

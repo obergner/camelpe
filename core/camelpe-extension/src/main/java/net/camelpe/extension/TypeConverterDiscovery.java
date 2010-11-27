@@ -58,208 +58,208 @@ import org.slf4j.LoggerFactory;
 @ApplicationScoped
 class TypeConverterDiscovery {
 
-    // -------------------------------------------------------------------------
-    // Static
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Static
+	// -------------------------------------------------------------------------
 
-    @SuppressWarnings("serial")
-    private static final Annotation CONVERTER_QUALIFIER = new AnnotationLiteral<Converter>() {
-    };
+	@SuppressWarnings("serial")
+	private static final Annotation CONVERTER_QUALIFIER = new AnnotationLiteral<Converter>() {
+	};
 
-    private static final Annotation FALLBACK_CONVERTER_QUALIFIER = new FallbackConverter() {
-        @Override
-        public boolean canPromote() {
-            return false;
-        }
+	private static final Annotation FALLBACK_CONVERTER_QUALIFIER = new FallbackConverter() {
+		@Override
+		public boolean canPromote() {
+			return false;
+		}
 
-        @Override
-        public Class<? extends Annotation> annotationType() {
-            return FallbackConverter.class;
-        }
-    };
+		@Override
+		public Class<? extends Annotation> annotationType() {
+			return FallbackConverter.class;
+		}
+	};
 
-    // -------------------------------------------------------------------------
-    // Fields
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Fields
+	// -------------------------------------------------------------------------
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Inject
-    private BeanManager beanManager;
+	@Inject
+	private BeanManager beanManager;
 
-    // -------------------------------------------------------------------------
-    // API
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// API
+	// -------------------------------------------------------------------------
 
-    void registerIn(final CamelContext camelContext) {
-        this.log.debug(
-                "About to register discovered TypeConverters in CamelContext [{}] ...",
-                camelContext);
-        final CdiTypeConverterBuilder typeConverterBuilder = new CdiTypeConverterBuilder(
-                this.beanManager, camelContext.getTypeConverterRegistry());
-        int registeredTypeConvertersCount = 0;
-        for (final Class<?> typeConverterClass : annotatedTypeConverterClasses()) {
-            final Set<TypeConverterHolder> typeConverterHolders = typeConverterBuilder
-                    .buildTypeConvertersFrom(typeConverterClass);
-            for (final TypeConverterHolder typeConverterHolder : typeConverterHolders) {
-                typeConverterHolder.registerIn(camelContext);
-                registeredTypeConvertersCount++;
-            }
-        }
-        this.log.debug(
-                "Registered [{}] discovered TypeConverter(s) in CamelContext [{}]",
-                registeredTypeConvertersCount, camelContext);
-    }
+	void registerIn(final CamelContext camelContext) {
+		this.log.debug(
+		        "About to register discovered TypeConverters in CamelContext [{}] ...",
+		        camelContext);
+		final CdiTypeConverterBuilder typeConverterBuilder = new CdiTypeConverterBuilder(
+		        this.beanManager, camelContext.getTypeConverterRegistry());
+		int registeredTypeConvertersCount = 0;
+		for (final Class<?> typeConverterClass : annotatedTypeConverterClasses()) {
+			final Set<TypeConverterHolder> typeConverterHolders = typeConverterBuilder
+			        .buildTypeConvertersFrom(typeConverterClass);
+			for (final TypeConverterHolder typeConverterHolder : typeConverterHolders) {
+				typeConverterHolder.registerIn(camelContext);
+				registeredTypeConvertersCount++;
+			}
+		}
+		this.log.debug(
+		        "Registered [{}] discovered TypeConverter(s) in CamelContext [{}]",
+		        registeredTypeConvertersCount, camelContext);
+	}
 
-    // -------------------------------------------------------------------------
-    // Internal
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
 
-    private Set<Class<?>> annotatedTypeConverterClasses() {
-        final Set<Class<?>> answer = new HashSet<Class<?>>();
-        final Set<Bean<?>> converterBeans = this.beanManager.getBeans(
-                Object.class, CONVERTER_QUALIFIER);
-        for (final Bean<?> converterBean : converterBeans) {
-            answer.add(converterBean.getBeanClass());
-        }
-        this.log.trace("Discovered [{}] TypeConverter Bean(s) in BeanManager",
-                converterBeans.size());
+	private Set<Class<?>> annotatedTypeConverterClasses() {
+		final Set<Class<?>> answer = new HashSet<Class<?>>();
+		final Set<Bean<?>> converterBeans = this.beanManager.getBeans(
+		        Object.class, CONVERTER_QUALIFIER);
+		for (final Bean<?> converterBean : converterBeans) {
+			answer.add(converterBean.getBeanClass());
+		}
+		this.log.trace("Discovered [{}] TypeConverter Bean(s) in BeanManager",
+		        converterBeans.size());
 
-        final Set<Bean<?>> fallbackConverterBeans = this.beanManager.getBeans(
-                Object.class, FALLBACK_CONVERTER_QUALIFIER);
-        for (final Bean<?> fallbackConverterBean : fallbackConverterBeans) {
-            answer.add(fallbackConverterBean.getBeanClass());
-        }
-        this.log.trace(
-                "Discovered [{}] FallbackTypeConverter Bean(s) in BeanManager",
-                fallbackConverterBeans.size());
+		final Set<Bean<?>> fallbackConverterBeans = this.beanManager.getBeans(
+		        Object.class, FALLBACK_CONVERTER_QUALIFIER);
+		for (final Bean<?> fallbackConverterBean : fallbackConverterBeans) {
+			answer.add(fallbackConverterBean.getBeanClass());
+		}
+		this.log.trace(
+		        "Discovered [{}] FallbackTypeConverter Bean(s) in BeanManager",
+		        fallbackConverterBeans.size());
 
-        return Collections.unmodifiableSet(answer);
-    }
+		return Collections.unmodifiableSet(answer);
+	}
 
-    // -------------------------------------------------------------------------
-    // This class wrapped in a CDI bean
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// This class wrapped in a CDI bean
+	// -------------------------------------------------------------------------
 
-    static class CdiBean implements Bean<TypeConverterDiscovery> {
+	static class CdiBean implements Bean<TypeConverterDiscovery> {
 
-        private final InjectionTarget<TypeConverterDiscovery> injectionTarget;
+		private final InjectionTarget<TypeConverterDiscovery> injectionTarget;
 
-        CdiBean(final BeanManager beanManager) throws IllegalArgumentException {
-            Validate.notNull(beanManager, "beanManager");
-            final AnnotatedType<TypeConverterDiscovery> at = beanManager
-                    .createAnnotatedType(TypeConverterDiscovery.class);
-            this.injectionTarget = beanManager.createInjectionTarget(at);
-        }
+		CdiBean(final BeanManager beanManager) throws IllegalArgumentException {
+			Validate.notNull(beanManager, "beanManager");
+			final AnnotatedType<TypeConverterDiscovery> at = beanManager
+			        .createAnnotatedType(TypeConverterDiscovery.class);
+			this.injectionTarget = beanManager.createInjectionTarget(at);
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getBeanClass()
-         */
-        @Override
-        public Class<?> getBeanClass() {
-            return TypeConverterDiscovery.class;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getBeanClass()
+		 */
+		@Override
+		public Class<?> getBeanClass() {
+			return TypeConverterDiscovery.class;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getInjectionPoints()
-         */
-        @Override
-        public Set<InjectionPoint> getInjectionPoints() {
-            return this.injectionTarget.getInjectionPoints();
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getInjectionPoints()
+		 */
+		@Override
+		public Set<InjectionPoint> getInjectionPoints() {
+			return this.injectionTarget.getInjectionPoints();
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getName()
-         */
-        @Override
-        public String getName() {
-            return "typeConverterDiscovery";
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getName()
+		 */
+		@Override
+		public String getName() {
+			return "typeConverterDiscovery";
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getQualifiers()
-         */
-        @SuppressWarnings("serial")
-        @Override
-        public Set<Annotation> getQualifiers() {
-            final Set<Annotation> qualifiers = new HashSet<Annotation>();
-            qualifiers.add(new AnnotationLiteral<Default>() {
-            });
-            qualifiers.add(new AnnotationLiteral<Any>() {
-            });
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getQualifiers()
+		 */
+		@SuppressWarnings("serial")
+		@Override
+		public Set<Annotation> getQualifiers() {
+			final Set<Annotation> qualifiers = new HashSet<Annotation>();
+			qualifiers.add(new AnnotationLiteral<Default>() {
+			});
+			qualifiers.add(new AnnotationLiteral<Any>() {
+			});
 
-            return qualifiers;
-        }
+			return qualifiers;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getScope()
-         */
-        @Override
-        public Class<? extends Annotation> getScope() {
-            return ApplicationScoped.class;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getScope()
+		 */
+		@Override
+		public Class<? extends Annotation> getScope() {
+			return ApplicationScoped.class;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getStereotypes()
-         */
-        @Override
-        public Set<Class<? extends Annotation>> getStereotypes() {
-            return Collections.emptySet();
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getStereotypes()
+		 */
+		@Override
+		public Set<Class<? extends Annotation>> getStereotypes() {
+			return Collections.emptySet();
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#getTypes()
-         */
-        @Override
-        public Set<Type> getTypes() {
-            final Set<Type> types = new HashSet<Type>();
-            types.add(TypeConverterDiscovery.class);
-            types.add(Object.class);
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#getTypes()
+		 */
+		@Override
+		public Set<Type> getTypes() {
+			final Set<Type> types = new HashSet<Type>();
+			types.add(TypeConverterDiscovery.class);
+			types.add(Object.class);
 
-            return types;
-        }
+			return types;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#isAlternative()
-         */
-        @Override
-        public boolean isAlternative() {
-            return false;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#isAlternative()
+		 */
+		@Override
+		public boolean isAlternative() {
+			return false;
+		}
 
-        /**
-         * @see javax.enterprise.inject.spi.Bean#isNullable()
-         */
-        @Override
-        public boolean isNullable() {
-            return false;
-        }
+		/**
+		 * @see javax.enterprise.inject.spi.Bean#isNullable()
+		 */
+		@Override
+		public boolean isNullable() {
+			return false;
+		}
 
-        /**
-         * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
-         */
-        @Override
-        public TypeConverterDiscovery create(
-                final CreationalContext<TypeConverterDiscovery> creationalContext) {
-            final TypeConverterDiscovery instance = this.injectionTarget
-                    .produce(creationalContext);
-            this.injectionTarget.inject(instance, creationalContext);
-            this.injectionTarget.postConstruct(instance);
+		/**
+		 * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
+		 */
+		@Override
+		public TypeConverterDiscovery create(
+		        final CreationalContext<TypeConverterDiscovery> creationalContext) {
+			final TypeConverterDiscovery instance = this.injectionTarget
+			        .produce(creationalContext);
+			this.injectionTarget.inject(instance, creationalContext);
+			this.injectionTarget.postConstruct(instance);
 
-            return instance;
-        }
+			return instance;
+		}
 
-        /**
-         * @see javax.enterprise.context.spi.Contextual#destroy(java.lang.Object,
-         *      javax.enterprise.context.spi.CreationalContext)
-         */
-        @Override
-        public void destroy(
-                final TypeConverterDiscovery instance,
-                final CreationalContext<TypeConverterDiscovery> creationalContext) {
-            this.injectionTarget.preDestroy(instance);
-            this.injectionTarget.dispose(instance);
-            creationalContext.release();
-        }
-    }
+		/**
+		 * @see javax.enterprise.context.spi.Contextual#destroy(java.lang.Object,
+		 *      javax.enterprise.context.spi.CreationalContext)
+		 */
+		@Override
+		public void destroy(
+		        final TypeConverterDiscovery instance,
+		        final CreationalContext<TypeConverterDiscovery> creationalContext) {
+			this.injectionTarget.preDestroy(instance);
+			this.injectionTarget.dispose(instance);
+			creationalContext.release();
+		}
+	}
 }

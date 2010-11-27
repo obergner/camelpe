@@ -29,7 +29,7 @@ package net.camelpe.extension.camel.typeconverter;
  */
 public class StringToByteArray {
 
-    byte[] toByteArray(final String stringToConvert) {
-        return stringToConvert.getBytes();
-    }
+	byte[] toByteArray(final String stringToConvert) {
+		return stringToConvert.getBytes();
+	}
 }

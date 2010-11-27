@@ -58,180 +58,180 @@ import org.junit.runner.RunWith;
 @Run(RunModeType.IN_CONTAINER)
 public class CdiInjectorInContainerTest {
 
-    // ------------------------------------------------------------------------
-    // Fields
-    // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	// Fields
+	// ------------------------------------------------------------------------
 
-    @Inject
-    private BeanManager beanManager;
+	@Inject
+	private BeanManager beanManager;
 
-    // -------------------------------------------------------------------------
-    // Test fixture
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Test fixture
+	// -------------------------------------------------------------------------
 
-    @Deployment
-    public static JavaArchive createTestArchive() {
-        final JavaArchive testModule = ShrinkWrap
-                .create(JavaArchive.class, "test.jar")
-                .addClasses(BeanHavingNoInjectionPoints.class,
-                        ApplicationScopedBean.class,
-                        BeanHavingOneInjectionPoint.class,
-                        BeanHavingPostConstructAnnotatedMethod.class,
-                        SingletonScopedBean.class,
-                        BeanTypeHavingTwoConcreteSubtypes.class)
-                .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
-                        ArchivePaths.create("beans.xml"));
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		final JavaArchive testModule = ShrinkWrap
+		        .create(JavaArchive.class, "test.jar")
+		        .addClasses(BeanHavingNoInjectionPoints.class,
+		                ApplicationScopedBean.class,
+		                BeanHavingOneInjectionPoint.class,
+		                BeanHavingPostConstructAnnotatedMethod.class,
+		                SingletonScopedBean.class,
+		                BeanTypeHavingTwoConcreteSubtypes.class)
+		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		                ArchivePaths.create("beans.xml"));
 
-        return testModule;
-    }
+		return testModule;
+	}
 
-    // -------------------------------------------------------------------------
-    // Tests
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Tests
+	// -------------------------------------------------------------------------
 
-    @Test
-    public void assertThatCdiInjectorCreatesNewInstanceHavingNoInjectionPoints() {
-        final BeanHavingNoInjectionPoints beanInstance = classUnderTest()
-                .newInstance(BeanHavingNoInjectionPoints.class);
+	@Test
+	public void assertThatCdiInjectorCreatesNewInstanceHavingNoInjectionPoints() {
+		final BeanHavingNoInjectionPoints beanInstance = classUnderTest()
+		        .newInstance(BeanHavingNoInjectionPoints.class);
 
-        assertNotNull(
-                "newInstance(" + BeanHavingNoInjectionPoints.class.getName()
-                        + ") should have returned an instance of ["
-                        + BeanHavingNoInjectionPoints.class.getName()
-                        + "] yet it returned null", beanInstance);
-    }
+		assertNotNull(
+		        "newInstance(" + BeanHavingNoInjectionPoints.class.getName()
+		                + ") should have returned an instance of ["
+		                + BeanHavingNoInjectionPoints.class.getName()
+		                + "] yet it returned null", beanInstance);
+	}
 
-    @Test
-    public void assertThatCdiInjectorCreatesNewConfiguredInstanceHavingInjectionPoints() {
-        final BeanHavingOneInjectionPoint beanInstance = classUnderTest()
-                .newInstance(BeanHavingOneInjectionPoint.class);
+	@Test
+	public void assertThatCdiInjectorCreatesNewConfiguredInstanceHavingInjectionPoints() {
+		final BeanHavingOneInjectionPoint beanInstance = classUnderTest()
+		        .newInstance(BeanHavingOneInjectionPoint.class);
 
-        assertNotNull(
-                "newInstance(" + BeanHavingOneInjectionPoint.class.getName()
-                        + ") should have returned an instance of ["
-                        + BeanHavingOneInjectionPoint.class.getName()
-                        + "] yet it returned null", beanInstance);
-        assertNotNull(
-                "newInstance("
-                        + BeanHavingOneInjectionPoint.class.getName()
-                        + ") should have injected dependencies into the newly created instance, yet it didn't",
-                beanInstance.injectionPoint);
-    }
+		assertNotNull(
+		        "newInstance(" + BeanHavingOneInjectionPoint.class.getName()
+		                + ") should have returned an instance of ["
+		                + BeanHavingOneInjectionPoint.class.getName()
+		                + "] yet it returned null", beanInstance);
+		assertNotNull(
+		        "newInstance("
+		                + BeanHavingOneInjectionPoint.class.getName()
+		                + ") should have injected dependencies into the newly created instance, yet it didn't",
+		        beanInstance.injectionPoint);
+	}
 
-    @Test
-    public void assertThatCdiInjectorInvokesPostConstructAnnotatedMethodOnNewlyCreatedInstance() {
-        final BeanHavingPostConstructAnnotatedMethod beanInstance = classUnderTest()
-                .newInstance(BeanHavingPostConstructAnnotatedMethod.class);
+	@Test
+	public void assertThatCdiInjectorInvokesPostConstructAnnotatedMethodOnNewlyCreatedInstance() {
+		final BeanHavingPostConstructAnnotatedMethod beanInstance = classUnderTest()
+		        .newInstance(BeanHavingPostConstructAnnotatedMethod.class);
 
-        assertNotNull("newInstance("
-                + BeanHavingPostConstructAnnotatedMethod.class.getName()
-                + ") should have returned an instance of ["
-                + BeanHavingPostConstructAnnotatedMethod.class.getName()
-                + "] yet it returned null", beanInstance);
-        assertNotNull("newInstance("
-                + BeanHavingPostConstructAnnotatedMethod.class.getName()
-                + ") should have invoked method annotated with @PostConstruct "
-                + "on newly created instance, yet it didn't",
-                beanInstance.postConstructed);
-    }
+		assertNotNull("newInstance("
+		        + BeanHavingPostConstructAnnotatedMethod.class.getName()
+		        + ") should have returned an instance of ["
+		        + BeanHavingPostConstructAnnotatedMethod.class.getName()
+		        + "] yet it returned null", beanInstance);
+		assertNotNull("newInstance("
+		        + BeanHavingPostConstructAnnotatedMethod.class.getName()
+		        + ") should have invoked method annotated with @PostConstruct "
+		        + "on newly created instance, yet it didn't",
+		        beanInstance.postConstructed);
+	}
 
-    @Test
-    public void assertThatCdiInjectorReturnsSingletonInstanceOfApplicationScopedBean() {
-        final ApplicationScopedBean singleton = new ApplicationScopedBean();
+	@Test
+	public void assertThatCdiInjectorReturnsSingletonInstanceOfApplicationScopedBean() {
+		final ApplicationScopedBean singleton = new ApplicationScopedBean();
 
-        final ApplicationScopedBean beanInstance = classUnderTest()
-                .newInstance(ApplicationScopedBean.class, singleton);
+		final ApplicationScopedBean beanInstance = classUnderTest()
+		        .newInstance(ApplicationScopedBean.class, singleton);
 
-        assertNotNull("newInstance(" + ApplicationScopedBean.class.getName()
-                + ", " + singleton + ") should have returned an instance of ["
-                + ApplicationScopedBean.class.getName()
-                + "] yet it returned null", beanInstance);
-        assertSame(
-                "newInstance("
-                        + ApplicationScopedBean.class.getName()
-                        + ", "
-                        + singleton
-                        + ") should have returned the same instance as had been passed in, yet it didn't",
-                singleton, beanInstance);
-    }
+		assertNotNull("newInstance(" + ApplicationScopedBean.class.getName()
+		        + ", " + singleton + ") should have returned an instance of ["
+		        + ApplicationScopedBean.class.getName()
+		        + "] yet it returned null", beanInstance);
+		assertSame(
+		        "newInstance("
+		                + ApplicationScopedBean.class.getName()
+		                + ", "
+		                + singleton
+		                + ") should have returned the same instance as had been passed in, yet it didn't",
+		        singleton, beanInstance);
+	}
 
-    @Test
-    public void assertThatCdiInjectorReturnsSingletonInstanceOfSingletonScopedBean() {
-        final SingletonScopedBean singleton = new SingletonScopedBean();
+	@Test
+	public void assertThatCdiInjectorReturnsSingletonInstanceOfSingletonScopedBean() {
+		final SingletonScopedBean singleton = new SingletonScopedBean();
 
-        final SingletonScopedBean beanInstance = classUnderTest().newInstance(
-                SingletonScopedBean.class, singleton);
+		final SingletonScopedBean beanInstance = classUnderTest().newInstance(
+		        SingletonScopedBean.class, singleton);
 
-        assertNotNull("newInstance(" + SingletonScopedBean.class.getName()
-                + ", " + singleton + ") should have returned an instance of ["
-                + SingletonScopedBean.class.getName()
-                + "] yet it returned null", beanInstance);
-        assertSame(
-                "newInstance("
-                        + SingletonScopedBean.class.getName()
-                        + ", "
-                        + singleton
-                        + ") should have returned the same instance as had been passed in, yet it didn't",
-                singleton, beanInstance);
-    }
+		assertNotNull("newInstance(" + SingletonScopedBean.class.getName()
+		        + ", " + singleton + ") should have returned an instance of ["
+		        + SingletonScopedBean.class.getName()
+		        + "] yet it returned null", beanInstance);
+		assertSame(
+		        "newInstance("
+		                + SingletonScopedBean.class.getName()
+		                + ", "
+		                + singleton
+		                + ") should have returned the same instance as had been passed in, yet it didn't",
+		        singleton, beanInstance);
+	}
 
-    @Test
-    public void assertThatCdiInjectorCreatesNewInstanceViaReflectionIfNotFoundInBeanManager() {
-        final BeanNotInBeanManager beanInstance = classUnderTest().newInstance(
-                BeanNotInBeanManager.class);
+	@Test
+	public void assertThatCdiInjectorCreatesNewInstanceViaReflectionIfNotFoundInBeanManager() {
+		final BeanNotInBeanManager beanInstance = classUnderTest().newInstance(
+		        BeanNotInBeanManager.class);
 
-        assertNotNull("newInstance(" + BeanNotInBeanManager.class.getName()
-                + ") should have created an instance of ["
-                + BeanNotInBeanManager.class.getName()
-                + "] via reflection, yet it returned null", beanInstance);
-    }
+		assertNotNull("newInstance(" + BeanNotInBeanManager.class.getName()
+		        + ") should have created an instance of ["
+		        + BeanNotInBeanManager.class.getName()
+		        + "] via reflection, yet it returned null", beanInstance);
+	}
 
-    @Test
-    public void assertThatCdiInjectorReturnsNewInstanceOfNonSingletonScopedBean() {
-        final BeanHavingNoInjectionPoints nonSingleton = new BeanHavingNoInjectionPoints();
+	@Test
+	public void assertThatCdiInjectorReturnsNewInstanceOfNonSingletonScopedBean() {
+		final BeanHavingNoInjectionPoints nonSingleton = new BeanHavingNoInjectionPoints();
 
-        final BeanHavingNoInjectionPoints newBeanInstance = classUnderTest()
-                .newInstance(BeanHavingNoInjectionPoints.class, nonSingleton);
+		final BeanHavingNoInjectionPoints newBeanInstance = classUnderTest()
+		        .newInstance(BeanHavingNoInjectionPoints.class, nonSingleton);
 
-        assertNotNull(
-                "newInstance(" + BeanHavingNoInjectionPoints.class.getName()
-                        + ", " + nonSingleton
-                        + ") should have returned an instance of ["
-                        + BeanHavingNoInjectionPoints.class.getName()
-                        + "] yet it returned null", newBeanInstance);
-        assertFalse(
-                "newInstance("
-                        + BeanHavingNoInjectionPoints.class.getName()
-                        + ", "
-                        + nonSingleton
-                        + ") should have returned a new instance, yet it returned the instance passed in",
-                nonSingleton == newBeanInstance);
-    }
+		assertNotNull(
+		        "newInstance(" + BeanHavingNoInjectionPoints.class.getName()
+		                + ", " + nonSingleton
+		                + ") should have returned an instance of ["
+		                + BeanHavingNoInjectionPoints.class.getName()
+		                + "] yet it returned null", newBeanInstance);
+		assertFalse(
+		        "newInstance("
+		                + BeanHavingNoInjectionPoints.class.getName()
+		                + ", "
+		                + nonSingleton
+		                + ") should have returned a new instance, yet it returned the instance passed in",
+		        nonSingleton == newBeanInstance);
+	}
 
-    @Test
-    public void assertThatCdiInjectorCreatesAnArbitraryInstanceIfTwoMatchingBeansAreFound() {
-        final BeanTypeHavingTwoConcreteSubtypes beanInstance = classUnderTest()
-                .newInstance(BeanTypeHavingTwoConcreteSubtypes.class);
+	@Test
+	public void assertThatCdiInjectorCreatesAnArbitraryInstanceIfTwoMatchingBeansAreFound() {
+		final BeanTypeHavingTwoConcreteSubtypes beanInstance = classUnderTest()
+		        .newInstance(BeanTypeHavingTwoConcreteSubtypes.class);
 
-        assertNotNull(
-                "newInstance("
-                        + BeanTypeHavingTwoConcreteSubtypes.class.getName()
-                        + ") should have created an arbitrary instance of ["
-                        + BeanNotInBeanManager.class.getName()
-                        + "] since two concrete subtypes are present in the bean manager, yet it returned null",
-                beanInstance);
-    }
+		assertNotNull(
+		        "newInstance("
+		                + BeanTypeHavingTwoConcreteSubtypes.class.getName()
+		                + ") should have created an arbitrary instance of ["
+		                + BeanNotInBeanManager.class.getName()
+		                + "] since two concrete subtypes are present in the bean manager, yet it returned null",
+		        beanInstance);
+	}
 
-    @Test(expected = RuntimeCamelException.class)
-    public void assertThatCdiInjectorThrowsRuntimeCamelExceptionIfBeanCannotBeConstructedViaReflection() {
-        classUnderTest().newInstance(BeanNotConstructableViaReflection.class);
-    }
+	@Test(expected = RuntimeCamelException.class)
+	public void assertThatCdiInjectorThrowsRuntimeCamelExceptionIfBeanCannotBeConstructedViaReflection() {
+		classUnderTest().newInstance(BeanNotConstructableViaReflection.class);
+	}
 
-    // -------------------------------------------------------------------------
-    // Internal
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
 
-    private CdiInjector classUnderTest() {
-        return new CdiInjector(this.beanManager);
-    }
+	private CdiInjector classUnderTest() {
+		return new CdiInjector(this.beanManager);
+	}
 }

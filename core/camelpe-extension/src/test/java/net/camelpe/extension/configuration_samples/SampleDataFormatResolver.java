@@ -37,23 +37,23 @@ import org.apache.camel.spi.DataFormatResolver;
 @CamelContextInjectable
 public class SampleDataFormatResolver implements DataFormatResolver {
 
-    /**
-     * @see org.apache.camel.spi.DataFormatResolver#resolveDataFormat(java.lang.String,
-     *      org.apache.camel.CamelContext)
-     */
-    @Override
-    public DataFormat resolveDataFormat(final String name,
-            final CamelContext context) {
-        return null;
-    }
+	/**
+	 * @see org.apache.camel.spi.DataFormatResolver#resolveDataFormat(java.lang.String,
+	 *      org.apache.camel.CamelContext)
+	 */
+	@Override
+	public DataFormat resolveDataFormat(final String name,
+	        final CamelContext context) {
+		return null;
+	}
 
-    /**
-     * @see org.apache.camel.spi.DataFormatResolver#resolveDataFormatDefinition(java.lang.String,
-     *      org.apache.camel.CamelContext)
-     */
-    @Override
-    public DataFormatDefinition resolveDataFormatDefinition(final String name,
-            final CamelContext context) {
-        return null;
-    }
+	/**
+	 * @see org.apache.camel.spi.DataFormatResolver#resolveDataFormatDefinition(java.lang.String,
+	 *      org.apache.camel.CamelContext)
+	 */
+	@Override
+	public DataFormatDefinition resolveDataFormatDefinition(final String name,
+	        final CamelContext context) {
+		return null;
+	}
 }

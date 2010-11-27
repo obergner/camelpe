@@ -34,6 +34,6 @@ import javax.inject.Named;
 @RequestScoped
 public class ExplicitlyNamedRequestScopedBean {
 
-    public static final String NAME = "explicitlyNamedRequestScopedBean";
+	public static final String NAME = "explicitlyNamedRequestScopedBean";
 
 }

@@ -35,10 +35,10 @@ import org.apache.camel.ProducerTemplate;
 @Named(BeanHavingEndpointInjectAnnotatedField.NAME)
 public class BeanHavingEndpointInjectAnnotatedField {
 
-    public static final String NAME = "beanHavingEndpointInjectAnnotatedField";
+	public static final String NAME = "beanHavingEndpointInjectAnnotatedField";
 
-    public static final String ENDPOINT_URI = "mock://endpointInjectEndpoint";
+	public static final String ENDPOINT_URI = "mock://endpointInjectEndpoint";
 
-    @EndpointInject(uri = BeanHavingEndpointInjectAnnotatedField.ENDPOINT_URI)
-    public ProducerTemplate producerTemplate;
+	@EndpointInject(uri = BeanHavingEndpointInjectAnnotatedField.ENDPOINT_URI)
+	public ProducerTemplate producerTemplate;
 }

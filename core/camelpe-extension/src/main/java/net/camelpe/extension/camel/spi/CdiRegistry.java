@@ -43,106 +43,106 @@ import org.slf4j.LoggerFactory;
  */
 public class CdiRegistry implements Registry {
 
-    private final BeanManager delegate;
+	private final BeanManager delegate;
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-    /**
-     * @param delegate
-     * @throws IllegalArgumentException
-     */
-    public CdiRegistry(final BeanManager delegate)
-            throws IllegalArgumentException {
-        Validate.notNull(delegate, "delegate");
-        this.delegate = delegate;
-    }
+	/**
+	 * @param delegate
+	 * @throws IllegalArgumentException
+	 */
+	public CdiRegistry(final BeanManager delegate)
+	        throws IllegalArgumentException {
+		Validate.notNull(delegate, "delegate");
+		this.delegate = delegate;
+	}
 
-    /**
-     * @see org.apache.camel.spi.Registry#lookup(java.lang.String)
-     */
-    @Override
-    public Object lookup(final String name) {
-        Validate.notEmpty(name, "name");
-        getLog().trace("Looking up bean using name = [{}] in CDI registry ...",
-                name);
+	/**
+	 * @see org.apache.camel.spi.Registry#lookup(java.lang.String)
+	 */
+	@Override
+	public Object lookup(final String name) {
+		Validate.notEmpty(name, "name");
+		getLog().trace("Looking up bean using name = [{}] in CDI registry ...",
+		        name);
 
-        final Set<Bean<?>> beans = getDelegate().getBeans(name);
-        if (beans.isEmpty()) {
-            getLog().debug(
-                    "Found no bean matching name = [{}] in CDI registry.", name);
-            return null;
-        }
-        if (beans.size() > 1) {
-            throw new IllegalStateException(
-                    "Expected to find exactly one bean having name [" + name
-                            + "], but got [" + beans.size() + "]");
-        }
-        final Bean<?> bean = beans.iterator().next();
-        getLog().debug("Found bean [{}] matching name = [{}] in CDI registry.",
-                bean, name);
+		final Set<Bean<?>> beans = getDelegate().getBeans(name);
+		if (beans.isEmpty()) {
+			getLog().debug(
+			        "Found no bean matching name = [{}] in CDI registry.", name);
+			return null;
+		}
+		if (beans.size() > 1) {
+			throw new IllegalStateException(
+			        "Expected to find exactly one bean having name [" + name
+			                + "], but got [" + beans.size() + "]");
+		}
+		final Bean<?> bean = beans.iterator().next();
+		getLog().debug("Found bean [{}] matching name = [{}] in CDI registry.",
+		        bean, name);
 
-        final CreationalContext<?> creationalContext = getDelegate()
-                .createCreationalContext(null);
+		final CreationalContext<?> creationalContext = getDelegate()
+		        .createCreationalContext(null);
 
-        return getDelegate().getReference(bean, bean.getBeanClass(),
-                creationalContext);
-    }
+		return getDelegate().getReference(bean, bean.getBeanClass(),
+		        creationalContext);
+	}
 
-    /**
-     * @see org.apache.camel.spi.Registry#lookup(java.lang.String,
-     *      java.lang.Class)
-     */
-    @Override
-    public <T> T lookup(final String name, final Class<T> type) {
-        Validate.notEmpty(name, "name");
-        Validate.notNull(type, "type");
-        getLog().trace(
-                "Looking up bean using name = [{}] having expected type = [{}] in CDI registry ...",
-                name, type.getName());
+	/**
+	 * @see org.apache.camel.spi.Registry#lookup(java.lang.String,
+	 *      java.lang.Class)
+	 */
+	@Override
+	public <T> T lookup(final String name, final Class<T> type) {
+		Validate.notEmpty(name, "name");
+		Validate.notNull(type, "type");
+		getLog().trace(
+		        "Looking up bean using name = [{}] having expected type = [{}] in CDI registry ...",
+		        name, type.getName());
 
-        return type.cast(lookup(name));
-    }
+		return type.cast(lookup(name));
+	}
 
-    /**
-     * @see org.apache.camel.spi.Registry#lookupByType(java.lang.Class)
-     */
-    @Override
-    public <T> Map<String, T> lookupByType(final Class<T> type) {
-        Validate.notNull(type, "type");
-        getLog().trace(
-                "Looking up all beans having expected type = [{}] in CDI registry ...",
-                type.getName());
+	/**
+	 * @see org.apache.camel.spi.Registry#lookupByType(java.lang.Class)
+	 */
+	@Override
+	public <T> Map<String, T> lookupByType(final Class<T> type) {
+		Validate.notNull(type, "type");
+		getLog().trace(
+		        "Looking up all beans having expected type = [{}] in CDI registry ...",
+		        type.getName());
 
-        final Set<Bean<?>> beans = getDelegate().getBeans(type);
-        if (beans.isEmpty()) {
-            getLog().debug(
-                    "Found no beans having expected type = [{}] in CDI registry.",
-                    type.getName());
+		final Set<Bean<?>> beans = getDelegate().getBeans(type);
+		if (beans.isEmpty()) {
+			getLog().debug(
+			        "Found no beans having expected type = [{}] in CDI registry.",
+			        type.getName());
 
-            return Collections.emptyMap();
-        }
-        getLog().debug(
-                "Found [{}] beans having expected type = [{}] in CDI registry.",
-                Integer.valueOf(beans.size()), type.getName());
+			return Collections.emptyMap();
+		}
+		getLog().debug(
+		        "Found [{}] beans having expected type = [{}] in CDI registry.",
+		        Integer.valueOf(beans.size()), type.getName());
 
-        final Map<String, T> beansByName = new HashMap<String, T>(beans.size());
-        final CreationalContext<?> creationalContext = getDelegate()
-                .createCreationalContext(null);
-        for (final Bean<?> bean : beans) {
-            beansByName.put(
-                    bean.getName(),
-                    type.cast(getDelegate().getReference(bean, type,
-                            creationalContext)));
-        }
+		final Map<String, T> beansByName = new HashMap<String, T>(beans.size());
+		final CreationalContext<?> creationalContext = getDelegate()
+		        .createCreationalContext(null);
+		for (final Bean<?> bean : beans) {
+			beansByName.put(
+			        bean.getName(),
+			        type.cast(getDelegate().getReference(bean, type,
+			                creationalContext)));
+		}
 
-        return beansByName;
-    }
+		return beansByName;
+	}
 
-    private Logger getLog() {
-        return this.log;
-    }
+	private Logger getLog() {
+		return this.log;
+	}
 
-    private BeanManager getDelegate() {
-        return this.delegate;
-    }
+	private BeanManager getDelegate() {
+		return this.delegate;
+	}
 }
