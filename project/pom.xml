@@ -129,7 +129,7 @@
 		</deps.hibernate-validator.version>
 		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
 		<deps.weld.version>1.1.0.Beta1</deps.weld.version>
-		<deps.camel.version>2.4.0</deps.camel.version>
+		<deps.camel.version>2.5.0</deps.camel.version>
 		<deps.hornetq.version>2.1.2.Final</deps.hornetq.version>
 		<deps.netty.version>3.2.1.Final</deps.netty.version>
 		<deps.osgi.version>4.1.0</deps.osgi.version>

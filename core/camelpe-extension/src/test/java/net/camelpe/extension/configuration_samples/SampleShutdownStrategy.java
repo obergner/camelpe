@@ -133,4 +133,20 @@ public class SampleShutdownStrategy implements ShutdownStrategy {
 	public void stop() throws Exception {
 	}
 
+	/**
+	 * @see org.apache.camel.spi.ShutdownStrategy#suspend(org.apache.camel.CamelContext, java.util.List)
+	 */
+	@Override
+	public void suspend(final CamelContext context,
+	        final List<RouteStartupOrder> routes) throws Exception {
+	}
+
+	/**
+	 * @see org.apache.camel.spi.ShutdownStrategy#suspend(org.apache.camel.CamelContext, java.util.List, long, java.util.concurrent.TimeUnit)
+	 */
+	@Override
+	public void suspend(final CamelContext context,
+	        final List<RouteStartupOrder> routes, final long timeout,
+	        final TimeUnit timeUnit) throws Exception {
+	}
 }
