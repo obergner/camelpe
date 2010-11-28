@@ -3,7 +3,7 @@ CamelPE - A Portable CDI Extension for Apache Camel
 
 ## Intro
 
-CamelPE is a, as its name suggests, a [portable CDI extension](http://docs.jboss.org/weld/reference/1.1.0.Beta1/en-US/html/extend.html) for [Apache Camel](http://camel.apache.org), a lightweight routing engine written in Java. As such, CamelPE offers an alternative configuration mechanism much in the same vein Apache Camel's [Guice module](http://camel.apache.org/guice.html) replaces the default [Spring](http://www.springframework.org) DI container.
+CamelPE is, as its name suggests, a [portable CDI extension](http://docs.jboss.org/weld/reference/1.1.0.Beta1/en-US/html/extend.html) for [Apache Camel](http://camel.apache.org), a lightweight routing engine written in Java. As such, CamelPE offers an alternative configuration mechanism much in the same vein Apache Camel's [Guice module](http://camel.apache.org/guice.html) replaces the default [Spring](http://www.springframework.org) DI container.
 
 It follows that CamelPE does *not* extend Apache Camel's feature set. Instead, it strives to provide a [CDI](http://seamframework.org/Weld)-friendly way of exposing what Apache Camel already has to offer.
 
@@ -27,11 +27,11 @@ Maybe the only caveat you should be aware of is that you cannot make a `RouteBui
 
 For a brief usage example take a look [here](https://github.com/obergner/camelpe/blob/master/core/camelpe-extension/src/test/java/net/camelpe/extension/advanced_samples/AdvancedRoutes.java).
 
-## Use CamelPE to delegate discovery, instantiation, configuration and registration of TypeConverters to your CDI container
+### Use CamelPE to delegate discovery, instantiation, configuration and registration of TypeConverters to your CDI container
 
 Easy. Just annotate your TypeConverters with [`org.apache.camel.Converter`](http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/Converter) or [`org.apache.camel.FallbackConverter`](http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/FallbackConverter) and you are good to go. CamelPE will discover, instantiate and configure those just like any other CDI bean, and will take care of registering them in the `CamelContext`.
 
-You should, however, take care *not* to use Apache Camel's standard mechanism of registering packages containing TypeConverters in `META-INF/services/org/apache/camel/TypeConverter`. Otherwise, they will be registered *twice* in the CamelContext, once by CamelPE and then again by Apache Camel's [`AnnotationTypeConverterLoader`](http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/impl/converter/AnnotationTypeConverterLoader.html). CamelPE does *not* disable the latter since it is required to load the set of built-in `TypeConverters` which are essential to Apache Camel's working properly.
+You should, however, take care *not* to use Apache Camel's standard mechanism of listing packages containing TypeConverters in `META-INF/services/org/apache/camel/TypeConverter`. Otherwise, they will be registered *twice* in the CamelContext, once by CamelPE and then again by Apache Camel's [`AnnotationTypeConverterLoader`](http://camel.apache.org/maven/camel-2.2.0/camel-core/apidocs/org/apache/camel/impl/converter/AnnotationTypeConverterLoader.html). CamelPE does *not* disable the latter since it is required to load the set of built-in `TypeConverters` which are essential to Apache Camel's working properly.
 
 What may seem counterintuitive is that you have to apply org.apache.camel.Converter *twice*, once on the class level and then again on the method level. While this is strictly speaking not necessary, it is in keeping with the restrictions imposed by Apache Camel itself, and I consciously chose not to relax this requirement.
 
