@@ -35,6 +35,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>top/README.md</name>
+			<type>1</type>
+			<locationURI>CAMELPE_HOME/README.markdown</locationURI>
+		</link>
+		<link>
 			<name>poms/addons/pom.xml</name>
 			<type>1</type>
 			<locationURI>CAMELPE_HOME/addons/pom.xml</locationURI>
