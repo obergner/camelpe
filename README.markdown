@@ -35,7 +35,7 @@ You should, however, take care *not* to use Apache Camel's standard mechanism of
 
 What may seem counterintuitive is that you have to apply org.apache.camel.Converter *twice*, once on the class level and then again on the method level. While this is strictly speaking not necessary, it is in keeping with the restrictions imposed by Apache Camel itself, and I consciously chose not to relax this requirement.
 
-For a very basic usage example take a look [here](https://github.com/obergner/camelpe/blob/master/core/camelpe-extension/src/test/java/net/camelpe/extension/advanced_samples/DateToLongConverter.java).
+For a brief usage example take a look [here](https://github.com/obergner/camelpe/blob/master/core/camelpe-extension/src/test/java/net/camelpe/extension/advanced_samples/DateToLongConverter.java).
 
 ## Building
 
