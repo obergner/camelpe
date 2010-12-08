@@ -1,0 +1,86 @@
+<!--
+
+    Copyright (C) 2010.
+    Olaf Bergner.
+    Hamburg, Germany. olaf.bergner@gmx.de
+    All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an "AS IS"
+    BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+    express or implied. See the License for the specific language
+    governing permissions and limitations under the License.
+
+-->
+
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>camelpe-distribution</id>
+	<formats>
+		<format>dir</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<files>
+		<file>
+			<source>src/main/assembly/LICENSE.txt</source>
+		</file>
+		<file>
+			<source>src/main/assembly/NOTICE.txt</source>
+		</file>
+		<file>
+			<source>src/main/assembly/README.txt</source>
+		</file>
+		<file>
+			<source>src/main/assembly/slf4j-license.txt</source>
+			<outputDirectory>lib/org.slf4j/</outputDirectory>
+		</file>
+	</files>
+	<moduleSets>
+		<moduleSet>
+			<useAllReactorProjects>true</useAllReactorProjects>
+			<includes>
+				<include>net.camelpe:camelpe-api</include>
+				<include>net.camelpe:camelpe-extension</include>
+			</includes>
+			<sources>
+				<includeModuleDirectory>false</includeModuleDirectory>
+				<fileSets>
+					<fileSet>
+						<outputDirectory>src/${module.artifactId}</outputDirectory>
+						<directory>src/main/java</directory>
+					</fileSet>
+				</fileSets>
+			</sources>
+			<binaries>
+				<includeDependencies>true</includeDependencies>
+				<unpack>false</unpack>
+				<outputDirectory>dist</outputDirectory>
+				<outputFileNameMapping>${module.artifactId}-${module.version}.${module.extension}</outputFileNameMapping>
+			</binaries>
+		</moduleSet>
+	</moduleSets>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<scope>runtime</scope>
+			<unpack>false</unpack>
+			<useProjectArtifact>true</useProjectArtifact>
+			<useTransitiveDependencies>true</useTransitiveDependencies>
+			<outputFileNameMapping>${artifact.groupId}/${artifact.artifactId}-${artifact.version}.${artifact.packaging}</outputFileNameMapping>
+			<useStrictFiltering>true</useStrictFiltering>
+			<excludes>
+				<exclude>net.camelpe:*</exclude>
+				<exclude>org.apache.camel:*</exclude>
+				<exclude>org.fusesource.commonman:*</exclude>
+			</excludes>
+		</dependencySet>
+	</dependencySets>
+</assembly>

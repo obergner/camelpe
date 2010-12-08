@@ -28,7 +28,7 @@
 			<name>Apache License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
 			<comments>
-				Copyright 2006-2007 the original author or authors.
+				Copyright 2010 Olaf Bergner.
 
 				Licensed under the Apache License, Version 2.0 (the
 				"License"); you
@@ -153,6 +153,7 @@
 		<plugins.source.version>2.1.1</plugins.source.version>
 		<plugins.cobertura.version>2.4</plugins.cobertura.version>
 		<plugins.license.version>1.8.0</plugins.license.version>
+		<plugins.assembly.version>2.2</plugins.assembly.version>
 		<!-- ######################################################### -->
 		<!-- Reporting plugin versions -->
 		<!-- ######################################################### -->
@@ -203,7 +204,7 @@
 				<groupId>net.camelpe</groupId>
 				<artifactId>camelpe-extension</artifactId>
 				<version>${project.version}</version>
-				<type>pom</type>
+				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>net.camelpe</groupId>
@@ -843,6 +844,11 @@
 						</includes>
 						<excludes>
 							<exclude>target/**</exclude>
+							<exclude>**/README.txt</exclude>
+							<exclude>**/LICENSE.txt</exclude>
+							<exclude>**/NOTICE.txt</exclude>
+							<exclude>**/slf4j-license.txt</exclude>
+							<exclude>**/*.md</exclude>
 						</excludes>
 						<useDefaultExcludes>true</useDefaultExcludes>
 						<useDefaultMapping>true</useDefaultMapping>
@@ -861,6 +867,25 @@
 							<phase>verify</phase>
 							<goals>
 								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${plugins.assembly.version}</version>
+					<configuration>
+						<descriptors>
+							<descriptor>src/main/assembly/distribution.xml</descriptor>
+						</descriptors>
+					</configuration>
+					<executions>
+						<execution>
+							<id>assemble-distribution</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
 							</goals>
 						</execution>
 					</executions>
@@ -1019,6 +1044,7 @@
 		<module>../core</module>
 		<module>../addons</module>
 		<module>../sandbox</module>
+		<module>../distribution</module>
 	</modules>
 
 </project>
