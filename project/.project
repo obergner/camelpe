@@ -55,10 +55,4 @@
 			<locationURI>CAMELPE_HOME/sandbox/pom.xml</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>CAMELPE_HOME</name>
-			<value>file:/E:/Projects/CamelPE/Src/net.camelpe</value>
-		</variable>
-	</variableList>
 </projectDescription>
