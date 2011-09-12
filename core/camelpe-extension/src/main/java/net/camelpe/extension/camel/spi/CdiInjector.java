@@ -22,6 +22,7 @@ package net.camelpe.extension.camel.spi;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
@@ -136,13 +137,11 @@ public class CdiInjector implements Injector {
 
 			return null;
 		}
-		// TODO: What is the appropriate behavior if more than one matching
-		// bean is found?
 		if (beans.size() > 1) {
-			getLog().warn(
-			        "Found more than one [{}] beans having type = [{}] in BeanManager: "
-			                + "will use arbitrarily chosen bean.",
-			        Integer.valueOf(beans.size()), type.getName());
+			throw new AmbiguousResolutionException(
+			        String.format(
+			                "Found more than one bean ({}) having type = [{}] in BeanManager",
+			                beans.size(), type.getName(), getBeanManager()));
 		}
 
 		return (Bean<T>) beans.iterator().next();

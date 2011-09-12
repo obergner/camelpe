@@ -23,6 +23,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertSame;
 
+import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 
@@ -206,18 +207,9 @@ public class CdiInjectorInContainerTest {
 		        nonSingleton == newBeanInstance);
 	}
 
-	@Test
-	public void assertThatCdiInjectorCreatesAnArbitraryInstanceIfTwoMatchingBeansAreFound() {
-		final BeanTypeHavingTwoConcreteSubtypes beanInstance = classUnderTest()
-		        .newInstance(BeanTypeHavingTwoConcreteSubtypes.class);
-
-		assertNotNull(
-		        "newInstance("
-		                + BeanTypeHavingTwoConcreteSubtypes.class.getName()
-		                + ") should have created an arbitrary instance of ["
-		                + BeanNotInBeanManager.class.getName()
-		                + "] since two concrete subtypes are present in the bean manager, yet it returned null",
-		        beanInstance);
+	@Test(expected = AmbiguousResolutionException.class)
+	public void assertThatCdiInjectorThrowsAmbiguousResolutionExceptionIfTwoMatchingBeansAreFound() {
+		classUnderTest().newInstance(BeanTypeHavingTwoConcreteSubtypes.class);
 	}
 
 	@Test(expected = RuntimeCamelException.class)
