@@ -43,14 +43,14 @@ Check out the source with
 
 	$ git clone git://github.com/obergner/camelpe.git
 
-This will create a new subdirectory `camelpe` in the current directory, containing the CamelPE multi-module project. In the module `camelpe/project` you will find [`settings-sample.xml`](https://github.com/obergner/camelpe/blob/master/project/settings-sample.xml). Copy the profile `net.camelpe.profile` into Maven's user-level `settings.xml`, usually found in `~/.m2/settings.xml`. You need to do this because CamelPE does consciously *not* declare any repositories in its master pom. For an explanation for why this is usually (though not always) a bad idea look [here](http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/).
+This will create a new subdirectory `camelpe` in the current directory, containing the CamelPE multi-module project. In the toplevel module `camelpe` you will find [`settings-sample.xml`](https://github.com/obergner/camelpe/blob/master/settings-sample.xml). Copy the profile `net.camelpe.profile` into Maven's user-level `settings.xml`, usually found in `~/.m2/settings.xml`. You need to do this because CamelPE does consciously *not* declare any repositories in its master pom. For an explanation for why this is usually (though not always) a bad idea look [here](http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/).
 
 Now, after 
 
-	$ cd camelpe/project
+	$ cd camelpe/
 
 you may build CamelPE with e.g.
 
 	$ mvn -Pnet.camelpe.profile clean install
 
-and you're done. 
+and you're done. Note that CamelPE has been verified to build using Maven 3.0. Older versions are likely to work. YMMV.
