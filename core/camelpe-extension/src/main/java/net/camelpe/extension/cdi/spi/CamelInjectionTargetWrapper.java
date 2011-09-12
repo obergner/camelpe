@@ -38,7 +38,10 @@ import org.apache.commons.lang.Validate;
 
 /**
  * <p>
- * TODO: Insert short summary for CamelInjectionTargetWrapper
+ * A wrapper for {@link javax.enterprise.inject.spi.InjectionTarget <code>InjectionTarget</code>}s 
+ * that knows how to inject {@link org.apache.camel.Endpoint <code>Camel Endpoint</code>}s into
+ * fields annotated with either {@link org.apache.camel.EndpointInject <code>@EndpointInject</code>}
+ * or  {@link org.apache.camel.Produce <code>@Produce</code>}.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>

@@ -154,7 +154,7 @@
 		<plugins.plugin.version>2.9</plugins.plugin.version>
 		<plugins.source.version>2.1.2</plugins.source.version>
 		<plugins.cobertura.version>2.5.1</plugins.cobertura.version>
-		<plugins.license.version>1.8.0</plugins.license.version>
+		<plugins.license.version>1.9.0</plugins.license.version>
 		<plugins.assembly.version>2.2.1</plugins.assembly.version>
 		<!-- ######################################################### -->
 		<!-- Reporting plugin versions -->
@@ -824,10 +824,8 @@
 							<manifest>
 								<addClasspath>true</addClasspath>
 								<classpathPrefix>lib/</classpathPrefix>
-								<addDefaultSpecificationEntries>true
-								</addDefaultSpecificationEntries>
-								<addDefaultImplementationEntries>true
-								</addDefaultImplementationEntries>
+								<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							</manifest>
 						</archive>
 					</configuration>

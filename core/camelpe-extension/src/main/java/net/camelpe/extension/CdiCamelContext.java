@@ -103,13 +103,11 @@ class CdiCamelContext extends DefaultCamelContext {
 	// equals(), hashCode(), toString()
 	// -------------------------------------------------------------------------
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "CDI CamelContext [name = " + getName() + " | beanManager = "
-		        + this.beanManager.getClass().getName() + "]";
+		return "CdiCamelContext@" + this.hashCode() + "[name = " + getName()
+		        + "|version = " + getVersion() + "|status = " + getStatus()
+		        + "|beanManager = " + this.beanManager + "]";
 	}
 
 	// -------------------------------------------------------------------------

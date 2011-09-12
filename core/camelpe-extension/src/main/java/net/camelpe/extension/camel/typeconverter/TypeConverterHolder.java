@@ -27,7 +27,7 @@ import org.apache.commons.lang.Validate;
  * <p>
  * Holds a {@link TypeConverter <code>TypeConverter</code>} and additional meta
  * data as <code>fromType</code>, <code>toType</code> and whether it is a
- * <code>Fallback TypeConverter</code>, all of which is needed for registering
+ * <code>FallbackTypeConverter</code>, all of which is needed for registering
  * the encapsulated <code>TypeConverter</code> in a
  * {@link org.apache.camel.spi.TypeConverterRegistry
  * <code>TypeConverterRegistry</code>}.

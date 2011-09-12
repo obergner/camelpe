@@ -38,7 +38,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * TODO: Insert short summary for CdiInjector
+ * A custom {@link org.apache.camel.spi.Injector} that delegates lookup and instantiation of beans 
+ * to a {@link javax.enterprise.inject.spi.BeanManager}. If that fails it will fall back to
+ * instantiating a requested bean via reflection.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -77,6 +79,10 @@ public class CdiInjector implements Injector {
 			 * No matching bean found in BeanManager. Create new instance via
 			 * reflection. This instance will NOT be registered with the
 			 * BeanManager.
+			 * 
+			 * Rationale: Not all modules (jars) Camel loads components from
+			 * (e.g. TypeConverters) are bean deployments. A prime example are
+			 * jars that are part of the Camel distribution.
 			 */
 			getLog().debug(
 			        "No bean matching type = [{}] is currently registered with "

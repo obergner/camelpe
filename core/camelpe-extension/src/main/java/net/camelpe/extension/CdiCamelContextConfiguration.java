@@ -58,6 +58,26 @@ import org.slf4j.LoggerFactory;
 class CdiCamelContextConfiguration {
 
 	// -------------------------------------------------------------------------
+	// This class wrapped in a CDI bean
+	// -------------------------------------------------------------------------
+
+	static Bean<CdiCamelContextConfiguration> cdiBean(
+	        final BeanManager beanManager) {
+		final AnnotatedType<CdiCamelContextConfiguration> annotatedType = beanManager
+		        .createAnnotatedType(CdiCamelContextConfiguration.class);
+		final InjectionTarget<CdiCamelContextConfiguration> injectionTarget = beanManager
+		        .createInjectionTarget(annotatedType);
+
+		return new BeanBuilder<CdiCamelContextConfiguration>(beanManager)
+		        .name("cdiCamelContextConfiguration")
+		        .readFromType(annotatedType).scope(ApplicationScoped.class)
+		        .addQualifiers(DefaultLiteral.INSTANCE, AnyLiteral.INSTANCE)
+		        .addTypes(CdiCamelContextConfiguration.class, Object.class)
+		        .alternative(false).nullable(false)
+		        .injectionPoints(injectionTarget.getInjectionPoints()).create();
+	}
+
+	// -------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------
 
@@ -293,22 +313,21 @@ class CdiCamelContextConfiguration {
 	}
 
 	// -------------------------------------------------------------------------
-	// This class wrapped in a CDI bean
+	// equals(), hashCode(), toString()
 	// -------------------------------------------------------------------------
 
-	static Bean<CdiCamelContextConfiguration> cdiBean(
-	        final BeanManager beanManager) {
-		final AnnotatedType<CdiCamelContextConfiguration> annotatedType = beanManager
-		        .createAnnotatedType(CdiCamelContextConfiguration.class);
-		final InjectionTarget<CdiCamelContextConfiguration> injectionTarget = beanManager
-		        .createInjectionTarget(annotatedType);
-
-		return new BeanBuilder<CdiCamelContextConfiguration>(beanManager)
-		        .name("cdiCamelContextConfiguration")
-		        .readFromType(annotatedType).scope(ApplicationScoped.class)
-		        .addQualifiers(DefaultLiteral.INSTANCE, AnyLiteral.INSTANCE)
-		        .addTypes(CdiCamelContextConfiguration.class, Object.class)
-		        .alternative(false).nullable(false)
-		        .injectionPoints(injectionTarget.getInjectionPoints()).create();
+	@Override
+	public String toString() {
+		return "CdiCamelContextConfiguration@" + this.hashCode()
+		        + "[classResolver = " + this.classResolver
+		        + "|packageScanClassResolver = "
+		        + this.packageScanClassResolver + "|dataFormatResolver = "
+		        + this.dataFormatResolver + "|executorServiceStrategy = "
+		        + this.executorServiceStrategy + "|factoryFinderResolver = "
+		        + this.factoryFinderResolver + "|inflightRepository = "
+		        + this.inflightRepository + "|managementStrategy = "
+		        + this.managementStrategy + "|processorFactory = "
+		        + this.processorFactory + "|shutdownStrategy = "
+		        + this.shutdownStrategy + "]";
 	}
 }

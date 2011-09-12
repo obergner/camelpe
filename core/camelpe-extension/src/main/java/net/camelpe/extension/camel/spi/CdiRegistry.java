@@ -35,7 +35,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * TODO: Insert short summary for CdiRegistry
+ * A {@link org.apache.camel.spi.Registry <code>Camel Registry</code>} that delegates
+ * to a {@link BeanManager <code>BeanManager</code>}.
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -43,9 +44,9 @@ import org.slf4j.LoggerFactory;
  */
 public class CdiRegistry implements Registry {
 
-	private final BeanManager delegate;
-
 	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	private final BeanManager delegate;
 
 	/**
 	 * @param delegate
@@ -136,6 +137,12 @@ public class CdiRegistry implements Registry {
 		}
 
 		return beansByName;
+	}
+
+	@Override
+	public String toString() {
+		return "CdiRegistry@" + this.hashCode() + "[delegate = "
+		        + this.delegate + "]";
 	}
 
 	private Logger getLog() {

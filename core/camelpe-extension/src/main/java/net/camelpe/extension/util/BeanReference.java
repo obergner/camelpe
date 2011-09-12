@@ -31,7 +31,9 @@ import org.apache.commons.lang.Validate;
 
 /**
  * <p>
- * TODO: Insert short summary for BeanReference
+ * A small utility class that serves as a <i>handle</i> for a CDI bean deployed in a 
+ * {@link BeanManager <code>BeanManager</code>}. It simply encapsulates the logic for
+ * looking up a <strong>unique</strong> bean in a <code>BeanManager</code>. 
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
@@ -131,12 +133,9 @@ public class BeanReference<T> {
 		return true;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "BeanReference [beanManager=" + this.beanManager + ", beanType="
-		        + this.beanType + "]";
+		return "BeanReference@" + this.hashCode() + "[beanManager = "
+		        + this.beanManager + "|beanType = " + this.beanType + "]";
 	}
 }

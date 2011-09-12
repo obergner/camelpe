@@ -35,7 +35,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * TODO: Insert short summary for CdiCamelContextLifecycleAdapter
+ * Ties the lifecycle of a {@link org.apache.camel.CamelContext <code>CamelContext</code>}
+ * created by our {@link CamelExtension <code>CamelExtension</code>} to that of its 
+ * <i>Bean Deployment Archive</i>. It starts the <code>CamelContext</code> as soon as the
+ * BDA is initialized and shuts it down immediately before the BDA is discarded. 
  * </p>
  * 
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>

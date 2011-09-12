@@ -88,7 +88,8 @@ public class CdiInstanceMethodFallbackTypeConverter implements TypeConverter {
 
 	@Override
 	public String toString() {
-		return "CdiInstanceMethodFallbackTypeConverter[method = " + this.method
-		        + " | useExchange = " + this.useExchange + "]";
+		return "CdiInstanceMethodFallbackTypeConverter@" + this.hashCode()
+		        + "[method = " + this.method + "|useExchange = "
+		        + this.useExchange + "]";
 	}
 }

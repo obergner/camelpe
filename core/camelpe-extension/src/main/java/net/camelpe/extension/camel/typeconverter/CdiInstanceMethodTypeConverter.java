@@ -95,7 +95,8 @@ public class CdiInstanceMethodTypeConverter implements TypeConverter {
 
 	@Override
 	public String toString() {
-		return "CdiInstanceMethodTypeConverter[method = " + this.method
-		        + " | useExchange = " + this.useExchange + "]";
+		return "CdiInstanceMethodTypeConverter@" + this.hashCode()
+		        + "[method = " + this.method + "|useExchange = "
+		        + this.useExchange + "]";
 	}
 }

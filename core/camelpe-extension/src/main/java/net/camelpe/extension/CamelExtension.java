@@ -34,6 +34,7 @@ import net.camelpe.extension.util.BeanReference;
 
 import org.apache.camel.Converter;
 import org.apache.camel.FallbackConverter;
+import org.jboss.seam.solder.core.VersionLoggerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,6 +62,9 @@ class CamelExtension implements Extension {
 
 	void initializeCamelExtension(@Observes final BeforeBeanDiscovery bbd,
 	        final BeanManager beanManager) {
+		VersionLoggerUtil.logVersionInformation(getClass(),
+		        "CDI Camel Extension %s (build id: %s)", "net.camelpe.Version");
+
 		this.cdiCamelContextLifecycleAdapterRef = new BeanReference<CdiCamelContextLifecycleAdapter>(
 		        CdiCamelContextLifecycleAdapter.class, beanManager);
 	}
