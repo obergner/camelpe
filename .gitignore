@@ -1,4 +1,9 @@
 # Ignore the maven generated 'target' directory
-target/
+**target/
 # Ignore toplevel trac directory
-/trac/
+trac/
+# Eclipse
+.settings
+.eclipse
+.classpath
+.project

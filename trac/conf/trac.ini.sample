@@ -4,6 +4,9 @@
 max_size = 262144
 render_unsafe_content = false
 
+[authz_policy]
+# authz_file = <inherited>
+
 [browser]
 color_scale = True
 downloadable_paths = /trunk, /branches/*, /tags/*
@@ -23,9 +26,14 @@ wiki_format_messages = true
 
 [git]
 cached_repository = false
-git_bin = /usr/bin/git
+git_bin = /usr/local/git/bin/git
+git_fs_encoding = utf-8
 persistent_cache = false
 shortrev_len = 7
+trac_user_rlookup = false
+use_committer_id = true
+use_committer_time = true
+wiki_shortrev_len = 40
 
 [header_logo]
 alt = (please configure the [header_logo] section in trac.ini)
@@ -42,7 +50,7 @@ templates_dir =
 log_file = trac.log
 # log_format = <inherited>
 log_level = DEBUG
-log_type = none
+log_type = file
 
 [milestone]
 stats_provider = DefaultTicketGroupStatsProvider
@@ -53,6 +61,8 @@ enscript_path = enscript
 max_preview_size = 262144
 mime_map = text/x-dylan:dylan,text/x-idl:ice,text/x-ada:ads:adb
 php_path = php
+pygments_default_style = trac
+pygments_modes = 
 tab_width = 8
 treat_as_binary = application/octet-stream,application/pdf,application/postscript,application/rtf
 
@@ -61,8 +71,10 @@ admit_domains =
 always_notify_owner = false
 always_notify_reporter = false
 always_notify_updater = true
+email_sender = SmtpEmailSender
 ignore_domains = 
 mime_encoding = none
+sendmail_path = sendmail
 smtp_always_bcc = 
 smtp_always_cc = 
 smtp_default_domain = 
@@ -86,13 +98,14 @@ admin_trac_url = .
 descr = My example project
 footer = Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a>
 icon = common/trac.ico
-name = My Project
+name = Camel PE
 url = 
 
 [query]
 default_anonymous_query = status!=closed&cc~=$USER
 default_query = status!=closed&owner=$USER
 items_per_page = 100
+ticketlink_query = ?status=!closed
 
 [report]
 items_per_page = 100
@@ -105,25 +118,34 @@ default_log_limit = 100
 stats_provider = DefaultTicketGroupStatsProvider
 
 [search]
+# default_disabled_filters = <inherited>
 min_query_length = 3
+
+[sqlite]
+# extensions = <inherited>
 
 [svn]
 branches = trunk,branches/*
 tags = tags/*
 
 [ticket]
+commit_ticket_update_check_perms = true
+commit_ticket_update_commands.close = close closed closes fix fixed fixes
+commit_ticket_update_commands.refs = addresses re references refs see
+commit_ticket_update_envelope = 
+commit_ticket_update_notify = true
 default_cc = 
-default_component = 
+default_component = project
 default_description = 
 default_keywords = 
-default_milestone = 
-default_owner = 
+default_milestone = CamelPE 0.1
+default_owner = obergner
 default_priority = major
 default_resolution = fixed
 default_severity = 
 default_summary = 
 default_type = defect
-default_version = 
+default_version = 0.1
 max_comment_size = 262144
 max_description_size = 262144
 preserve_newlines = default
@@ -141,8 +163,11 @@ newticket_formatter = oneliner
 ticket_show_details = false
 
 [trac]
+auth_cookie_lifetime = 0
+auth_cookie_path = 
 authz_file = 
 authz_module_name = 
+auto_preview_timeout = 2.0
 auto_reload = False
 backup_dir = db
 base_url = 
@@ -150,6 +175,9 @@ check_auth_ip = false
 database = sqlite:db/trac.db
 debug_sql = False
 default_charset = iso-8859-15
+default_handler = WikiModule
+default_timezone = 
+genshi_cache_size = 128
 htdocs_location = 
 ignore_auth_case = false
 mainnav = wiki,timeline,roadmap,browser,tickets,newticket,search
@@ -159,8 +187,11 @@ never_obfuscate_mailto = false
 permission_policies = DefaultPermissionPolicy, LegacyAttachmentPolicy
 permission_store = DefaultPermissionStore
 pg_dump_path = pg_dump
-repository_dir = 
-repository_type = svn
+repository_dir = /Volumes/Projects/CamelPE/Src/net.camelpe.project/.git
+repository_sync_per_request = (default)
+repository_type = git
+# request_filters = <inherited>
+resizable_textareas = true
 secure_cookies = False
 show_email_addresses = false
 show_ip_addresses = false
@@ -173,3 +204,6 @@ max_size = 262144
 render_unsafe_content = false
 split_page_names = false
 
+[components]
+tracext.git.* = enabled
+tracrpc.* = enabled
