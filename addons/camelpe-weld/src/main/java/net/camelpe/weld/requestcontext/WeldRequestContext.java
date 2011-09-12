@@ -95,7 +95,7 @@ public final class WeldRequestContext {
 
 	private static WeldRequestContext newRequestContext() {
 		final String id = "urn:weld-request-context:tid-"
-		        + Thread.currentThread().getId() + "@" + UUID.randomUUID();
+				+ Thread.currentThread().getId() + "@" + UUID.randomUUID();
 		final BeanStore beanStore = new HashMapBeanStore();
 
 		return new WeldRequestContext(id, beanStore);
@@ -127,29 +127,29 @@ public final class WeldRequestContext {
 	private void beginInternal() throws IllegalStateException {
 		if (isActiveInternal()) {
 			throw new IllegalStateException(
-			        "There is already a Weld RequestContext active on thread [ID = "
-			                + Thread.currentThread().getId() + " | Name = "
-			                + Thread.currentThread().getName() + "]");
+					"There is already a Weld RequestContext active on thread [ID = "
+							+ Thread.currentThread().getId() + " | Name = "
+							+ Thread.currentThread().getName() + "]");
 		}
 		// this.lifecycle.beginRequest(this.id, this.beanStore);
 		this.log.trace(
-		        ">>>>> Weld RequestContext [ID = {}] started on Thread [ID = {} | Name = {}]",
-		        new Object[] { this.id, Thread.currentThread().getId(),
-		                Thread.currentThread().getName() });
+				">>>>> Weld RequestContext [ID = {}] started on Thread [ID = {} | Name = {}]",
+				new Object[] { this.id, Thread.currentThread().getId(),
+						Thread.currentThread().getName() });
 	}
 
 	private void endInternal() throws IllegalStateException {
 		if (!isActiveInternal()) {
 			throw new IllegalStateException(
-			        "There is no active Weld RequestContext on thread [ID = "
-			                + Thread.currentThread().getId() + " | Name = "
-			                + Thread.currentThread().getName() + "]");
+					"There is no active Weld RequestContext on thread [ID = "
+							+ Thread.currentThread().getId() + " | Name = "
+							+ Thread.currentThread().getName() + "]");
 		}
 		// this.lifecycle.endRequest(this.id, this.beanStore);
 		this.log.trace(
-		        "<<<<< Weld RequestContext [ID = {}] terminated on Thread [ID = {} | Name = {}]",
-		        new Object[] { this.id, Thread.currentThread().getId(),
-		                Thread.currentThread().getName() });
+				"<<<<< Weld RequestContext [ID = {}] terminated on Thread [ID = {} | Name = {}]",
+				new Object[] { this.id, Thread.currentThread().getId(),
+						Thread.currentThread().getName() });
 	}
 
 	private boolean isActiveInternal() {

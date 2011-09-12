@@ -1,0 +1,1113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.camelpe</groupId>
+	<artifactId>camelpe-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>0.1-SNAPSHOT</version>
+	<name><![CDATA[Camel Portable Extension :: Parent]]></name>
+
+	<url>http://github.com/obergner/camelpe</url>
+
+	<description><![CDATA[Camel PE - A portable CDI extension for Apache Camel]]></description>
+
+	<developers>
+		<developer>
+			<id>obergner</id>
+			<name>Olaf Bergner</name>
+			<email>olaf.bergner AT gmx.de</email>
+			<roles>
+				<role>Project Admin</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>0</timezone>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<comments>
+				Copyright 2010 Olaf Bergner.
+
+				Licensed under the Apache License, Version 2.0 (the
+				"License"); you
+				may not use this file except in
+				compliance with the License. You may
+				obtain a copy of
+				the License at
+
+				http://www.apache.org/licenses/LICENSE-2.0
+
+				Unless required by
+				applicable law or agreed to in
+				writing, software distributed under
+				the License is
+				distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+				CONDITIONS OF ANY KIND, either express or implied. See
+				the License
+				for the specific language governing
+				permissions and limitations under
+				the License.
+			</comments>
+		</license>
+	</licenses>
+
+	<!-- =================================================== -->
+	<!-- SCM section -->
+	<!-- =================================================== -->
+
+	<scm>
+		<connection>scm:git:git://github.com/obergner/camelpe.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:obergner/camelpe.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/obergner/camelpe</url>
+	</scm>
+
+	<!-- =================================================== -->
+	<!-- Distribution management -->
+	<!-- =================================================== -->
+
+	<distributionManagement>
+		<site>
+			<id>net.camelpe.website</id>
+			<url>https://github.com/obergner/camelpe</url>
+		</site>
+		<repository>
+			<id>com.obergner.localDistributionRepository
+			</id>
+			<name>CamelPE's' Local Distribution Repository</name>
+			<url>file:/E:/Var/Data/Maven2/Repository/</url>
+		</repository>
+	</distributionManagement>
+
+	<!-- =================================================== -->
+	<!-- Continuous integration management -->
+	<!-- =================================================== -->
+
+	<ciManagement>
+		<system>hudson</system>
+		<url>http://localhost:7777/hudson/job/CamelPE/</url>
+	</ciManagement>
+	
+	<!-- =================================================== -->
+	<!-- Project modules -->
+	<!-- =================================================== -->
+
+	<modules>
+		<module>api</module>
+		<module>impl</module>
+		<module>addons</module>
+	</modules>
+
+	<!-- =================================================== -->
+	<!-- Global properties -->
+	<!-- =================================================== -->
+
+	<properties>
+		<!-- Make the build platform independent: http://maven.apache.org/general.html#encoding-warning -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- javac settings -->
+		<compiler.source>1.6</compiler.source>
+		<compiler.target>1.6</compiler.target>
+		<compiler.verbose>true</compiler.verbose>
+		<compiler.debug>true</compiler.debug>
+		<compiler.showWarnings>true</compiler.showWarnings>
+		<compiler.showDeprecation>true</compiler.showDeprecation>
+		<!-- ######################################################### -->
+		<!-- Dependency versions -->
+		<!-- ######################################################### -->
+		<!-- Standard javax apis -->
+		<deps.javax-inject.version>1</deps.javax-inject.version>
+		<deps.cdi-api.version>1.0-SP4</deps.cdi-api.version>
+		<deps.ejb-api.version>3.1.0</deps.ejb-api.version>
+		<deps.interceptor-api.version>1.1</deps.interceptor-api.version>
+		<deps.jta.version>1.1</deps.jta.version>
+		<deps.jms.version>1.1</deps.jms.version>
+		<deps.jsr250-api.version>1.0</deps.jsr250-api.version>
+		<deps.servlet-api.version>2.5</deps.servlet-api.version>
+		<deps.validation-api.version>1.0.0.GA</deps.validation-api.version>
+		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
+		<deps.el-api.version>2.2</deps.el-api.version>
+		<!-- Proprietary -->
+		<deps.slf4j.version>1.6.2</deps.slf4j.version>
+		<deps.log4j.version>1.2.16</deps.log4j.version>
+		<deps.spring.version>3.0.5.RELEASE</deps.spring.version>
+		<!-- We use Hibernate Validator 4.1.0.Final because its pom correctly registers 
+			the dependencies on jaxb in scope 'provided' instead of 'runtime'. -->
+		<deps.hibernate-validator.version>4.1.0.Final</deps.hibernate-validator.version>
+		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
+		<deps.weld.version>1.1.2.Final</deps.weld.version>
+		<deps.seam-solder.version>3.0.0.Final</deps.seam-solder.version>
+		<deps.camel.version>2.8.0</deps.camel.version>
+		<deps.hornetq.version>2.2.7.Final</deps.hornetq.version>
+		<deps.jboss-vfs.version>3.0.1.GA</deps.jboss-vfs.version>
+		<deps.netty.version>3.2.5.Final</deps.netty.version>
+		<deps.osgi.version>4.1.0</deps.osgi.version>
+		<deps.google-guava.version>10.0-rc1</deps.google-guava.version>
+		<!-- Testing -->
+		<deps.junit.version>4.9</deps.junit.version>
+		<deps.arquillian.version>1.0.0.Alpha5</deps.arquillian.version>
+		<deps.easymock.version>3.0</deps.easymock.version>
+		<!-- ######################################################### -->
+		<!-- Build plugin versions -->
+		<!-- ######################################################### -->
+		<plugins.compiler.version>2.3.2</plugins.compiler.version>
+		<plugins.clean.version>2.4.1</plugins.clean.version>
+		<plugins.deploy.version>2.7</plugins.deploy.version>
+		<plugins.install.version>2.3.1</plugins.install.version>
+		<plugins.resources.version>2.5</plugins.resources.version>
+		<plugins.surefire.version>2.9</plugins.surefire.version>
+		<plugins.jar.version>2.3.2</plugins.jar.version>
+		<plugins.dependency.version>2.3</plugins.dependency.version>
+		<plugins.plugin.version>2.9</plugins.plugin.version>
+		<plugins.source.version>2.1.2</plugins.source.version>
+		<plugins.cobertura.version>2.5.1</plugins.cobertura.version>
+		<plugins.license.version>1.9.0</plugins.license.version>
+		<plugins.assembly.version>2.2.1</plugins.assembly.version>
+		<!-- ######################################################### -->
+		<!-- Reporting plugin versions -->
+		<!-- ######################################################### -->
+		<!-- This version works only under Maven 2.x, NOT under Maven 3.x. See 
+			Ticket #33. -->
+		<plugins.site.version>2.1.1</plugins.site.version>
+		<plugins.javadoc.version>2.8</plugins.javadoc.version>
+		<plugins.surefire-reports.version>2.9</plugins.surefire-reports.version>
+		<plugins.pmd.version>2.5</plugins.pmd.version>
+		<!-- We cannot upgrade to 2.2 because of http://jira.codehaus.org/browse/MPIR-150 -->
+		<plugins.project-info-reports.version>2.0.1</plugins.project-info-reports.version>
+	</properties>
+
+	<!-- =================================================== -->
+	<!-- Project Dependencies -->
+	<!-- =================================================== -->
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- =========================================== -->
+			<!-- Application modules -->
+			<!-- =========================================== -->
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-impl</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-addons</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-api</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-extension</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-weld</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-weld-sandbox</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- =========================================== -->
+			<!-- Standard Javax APIs -->
+			<!-- =========================================== -->
+			<!-- JSR 330: @Inject etc -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${deps.javax-inject.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- JSR 250 Annotations: @Resource etc -->
+			<dependency>
+				<groupId>javax.annotation</groupId>
+				<artifactId>jsr250-api</artifactId>
+				<version>${deps.jsr250-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- JSR 299/CDI etc -->
+			<dependency>
+				<groupId>javax.enterprise</groupId>
+				<artifactId>cdi-api</artifactId>
+				<version>${deps.cdi-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Javax Interceptor API - TODO: Replace with standard javax.interceptor -->
+			<dependency>
+				<groupId>org.jboss.interceptor</groupId>
+				<artifactId>jboss-interceptor-api</artifactId>
+				<version>${deps.interceptor-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Javax Transaction API -->
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+				<version>${deps.jta.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Javax JMS API -->
+			<dependency>
+				<groupId>javax.jms</groupId>
+				<artifactId>jms</artifactId>
+				<version>${deps.jms.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Servlet API -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${deps.servlet-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- EJB 3.1 API - TODO: Replace with standard javax.ejb -->
+			<dependency>
+				<groupId>org.jboss.ejb3</groupId>
+				<artifactId>jboss-ejb3-api</artifactId>
+				<version>${deps.ejb-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>jbossws</groupId>
+						<artifactId>jboss-jaxrpc</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jboss.javaee</groupId>
+						<artifactId>jboss-transaction-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>jboss.jbossws</groupId>
+						<artifactId>jboss-jaxrpc</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- Bean Validation API -->
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${deps.validation-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- J2EE Management Specification -->
+			<dependency>
+				<groupId>org.apache.geronimo.specs</groupId>
+				<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
+				<version>1.0.1</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Java Server Faces -->
+			<dependency>
+				<groupId>javax.faces</groupId>
+				<artifactId>jsf-api</artifactId>
+				<version>${deps.jsf-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Expression Language -->
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>el-api</artifactId>
+				<version>${deps.el-api.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- =========================================== -->
+			<!-- Implementations of standard javax APIs -->
+			<!-- =========================================== -->
+			<!-- Hibernate Bean Validation Implementation -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${deps.hibernate-validator.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+				<exclusions>
+					<!-- We want slf4j in 'provided' scope since it is one of the libraries 
+						that are shared between different JEE modules in our final war. If we wouldn't 
+						exclude it here, it would end up in scope 'runtime' and thus would be automatically 
+						included in every JEE module we build, not only in the final ear. -->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>javax.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>${deps.jsf-ri.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- =========================================== -->
+			<!-- Proprietary -->
+			<!-- =========================================== -->
+			<!-- Apache -->
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.4</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${deps.log4j.version}</version>
+				<type>jar</type>
+				<optional>true</optional>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.jms</groupId>
+						<artifactId>jms</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.mail</groupId>
+						<artifactId>mail</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.activation</groupId>
+						<artifactId>activation</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.sun.jdmk</groupId>
+						<artifactId>jmxtools</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.sun.jmx</groupId>
+						<artifactId>jmxri</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>logkit</groupId>
+						<artifactId>logkit</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>avalon-framework</groupId>
+						<artifactId>avalon-framework</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.fusesource.commonman</groupId>
+				<artifactId>commons-management</artifactId>
+				<version>1.0</version>
+				<type>jar</type>
+			</dependency>
+			<!-- Apache Camel -->
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-core</artifactId>
+				<version>${deps.camel.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>${deps.osgi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-jms</artifactId>
+				<version>${deps.camel.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<!-- We use the standard javax.jms-1.1 -->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-jms_1.1_spec</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-spring</artifactId>
+				<version>${deps.camel.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-test</artifactId>
+				<version>${deps.camel.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- JBoss Weld - CDI RI -->
+			<dependency>
+				<groupId>org.jboss.weld</groupId>
+				<artifactId>weld-core-bom</artifactId>
+				<version>${deps.weld.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- Seam Solder: utilities for building CDI extensions -->
+			<dependency>
+				<groupId>org.jboss.seam.solder</groupId>
+				<artifactId>seam-solder</artifactId>
+				<version>${deps.seam-solder.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- JBoss HornetQ -->
+			<dependency>
+				<groupId>org.hornetq</groupId>
+				<artifactId>hornetq-core</artifactId>
+				<version>${deps.hornetq.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.hornetq</groupId>
+				<artifactId>hornetq-core-client</artifactId>
+				<version>${deps.hornetq.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.netty</groupId>
+				<artifactId>netty</artifactId>
+				<version>${deps.netty.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.hornetq</groupId>
+				<artifactId>hornetq-jms-client</artifactId>
+				<version>${deps.hornetq.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- JBoss VFS -->
+			<dependency>
+				<groupId>org.jboss</groupId>
+				<artifactId>jboss-vfs</artifactId>
+				<version>${deps.jboss-vfs.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Google -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${deps.google-guava.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- SLF4J -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${deps.slf4j.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${deps.slf4j.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-ext</artifactId>
+				<version>${deps.slf4j.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${deps.slf4j.version}</version>
+				<type>jar</type>
+				<optional>true</optional>
+			</dependency>
+			<!-- Spring -->
+			<dependency>
+				<groupId>aopalliance</groupId>
+				<artifactId>aopalliance</artifactId>
+				<version>1.0</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jms</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-asm</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${deps.spring.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- =========================================== -->
+			<!-- Test dependencies -->
+			<!-- =========================================== -->
+			<!-- JUnit -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${deps.junit.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Arquillian: Test framework for CDI, Glassfish, JBoss -->
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-junit</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+				<exclusions>
+					<!-- Pulled in by one of arquillian-junit's dependencies -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<!-- 
+						Pulled in by one of arquillian-junit's dependencies.
+						This is getting ridiculous.
+					 -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.container</groupId>
+				<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+				<exclusions>
+					<!-- We don't use jdk14 logging. If we wouldn't exclude it here SLF4J 
+						would keep complaining about finding two bindings - one for log4j and one 
+						for jdk14 - when running test cases. -->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.container</groupId>
+				<artifactId>arquillian-glassfish-embedded-3</artifactId>
+				<version>${deps.arquillian.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.extras</groupId>
+				<artifactId>glassfish-embedded-all</artifactId>
+				<version>${deps.glassfish-embedded-all.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
+			<!-- Easymock -->
+			<dependency>
+				<groupId>org.easymock</groupId>
+				<artifactId>easymock</artifactId>
+				<version>${deps.easymock.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- shared dependencies across modules -->
+	<dependencies>
+		<!-- =========================================== -->
+		<!-- Provided -->
+		<!-- =========================================== -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- =========================================== -->
+		<!-- Compile -->
+		<!-- =========================================== -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<!-- =========================================== -->
+		<!-- Runtime -->
+		<!-- =========================================== -->
+		<!-- =========================================== -->
+		<!-- Test -->
+		<!-- =========================================== -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<!-- =================================================== -->
+	<!-- Project Plugins -->
+	<!-- =================================================== -->
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${plugins.clean.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${plugins.resources.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${plugins.compiler.version}</version>
+					<configuration>
+						<source>${compiler.source}</source>
+						<target>${compiler.target}</target>
+						<verbose>${compiler.verbose}</verbose>
+						<debug>${compiler.debug}</debug>
+						<showWarnings>
+							${compiler.showWarnings}
+						</showWarnings>
+						<showDeprecation>
+							${compiler.showDeprecation}
+						</showDeprecation>
+					</configuration>
+				</plugin>
+				<plugin>
+					<!-- | Because of a bug that sometimes causes wrong classpath ordering, 
+						| we have to use a maven-surefire-plugin version >= 2.3.1. | See | SUREFIRE-61 -->
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${plugins.surefire.version}</version>
+					<!-- Don't fork VM in order to be able to debug test cases -->
+					<configuration>
+						<!-- forkMode>never</forkMode -->
+						<forkMode>perTest</forkMode>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>cobertura-maven-plugin</artifactId>
+					<version>${plugins.cobertura.version}</version>
+					<configuration>
+						<aggregate>true</aggregate>
+						<formats>
+							<format>html</format>
+							<format>xml</format>
+						</formats>
+						<instrumentation>
+							<includes>
+								<include>**/*.class</include>
+							</includes>
+							<excludes>
+								<exclude>**/*Test.class</exclude>
+							</excludes>
+						</instrumentation>
+					</configuration>
+					<executions>
+						<execution>
+							<id>cobertura-clean</id>
+							<phase>pre-site</phase>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>cobertura-cobertura</id>
+							<phase>site</phase>
+							<goals>
+								<goal>cobertura</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${plugins.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${plugins.jar.version}</version>
+					<configuration>
+						<archive>
+							<index>true</index>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>lib/</classpathPrefix>
+								<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${plugins.source.version}</version>
+					<executions>
+						<execution>
+							<id>create-source-jar</id>
+							<phase>package</phase>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>create-test-source-jar</id>
+							<phase>package</phase>
+							<goals>
+								<goal>test-jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${plugins.dependency.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>${plugins.license.version}</version>
+					<inherited>false</inherited>
+					<configuration>
+						<header>${basedir}/src/main/build/apache-license-2.0.txt</header>
+						<quiet>false</quiet>
+						<strictCheck>true</strictCheck>
+						<failIfMissing>true</failIfMissing>
+						<aggregate>true</aggregate>
+						<includes>
+							<include>**/src/main/**</include>
+							<include>**/src/test/**</include>
+						</includes>
+						<excludes>
+							<exclude>**/target/**</exclude>
+							<exclude>**/README.txt</exclude>
+							<exclude>**/LICENSE.txt</exclude>
+							<exclude>**/NOTICE.txt</exclude>
+							<exclude>**/slf4j-license.txt</exclude>
+							<exclude>**/*.md</exclude>
+						</excludes>
+						<useDefaultExcludes>true</useDefaultExcludes>
+						<useDefaultMapping>true</useDefaultMapping>
+						<encoding>UTF-8</encoding>
+					</configuration>
+					<executions>
+						<execution>
+							<id>format-license-headers</id>
+							<phase>process-sources</phase>
+							<goals>
+								<goal>format</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>check-license-headers</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${plugins.assembly.version}</version>
+					<configuration>
+						<descriptors>
+							<descriptor>src/main/assembly/distribution.xml</descriptor>
+						</descriptors>
+					</configuration>
+					<executions>
+						<execution>
+							<id>assemble-distribution</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${plugins.install.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${plugins.deploy.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>${plugins.site.version}</version>
+				</plugin>
+				<!-- ======================================= -->
+				<!-- Report plugins                          -->
+				<!-- ======================================= -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>${plugins.surefire-reports.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>cobertura-maven-plugin</artifactId>
+					<version>${plugins.cobertura.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${plugins.javadoc.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-pmd-plugin</artifactId>
+					<version>${plugins.pmd.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>${plugins.project-info-reports.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- =================================================== -->
+	<!-- Project Reporting -->
+	<!-- =================================================== -->
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<linksource>true</linksource>
+					<show>package</show>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<id>per-module</id>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+					<reportSet>
+						<id>aggregate</id>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+					<targetJdk>${compiler.source}</targetJdk>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+					<reportSets>
+						<reportSet>
+							<reports>
+								<report>index</report>
+								<report>dependencies</report>
+								<report>dependency-convergence</report>
+								<report>project-team</report>
+								<report>cim</report>
+								<report>license</report>
+								<report>scm</report>
+								<report>summary</report>
+							</reports>
+						</reportSet>
+					</reportSets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+</project>

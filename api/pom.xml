@@ -7,36 +7,21 @@
 
 	<parent>
 		<groupId>net.camelpe</groupId>
-		<artifactId>camelpe-addons</artifactId>
+		<artifactId>camelpe-parent</artifactId>
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
 	<groupId>net.camelpe</groupId>
-	<artifactId>camelpe-jboss</artifactId>
+	<artifactId>camelpe-api</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name><![CDATA[Camel Portable Extension :: JBoss Support]]></name>
+	<name><![CDATA[Camel Portable Extension :: API]]></name>
 
 	<dependencies>
 		<!-- Provided dependencies -->
-		<dependency>
-			<groupId>org.jboss</groupId>
-			<artifactId>jboss-vfs</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<!-- Compile time dependencies -->
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-core</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<scope>compile</scope>
-		</dependency>
 		<!-- Runtime dependencies -->
 		<!-- Test dependencies -->
 	</dependencies>

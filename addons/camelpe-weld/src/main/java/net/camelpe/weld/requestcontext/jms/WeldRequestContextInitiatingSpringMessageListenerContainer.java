@@ -36,10 +36,10 @@ import org.apache.camel.component.jms.JmsMessageListenerContainer;
  * 
  */
 public class WeldRequestContextInitiatingSpringMessageListenerContainer extends
-        JmsMessageListenerContainer {
+		JmsMessageListenerContainer {
 
 	public WeldRequestContextInitiatingSpringMessageListenerContainer(
-	        final JmsEndpoint endpoint) {
+			final JmsEndpoint endpoint) {
 		super(endpoint);
 	}
 

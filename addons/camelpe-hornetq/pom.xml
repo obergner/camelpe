@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>net.camelpe</groupId>
-		<artifactId>addons</artifactId>
+		<artifactId>camelpe-addons</artifactId>
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>net.camelpe</groupId>
 	<artifactId>camelpe-hornetq</artifactId>
 	<version>0.1-SNAPSHOT</version>
@@ -96,5 +100,14 @@
 		</dependency>
 		<!-- | Test dependencies -->
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

@@ -1,0 +1,4 @@
+# Ignore the maven generated 'target' directory
+target/
+# Ignore toplevel trac directory
+/trac/

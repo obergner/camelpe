@@ -38,7 +38,7 @@ import org.springframework.jms.listener.DefaultMessageListenerContainer;
  * 
  */
 public class WeldRequestContextInitiatingJmsConfiguration extends
-        JmsConfiguration {
+		JmsConfiguration {
 
 	// -------------------------------------------------------------------------
 	// Constructors
@@ -48,7 +48,7 @@ public class WeldRequestContextInitiatingJmsConfiguration extends
 	}
 
 	public WeldRequestContextInitiatingJmsConfiguration(
-	        final ConnectionFactory connectionFactory) {
+			final ConnectionFactory connectionFactory) {
 		super(connectionFactory);
 	}
 
@@ -57,7 +57,7 @@ public class WeldRequestContextInitiatingJmsConfiguration extends
 	// -------------------------------------------------------------------------
 
 	public void setExecutor(final Executor executor)
-	        throws IllegalArgumentException {
+			throws IllegalArgumentException {
 		Validate.notNull(executor, "executor");
 		setTaskExecutor(new TaskExecutorAdapter(executor));
 	}
@@ -71,9 +71,9 @@ public class WeldRequestContextInitiatingJmsConfiguration extends
 	 */
 	@Override
 	public DefaultMessageListenerContainer createMessageListenerContainer(
-	        final JmsEndpoint endpoint) throws Exception {
+			final JmsEndpoint endpoint) throws Exception {
 		final DefaultMessageListenerContainer container = new WeldRequestContextInitiatingSpringMessageListenerContainer(
-		        endpoint);
+				endpoint);
 		configureMessageListenerContainer(container, endpoint);
 		return container;
 	}

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><templates><template autoinsert="true" context="java" deleted="false" description="Introduce 'Protected' comment section" enabled="true" name="prsect">	// -------------------------------------------------------------------------&#13;
-	// Protected&#13;
-	// -------------------------------------------------------------------------&#13;
-    ${cursor}</template></templates>

@@ -1,15 +1,19 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>net.camelpe</groupId>
-		<artifactId>project</artifactId>
+		<artifactId>camelpe-parent</artifactId>
 		<version>0.1-SNAPSHOT</version>
-		<relativePath>../project</relativePath>
+		<relativePath>../</relativePath>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>net.camelpe</groupId>
-	<artifactId>addons</artifactId>
+	<artifactId>camelpe-addons</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -24,6 +28,8 @@
 
 	<modules>
 		<module>camelpe-weld</module>
+		<module>camelpe-jboss</module>
+		<module>camelpe-hornetq</module>
 	</modules>
 
 </project>
