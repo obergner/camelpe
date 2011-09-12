@@ -34,6 +34,10 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.ThreadPoolRejectedPolicy;
 import org.apache.camel.impl.ServiceSupport;
 import org.apache.camel.impl.ThreadPoolProfileSupport;
+import org.apache.camel.model.OptionalIdentifiedDefinition;
+import org.apache.camel.model.ProcessorDefinition;
+import org.apache.camel.model.ProcessorDefinitionHelper;
+import org.apache.camel.model.RouteDefinition;
 import org.apache.camel.spi.ExecutorServiceStrategy;
 import org.apache.camel.spi.LifecycleStrategy;
 import org.apache.camel.spi.ThreadPoolProfile;
@@ -341,7 +345,7 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 	        final String name) {
 		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 		        .newCachedThreadPool(this.threadNamePattern, name, true);
-		onThreadPoolCreated(answer);
+		onThreadPoolCreated(answer, source, null);
 
 		this.log.debug(
 		        "Created new cached thread pool for source [{}] with name [{}] -> [{}]",
@@ -371,7 +375,7 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 		final ScheduledExecutorService answer = WeldExecutorServiceStrategyUtil
 		        .newScheduledThreadPool(poolSize, this.threadNamePattern, name,
 		                true);
-		onThreadPoolCreated(answer);
+		onThreadPoolCreated(answer, source, null);
 
 		this.log.debug(
 		        "Created new scheduled thread pool for source [{}] with name [{}] and pool size [{}] -> [{}]",
@@ -390,7 +394,7 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 		        .newFixedThreadPool(poolSize, this.threadNamePattern, name,
 		                true);
-		onThreadPoolCreated(answer);
+		onThreadPoolCreated(answer, source, null);
 
 		this.log.debug(
 		        "Created new fixed thread pool for source [{}] with name [{}] and pool size [{}] -> [{}]",
@@ -408,7 +412,7 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 	        final String name) {
 		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 		        .newSingleThreadExecutor(this.threadNamePattern, name, true);
-		onThreadPoolCreated(answer);
+		onThreadPoolCreated(answer, source, null);
 
 		this.log.debug(
 		        "Created new single thread pool for source [{}] with name [{}] -> [{}]",
@@ -427,7 +431,7 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 		final ExecutorService answer = WeldExecutorServiceStrategyUtil
 		        .newThreadPool(this.threadNamePattern, name, corePoolSize,
 		                maxPoolSize);
-		onThreadPoolCreated(answer);
+		onThreadPoolCreated(answer, source, null);
 
 		this.log.debug(
 		        "Created new fixed thread pool for source [{}] with name [{}], pool size [{}] and max pool size [{}] -> [{}]",
@@ -456,7 +460,7 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 		        .newThreadPool(this.threadNamePattern, name, corePoolSize,
 		                maxPoolSize, keepAliveTime, timeUnit, maxQueueSize,
 		                rejectedExecutionHandler, daemon);
-		onThreadPoolCreated(answer);
+		onThreadPoolCreated(answer, source, null);
 
 		this.log.debug(
 		        "Created new fixed thread pool for source [{}] with name [{}], pool size [{}], max pool size [{}], "
@@ -466,6 +470,21 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 		                rejectedExecutionHandler, daemon, answer });
 
 		return answer;
+	}
+
+	@Override
+	public ExecutorService newSynchronousThreadPool(final Object source,
+	        final String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ExecutorService newThreadPool(final Object source,
+	        final String name, final int corePoolSize, final int maxPoolSize,
+	        final int maxQueueSize) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -576,9 +595,47 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 	// Internal
 	// -------------------------------------------------------------------------
 
-	private void onThreadPoolCreated(final ExecutorService executorService) {
+	private void onThreadPoolCreated(final ExecutorService executorService,
+	        final Object source, final String threadPoolProfileId) {
 		// add to internal list of thread pools
 		this.executorServices.add(executorService);
+
+		String id;
+		String sourceId = null;
+		String routeId = null;
+
+		// extract id from source
+		if (source instanceof OptionalIdentifiedDefinition) {
+			id = ((OptionalIdentifiedDefinition) source)
+			        .idOrCreate(this.camelContext.getNodeIdFactory());
+			// and let source be the short name of the pattern
+			sourceId = ((OptionalIdentifiedDefinition) source).getShortName();
+		} else if (source instanceof String) {
+			id = (String) source;
+		} else if (source != null) {
+			// fallback and use the simple class name with hashcode for the id
+			// so its unique for this given source
+			id = source.getClass().getSimpleName() + "("
+			        + ObjectHelper.getIdentityHashCode(source) + ")";
+		} else {
+			// no source, so fallback and use the simple class name from thread
+			// pool and its hashcode identity so its unique
+			id = executorService.getClass().getSimpleName() + "("
+			        + ObjectHelper.getIdentityHashCode(executorService) + ")";
+		}
+
+		// id is mandatory
+		ObjectHelper.notEmpty(id, "id for thread pool " + executorService);
+
+		// extract route id if possible
+		if (source instanceof ProcessorDefinition) {
+			final RouteDefinition route = ProcessorDefinitionHelper
+			        .getRoute((ProcessorDefinition) source);
+			if (route != null) {
+				routeId = route
+				        .idOrCreate(this.camelContext.getNodeIdFactory());
+			}
+		}
 
 		// let lifecycle strategy be notified as well which can let it be
 		// managed in JMX as well
@@ -586,7 +643,8 @@ public class WeldExecutorServiceStrategy extends ServiceSupport implements
 			final ThreadPoolExecutor threadPool = (ThreadPoolExecutor) executorService;
 			for (final LifecycleStrategy lifecycle : this.camelContext
 			        .getLifecycleStrategies()) {
-				lifecycle.onThreadPoolAdd(this.camelContext, threadPool);
+				lifecycle.onThreadPoolAdd(this.camelContext, threadPool, id,
+				        sourceId, routeId, threadPoolProfileId);
 			}
 		}
 

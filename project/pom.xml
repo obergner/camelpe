@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.camelpe</groupId>
@@ -8,7 +10,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<name><![CDATA[Camel PE]]></name>
 	<url></url>
-	<description><![CDATA[Camel PE - A CDI portable extension for Apache Camel]]></description>
+	<description><![CDATA[Camel PE - A portable CDI extension for Apache Camel]]></description>
 
 	<developers>
 		<developer>
@@ -109,7 +111,7 @@
 		<!-- ######################################################### -->
 		<!-- Standard javax apis -->
 		<deps.javax-inject.version>1</deps.javax-inject.version>
-		<deps.cdi-api.version>1.0-SP2</deps.cdi-api.version>
+		<deps.cdi-api.version>1.0-SP4</deps.cdi-api.version>
 		<deps.ejb-api.version>3.1.0</deps.ejb-api.version>
 		<deps.interceptor-api.version>1.1</deps.interceptor-api.version>
 		<deps.jta.version>1.1</deps.jta.version>
@@ -120,48 +122,47 @@
 		<deps.jsf-api.version>2.0.2-FCS</deps.jsf-api.version>
 		<deps.el-api.version>2.2</deps.el-api.version>
 		<!-- Proprietary -->
-		<deps.slf4j.version>1.5.11</deps.slf4j.version>
+		<deps.slf4j.version>1.6.2</deps.slf4j.version>
 		<deps.log4j.version>1.2.16</deps.log4j.version>
-		<deps.spring.version>3.0.2.RELEASE</deps.spring.version>
+		<deps.spring.version>3.0.5.RELEASE</deps.spring.version>
 		<!-- We use Hibernate Validator 4.1.0.Final because its pom correctly registers 
 			the dependencies on jaxb in scope 'provided' instead of 'runtime'. -->
-		<deps.hibernate-validator.version>4.1.0.Final
-		</deps.hibernate-validator.version>
+		<deps.hibernate-validator.version>4.1.0.Final</deps.hibernate-validator.version>
 		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
-		<deps.weld.version>1.1.0.Beta1</deps.weld.version>
-		<deps.camel.version>2.5.0</deps.camel.version>
-		<deps.hornetq.version>2.1.2.Final</deps.hornetq.version>
-		<deps.netty.version>3.2.1.Final</deps.netty.version>
+		<deps.weld.version>1.1.2.Final</deps.weld.version>
+		<deps.camel.version>2.8.0</deps.camel.version>
+		<deps.hornetq.version>2.2.7.Final</deps.hornetq.version>
+		<deps.netty.version>3.2.5.Final</deps.netty.version>
 		<deps.osgi.version>4.1.0</deps.osgi.version>
-		<deps.google-guava.version>r06</deps.google-guava.version>
+		<deps.google-guava.version>10.0-rc1</deps.google-guava.version>
 		<!-- Testing -->
-		<deps.junit.version>4.8.1</deps.junit.version>
-		<deps.arquillian.version>1.0.0.Alpha4</deps.arquillian.version>
-		<deps.easymock.version>2.5.2</deps.easymock.version>
+		<deps.junit.version>4.9</deps.junit.version>
+		<deps.arquillian.version>1.0.0.Alpha5</deps.arquillian.version>
+		<deps.easymock.version>3.0</deps.easymock.version>
 		<!-- ######################################################### -->
 		<!-- Build plugin versions -->
 		<!-- ######################################################### -->
 		<plugins.compiler.version>2.3.2</plugins.compiler.version>
 		<plugins.clean.version>2.4.1</plugins.clean.version>
-		<plugins.deploy.version>2.5</plugins.deploy.version>
+		<plugins.deploy.version>2.7</plugins.deploy.version>
 		<plugins.install.version>2.3.1</plugins.install.version>
-		<plugins.resources.version>2.4.3</plugins.resources.version>
-		<plugins.surefire.version>2.6</plugins.surefire.version>
-		<plugins.jar.version>2.3.1</plugins.jar.version>
-		<plugins.dependency.version>2.1</plugins.dependency.version>
-		<plugins.plugin.version>2.5.1</plugins.plugin.version>
-		<plugins.source.version>2.1.1</plugins.source.version>
-		<plugins.cobertura.version>2.4</plugins.cobertura.version>
+		<plugins.resources.version>2.5</plugins.resources.version>
+		<plugins.surefire.version>2.9</plugins.surefire.version>
+		<plugins.jar.version>2.3.2</plugins.jar.version>
+		<plugins.dependency.version>2.3</plugins.dependency.version>
+		<plugins.plugin.version>2.9</plugins.plugin.version>
+		<plugins.source.version>2.1.2</plugins.source.version>
+		<plugins.cobertura.version>2.5.1</plugins.cobertura.version>
 		<plugins.license.version>1.8.0</plugins.license.version>
-		<plugins.assembly.version>2.2</plugins.assembly.version>
+		<plugins.assembly.version>2.2.1</plugins.assembly.version>
 		<!-- ######################################################### -->
 		<!-- Reporting plugin versions -->
 		<!-- ######################################################### -->
 		<!-- This version works only under Maven 2.x, NOT under Maven 3.x. See 
 			Ticket #33. -->
 		<plugins.site.version>2.1.1</plugins.site.version>
-		<plugins.javadoc.version>2.7</plugins.javadoc.version>
-		<plugins.surefire-reports.version>2.6</plugins.surefire-reports.version>
+		<plugins.javadoc.version>2.8</plugins.javadoc.version>
+		<plugins.surefire-reports.version>2.9</plugins.surefire-reports.version>
 		<plugins.pmd.version>2.5</plugins.pmd.version>
 		<!-- We cannot upgrade to 2.2 because of http://jira.codehaus.org/browse/MPIR-150 -->
 		<plugins.project-info-reports.version>2.0.1</plugins.project-info-reports.version>
@@ -509,6 +510,12 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${deps.slf4j.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-ext</artifactId>
 				<version>${deps.slf4j.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -1022,12 +1029,11 @@
 						<reports>
 							<report>index</report>
 							<report>dependencies</report>
+							<report>dependency-convergence</report>
 							<report>project-team</report>
 							<report>cim</report>
 							<report>license</report>
 							<report>scm</report>
-							<report>plugin-management</report>
-							<report>plugins</report>
 							<report>summary</report>
 						</reports>
 					</reportSet>

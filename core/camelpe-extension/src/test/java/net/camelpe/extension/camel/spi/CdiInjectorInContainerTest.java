@@ -37,8 +37,6 @@ import net.camelpe.extension.camel.spi.beans.injector.SingletonScopedBean;
 
 import org.apache.camel.RuntimeCamelException;
 import org.jboss.arquillian.api.Deployment;
-import org.jboss.arquillian.api.Run;
-import org.jboss.arquillian.api.RunModeType;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -55,7 +53,6 @@ import org.junit.runner.RunWith;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  */
 @RunWith(Arquillian.class)
-@Run(RunModeType.IN_CONTAINER)
 public class CdiInjectorInContainerTest {
 
 	// ------------------------------------------------------------------------
@@ -69,7 +66,7 @@ public class CdiInjectorInContainerTest {
 	// Test fixture
 	// -------------------------------------------------------------------------
 
-	@Deployment
+	@Deployment(testable = true)
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap
 		        .create(JavaArchive.class, "test.jar")
@@ -79,7 +76,8 @@ public class CdiInjectorInContainerTest {
 		                BeanHavingPostConstructAnnotatedMethod.class,
 		                SingletonScopedBean.class,
 		                BeanTypeHavingTwoConcreteSubtypes.class)
-		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		        .addAsManifestResource(
+		                new ByteArrayAsset("<beans/>".getBytes()),
 		                ArchivePaths.create("beans.xml"));
 
 		return testModule;

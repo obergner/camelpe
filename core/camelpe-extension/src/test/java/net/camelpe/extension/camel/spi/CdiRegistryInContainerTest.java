@@ -33,8 +33,6 @@ import net.camelpe.extension.camel.spi.beans.registry.ExplicitlyNamedApplication
 import net.camelpe.extension.camel.spi.beans.registry.ExplicitlyNamedRequestScopedBean;
 
 import org.jboss.arquillian.api.Deployment;
-import org.jboss.arquillian.api.Run;
-import org.jboss.arquillian.api.RunModeType;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -51,7 +49,6 @@ import org.junit.runner.RunWith;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  */
 @RunWith(Arquillian.class)
-@Run(RunModeType.IN_CONTAINER)
 public class CdiRegistryInContainerTest {
 
 	// ------------------------------------------------------------------------
@@ -64,13 +61,14 @@ public class CdiRegistryInContainerTest {
 	// Test fixture
 	// -------------------------------------------------------------------------
 
-	@Deployment
+	@Deployment(testable = true)
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap
 		        .create(JavaArchive.class, "test.jar")
 		        .addPackages(false,
 		                ExplicitlyNamedApplicationScopedBean.class.getPackage())
-		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		        .addAsManifestResource(
+		                new ByteArrayAsset("<beans/>".getBytes()),
 		                ArchivePaths.create("beans.xml"));
 
 		return testModule;

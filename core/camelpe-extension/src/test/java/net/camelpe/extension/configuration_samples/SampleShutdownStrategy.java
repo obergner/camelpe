@@ -149,4 +149,12 @@ public class SampleShutdownStrategy implements ShutdownStrategy {
 	        final List<RouteStartupOrder> routes, final long timeout,
 	        final TimeUnit timeUnit) throws Exception {
 	}
+
+	@Override
+	public boolean shutdown(final CamelContext context,
+	        final RouteStartupOrder route, final long timeout,
+	        final TimeUnit timeUnit, final boolean abortAfterTimeout)
+	        throws Exception {
+		return false;
+	}
 }

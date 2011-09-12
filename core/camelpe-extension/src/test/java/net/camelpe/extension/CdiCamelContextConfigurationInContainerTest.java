@@ -44,8 +44,6 @@ import org.apache.camel.spi.ProcessorFactory;
 import org.apache.camel.spi.ShutdownStrategy;
 import org.easymock.Capture;
 import org.jboss.arquillian.api.Deployment;
-import org.jboss.arquillian.api.Run;
-import org.jboss.arquillian.api.RunModeType;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -64,7 +62,6 @@ import org.junit.runner.RunWith;
  * 
  */
 @RunWith(Arquillian.class)
-@Run(RunModeType.IN_CONTAINER)
 public class CdiCamelContextConfigurationInContainerTest {
 
 	// -------------------------------------------------------------------------
@@ -118,13 +115,14 @@ public class CdiCamelContextConfigurationInContainerTest {
 	// Test fixture
 	// -------------------------------------------------------------------------
 
-	@Deployment
+	@Deployment(testable = true)
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap
 		        .create(JavaArchive.class, "test.jar")
 		        .addClass(CdiCamelContextConfiguration.class)
 		        .addPackages(false, SampleClassResolver.class.getPackage())
-		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		        .addAsManifestResource(
+		                new ByteArrayAsset("<beans/>".getBytes()),
 		                ArchivePaths.create("beans.xml"));
 
 		return testModule;

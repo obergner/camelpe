@@ -21,13 +21,11 @@ package net.camelpe.weld.requestcontext;
 
 import java.util.UUID;
 
-import org.jboss.weld.Container;
-import org.jboss.weld.bootstrap.api.Lifecycle;
-import org.jboss.weld.context.ContextLifecycle;
-import org.jboss.weld.context.api.BeanStore;
+import org.jboss.weld.context.beanstore.BeanStore;
 import org.jboss.weld.context.beanstore.HashMapBeanStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.Lifecycle;
 
 /**
  * <p>
@@ -99,10 +97,8 @@ public final class WeldRequestContext {
 		final String id = "urn:weld-request-context:tid-"
 		        + Thread.currentThread().getId() + "@" + UUID.randomUUID();
 		final BeanStore beanStore = new HashMapBeanStore();
-		final Lifecycle lifecycle = Container.instance().services()
-		        .get(ContextLifecycle.class);
 
-		return new WeldRequestContext(id, beanStore, lifecycle);
+		return new WeldRequestContext(id, beanStore);
 	}
 
 	// -------------------------------------------------------------------------
@@ -115,17 +111,13 @@ public final class WeldRequestContext {
 
 	private final BeanStore beanStore;
 
-	private final Lifecycle lifecycle;
-
 	// -------------------------------------------------------------------------
 	// Constructors
 	// -------------------------------------------------------------------------
 
-	private WeldRequestContext(final String id, final BeanStore beanStore,
-	        final Lifecycle lifecycle) {
+	private WeldRequestContext(final String id, final BeanStore beanStore) {
 		this.id = id;
 		this.beanStore = beanStore;
-		this.lifecycle = lifecycle;
 	}
 
 	// -------------------------------------------------------------------------
@@ -139,7 +131,7 @@ public final class WeldRequestContext {
 			                + Thread.currentThread().getId() + " | Name = "
 			                + Thread.currentThread().getName() + "]");
 		}
-		this.lifecycle.beginRequest(this.id, this.beanStore);
+		// this.lifecycle.beginRequest(this.id, this.beanStore);
 		this.log.trace(
 		        ">>>>> Weld RequestContext [ID = {}] started on Thread [ID = {} | Name = {}]",
 		        new Object[] { this.id, Thread.currentThread().getId(),
@@ -153,7 +145,7 @@ public final class WeldRequestContext {
 			                + Thread.currentThread().getId() + " | Name = "
 			                + Thread.currentThread().getName() + "]");
 		}
-		this.lifecycle.endRequest(this.id, this.beanStore);
+		// this.lifecycle.endRequest(this.id, this.beanStore);
 		this.log.trace(
 		        "<<<<< Weld RequestContext [ID = {}] terminated on Thread [ID = {} | Name = {}]",
 		        new Object[] { this.id, Thread.currentThread().getId(),
@@ -161,6 +153,6 @@ public final class WeldRequestContext {
 	}
 
 	private boolean isActiveInternal() {
-		return this.lifecycle.isRequestActive();
+		return true; // this.lifecycle.isRequestActive();
 	}
 }

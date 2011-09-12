@@ -23,7 +23,8 @@ import javax.jms.Session;
 
 import net.camelpe.weld.requestcontext.WeldRequestContext;
 
-import org.springframework.jms.listener.DefaultMessageListenerContainer;
+import org.apache.camel.component.jms.JmsEndpoint;
+import org.apache.camel.component.jms.JmsMessageListenerContainer;
 
 /**
  * <p>
@@ -35,7 +36,12 @@ import org.springframework.jms.listener.DefaultMessageListenerContainer;
  * 
  */
 public class WeldRequestContextInitiatingSpringMessageListenerContainer extends
-        DefaultMessageListenerContainer {
+        JmsMessageListenerContainer {
+
+	public WeldRequestContextInitiatingSpringMessageListenerContainer(
+	        final JmsEndpoint endpoint) {
+		super(endpoint);
+	}
 
 	// -------------------------------------------------------------------------
 	// Initiate new Weld RequestContext

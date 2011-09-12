@@ -47,8 +47,6 @@ import org.apache.camel.Endpoint;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.jboss.arquillian.api.Deployment;
-import org.jboss.arquillian.api.Run;
-import org.jboss.arquillian.api.RunModeType;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -66,7 +64,6 @@ import org.junit.runner.RunWith;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  */
 @RunWith(Arquillian.class)
-@Run(RunModeType.IN_CONTAINER)
 public class CamelInjectionTargetWrapperInContainerTest {
 
 	// ------------------------------------------------------------------------
@@ -120,7 +117,7 @@ public class CamelInjectionTargetWrapperInContainerTest {
 	// Test fixture
 	// -------------------------------------------------------------------------
 
-	@Deployment
+	@Deployment(testable = true)
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap
 		        .create(JavaArchive.class, "test.jar")
@@ -128,7 +125,8 @@ public class CamelInjectionTargetWrapperInContainerTest {
 		                false,
 		                BeanHavingNoEndpointInjectAnnotatedField.class
 		                        .getPackage())
-		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		        .addAsManifestResource(
+		                new ByteArrayAsset("<beans/>".getBytes()),
 		                ArchivePaths.create("beans.xml"));
 
 		return testModule;

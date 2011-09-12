@@ -246,4 +246,17 @@ public class SampleExecutorServiceStrategy implements ExecutorServiceStrategy {
 	@Override
 	public void stop() throws Exception {
 	}
+
+	@Override
+	public ExecutorService newSynchronousThreadPool(final Object source,
+	        final String name) {
+		return null;
+	}
+
+	@Override
+	public ExecutorService newThreadPool(final Object source,
+	        final String name, final int corePoolSize, final int maxPoolSize,
+	        final int maxQueueSize) {
+		return null;
+	}
 }

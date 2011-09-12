@@ -36,8 +36,6 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.TypeConverter;
 import org.apache.camel.spi.TypeConverterRegistry;
 import org.jboss.arquillian.api.Deployment;
-import org.jboss.arquillian.api.Run;
-import org.jboss.arquillian.api.RunModeType;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -55,7 +53,6 @@ import org.junit.runner.RunWith;
  * 
  */
 @RunWith(Arquillian.class)
-@Run(RunModeType.IN_CONTAINER)
 public class TypeConverterDiscoveryInContainerTest {
 
 	// ------------------------------------------------------------------------
@@ -69,14 +66,15 @@ public class TypeConverterDiscoveryInContainerTest {
 	// Test fixture
 	// -------------------------------------------------------------------------
 
-	@Deployment
+	@Deployment(testable = true)
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap
 		        .create(JavaArchive.class, "test.jar")
 		        .addPackages(false,
 		                InstanceMethodTypeConverter.class.getPackage())
-		        .addServiceProvider(Extension.class, CamelExtension.class)
-		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		        .addAsServiceProvider(Extension.class, CamelExtension.class)
+		        .addAsManifestResource(
+		                new ByteArrayAsset("<beans/>".getBytes()),
 		                ArchivePaths.create("beans.xml"));
 
 		return testModule;

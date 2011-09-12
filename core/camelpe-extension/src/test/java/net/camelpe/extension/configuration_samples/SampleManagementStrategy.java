@@ -30,6 +30,7 @@ import org.apache.camel.spi.EventFactory;
 import org.apache.camel.spi.EventNotifier;
 import org.apache.camel.spi.ManagementAgent;
 import org.apache.camel.spi.ManagementNamingStrategy;
+import org.apache.camel.spi.ManagementObjectStrategy;
 import org.apache.camel.spi.ManagementStrategy;
 import org.fusesource.commons.management.Statistic;
 import org.fusesource.commons.management.Statistic.UpdateMode;
@@ -230,5 +231,20 @@ public class SampleManagementStrategy implements ManagementStrategy {
 	 */
 	@Override
 	public void stop() throws Exception {
+	}
+
+	@Override
+	public boolean removeEventNotifier(final EventNotifier eventNotifier) {
+		return false;
+	}
+
+	@Override
+	public ManagementObjectStrategy getManagementObjectStrategy() {
+		return null;
+	}
+
+	@Override
+	public void setManagementObjectStrategy(
+	        final ManagementObjectStrategy strategy) {
 	}
 }

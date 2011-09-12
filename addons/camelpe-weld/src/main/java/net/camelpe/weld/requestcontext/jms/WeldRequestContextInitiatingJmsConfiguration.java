@@ -24,9 +24,10 @@ import java.util.concurrent.Executor;
 import javax.jms.ConnectionFactory;
 
 import org.apache.camel.component.jms.JmsConfiguration;
+import org.apache.camel.component.jms.JmsEndpoint;
 import org.apache.commons.lang.Validate;
 import org.springframework.core.task.support.TaskExecutorAdapter;
-import org.springframework.jms.listener.AbstractMessageListenerContainer;
+import org.springframework.jms.listener.DefaultMessageListenerContainer;
 
 /**
  * <p>
@@ -66,10 +67,14 @@ public class WeldRequestContextInitiatingJmsConfiguration extends
 	// -------------------------------------------------------------------------
 
 	/**
-	 * @see org.apache.camel.component.jms.JmsConfiguration#chooseMessageListenerContainerImplementation()
+	 * @see org.apache.camel.component.jms.JmsConfiguration#createMessageListenerContainer(org.apache.camel.component.jms.JmsEndpoint)
 	 */
 	@Override
-	public AbstractMessageListenerContainer chooseMessageListenerContainerImplementation() {
-		return new WeldRequestContextInitiatingSpringMessageListenerContainer();
+	public DefaultMessageListenerContainer createMessageListenerContainer(
+	        final JmsEndpoint endpoint) throws Exception {
+		final DefaultMessageListenerContainer container = new WeldRequestContextInitiatingSpringMessageListenerContainer(
+		        endpoint);
+		configureMessageListenerContainer(container, endpoint);
+		return container;
 	}
 }

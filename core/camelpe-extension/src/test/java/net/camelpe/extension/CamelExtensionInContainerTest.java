@@ -39,8 +39,6 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.jboss.arquillian.api.Deployment;
-import org.jboss.arquillian.api.Run;
-import org.jboss.arquillian.api.RunModeType;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -57,7 +55,6 @@ import org.junit.runner.RunWith;
  * @author <a href="mailto:olaf.bergner@saxsys.de">Olaf Bergner</a>
  */
 @RunWith(Arquillian.class)
-@Run(RunModeType.IN_CONTAINER)
 public class CamelExtensionInContainerTest {
 
 	// ------------------------------------------------------------------------
@@ -83,14 +80,15 @@ public class CamelExtensionInContainerTest {
 	// Test fixture
 	// -------------------------------------------------------------------------
 
-	@Deployment
+	@Deployment(testable = true)
 	public static JavaArchive createTestArchive() {
 		final JavaArchive testModule = ShrinkWrap
 		        .create(JavaArchive.class, "test.jar")
 		        .addPackages(false, SampleRoutes.class.getPackage(),
 		                AdvancedRoutes.class.getPackage())
-		        .addServiceProvider(Extension.class, CamelExtension.class)
-		        .addManifestResource(new ByteArrayAsset("<beans/>".getBytes()),
+		        .addAsServiceProvider(Extension.class, CamelExtension.class)
+		        .addAsManifestResource(
+		                new ByteArrayAsset("<beans/>".getBytes()),
 		                ArchivePaths.create("beans.xml"));
 
 		return testModule;
