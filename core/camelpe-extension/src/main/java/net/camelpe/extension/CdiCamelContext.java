@@ -19,23 +19,13 @@
 
 package net.camelpe.extension;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.ContextException;
 import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.InjectionTarget;
-import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 
 import net.camelpe.extension.camel.spi.CdiInjector;
@@ -47,6 +37,10 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.converter.DefaultTypeConverter;
 import org.apache.camel.spi.Injector;
 import org.apache.camel.spi.Registry;
+import org.jboss.seam.solder.bean.BeanBuilder;
+import org.jboss.seam.solder.bean.ContextualLifecycle;
+import org.jboss.seam.solder.literal.AnyLiteral;
+import org.jboss.seam.solder.literal.DefaultLiteral;
 
 /**
  * <p>
@@ -122,134 +116,51 @@ class CdiCamelContext extends DefaultCamelContext {
 	// This class wrapped in a CDI bean
 	// -------------------------------------------------------------------------
 
-	static class CdiBean implements Bean<CdiCamelContext> {
+	static Bean<CdiCamelContext> cdiBean(final BeanManager beanManager) {
+		final AnnotatedType<CdiCamelContext> annotatedType = beanManager
+		        .createAnnotatedType(CdiCamelContext.class);
+		final InjectionTarget<CdiCamelContext> injectionTarget = beanManager
+		        .createInjectionTarget(annotatedType);
 
-		private final InjectionTarget<CdiCamelContext> injectionTarget;
+		return new BeanBuilder<CdiCamelContext>(beanManager)
+		        .name("cdiCamelContext")
+		        .readFromType(annotatedType)
+		        .scope(ApplicationScoped.class)
+		        .addQualifiers(DefaultLiteral.INSTANCE, AnyLiteral.INSTANCE)
+		        .addTypes(CdiCamelContext.class, CamelContext.class,
+		                Object.class).alternative(false).nullable(false)
+		        .injectionPoints(injectionTarget.getInjectionPoints())
+		        .beanLifecycle(new ContextualLifecycle<CdiCamelContext>() {
 
-		/**
-		 * @param beanManager
-		 */
-		CdiBean(final BeanManager beanManager) {
-			final AnnotatedType<CdiCamelContext> annotatedType = beanManager
-			        .createAnnotatedType(CdiCamelContext.class);
-			this.injectionTarget = beanManager
-			        .createInjectionTarget(annotatedType);
-		}
+			        @Override
+			        public void destroy(
+			                final Bean<CdiCamelContext> bean,
+			                final CdiCamelContext instance,
+			                final CreationalContext<CdiCamelContext> creationalContext) {
+				        try {
+					        injectionTarget.preDestroy(instance);
+					        instance.stop();
+					        injectionTarget.dispose(instance);
+					        creationalContext.release();
+				        } catch (final Exception e) {
+					        throw new ContextException(
+					                "Failed to destroy CamelContext ["
+					                        + instance + "]: " + e.getMessage(),
+					                e);
+				        }
+			        }
 
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getBeanClass()
-		 */
-		@Override
-		public Class<?> getBeanClass() {
-			return CdiCamelContext.class;
-		}
+			        @Override
+			        public CdiCamelContext create(
+			                final Bean<CdiCamelContext> bean,
+			                final CreationalContext<CdiCamelContext> creationalContext) {
+				        final CdiCamelContext instance = injectionTarget
+				                .produce(creationalContext);
+				        injectionTarget.inject(instance, creationalContext);
+				        injectionTarget.postConstruct(instance);
 
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getInjectionPoints()
-		 */
-		@Override
-		public Set<InjectionPoint> getInjectionPoints() {
-			return Collections.emptySet();
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getName()
-		 */
-		@Override
-		public String getName() {
-			return "cdiCamelContext";
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getQualifiers()
-		 */
-		@SuppressWarnings("serial")
-		@Override
-		public Set<Annotation> getQualifiers() {
-			final Set<Annotation> qualifiers = new HashSet<Annotation>();
-			qualifiers.add(new AnnotationLiteral<Default>() {
-			});
-			qualifiers.add(new AnnotationLiteral<Any>() {
-			});
-
-			return qualifiers;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getScope()
-		 */
-		@Override
-		public Class<? extends Annotation> getScope() {
-			return ApplicationScoped.class;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getStereotypes()
-		 */
-		@Override
-		public Set<Class<? extends Annotation>> getStereotypes() {
-			return Collections.emptySet();
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getTypes()
-		 */
-		@Override
-		public Set<Type> getTypes() {
-			final Set<Type> types = new HashSet<Type>();
-			types.add(CdiCamelContext.class);
-			types.add(CamelContext.class);
-			types.add(Object.class);
-
-			return types;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#isAlternative()
-		 */
-		@Override
-		public boolean isAlternative() {
-			return false;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#isNullable()
-		 */
-		@Override
-		public boolean isNullable() {
-			return false;
-		}
-
-		/**
-		 * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
-		 */
-		@Override
-		public CdiCamelContext create(
-		        final CreationalContext<CdiCamelContext> creationalContext) {
-			final CdiCamelContext instance = this.injectionTarget
-			        .produce(creationalContext);
-			this.injectionTarget.inject(instance, creationalContext);
-			this.injectionTarget.postConstruct(instance);
-
-			return instance;
-		}
-
-		/**
-		 * @see javax.enterprise.context.spi.Contextual#destroy(java.lang.Object,
-		 *      javax.enterprise.context.spi.CreationalContext)
-		 */
-		@Override
-		public void destroy(final CdiCamelContext instance,
-		        final CreationalContext<CdiCamelContext> creationalContext) {
-			try {
-				this.injectionTarget.preDestroy(instance);
-				instance.stop();
-				this.injectionTarget.dispose(instance);
-				creationalContext.release();
-			} catch (final Exception e) {
-				throw new ContextException("Failed to destroy CamelContext ["
-				        + instance + "]: " + e.getMessage(), e);
-			}
-		}
+				        return instance;
+			        }
+		        }).create();
 	}
 }

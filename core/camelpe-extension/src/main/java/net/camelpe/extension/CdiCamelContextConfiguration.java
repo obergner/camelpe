@@ -19,24 +19,13 @@
 
 package net.camelpe.extension;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.AmbiguousResolutionException;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.InjectionTarget;
-import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 
 import net.camelpe.api.CamelContextInjectable;
@@ -51,6 +40,9 @@ import org.apache.camel.spi.ManagementStrategy;
 import org.apache.camel.spi.PackageScanClassResolver;
 import org.apache.camel.spi.ProcessorFactory;
 import org.apache.camel.spi.ShutdownStrategy;
+import org.jboss.seam.solder.bean.BeanBuilder;
+import org.jboss.seam.solder.literal.AnyLiteral;
+import org.jboss.seam.solder.literal.DefaultLiteral;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -304,131 +296,19 @@ class CdiCamelContextConfiguration {
 	// This class wrapped in a CDI bean
 	// -------------------------------------------------------------------------
 
-	static class CdiBean implements Bean<CdiCamelContextConfiguration> {
+	static Bean<CdiCamelContextConfiguration> cdiBean(
+	        final BeanManager beanManager) {
+		final AnnotatedType<CdiCamelContextConfiguration> annotatedType = beanManager
+		        .createAnnotatedType(CdiCamelContextConfiguration.class);
+		final InjectionTarget<CdiCamelContextConfiguration> injectionTarget = beanManager
+		        .createInjectionTarget(annotatedType);
 
-		private final AnnotatedType<CdiCamelContextConfiguration> configurationAnnotatedType;
-
-		private final InjectionTarget<CdiCamelContextConfiguration> configurationInjectionTarget;
-
-		/**
-		 * @param beanManager
-		 */
-		CdiBean(final BeanManager beanManager) {
-			this.configurationAnnotatedType = beanManager
-			        .createAnnotatedType(CdiCamelContextConfiguration.class);
-			this.configurationInjectionTarget = beanManager
-			        .createInjectionTarget(this.configurationAnnotatedType);
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getBeanClass()
-		 */
-		@Override
-		public Class<?> getBeanClass() {
-			return CdiCamelContextConfiguration.class;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getInjectionPoints()
-		 */
-		@Override
-		public Set<InjectionPoint> getInjectionPoints() {
-			return this.configurationInjectionTarget.getInjectionPoints();
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getName()
-		 */
-		@Override
-		public String getName() {
-			return "cdiCamelContextConfiguration";
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getQualifiers()
-		 */
-		@SuppressWarnings("serial")
-		@Override
-		public Set<Annotation> getQualifiers() {
-			final Set<Annotation> qualifiers = new HashSet<Annotation>();
-			qualifiers.add(new AnnotationLiteral<Default>() {
-			});
-			qualifiers.add(new AnnotationLiteral<Any>() {
-			});
-
-			return qualifiers;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getScope()
-		 */
-		@Override
-		public Class<? extends Annotation> getScope() {
-			return ApplicationScoped.class;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getStereotypes()
-		 */
-		@Override
-		public Set<Class<? extends Annotation>> getStereotypes() {
-			return Collections.emptySet();
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#getTypes()
-		 */
-		@Override
-		public Set<Type> getTypes() {
-			final Set<Type> types = new HashSet<Type>();
-			types.add(CdiCamelContextConfiguration.class);
-			types.add(Object.class);
-
-			return types;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#isAlternative()
-		 */
-		@Override
-		public boolean isAlternative() {
-			return false;
-		}
-
-		/**
-		 * @see javax.enterprise.inject.spi.Bean#isNullable()
-		 */
-		@Override
-		public boolean isNullable() {
-			return false;
-		}
-
-		/**
-		 * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
-		 */
-		@Override
-		public CdiCamelContextConfiguration create(
-		        final CreationalContext<CdiCamelContextConfiguration> creationalContext) {
-			final CdiCamelContextConfiguration instance = this.configurationInjectionTarget
-			        .produce(creationalContext);
-			this.configurationInjectionTarget.inject(instance,
-			        creationalContext);
-			this.configurationInjectionTarget.postConstruct(instance);
-
-			return instance;
-		}
-
-		/**
-		 * @see javax.enterprise.context.spi.Contextual#destroy(java.lang.Object,
-		 *      javax.enterprise.context.spi.CreationalContext)
-		 */
-		@Override
-		public void destroy(
-		        final CdiCamelContextConfiguration instance,
-		        final CreationalContext<CdiCamelContextConfiguration> creationalContext) {
-			this.configurationInjectionTarget.preDestroy(instance);
-			this.configurationInjectionTarget.dispose(instance);
-			creationalContext.release();
-		}
+		return new BeanBuilder<CdiCamelContextConfiguration>(beanManager)
+		        .name("cdiCamelContextConfiguration")
+		        .readFromType(annotatedType).scope(ApplicationScoped.class)
+		        .addQualifiers(DefaultLiteral.INSTANCE, AnyLiteral.INSTANCE)
+		        .addTypes(CdiCamelContextConfiguration.class, Object.class)
+		        .alternative(false).nullable(false)
+		        .injectionPoints(injectionTarget.getInjectionPoints()).create();
 	}
 }

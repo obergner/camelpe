@@ -71,9 +71,9 @@ public class BeanReference<T> {
 			        + this.beanType.getName() + "] Bean in BeanManager ["
 			        + this.beanManager + "]");
 		}
-		final Bean<T> uniqueMatchingBean = (Bean<T>) this.beanManager
+		final Bean<?> uniqueMatchingBean = this.beanManager
 		        .resolve(matchingBeans);
-		final CreationalContext<T> creationalContext = this.beanManager
+		final CreationalContext<?> creationalContext = this.beanManager
 		        .createCreationalContext(uniqueMatchingBean);
 
 		return this.beanType.cast(this.beanManager.getReference(

@@ -130,6 +130,7 @@
 		<deps.hibernate-validator.version>4.1.0.Final</deps.hibernate-validator.version>
 		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
 		<deps.weld.version>1.1.2.Final</deps.weld.version>
+		<deps.seam-solder.version>3.0.0.Final</deps.seam-solder.version>
 		<deps.camel.version>2.8.0</deps.camel.version>
 		<deps.hornetq.version>2.2.7.Final</deps.hornetq.version>
 		<deps.netty.version>3.2.5.Final</deps.netty.version>
@@ -464,6 +465,13 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!-- Seam Solder: utilities for building CDI extensions -->
+			<dependency>
+				<groupId>org.jboss.seam.solder</groupId>
+				<artifactId>seam-solder</artifactId>
+				<version>${deps.seam-solder.version}</version>
+				<type>jar</type>
+			</dependency>
 			<!-- JBoss HornetQ -->
 			<dependency>
 				<groupId>org.hornetq</groupId>
@@ -605,6 +613,21 @@
 				<version>${deps.arquillian.version}</version>
 				<scope>test</scope>
 				<type>jar</type>
+				<exclusions>
+					<!-- Pulled in by one of arquillian-junit's dependencies -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<!-- 
+						Pulled in by one of arquillian-junit's dependencies.
+						This is getting ridiculous.
+					 -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.arquillian.container</groupId>

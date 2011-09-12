@@ -88,11 +88,11 @@ class CamelExtension implements Extension {
 
 	void registerCamelExtensionBeans(@Observes final AfterBeanDiscovery abd,
 	        final BeanManager beanManager) {
-		abd.addBean(new CdiCamelContextConfiguration.CdiBean(beanManager));
-		abd.addBean(new TypeConverterDiscovery.CdiBean(beanManager));
-		abd.addBean(new RoutesDiscovery.CdiBean(beanManager));
-		abd.addBean(new CdiCamelContext.CdiBean(beanManager));
-		abd.addBean(new CdiCamelContextLifecycleAdapter.CdiBean(beanManager));
+		abd.addBean(CdiCamelContextConfiguration.cdiBean(beanManager));
+		abd.addBean(TypeConverterDiscovery.cdiBean(beanManager));
+		abd.addBean(RoutesDiscovery.cdiBean(beanManager));
+		abd.addBean(CdiCamelContext.cdiBean(beanManager));
+		abd.addBean(CdiCamelContextLifecycleAdapter.cdiBean(beanManager));
 
 		getLog().debug(
 		        "CamelExtension Beans have been registered in the BeanManager.");
