@@ -1,52 +1,129 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>net.camelpe</groupId>
-		<artifactId>project</artifactId>
+		<artifactId>camelpe-parent</artifactId>
 		<version>0.1-SNAPSHOT</version>
-		<relativePath>../project</relativePath>
+		<relativePath>../</relativePath>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.camelpe</groupId>
-	<artifactId>distribution</artifactId>
-	<version>0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
 
+	<artifactId>camelpe-distribution</artifactId>
 	<name><![CDATA[Camel Portable Extension :: Distribution]]></name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 
 	<dependencies>
-		<!-- Provided dependencies -->
-		<!-- Compile time dependencies -->
-		<!-- Runtime dependencies -->
-		<!-- ==================================================================================== -->
-		<!-- NOTE: These dependencies serve merely to ensure that the modules we are about to     -->
-		<!--       package into our distribution will actually be built BEFORE this module is     -->
-		<!--       built.                                                                         -->
-		<!-- SEE:  http://maven.apache.org/plugins/maven-assembly-plugin/faq.html#module-binaries -->
-		<!-- ==================================================================================== -->
 		<dependency>
 			<groupId>net.camelpe</groupId>
 			<artifactId>camelpe-api</artifactId>
-			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>net.camelpe</groupId>
-			<artifactId>camelpe-extension</artifactId>
-			<scope>runtime</scope>
+			<artifactId>camelpe-api</artifactId>
+			<version>${project.version}</version>
+			<classifier>sources</classifier>
+			<optional>true</optional>
 		</dependency>
-		<!-- Test dependencies -->
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-api</artifactId>
+			<version>${project.version}</version>
+			<classifier>javadoc</classifier>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-impl</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-impl</artifactId>
+			<version>${project.version}</version>
+			<classifier>sources</classifier>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-impl</artifactId>
+			<version>${project.version}</version>
+			<classifier>javadoc</classifier>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-hornetq</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-hornetq</artifactId>
+			<version>${project.version}</version>
+			<classifier>sources</classifier>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-hornetq</artifactId>
+			<version>${project.version}</version>
+			<classifier>javadoc</classifier>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-jboss</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-jboss</artifactId>
+			<version>${project.version}</version>
+			<classifier>sources</classifier>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-jboss</artifactId>
+			<version>${project.version}</version>
+			<classifier>javadoc</classifier>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-weld</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-weld</artifactId>
+			<version>${project.version}</version>
+			<classifier>sources</classifier>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.camelpe</groupId>
+			<artifactId>camelpe-weld</artifactId>
+			<version>${project.version}</version>
+			<classifier>javadoc</classifier>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<configuration>
-					<basedir>${parent.parent.basedir}</basedir>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>

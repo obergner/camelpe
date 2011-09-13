@@ -23,64 +23,142 @@
 	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
 	<id>camelpe-distribution</id>
+
 	<formats>
 		<format>dir</format>
 	</formats>
-	<includeBaseDirectory>false</includeBaseDirectory>
-	<files>
-		<file>
-			<source>src/main/assembly/LICENSE.txt</source>
-		</file>
-		<file>
-			<source>src/main/assembly/NOTICE.txt</source>
-		</file>
-		<file>
-			<source>src/main/assembly/README.txt</source>
-		</file>
-		<file>
-			<source>src/main/assembly/slf4j-license.txt</source>
-			<outputDirectory>lib/org.slf4j/</outputDirectory>
-		</file>
-	</files>
-	<moduleSets>
-		<moduleSet>
-			<useAllReactorProjects>true</useAllReactorProjects>
+
+	<baseDirectory>${project.build.finalName}</baseDirectory>
+
+	<fileSets>
+		<fileSet>
+			<directory>src/main/assembly</directory>
+			<outputDirectory>.</outputDirectory>
+			<filtered>true</filtered>
 			<includes>
-				<include>net.camelpe:camelpe-api</include>
-				<include>net.camelpe:camelpe-extension</include>
+				<include>README.txt</include>
+				<include>LICENSE.txt</include>
+				<include>NOTICE.txt</include>
+				<include>slf4j-license.txt</include>
 			</includes>
-			<sources>
-				<includeModuleDirectory>false</includeModuleDirectory>
-				<fileSets>
-					<fileSet>
-						<outputDirectory>src/${module.artifactId}</outputDirectory>
-						<directory>src/main/java</directory>
-					</fileSet>
-				</fileSets>
-			</sources>
-			<binaries>
-				<includeDependencies>true</includeDependencies>
-				<unpack>false</unpack>
-				<outputDirectory>dist</outputDirectory>
-				<outputFileNameMapping>${module.artifactId}-${module.version}.${module.extension}</outputFileNameMapping>
-			</binaries>
-		</moduleSet>
-	</moduleSets>
+		</fileSet>
+	</fileSets>
+
 	<dependencySets>
+		<!-- Add necessary binaries -->
+		<dependencySet>
+			<outputDirectory>artifacts</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
+			<includes>
+				<include>net.camelpe:*</include>
+			</includes>
+			<outputFileNameMapping>${artifact.artifactId}-${artifact.version}.${artifact.packaging}</outputFileNameMapping>
+			<useStrictFiltering>true</useStrictFiltering>
+		</dependencySet>
+      
+      	<!-- Add dependencies -->
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>
 			<scope>runtime</scope>
 			<unpack>false</unpack>
 			<useProjectArtifact>true</useProjectArtifact>
 			<useTransitiveDependencies>true</useTransitiveDependencies>
-			<outputFileNameMapping>${artifact.groupId}/${artifact.artifactId}-${artifact.version}.${artifact.packaging}</outputFileNameMapping>
-			<useStrictFiltering>true</useStrictFiltering>
 			<excludes>
 				<exclude>net.camelpe:*</exclude>
 				<exclude>org.apache.camel:*</exclude>
 				<exclude>org.fusesource.commonman:*</exclude>
 			</excludes>
+			<outputFileNameMapping>${artifact.artifactId}-${artifact.version}.${artifact.packaging}</outputFileNameMapping>
+			<useStrictFiltering>true</useStrictFiltering>
+		</dependencySet>
+		
+		<!-- JavaDoc -->
+		<dependencySet>
+			<outputDirectory>doc/api/camelpe-api</outputDirectory>
+			<unpack>true</unpack>
+			<useProjectArtifact>false</useProjectArtifact>
+			<includes>
+				<include>net.camelpe:camelpe-api:jar:javadoc</include>
+			</includes>
+			<unpackOptions>
+				<excludes>
+					<exclude>META-INF/</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>doc/api/camelpe-impl</outputDirectory>
+			<unpack>true</unpack>
+			<useProjectArtifact>false</useProjectArtifact>
+			<includes>
+				<include>net.camelpe:camelpe-impl:jar:javadoc</include>
+			</includes>
+			<unpackOptions>
+				<excludes>
+					<exclude>META-INF/</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>doc/api/camelpe-hornetq</outputDirectory>
+			<unpack>true</unpack>
+			<useProjectArtifact>false</useProjectArtifact>
+			<includes>
+				<include>net.camelpe:camelpe-hornetq:jar:javadoc</include>
+			</includes>
+			<unpackOptions>
+				<excludes>
+					<exclude>META-INF/</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>doc/api/camelpe-weld</outputDirectory>
+			<unpack>true</unpack>
+			<useProjectArtifact>false</useProjectArtifact>
+			<includes>
+				<include>net.camelpe:camelpe-weld:jar:javadoc</include>
+			</includes>
+			<unpackOptions>
+				<excludes>
+					<exclude>META-INF/</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>doc/api/camelpe-jboss</outputDirectory>
+			<unpack>true</unpack>
+			<useProjectArtifact>false</useProjectArtifact>
+			<includes>
+				<include>net.camelpe:camelpe-jboss:jar:javadoc</include>
+			</includes>
+			<unpackOptions>
+				<excludes>
+					<exclude>META-INF/</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+      
+        <!-- Source code -->
+		<dependencySet>
+			<outputDirectory>source</outputDirectory>
+			<unpack>true</unpack>
+			<useProjectArtifact>false</useProjectArtifact>
+			<includes>
+				<include>net.camelpe:camelpe-api:*:sources</include>
+				<include>net.camelpe:camelpe-impl:*:sources</include>
+				<include>net.camelpe:camelpe-weld:*:sources</include>
+				<include>net.camelpe:camelpe-hornetq:*:sources</include>
+				<include>net.camelpe:camelpe-jboss:*:sources</include>
+			</includes>
+			<unpackOptions>
+				<excludes>
+					<exclude>META-INF/</exclude>
+				</excludes>
+			</unpackOptions>
 		</dependencySet>
 	</dependencySets>
+
 </assembly>

@@ -12,12 +12,10 @@
 		<relativePath>../</relativePath>
 	</parent>
 
-	<groupId>net.camelpe</groupId>
 	<artifactId>camelpe-addons</artifactId>
-	<version>0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
-
 	<name><![CDATA[Camel Portable Extension :: Additional Components]]></name>
+
+	<packaging>pom</packaging>
 
 	<dependencies>
 		<!-- Provided dependencies -->

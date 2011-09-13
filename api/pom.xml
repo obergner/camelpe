@@ -12,12 +12,9 @@
 		<relativePath>../</relativePath>
 	</parent>
 
-	<groupId>net.camelpe</groupId>
 	<artifactId>camelpe-api</artifactId>
-	<version>0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
 	<name><![CDATA[Camel Portable Extension :: API]]></name>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<!-- Provided dependencies -->
@@ -25,14 +22,5 @@
 		<!-- Runtime dependencies -->
 		<!-- Test dependencies -->
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

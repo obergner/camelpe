@@ -43,49 +43,49 @@ import org.springframework.core.task.support.TaskExecutorAdapter;
  */
 public class HornetQCamelComponent extends JmsComponent {
 
-    // -------------------------------------------------------------------------
-    // Static
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Static
+	// -------------------------------------------------------------------------
 
-    public static final String URI_PREFIX = "hornetq";
+	public static final String URI_PREFIX = "hornetq";
 
-    private static final String NETTY_CONNECTOR_FACTORY = "org.hornetq.core.remoting.impl.netty.NettyConnectorFactory";
+	private static final String NETTY_CONNECTOR_FACTORY = "org.hornetq.core.remoting.impl.netty.NettyConnectorFactory";
 
-    // -------------------------------------------------------------------------
-    // Constructors
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
-    public HornetQCamelComponent(final CamelContext context) {
-        super(context);
-        setConnectionFactory(createHornetQConnectionFactory());
-    }
+	public HornetQCamelComponent(final CamelContext context) {
+		super(context);
+		setConnectionFactory(createHornetQConnectionFactory());
+	}
 
-    public HornetQCamelComponent(final CamelContext context,
-            final JmsConfiguration configuration) {
-        super(context);
-        final HornetQJMSConnectionFactory connectionFactory = createHornetQConnectionFactory();
-        setConnectionFactory(connectionFactory);
-        configuration.setConnectionFactory(connectionFactory);
-        setConfiguration(configuration);
-    }
+	public HornetQCamelComponent(final CamelContext context,
+			final JmsConfiguration configuration) {
+		super(context);
+		final HornetQJMSConnectionFactory connectionFactory = createHornetQConnectionFactory();
+		setConnectionFactory(connectionFactory);
+		configuration.setConnectionFactory(connectionFactory);
+		setConfiguration(configuration);
+	}
 
-    // -------------------------------------------------------------------------
-    // Additional properties
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Additional properties
+	// -------------------------------------------------------------------------
 
-    public void setExecutor(final Executor executor)
-            throws IllegalArgumentException {
-        Validate.notNull(executor, "executor");
-        getConfiguration().setTaskExecutor(new TaskExecutorAdapter(executor));
-    }
+	public void setExecutor(final Executor executor)
+			throws IllegalArgumentException {
+		Validate.notNull(executor, "executor");
+		getConfiguration().setTaskExecutor(new TaskExecutorAdapter(executor));
+	}
 
-    // -------------------------------------------------------------------------
-    // Internal
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// Internal
+	// -------------------------------------------------------------------------
 
-    private HornetQJMSConnectionFactory createHornetQConnectionFactory() {
-        return HornetQJMSConnectionFactory.class.cast(HornetQJMSClient
-                .createConnectionFactoryWithoutHA(JMSFactoryType.CF,
-                        new TransportConfiguration(NETTY_CONNECTOR_FACTORY)));
-    }
+	private HornetQJMSConnectionFactory createHornetQConnectionFactory() {
+		return HornetQJMSConnectionFactory.class.cast(HornetQJMSClient
+				.createConnectionFactoryWithoutHA(JMSFactoryType.CF,
+						new TransportConfiguration(NETTY_CONNECTOR_FACTORY)));
+	}
 }

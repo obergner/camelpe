@@ -43,73 +43,73 @@ import org.jboss.vfs.util.AbstractVirtualFileVisitor;
  * 
  */
 public class JBossPackageScanClassResolver extends
-        DefaultPackageScanClassResolver {
+		DefaultPackageScanClassResolver {
 
-    @Override
-    protected void find(final PackageScanFilter test, final String packageName,
-            final ClassLoader loader, final Set<Class<?>> classes) {
-        if (this.log.isTraceEnabled()) {
-            this.log.trace("Searching for [" + test + "] in package ["
-                    + packageName + "] using classloader ["
-                    + loader.getClass().getName() + "]");
-        }
+	@Override
+	protected void find(final PackageScanFilter test, final String packageName,
+			final ClassLoader loader, final Set<Class<?>> classes) {
+		if (this.log.isTraceEnabled()) {
+			this.log.trace("Searching for [" + test + "] in package ["
+					+ packageName + "] using classloader ["
+					+ loader.getClass().getName() + "]");
+		}
 
-        Enumeration<URL> urls;
-        try {
-            urls = getResources(loader, packageName);
-            if (!urls.hasMoreElements()) {
-                this.log.trace("No URLs returned by classloader");
-            }
-        } catch (final IOException ioe) {
-            this.log.warn("Could not read package [" + packageName + "]", ioe);
-            return;
-        }
+		Enumeration<URL> urls;
+		try {
+			urls = getResources(loader, packageName);
+			if (!urls.hasMoreElements()) {
+				this.log.trace("No URLs returned by classloader");
+			}
+		} catch (final IOException ioe) {
+			this.log.warn("Could not read package [" + packageName + "]", ioe);
+			return;
+		}
 
-        while (urls.hasMoreElements()) {
-            URL url = null;
-            try {
-                url = urls.nextElement();
-                if (this.log.isTraceEnabled()) {
-                    this.log.trace("Searching for [" + test + "] in package ["
-                            + packageName + "] using URL [" + url
-                            + "] from classloader");
-                }
-                final VirtualFile root = VFS.getChild(url);
-                root.visit(new MatchingClassVisitor(test, classes));
-            } catch (final URISyntaxException e) {
-                // Cannot happen
-            } catch (final IOException ioe) {
-                this.log.warn("Could not read entries in URL [" + url + "]",
-                        ioe);
-            }
-        }
-    }
+		while (urls.hasMoreElements()) {
+			URL url = null;
+			try {
+				url = urls.nextElement();
+				if (this.log.isTraceEnabled()) {
+					this.log.trace("Searching for [" + test + "] in package ["
+							+ packageName + "] using URL [" + url
+							+ "] from classloader");
+				}
+				final VirtualFile root = VFS.getChild(url);
+				root.visit(new MatchingClassVisitor(test, classes));
+			} catch (final URISyntaxException e) {
+				// Cannot happen
+			} catch (final IOException ioe) {
+				this.log.warn("Could not read entries in URL [" + url + "]",
+						ioe);
+			}
+		}
+	}
 
-    private class MatchingClassVisitor extends AbstractVirtualFileVisitor {
-        private final PackageScanFilter filter;
-        private final Set<Class<?>> classes;
+	private class MatchingClassVisitor extends AbstractVirtualFileVisitor {
+		private final PackageScanFilter filter;
+		private final Set<Class<?>> classes;
 
-        private MatchingClassVisitor(final PackageScanFilter filter,
-                final Set<Class<?>> classes) {
-            super(VisitorAttributes.RECURSE_LEAVES_ONLY);
-            this.filter = filter;
-            this.classes = classes;
-        }
+		private MatchingClassVisitor(final PackageScanFilter filter,
+				final Set<Class<?>> classes) {
+			super(VisitorAttributes.RECURSE_LEAVES_ONLY);
+			this.filter = filter;
+			this.classes = classes;
+		}
 
-        @Override
-        public void visit(final VirtualFile file) {
-            if (file.getName().endsWith(".class")) {
-                final String fqn = file.getPathName();
-                String qn;
-                if (fqn.indexOf("jar/") != -1) {
-                    qn = fqn.substring(fqn.indexOf("jar/") + 4);
-                } else {
-                    qn = fqn.substring(fqn.indexOf("/") + 1);
-                }
+		@Override
+		public void visit(final VirtualFile file) {
+			if (file.getName().endsWith(".class")) {
+				final String fqn = file.getPathName();
+				String qn;
+				if (fqn.indexOf("jar/") != -1) {
+					qn = fqn.substring(fqn.indexOf("jar/") + 4);
+				} else {
+					qn = fqn.substring(fqn.indexOf("/") + 1);
+				}
 
-                addIfMatching(this.filter, qn, this.classes);
-            }
-        }
-    }
+				addIfMatching(this.filter, qn, this.classes);
+			}
+		}
+	}
 
 }

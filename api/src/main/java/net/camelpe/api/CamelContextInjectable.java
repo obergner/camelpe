@@ -38,7 +38,7 @@ import javax.inject.Qualifier;
  */
 @Qualifier
 @Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD,
-		ElementType.PARAMETER })
+        ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CamelContextInjectable {
 }
