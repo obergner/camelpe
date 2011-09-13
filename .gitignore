@@ -7,3 +7,5 @@ trac/
 **.eclipse
 .classpath
 .project
+# Exclude testsuite for now
+testsuite/

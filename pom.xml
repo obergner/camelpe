@@ -152,8 +152,10 @@
 		<deps.google-guava.version>10.0-rc1</deps.google-guava.version>
 		<!-- Testing -->
 		<deps.junit.version>4.9</deps.junit.version>
-		<deps.arquillian.version>1.0.0.Alpha5</deps.arquillian.version>
 		<deps.easymock.version>3.0</deps.easymock.version>
+		<deps.arquillian-junit.version>1.0.0.CR4</deps.arquillian-junit.version>
+		<deps.arquillian-weld-ee-embedded-1.1.version>1.0.0.CR2</deps.arquillian-weld-ee-embedded-1.1.version>
+		<deps.shrinkwrap-resolver.version>1.0.0-beta-5</deps.shrinkwrap-resolver.version>
 		<!-- ######################################################### -->
 		<!-- Build plugin versions -->
 		<!-- ######################################################### -->
@@ -243,6 +245,30 @@
 			<dependency>
 				<groupId>net.camelpe</groupId>
 				<artifactId>camelpe-weld</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-testsuite</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-testsuite-glassfish-embedded-3.1</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-testsuite-jboss-managed-7</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe</groupId>
+				<artifactId>camelpe-testsuite-weld-ee-embedded-1.1</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -648,31 +674,16 @@
 			</dependency>
 			<!-- Arquillian: Test framework for CDI, Glassfish, JBoss -->
 			<dependency>
-				<groupId>org.jboss.arquillian</groupId>
-				<artifactId>arquillian-junit</artifactId>
-				<version>${deps.arquillian.version}</version>
+				<groupId>org.jboss.arquillian.junit</groupId>
+				<artifactId>arquillian-junit-container</artifactId>
+				<version>${deps.arquillian-junit.version}</version>
 				<scope>test</scope>
 				<type>jar</type>
-				<exclusions>
-					<!-- Pulled in by one of arquillian-junit's dependencies -->
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-					<!-- 
-						Pulled in by one of arquillian-junit's dependencies.
-						This is getting ridiculous.
-					 -->
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging-api</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.arquillian.container</groupId>
 				<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-				<version>${deps.arquillian.version}</version>
+				<version>${deps.arquillian-weld-ee-embedded-1.1.version}</version>
 				<scope>test</scope>
 				<type>jar</type>
 				<exclusions>
@@ -687,17 +698,39 @@
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.arquillian.container</groupId>
-				<artifactId>arquillian-glassfish-embedded-3</artifactId>
+				<artifactId>arquillian-glassfish-embedded-3.1</artifactId>
 				<version>${deps.arquillian.version}</version>
 				<scope>test</scope>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>org.glassfish.extras</groupId>
-				<artifactId>glassfish-embedded-all</artifactId>
-				<version>${deps.glassfish-embedded-all.version}</version>
+				<groupId>org.jboss.shrinkwrap.resolver</groupId>
+				<artifactId>shrinkwrap-resolver-api-maven</artifactId>
+				<version>${deps.shrinkwrap-resolver.version}</version>
 				<scope>test</scope>
 				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.shrinkwrap.resolver</groupId>
+				<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+				<version>${deps.shrinkwrap-resolver.version}</version>
+				<scope>test</scope>
+				<type>jar</type>
+				<exclusions>
+					<!-- Pulled in by one of shrinkwrap-resolver-impl-maven's dependencies -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<!-- 
+						Pulled in by one of shrinkwrap-resolver-impl-maven's dependencies.
+						This is getting ridiculous.
+					 -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<!-- Easymock -->
 			<dependency>
