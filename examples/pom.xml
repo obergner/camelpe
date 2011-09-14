@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.camelpe</groupId>
+		<artifactId>camelpe-parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<artifactId>camelpe-examples</artifactId>
+	<name><![CDATA[Camel Portable Extension :: Examples]]></name>
+
+	<packaging>pom</packaging>
+
+	<dependencies>
+		<!-- Provided dependencies -->
+		<!-- Compile time dependencies -->
+		<!-- Runtime dependencies -->
+		<!-- Test dependencies -->
+	</dependencies>
+
+	<modules>
+		<module>loan-broker</module>
+	</modules>
+
+</project>
