@@ -23,13 +23,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>net.camelpe</groupId>
-		<artifactId>camelpe-examples</artifactId>
+		<groupId>net.camelpe.examples</groupId>
+		<artifactId>examples-parent</artifactId>
 		<version>0.1-SNAPSHOT</version>
-		<relativePath>..</relativePath>
+		<relativePath>../</relativePath>
 	</parent>
 
-	<artifactId>camelpe-examples-loan-broker</artifactId>
+	<artifactId>loan-broker-common</artifactId>
 	<packaging>jar</packaging>
 	<name>Camel Portable Extension :: Examples :: Loan Broker</name>
 	<description>An example that shows the EPI's loan broker demo</description>
@@ -87,8 +87,8 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.camelpe</groupId>
-			<artifactId>camelpe-hornetq</artifactId>
+			<groupId>net.camelpe.addons</groupId>
+			<artifactId>hornetq-component</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

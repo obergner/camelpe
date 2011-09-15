@@ -226,26 +226,26 @@
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>net.camelpe</groupId>
-				<artifactId>camelpe-addons</artifactId>
+				<groupId>net.camelpe.addons</groupId>
+				<artifactId>addons-parent</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>net.camelpe</groupId>
-				<artifactId>camelpe-hornetq</artifactId>
+				<groupId>net.camelpe.addons</groupId>
+				<artifactId>hornetq-component</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>net.camelpe</groupId>
-				<artifactId>camelpe-jboss</artifactId>
+				<groupId>net.camelpe.addons</groupId>
+				<artifactId>jboss-support</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>net.camelpe</groupId>
-				<artifactId>camelpe-weld</artifactId>
+				<groupId>net.camelpe.addons</groupId>
+				<artifactId>weld-support</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -280,14 +280,20 @@
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>net.camelpe</groupId>
-				<artifactId>camelpe-examples</artifactId>
+				<groupId>net.camelpe.examples</groupId>
+				<artifactId>examples-parent</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>net.camelpe</groupId>
-				<artifactId>camelpe-examples-loan-broker</artifactId>
+				<groupId>net.camelpe.examples</groupId>
+				<artifactId>loan-broker-common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>net.camelpe.examples</groupId>
+				<artifactId>loan-broker-jboss7</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>

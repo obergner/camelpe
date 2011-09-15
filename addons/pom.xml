@@ -12,8 +12,9 @@
 		<relativePath>../</relativePath>
 	</parent>
 
-	<artifactId>camelpe-addons</artifactId>
-	<name><![CDATA[Camel Portable Extension :: Additional Components]]></name>
+	<groupId>net.camelpe.addons</groupId>
+	<artifactId>addons-parent</artifactId>
+	<name><![CDATA[Camel Portable Extension :: Addons :: Parent]]></name>
 
 	<packaging>pom</packaging>
 
@@ -25,9 +26,9 @@
 	</dependencies>
 
 	<modules>
-		<module>camelpe-weld</module>
-		<module>camelpe-jboss</module>
-		<module>camelpe-hornetq</module>
+		<module>weld-support</module>
+		<module>jboss-support</module>
+		<module>hornetq-component</module>
 	</modules>
 
 </project>

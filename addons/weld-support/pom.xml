@@ -6,13 +6,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>net.camelpe</groupId>
-		<artifactId>camelpe-addons</artifactId>
+		<groupId>net.camelpe.addons</groupId>
+		<artifactId>addons-parent</artifactId>
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
-	<artifactId>camelpe-weld</artifactId>
+	<artifactId>weld-support</artifactId>
 	<name><![CDATA[Camel Portable Extension :: Weld Support]]></name>
 	<packaging>jar</packaging>
 

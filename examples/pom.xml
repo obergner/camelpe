@@ -12,7 +12,8 @@
 		<relativePath>../</relativePath>
 	</parent>
 
-	<artifactId>camelpe-examples</artifactId>
+	<groupId>net.camelpe.examples</groupId>
+	<artifactId>examples-parent</artifactId>
 	<name><![CDATA[Camel Portable Extension :: Examples]]></name>
 
 	<packaging>pom</packaging>
@@ -25,7 +26,8 @@
 	</dependencies>
 
 	<modules>
-		<module>loan-broker</module>
+		<module>loan-broker-common</module>
+		<module>loan-broker-jboss7</module>
 	</modules>
 
 </project>
