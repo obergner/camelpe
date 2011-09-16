@@ -16,26 +16,31 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package net.camelpe.examples.loanbroker.queue;
+package net.camelpe.examples.loanbroker.queue.test;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.camelpe.hornetq.HornetQCamelComponent;
 
-import org.apache.camel.CamelContext;
+import org.apache.camel.component.jms.JmsConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class CamelContextConfiguration {
 
-	@Inject
-	private CamelContext camelContext;
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Named("jms")
 	@Produces
 	public HornetQCamelComponent jmsComponent() {
-		return new HornetQCamelComponent(this.camelContext);
+		final JmsConfiguration jmsConfiguration = new JmsConfiguration();
+		jmsConfiguration.setTestConnectionOnStartup(false);
+		this.log.info(
+				"Will return HornetQCamelComponent using configuration [{}]",
+				jmsConfiguration);
+		return new HornetQCamelComponent(jmsConfiguration);
 	}
 }

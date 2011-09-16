@@ -41,6 +41,10 @@ public class JmsResources {
 
 		private final String name;
 
+		public static String getBindingFor(final String queueName) {
+			return "/queue/" + queueName;
+		}
+
 		private QueueDefinition(final String name) {
 			super();
 			this.name = name;
@@ -51,7 +55,7 @@ public class JmsResources {
 		}
 
 		public String getBinding() {
-			return "/queue/" + this.name;
+			return getBindingFor(this.name);
 		}
 
 		public String getCamelUri() {

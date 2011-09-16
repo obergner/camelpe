@@ -23,17 +23,17 @@
 			<artifactId>jms</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- | Compile time dependencies -->
 		<dependency>
 			<groupId>org.hornetq</groupId>
 			<artifactId>hornetq-core</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hornetq</groupId>
 			<artifactId>hornetq-jms-client</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
-		<!-- | Compile time dependencies -->
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-core</artifactId>

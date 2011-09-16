@@ -19,33 +19,32 @@
 /**
  * 
  */
-package net.camelpe.examples.loanbroker.queue;
+package net.camelpe.examples.jboss7.loanbroker.queue;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicReference;
+import java.io.File;
 
-import javax.enterprise.inject.spi.Extension;
+import javax.annotation.Resource;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.naming.InitialContext;
 
-import net.camelpe.examples.loanbroker.queue.test.CamelContextConfiguration;
-import net.camelpe.examples.loanbroker.queue.test.JmsBroker;
+import net.camelpe.examples.loanbroker.queue.Constants;
+import net.camelpe.examples.loanbroker.queue.JmsResources;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.AfterClass;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+import org.jboss.shrinkwrap.resolver.api.maven.filter.ScopeFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -56,59 +55,35 @@ import org.slf4j.LoggerFactory;
  * 
  */
 @RunWith(Arquillian.class)
-public class LoanBrokerQueueInContainerTest {
+public class LoanBrokerJboss7InContainerTest {
 
-	// ------------------------------------------------------------------------
-	// Start/stop HornetQ
-	// ------------------------------------------------------------------------
+	private static final Logger LOG = LoggerFactory
+			.getLogger(LoanBrokerJboss7InContainerTest.class);
 
-	private static final JmsBroker jmsServer = new JmsBroker();
-
-	/*
-	 * HACK: I'd prefer to use @BeforeClass, but that's obviously called only
-	 * AFTER Weld initializes the BDA. And that't too late.
-	 */
-	static {
-		try {
-			jmsServer.start();
-		} catch (final Exception e) {
-			throw new ExceptionInInitializerError(e);
-		}
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void stopEmbeddedHornetQBroker() throws Exception {
-		jmsServer.stop();
-	}
+	@Resource(mappedName = "java:/JmsXA")
+	private ConnectionFactory connectionFactory;
 
 	// -------------------------------------------------------------------------
 	// Test fixture
 	// -------------------------------------------------------------------------
 
 	@Deployment(testable = true)
-	public static JavaArchive createTestArchive() {
-		final JavaArchive testModule = ShrinkWrap
-				.create(JavaArchive.class, "test.jar")
-				.addPackages(false, LoanBroker.class.getPackage())
-				.addClass(CamelContextConfiguration.class)
-				.addAsServiceProvider(Extension.class, loadCamelExtension())
-				.addAsManifestResource(
-						new ByteArrayAsset("<beans/>".getBytes()),
-						ArchivePaths.create("beans.xml"));
+	public static WebArchive createTestArchive() throws Exception {
+		final WebArchive testModule = ShrinkWrap
+				.create(WebArchive.class, "test.war")
+				.addClass(JBoss7CamelContextConfiguration.class)
+				.addAsWebInfResource(
+						new File("src/main/webapp/WEB-INF/beans.xml"))
+				.addAsResource("log4j.xml")
+				.addAsLibraries(
+						DependencyResolvers
+								.use(MavenDependencyResolver.class)
+								.includeDependenciesFromPom("pom.xml")
+								.resolveAs(JavaArchive.class,
+										new ScopeFilter("compile", "runtime")));
+		LOG.info("Deploy test module: " + testModule.toString(true));
 
 		return testModule;
-	}
-
-	private static Class<?> loadCamelExtension() {
-		try {
-			return Class.forName("net.camelpe.extension.CamelExtension");
-		} catch (final ClassNotFoundException e) {
-			throw new RuntimeException("Failed to load CamelExtension: "
-					+ e.getMessage(), e);
-		}
 	}
 
 	// -------------------------------------------------------------------------
@@ -120,26 +95,20 @@ public class LoanBrokerQueueInContainerTest {
 		final String ssn = "Client-A";
 		final String loanRequest = "Request quote for lowest rate of lending bank";
 
-		final CountDownLatch loanReplyReceived = new CountDownLatch(1);
-		final AtomicReference<Message> receivedLoanReply = new AtomicReference<Message>();
-		final MessageListener loanReplyListenerDelegate = new MessageListener() {
-			@Override
-			public void onMessage(final Message arg0) {
-				receivedLoanReply.set(arg0);
-				loanReplyReceived.countDown();
-			}
-		};
-		final LoanReplyListener loanReplyListener = new LoanReplyListener(
-				jmsServer, loanReplyListenerDelegate);
+		final LoanReplyReceiver loanReplyListener = new LoanReplyReceiver(
+				this.connectionFactory);
 		loanReplyListener.start();
 
 		final LoanRequestSender loanRequestSender = new LoanRequestSender(
-				jmsServer);
+				this.connectionFactory);
 		loanRequestSender.start();
 		loanRequestSender.requestLoan(ssn, loanRequest);
 		loanRequestSender.stop();
 
-		loanReplyReceived.await();
+		final TextMessage receivedLoanReply = loanReplyListener.receive(10000);
+		LOG.info("Received reply {} - Body = [{}]", receivedLoanReply,
+				receivedLoanReply.getText());
+
 		loanReplyListener.stop();
 	}
 
@@ -151,7 +120,7 @@ public class LoanBrokerQueueInContainerTest {
 
 		private final Logger log = LoggerFactory.getLogger(getClass());
 
-		private final JmsBroker embeddedBroker;
+		private final ConnectionFactory connectionFactory;
 
 		private Connection connection;
 
@@ -159,29 +128,30 @@ public class LoanBrokerQueueInContainerTest {
 
 		private Session session;
 
-		LoanRequestSender(final JmsBroker embeddedBroker) {
-			this.embeddedBroker = embeddedBroker;
+		private LoanRequestSender(final ConnectionFactory connectionFactory) {
+			super();
+			this.connectionFactory = connectionFactory;
 		}
 
 		public void start() throws Exception {
 			try {
 				this.log.info("Connecting LoanRequestSender ...");
 
-				final ConnectionFactory cf = this.embeddedBroker
-						.getConnectionFactory();
-				final Queue queue = this.embeddedBroker
-						.queueBoundTo(JmsResources.LOAN_REQUEST_QUEUE
-								.getBinding());
-				this.log.info("Looked up queue [{}]", queue);
-
-				this.connection = cf.createConnection();
+				this.connection = this.connectionFactory.createConnection();
 				this.log.info("Connection [{}] created", this.connection);
 
 				this.session = this.connection.createSession(false,
 						Session.AUTO_ACKNOWLEDGE);
 				this.log.info("Session [{}] created", this.session);
 
-				this.messageProducer = this.session.createProducer(queue);
+				final InitialContext ic = new InitialContext();
+				final Queue loanRequestQueue = (Queue) ic
+						.lookup(JmsResources.LOAN_REQUEST_QUEUE.getBinding());
+				this.log.info("Looked up loanRequestQueue [{}]",
+						loanRequestQueue);
+
+				this.messageProducer = this.session
+						.createProducer(loanRequestQueue);
 				this.log.info("MessageProducer [{}] created",
 						this.messageProducer);
 
@@ -220,54 +190,43 @@ public class LoanBrokerQueueInContainerTest {
 		}
 	}
 
-	private static class LoanReplyListener implements MessageListener {
+	private static class LoanReplyReceiver {
 
 		private final Logger log = LoggerFactory.getLogger(getClass());
 
+		private final ConnectionFactory connectionFactory;
+
 		private Connection connection;
 
-		private final JmsBroker embeddedBroker;
+		private MessageConsumer messageConsumer;
 
-		private final MessageListener delegate;
-
-		LoanReplyListener(final JmsBroker embeddedBroker,
-				final MessageListener delegate) {
-			this.embeddedBroker = embeddedBroker;
-			this.delegate = delegate;
-		}
-
-		@Override
-		public void onMessage(final Message arg0) {
-			this.log.info("Received loan reply [{}]", arg0);
-			this.delegate.onMessage(arg0);
+		LoanReplyReceiver(final ConnectionFactory connectionFactory) {
+			this.connectionFactory = connectionFactory;
 		}
 
 		public void start() throws Exception {
 			try {
-				this.log.info("Connecting LoanReplyListener ...");
+				this.log.info("Connecting LoanReplyReceiver ...");
 
-				final ConnectionFactory cf = this.embeddedBroker
-						.getConnectionFactory();
-				final Queue queue = this.embeddedBroker
-						.queueBoundTo(JmsResources.LOAN_REPLY_QUEUE
-								.getBinding());
-				this.log.info("Looked up queue [{}]", queue);
-
-				this.connection = cf.createConnection();
+				this.connection = this.connectionFactory.createConnection();
 				this.log.info("Connection [{}] created", this.connection);
 
 				final Session session = this.connection.createSession(false,
 						Session.AUTO_ACKNOWLEDGE);
 				this.log.info("Session [{}] created", session);
 
-				final MessageConsumer messageConsumer = session
-						.createConsumer(queue);
-				messageConsumer.setMessageListener(this);
-				this.log.info("MessageConsumer [{}] created", messageConsumer);
+				final InitialContext ic = new InitialContext();
+				final Queue loanReplyQueue = (Queue) ic
+						.lookup(JmsResources.LOAN_REPLY_QUEUE.getBinding());
+				this.log.info("Looked up loanReplyQueue [{}]", loanReplyQueue);
+
+				this.messageConsumer = session.createConsumer(loanReplyQueue);
+				this.log.info("MessageConsumer [{}] created",
+						this.messageConsumer);
 
 				this.connection.start();
 				this.log.info(
-						"Connection [{}] started. Ready to receive messages.",
+						"LoanReplyReceiver connected [connection = {}]. Ready to receive messages.",
 						this.connection);
 			} catch (final Exception e) {
 				if (this.connection != null) {
@@ -278,12 +237,18 @@ public class LoanBrokerQueueInContainerTest {
 			}
 		}
 
+		public TextMessage receive(final long timeoutMillis)
+				throws JMSException {
+			return TextMessage.class.cast(this.messageConsumer
+					.receive(timeoutMillis));
+		}
+
 		public void stop() throws Exception {
-			this.log.info("Stopping LoanReplyListener ...");
+			this.log.info("Stopping LoanReplyReceiver ...");
 
 			this.connection.close();
 
-			this.log.info("LoanReplyListener stopped");
+			this.log.info("LoanReplyReceiver stopped");
 		}
 	}
 }

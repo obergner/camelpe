@@ -27,7 +27,18 @@
 
 	<modules>
 		<module>loan-broker-common</module>
-		<module>loan-broker-jboss7</module>
 	</modules>
+
+	<profiles>
+		<profile>
+			<id>jboss7</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>loan-broker-jboss7</module>
+			</modules>
+		</profile>
+	</profiles>
 
 </project>

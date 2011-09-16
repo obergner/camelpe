@@ -156,6 +156,7 @@
 		<deps.easymock.version>3.0</deps.easymock.version>
 		<deps.arquillian-junit.version>1.0.0.CR4</deps.arquillian-junit.version>
 		<deps.arquillian-weld-ee-embedded-1.1.version>1.0.0.CR2</deps.arquillian-weld-ee-embedded-1.1.version>
+		<deps.jboss-as.version>7.0.1.Final</deps.jboss-as.version>
 		<deps.shrinkwrap-resolver.version>1.0.0-beta-5</deps.shrinkwrap-resolver.version>
 		<!-- ######################################################### -->
 		<!-- Build plugin versions -->
@@ -167,6 +168,7 @@
 		<plugins.resources.version>2.5</plugins.resources.version>
 		<plugins.surefire.version>2.9</plugins.surefire.version>
 		<plugins.jar.version>2.3.2</plugins.jar.version>
+		<plugins.war.version>2.1.1</plugins.war.version>
 		<plugins.dependency.version>2.3</plugins.dependency.version>
 		<plugins.plugin.version>2.9</plugins.plugin.version>
 		<plugins.source.version>2.1.2</plugins.source.version>
@@ -295,7 +297,7 @@
 				<groupId>net.camelpe.examples</groupId>
 				<artifactId>loan-broker-jboss7</artifactId>
 				<version>${project.version}</version>
-				<type>jar</type>
+				<type>war</type>
 			</dependency>
 			<!-- =========================================== -->
 			<!-- Standard Javax APIs -->
@@ -732,11 +734,10 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.jboss.arquillian.container</groupId>
-				<artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-				<version>${deps.arquillian.version}</version>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>jboss-as-arquillian-container-managed</artifactId>
+				<version>${deps.jboss-as.version}</version>
 				<scope>test</scope>
-				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.shrinkwrap.resolver</groupId>
@@ -929,6 +930,21 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>${plugins.jar.version}</version>
 					<configuration>
+						<archive>
+							<index>true</index>
+							<manifest>
+								<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${plugins.war.version}</version>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
 						<archive>
 							<index>true</index>
 							<manifest>

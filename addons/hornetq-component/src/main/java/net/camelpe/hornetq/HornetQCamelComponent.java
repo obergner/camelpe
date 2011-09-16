@@ -60,6 +60,14 @@ public class HornetQCamelComponent extends JmsComponent {
 		setConnectionFactory(createHornetQConnectionFactory());
 	}
 
+	public HornetQCamelComponent(final JmsConfiguration configuration) {
+		super(configuration);
+		final HornetQJMSConnectionFactory connectionFactory = createHornetQConnectionFactory();
+		setConnectionFactory(connectionFactory);
+		configuration.setConnectionFactory(connectionFactory);
+		setConfiguration(configuration);
+	}
+
 	public HornetQCamelComponent(final CamelContext context,
 			final JmsConfiguration configuration) {
 		super(context);

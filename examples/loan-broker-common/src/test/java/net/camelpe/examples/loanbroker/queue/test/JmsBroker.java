@@ -59,6 +59,10 @@ public class JmsBroker {
 	 */
 	@PostConstruct
 	public void start() throws Exception {
+		startHornetQServer();
+	}
+
+	private void startHornetQServer() throws Exception {
 		this.log.info("Starting embedded HornetQ server ...");
 
 		org.hornetq.core.logging.Logger
@@ -80,16 +84,19 @@ public class JmsBroker {
 
 	private Configuration configureCore() {
 		final Configuration configuration = new ConfigurationImpl();
+
 		configuration.setPersistenceEnabled(false);
 		configuration.setSecurityEnabled(false);
 		configuration.getAcceptorConfigurations()
 				.add(new TransportConfiguration(NettyAcceptorFactory.class
 						.getName()));
+		configuration.setJournalDirectory("target/data/journal");
 
 		final TransportConfiguration connectorConfig = new TransportConfiguration(
 				NettyConnectorFactory.class.getName());
 		configuration.getConnectorConfigurations().put("connector",
 				connectorConfig);
+
 		return configuration;
 	}
 
@@ -132,6 +139,10 @@ public class JmsBroker {
 	 */
 	@PreDestroy
 	public void stop() throws Exception {
+		stopHornetQServer();
+	}
+
+	private void stopHornetQServer() throws Exception {
 		this.log.info("Stopping embedded HornetQ server [{}] ...",
 				this.jmsServer);
 
