@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -94,7 +92,7 @@
 		<system>hudson</system>
 		<url>http://localhost:7777/hudson/job/CamelPE/</url>
 	</ciManagement>
-	
+
 	<!-- =================================================== -->
 	<!-- Project modules -->
 	<!-- =================================================== -->
@@ -143,7 +141,7 @@
 			the dependencies on jaxb in scope 'provided' instead of 'runtime'. -->
 		<deps.hibernate-validator.version>4.1.0.Final</deps.hibernate-validator.version>
 		<deps.jsf-ri.version>2.0.2-FCS</deps.jsf-ri.version>
-		<deps.weld.version>1.1.2.Final</deps.weld.version>
+		<deps.weld.version>1.1.4.Final</deps.weld.version>
 		<deps.seam-solder.version>3.0.0.Final</deps.seam-solder.version>
 		<deps.camel.version>2.8.0</deps.camel.version>
 		<deps.hornetq.version>2.2.7.Final</deps.hornetq.version>
@@ -187,7 +185,7 @@
 		<!-- We cannot upgrade to 2.2 because of http://jira.codehaus.org/browse/MPIR-150 -->
 		<plugins.project-info-reports.version>2.0.1</plugins.project-info-reports.version>
 	</properties>
-	
+
 	<!-- =================================================== -->
 	<!-- Profiles -->
 	<!-- =================================================== -->
@@ -758,10 +756,8 @@
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging</artifactId>
 					</exclusion>
-					<!-- 
-						Pulled in by one of shrinkwrap-resolver-impl-maven's dependencies.
-						This is getting ridiculous.
-					 -->
+					<!-- Pulled in by one of shrinkwrap-resolver-impl-maven's dependencies. 
+						This is getting ridiculous. -->
 					<exclusion>
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging-api</artifactId>
@@ -1062,7 +1058,7 @@
 					<version>${plugins.site.version}</version>
 				</plugin>
 				<!-- ======================================= -->
-				<!-- Report plugins                          -->
+				<!-- Report plugins -->
 				<!-- ======================================= -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>

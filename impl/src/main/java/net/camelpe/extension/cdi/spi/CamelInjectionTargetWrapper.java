@@ -200,12 +200,12 @@ public class CamelInjectionTargetWrapper<T> implements InjectionTarget<T> {
 			        instance.getClass().getName());
 		} else if (camelInjectAnnotatedField
 		        .isAnnotationPresent(org.apache.camel.Produce.class)) {
-			final org.apache.camel.Produce endpointInjectAnnotation = camelInjectAnnotatedField
+			final org.apache.camel.Produce produceAnnotation = camelInjectAnnotatedField
 			        .getAnnotation(org.apache.camel.Produce.class);
 			valueToInject = getCamelPostProcessorHelper().getInjectionValue(
 			        camelInjectAnnotatedField.getType(),
-			        endpointInjectAnnotation.uri(),
-			        endpointInjectAnnotation.ref(),
+			        produceAnnotation.uri(),
+			        produceAnnotation.ref(),
 			        camelInjectAnnotatedField.getName(), instance,
 			        instance.getClass().getName());
 		} else {
